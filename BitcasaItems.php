@@ -98,6 +98,9 @@ class Item {
 		if (count($data) == 0) {
 			return null;
 		}
+		if (!isset($data['id']) || !isset($data['type'])) {
+			return null;
+		}
 
 		if ($data["type"] == 'folder') {
 			$item = new Folder($api);

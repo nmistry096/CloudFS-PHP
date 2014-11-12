@@ -91,7 +91,6 @@ class InvalidArgument extends Exception {
 }
 
 
-
 function assert_non_null($s, $argno = 0) {
 	if ($s == null) {
 		throw new InvalidArgument($argno) ;

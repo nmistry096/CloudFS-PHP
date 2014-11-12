@@ -543,19 +543,20 @@ class BitcasaApi {
 	}
 
 
-	public function uploadFile($parentpath, $name, $fp, $exists = "overwrite") {
+	public function uploadFile($parentpath, $name, $filepath, $exists = "overwrite") {
+		assert_string($filepath);
 		$params = array();
 		$connection = new HTTPConnect($this->credential->getSession());
 		$connection->raw();
-		if (substr($parentpath, -1, 1) != "/") {
-			$parentpath .= "/";
-		}
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $parentpath,
 												$params);
-		if ($connection->post_multipart($url, $name, $fp, $exists) <= 100) {
+		if ($connection->post_multipart($url, $name, $filepath, $exists) <= 100) {
 			return false;
 		}
-		return $connection->getResponse(true);
+		// upload payload is raw download is json
+		$this->raw = false;
+		$resp = $connection->getResponse(true);
+		return $resp;
 	}
 
 
@@ -601,6 +602,4 @@ class BitcasaApi {
 	}
 
 }
-
-
 ?>

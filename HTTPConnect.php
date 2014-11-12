@@ -12,11 +12,11 @@
 require_once "BitcasaException.php";
 
 
+
 class HTTPConnect {
 
 	private $headers;
 	private $user_agent;
-	private $curl;
 	private $http_status;
 	private $return_xfer;
 	private $session;
@@ -27,9 +27,10 @@ class HTTPConnect {
 	private $datalen;
 	private $is_raw;
 	private $debug;
-	private $boundary;
-	private $eof;
-	private $postdata;
+	public $curl;
+	public $boundary;
+	public $eof;
+	public $postdata;
 
 
 	public function HTTPConnect($session = null) {
@@ -108,8 +109,8 @@ class HTTPConnect {
 			if ($this->debug) {
 				print "body="; var_dump($this->data);
 			}
-			curl_setopt($this->curl, CURLOPT_POST, $this->datalen);
-			curl_setopt($this->curl, CURLOPT_POSTFIELDS, $this->data);
+			assert(curl_setopt($this->curl, CURLOPT_POST, $this->datalen));
+			assert(curl_setopt($this->curl, CURLOPT_POSTFIELDS, $this->data));
 		}
   		$this->process($url);
 		return $this->http_status;
@@ -117,7 +118,6 @@ class HTTPConnect {
 
 
 	public function read_function($curl, $fd, $length) {
-		//print "reading... " . $length . "\n";
 		$resp = null;
 		if ($this->postdata != null) {
 			if (strlen($this->postdata) <= $length) {
@@ -136,7 +136,7 @@ class HTTPConnect {
 			}
 			else if (feof($this->stream)) {
 				$this->eof = true;
-				$resp = "\n" . $this->boundary . "--\n";
+				$resp = "\r\n" . $this->boundary . "--\r\n";
 			} else {
 				$buffer = fread($this->stream, $length);
 				if ($buffer != false) {
@@ -144,26 +144,31 @@ class HTTPConnect {
 				}
 			}
 		}
-		//print "returning: " . $resp . "\n";
-		print $resp;
 		return $resp;
 	}
 
 
-	public function post_multipart($url, $name, $stream, $exists) {
+	public function post_multipart($url, $name, $path, $exists) {
 		$bdry = dechex(time(0));
+		$this->is_raw = true;
 		$this->boundary = "--" . $bdry;
-		$cd = "\n" . $this->boundary . "\nContent-Disposition: form-data; name=";
+		$cd = "\r\n" . $this->boundary . "\r\nContent-Disposition: form-data; name=";
+		$this->postdata = $cd . '"exists"' . "\r\n\r\n" . $exists . "\r\n"; 
+		$this->postdata .= $cd . '"file"; filename="' . $name . '"' . "\r\n"; 
+		$this->postdata .= "Content-Type: application/octet-stream\r\n\r\n"; 
+
 		$this->setup();
-		$this->stream = $stream;
-		$this->addHeader("Content-Type", "multipart/form-data; boundary=--" . $bdry);
-		curl_setopt($this->curl, CURLOPT_URL, $url);
-		curl_setopt($this->curl, CURLOPT_POST, 1);
-		curl_setopt($this->curl, CURLOPT_READFUNCTION, array($this, 'read_function'));
-		$this->postdata = $cd . '"exists"' . "\n\n" . $exists . "\n"; 
-		$this->postdata .= $cd . '"file"; filename="' . $name . '"' . "\n"; 
-		$this->postdata .= "Content-Type: application/octet-stream\n\n"; 
+		$this->stream = fopen($path, "r");
+		$this->addHeader("Content-Type", "multipart/form-data; boundary=" . $bdry);
+		$this->addHeader('Accept', 'application/json');
+		assert(curl_setopt($this->curl, CURLOPT_URL, $url));
+		assert(curl_setopt($this->curl, CURLOPT_POST, 1));
+		assert(curl_setopt($this->curl, CURLOPT_READFUNCTION, array($this, 'read_function')));
+		$len = strlen($this->postdata) + strlen("\r\n" . $this->boundary . "--\r\n") + filesize($path);
+		$this->addHeader("Content-Length", $len);
+		
   		$this->process($url);
+		fclose($this->stream);
 		return $this->http_status;
 	}
 
@@ -198,7 +203,7 @@ class HTTPConnect {
 
 
 	public function getResponse($json = false, $check = true) {
-		if (!$this->is_raw && $json && $this->hasHeader('Accept', 'application/json')) {
+		if ($json && $this->hasHeader('Accept', 'application/json')) {
 			$res = json_decode($this->response, true);
 			if ($check) {
 				$b = new BitcasaStatus($res);
@@ -216,28 +221,38 @@ class HTTPConnect {
 	public function getUserAgent() {
 		return $this->user_agent;
 	}
+	
 
 	private function process($url) {
+		//if (substr($url, -1, 1) == "/") {
+		//	$url = substr($url, 0, -1);
+		//}
 		if (!$this->is_raw) {
 			$this->addMissingHeader('Accept', 'application/json');
 		}
 		if ($this->return_xfer) {
-			curl_setopt_array($this->curl, array(CURLOPT_RETURNTRANSFER => 1));
+			assert(curl_setopt_array($this->curl, array(CURLOPT_RETURNTRANSFER => 1)));
 		}
-		curl_setopt_array($this->curl, array(CURLOPT_URL => $url,
-											 CURLOPT_FOLLOWLOCATION => true,
-											 CURLOPT_SSL_VERIFYPEER => false,
-											 CURLOPT_SSL_VERIFYHOST => 0));
+		assert(curl_setopt_array($this->curl, array(CURLOPT_URL => $url,
+													CURLINFO_HEADER_OUT => true, //Request header
+													CURLOPT_HEADER => true, //Return header
+													CURLOPT_FOLLOWLOCATION => true,
+													CURLOPT_SSL_VERIFYPEER => false,
+													CURLOPT_SSL_VERIFYHOST => 0)));
 		$hdrs = $this->getHeaders();
 		if ($this->debug) {
 			var_dump($hdrs);
 			var_dump($url);
 		}
-		curl_setopt($this->curl, CURLOPT_HTTPHEADER, $hdrs);
+		assert(curl_setopt($this->curl, CURLOPT_HTTPHEADER, $hdrs));
 
-		//print "---------------------------------------------------\n";
 		$resp = curl_exec($this->curl);
-		//print "---------------------------------------------------\n";
+
+		$header_info = curl_getinfo($this->curl,CURLINFO_HEADER_OUT);
+		$header_size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
+		$header = substr($resp, 0, $header_size);
+		$body = substr($resp, $header_size);
+		$resp = $body;
 
 		if ($resp != false) {
 			$this->response = $resp;
@@ -249,12 +264,25 @@ class HTTPConnect {
 		if ($this->debug) {
 			var_dump("HTTP status: " .	$this->http_status );
 		}
+		if ($this->http_status < 200 || $this->http_status >= 300) {
+
+			$err = curl_errno($this->curl);
+			if ($err == 0) {
+				$err = $this->http_status;
+			}
+			if ($resp == false) {
+				$resp = curl_error($this->curl);
+			}
+			throw new Exception($this->http_status . ": " . $resp, $err);
+		}
+
 		if ($resp == NULL || $resp == false) {
 			$this->error_msg = curl_error($this->curl);
 			$this->error_code = curl_errno($this->curl);
 			if ($this->debug) {
-				var_dump($this->error_msg);
+				print "error-msg: "; var_dump($this->error_msg);
 			}
+			throw new Exception($this->error_msg);
 		} else {
 			$this->response = $resp;
 		}
@@ -275,5 +303,35 @@ class HTTPConnect {
 	}
 }
 
+
+function read_function($curl, $instance, $length) {
+	$resp = null;
+	if ($instance->postdata != null) {
+		if (strlen($instance->postdata) <= $length) {
+			$data = $instance->postdata;
+			$instance->postdata = null;
+			$resp = $data;
+		} else {
+			$data = substr($instance->postdata, 0, $length);
+			$instance->postdata = substr($instance->postdata, $length);
+			$resp = $data;
+		}
+
+	} else {
+		if ($instance->eof) {
+			$resp = null;
+		}
+		else if (feof($instance->stream)) {
+			$instance->eof = true;
+			$resp = "\n" . $instance->boundary . "--\n";
+		} else {
+			$buffer = fread($instance->stream, $length);
+			if ($buffer != false) {
+				$resp = $buffer;
+			}
+		}
+	}
+	return $resp;
+}
 
 ?>

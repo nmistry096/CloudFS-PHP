@@ -11,6 +11,7 @@
 
 require_once("BitcasaItems.php");
 require_once("BitcasaApi.php");
+require_once("BitcasaException.php");
 
 
 class Filesystem {
@@ -33,8 +34,10 @@ class Filesystem {
 		$resp = $this->api->getList($path);
 		$items = $resp["result"]["items"];
 		$lst = array();
-		foreach ($items as $item) {
-			$lst[] = Item::make($item, $dir);
+		if ($items != null) {
+			foreach ($items as $item) {
+				$lst[] = Item::make($item, $dir);
+			}
 		}
 		return $lst;
 	}
@@ -164,18 +167,18 @@ class Filesystem {
 	}
 
 
-	public function upload($parent, $path, $exists = "fail") {
+	public function upload($parent, $path, $exists = "overwrite") {
 		$parentpath = "/";
 		if (is_string($parent)) {
 			$parentpath = $parent;
 		} else if ($parent != null) {
 			$parentpath = $parent->path();
 		}
-		$fp = fopen($path, "r");
+
+		$fp = $path;
 		$name = basename($path);
 		$res = $this->api->uploadFile($parentpath, $name, $fp, $exists);
-		fclose($fp);
-		return Item::make($res, $parent, $this);
+		return Item::make($res['result'], $parent, $this);
 	}
 
  
