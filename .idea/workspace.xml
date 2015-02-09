@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ac582b3-6f78-470e-9301-a20ad657b456" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BitcasaApi.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BitcasaConstants.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BitcasaException.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BitcasaFilesystem.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BitcasaItems.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BitcasaUtils.php" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/HTTPConnect.php" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/BaseTest.php" afterPath="$PROJECT_DIR$/tests/BaseTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cloudfs/BitcasaApi.php" afterPath="$PROJECT_DIR$/cloudfs/BitcasaApi.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cloudfs/HTTPConnect.php" afterPath="$PROJECT_DIR$/cloudfs/HTTPConnect.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="CloudFS-PHP.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,11 +30,113 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FileSystemTest.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/FileSystemTest.php">
+      <file leaf-file-name="BitcasaFilesystem.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaFilesystem.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.041667" vertical-offset="32" max-vertical-offset="1380">
-              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+            <state vertical-scroll-proportion="-110.083336" vertical-offset="163" max-vertical-offset="3300">
+              <caret line="194" column="17" selection-start-line="194" selection-start-column="17" selection-end-line="194" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BitcasaApiTest.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tests/BitcasaApiTest.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.59731543" vertical-offset="137" max-vertical-offset="3270">
+              <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BitcasaApi.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaApi.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.5416665" vertical-offset="3722" max-vertical-offset="4020">
+              <caret line="615" column="0" selection-start-line="615" selection-start-column="0" selection-end-line="615" selection-end-column="0" />
+              <folding>
+                <element signature="n#__construct#0;n#Credential#0;n#!!top" expanded="false" />
+                <element signature="n#getEndPoint#0;n#Credential#0;n#!!top" expanded="false" />
+                <element signature="n#getApplicationContext#0;n#Credential#0;n#!!top" expanded="false" />
+                <element signature="n#getAccessToken#0;n#Credential#0;n#!!top" expanded="false" />
+                <element signature="n#setAccessToken#0;n#Credential#0;n#!!top" expanded="false" />
+                <element signature="n#getTokenType#0;n#Credential#0;n#!!top" expanded="false" />
+                <element signature="n#setTokenType#0;n#Credential#0;n#!!top" expanded="false" />
+                <element signature="n#getRequestUrl#0;n#Credential#0;n#!!top" expanded="false" />
+                <element signature="n#getSession#0;n#Credential#0;n#!!top" expanded="false" />
+                <element signature="n#authenticate#0;n#Session#0;n#!!top" expanded="false" />
+                <element signature="e#2170#2236#0#PHP" expanded="false" />
+                <element signature="n#getClientApi#0;n#Session#0;n#!!top" expanded="false" />
+                <element signature="n#isLinked#0;n#Session#0;n#!!top" expanded="false" />
+                <element signature="n#unlink#0;n#Session#0;n#!!top" expanded="false" />
+                <element signature="e#2653#2835#0#PHP" expanded="false" />
+                <element signature="n#user#0;n#Session#0;n#!!top" expanded="false" />
+                <element signature="e#2993#3178#0#PHP" expanded="false" />
+                <element signature="n#account#0;n#Session#0;n#!!top" expanded="false" />
+                <element signature="n#filesystem#0;n#Session#0;n#!!top" expanded="false" />
+                <element signature="n#getClientId#0;n#Session#0;n#!!top" expanded="false" />
+                <element signature="n#setClientId#0;n#Session#0;n#!!top" expanded="false" />
+                <element signature="n#getClientSecret#0;n#Session#0;n#!!top" expanded="false" />
+                <element signature="n#setClientSecret#0;n#Session#0;n#!!top" expanded="false" />
+                <element signature="n#getAccessToken#0;n#Session#0;n#!!top" expanded="false" />
+                <element signature="e#4273#4455#0#PHP" expanded="false" />
+                <element signature="n#getAccessToken#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+                <element signature="e#4531#4684#0#PHP" expanded="false" />
+                <element signature="e#5895#6266#0#PHP" expanded="false" />
+                <element signature="e#5989#6091#0#PHP" expanded="false" />
+                <element signature="e#6096#6192#0#PHP" expanded="false" />
+                <element signature="e#6197#6242#0#PHP" expanded="false" />
+                <element signature="n#getList#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+                <element signature="e#6498#6611#0#PHP" expanded="false" />
+                <element signature="n#getFileMeta#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+                <element signature="e#7227#7387#0#PHP" expanded="false" />
+                <element signature="e#7278#7387#0#PHP" expanded="false" />
+                <element signature="e#7354#7387#0#PHP" expanded="false" />
+                <element signature="e#7390#7450#0#PHP" expanded="false" />
+                <element signature="e#7613#7688#0#PHP" expanded="false" />
+                <element signature="n#getFolderMeta#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+                <element signature="e#8234#8309#0#PHP" expanded="false" />
+                <element signature="n#deleteFolder#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+                <element signature="n#deleteFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+                <element signature="e#9904#9965#0#PHP" expanded="false" />
+                <element signature="e#9976#10074#0#PHP" expanded="false" />
+                <element signature="e#10081#10141#0#PHP" expanded="false" />
+                <element signature="n#alterFolder#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+                <element signature="e#10372#10476#0#PHP" expanded="false" />
+                <element signature="e#10611#10669#0#PHP" expanded="false" />
+                <element signature="n#alterFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+                <element signature="e#10883#10985#0#PHP" expanded="false" />
+                <element signature="e#11120#11178#0#PHP" expanded="false" />
+                <element signature="n#copyFolder#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+                <element signature="n#copyFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+                <element signature="e#12476#12534#0#PHP" expanded="false" />
+                <element signature="n#moveFolder#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+                <element signature="n#moveFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+                <element signature="e#13455#13616#0#PHP" expanded="false" />
+                <element signature="e#13675#13727#0#PHP" expanded="false" />
+                <element signature="e#13820#13878#0#PHP" expanded="false" />
+                <element signature="n#downloadFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HTTPConnect.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cloudfs/HTTPConnect.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.2916665" vertical-offset="2927" max-vertical-offset="5040">
+              <caret line="209" column="0" selection-start-line="209" selection-start-column="0" selection-end-line="209" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BitcasaException.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaException.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.2916665" vertical-offset="572" max-vertical-offset="2115">
+              <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -46,18 +145,18 @@
       <file leaf-file-name="SessionTest.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/SessionTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.375" vertical-offset="0" max-vertical-offset="420">
-              <caret line="7" column="74" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="74" />
+            <state vertical-scroll-proportion="-2.2916667" vertical-offset="35" max-vertical-offset="420">
+              <caret line="6" column="42" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserTest.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tests/UserTest.php">
+      <file leaf-file-name="BaseTest.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/BaseTest.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.14950167" vertical-offset="0" max-vertical-offset="602">
-              <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+            <state vertical-scroll-proportion="-7.8333335" vertical-offset="562" max-vertical-offset="930">
+              <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -73,7 +172,6 @@
       <list>
         <option value="$PROJECT_DIR$/tests/AuthenticationTest.php" />
         <option value="$PROJECT_DIR$/tests/Configuration.php" />
-        <option value="$PROJECT_DIR$/tests/BaseTest.php" />
         <option value="$PROJECT_DIR$/tests/SessionTest.php" />
         <option value="$PROJECT_DIR$/tests/UserTest.php" />
         <option value="$PROJECT_DIR$/docs/sphinx/source/introduction.rst" />
@@ -88,6 +186,14 @@
         <option value="$PROJECT_DIR$/instructions" />
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/tests/FileSystemTest.php" />
+        <option value="$PROJECT_DIR$/tests/BaseTest.php" />
+        <option value="$PROJECT_DIR$/tests/files/text-file" />
+        <option value="$PROJECT_DIR$/cloudfs/BitcasaApi.php" />
+        <option value="$PROJECT_DIR$/tests/files/upload/history" />
+        <option value="$PROJECT_DIR$/tests/files/upload/history2" />
+        <option value="$PROJECT_DIR$/tests/files/upload/history3" />
+        <option value="$PROJECT_DIR$/cloudfs/HTTPConnect.php" />
+        <option value="$PROJECT_DIR$/tests/BitcasaApiTest.php" />
       </list>
     </option>
   </component>
@@ -199,6 +305,50 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="files" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="upload" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CloudFS-PHP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CloudFS-PHP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tests" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="files" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="download" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CloudFS-PHP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CloudFS-PHP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="cloudfs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -208,7 +358,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sphpdox" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/tests/BitcasaApiTest.php" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="configurable.group.editor" />
@@ -216,6 +366,14 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="FullScreen" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/files/upload" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/files/upload" />
+    </key>
   </component>
   <component name="RunManager" selected="PHPUnit.tests">
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -247,7 +405,7 @@
       <method />
     </configuration>
     <configuration default="false" name="tests" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
-      <TestRunner class="FileSystemTest" directory="$PROJECT_DIR$/tests" file="$PROJECT_DIR$/tests/FileSystemTest.php" scope="Class" />
+      <TestRunner class="BitcasaApiTest" directory="$PROJECT_DIR$/tests" file="$PROJECT_DIR$/tests/BitcasaApiTest.php" scope="Class" />
       <RunnerSettings RunnerId="PhpUnitDebugRunner" />
       <ConfigurationWrapper RunnerId="PhpUnitDebugRunner" />
       <method />
@@ -277,9 +435,11 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4718935" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2494043" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27720413" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.44563553" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -287,9 +447,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32988167" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.40122512" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
@@ -338,60 +496,17 @@
           <line>65</line>
           <option name="timeStamp" value="41" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/cloudfs/HTTPConnect.php</url>
+          <line>207</line>
+          <option name="timeStamp" value="92" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="45" />
+      <option name="time" value="93" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/docs/sphinx/source/conf.py">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1290" max-vertical-offset="3960">
-          <caret line="86" column="44" selection-start-line="86" selection-start-column="35" selection-end-line="86" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/sphinx/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/sphinx/source/index.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="100">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/sphinx/source/conf.py">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="3960">
-          <caret line="30" column="39" selection-start-line="30" selection-start-column="39" selection-end-line="30" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaApi.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1289" max-vertical-offset="2535">
-          <caret line="337" column="5" selection-start-line="337" selection-start-column="5" selection-end-line="337" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/FileSystemTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5" max-vertical-offset="390">
-          <caret line="2" column="39" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/UserTest.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="300">
@@ -410,6 +525,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="450">
           <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -417,6 +533,69 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2535">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#__construct#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#getEndPoint#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#getApplicationContext#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#getAccessToken#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#setAccessToken#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#getTokenType#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#setTokenType#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#getRequestUrl#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#getSession#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#authenticate#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="e#2170#2236#0#PHP" expanded="false" />
+            <element signature="n#getClientApi#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#isLinked#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#unlink#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="e#2653#2835#0#PHP" expanded="false" />
+            <element signature="n#user#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="e#2993#3178#0#PHP" expanded="false" />
+            <element signature="n#account#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#filesystem#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#getClientId#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#setClientId#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#getClientSecret#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#setClientSecret#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#getAccessToken#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="e#4273#4455#0#PHP" expanded="false" />
+            <element signature="n#getAccessToken#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#4531#4684#0#PHP" expanded="false" />
+            <element signature="e#5895#6266#0#PHP" expanded="false" />
+            <element signature="e#5989#6091#0#PHP" expanded="false" />
+            <element signature="e#6096#6192#0#PHP" expanded="false" />
+            <element signature="e#6197#6242#0#PHP" expanded="false" />
+            <element signature="n#getList#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#6498#6611#0#PHP" expanded="false" />
+            <element signature="n#getFileMeta#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#7227#7387#0#PHP" expanded="false" />
+            <element signature="e#7278#7387#0#PHP" expanded="false" />
+            <element signature="e#7354#7387#0#PHP" expanded="false" />
+            <element signature="e#7390#7450#0#PHP" expanded="false" />
+            <element signature="e#7613#7688#0#PHP" expanded="false" />
+            <element signature="n#getFolderMeta#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#8234#8309#0#PHP" expanded="false" />
+            <element signature="n#deleteFolder#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="n#deleteFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#9904#9965#0#PHP" expanded="false" />
+            <element signature="e#9976#10074#0#PHP" expanded="false" />
+            <element signature="e#10081#10141#0#PHP" expanded="false" />
+            <element signature="n#alterFolder#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#10372#10476#0#PHP" expanded="false" />
+            <element signature="e#10611#10669#0#PHP" expanded="false" />
+            <element signature="n#alterFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#10883#10985#0#PHP" expanded="false" />
+            <element signature="e#11120#11178#0#PHP" expanded="false" />
+            <element signature="n#copyFolder#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="n#copyFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#12476#12534#0#PHP" expanded="false" />
+            <element signature="n#moveFolder#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="n#moveFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#13455#13616#0#PHP" expanded="false" />
+            <element signature="e#13675#13727#0#PHP" expanded="false" />
+            <element signature="e#13820#13878#0#PHP" expanded="false" />
+            <element signature="n#downloadFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -535,13 +714,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaUtils.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1200">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/sphpdox/sphpdox/lib/Sphpdox/Process.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.050933786" vertical-offset="0" max-vertical-offset="2610">
@@ -602,13 +774,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/BaseTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.125" vertical-offset="0" max-vertical-offset="450">
-          <caret line="13" column="92" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="92" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docs/sphinx/source/index.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.2479608" vertical-offset="0" max-vertical-offset="900">
@@ -620,41 +785,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="2745">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/phpunit/phpunit/src/Util/ErrorHandler.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35049835" vertical-offset="539" max-vertical-offset="1785">
-          <caret line="57" column="23" selection-start-line="57" selection-start-column="23" selection-end-line="57" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaConstants.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-142.5" vertical-offset="0" max-vertical-offset="3645">
-          <caret line="235" column="10" selection-start-line="235" selection-start-column="10" selection-end-line="235" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaException.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.7083335" vertical-offset="1297" max-vertical-offset="2115">
-          <caret line="101" column="9" selection-start-line="101" selection-start-column="9" selection-end-line="101" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaApi.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.5416665" vertical-offset="2786" max-vertical-offset="3690">
-          <caret line="376" column="0" selection-start-line="376" selection-start-column="0" selection-end-line="376" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/phpunit/phpunit/src/Framework/TestCase.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.541667" vertical-offset="12386" max-vertical-offset="29460">
-          <caret line="852" column="23" selection-start-line="852" selection-start-column="23" selection-end-line="852" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -698,34 +828,203 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaFilesystem.php">
+    <entry file="file://$PROJECT_DIR$/tests/UserTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.3887043" vertical-offset="163" max-vertical-offset="3300">
-          <caret line="194" column="17" selection-start-line="194" selection-start-column="17" selection-end-line="194" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/FileSystemTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.041667" vertical-offset="32" max-vertical-offset="1380">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.14950167" vertical-offset="0" max-vertical-offset="602">
+          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/SessionTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.375" vertical-offset="0" max-vertical-offset="420">
-          <caret line="7" column="74" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="74" />
+        <state vertical-scroll-proportion="-2.2916667" vertical-offset="35" max-vertical-offset="420">
+          <caret line="6" column="42" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="42" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/UserTest.php">
+    <entry file="file://$PROJECT_DIR$/vendor/phpunit/phpunit/src/Util/ErrorHandler.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14950167" vertical-offset="0" max-vertical-offset="602">
-          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+        <state vertical-scroll-proportion="-16.583334" vertical-offset="427" max-vertical-offset="1785">
+          <caret line="62" column="29" selection-start-line="62" selection-start-column="29" selection-end-line="62" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/BaseTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.8333335" vertical-offset="562" max-vertical-offset="930">
+          <caret line="50" column="13" selection-start-line="50" selection-start-column="13" selection-end-line="50" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/files/upload/text">
+      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13975155" vertical-offset="0" max-vertical-offset="322">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/FileSystemTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.9194632" vertical-offset="0" max-vertical-offset="1380">
+          <caret line="58" column="54" selection-start-line="58" selection-start-column="54" selection-end-line="58" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaUtils.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36334404" vertical-offset="307" max-vertical-offset="1200">
+          <caret line="35" column="27" selection-start-line="35" selection-start-column="27" selection-end-line="35" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaFilesystem.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-110.083336" vertical-offset="163" max-vertical-offset="3300">
+          <caret line="194" column="17" selection-start-line="194" selection-start-column="17" selection-end-line="194" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaConstants.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35691318" vertical-offset="1974" max-vertical-offset="3645">
+          <caret line="146" column="10" selection-start-line="146" selection-start-column="10" selection-end-line="146" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/files/upload/history3">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="626">
+          <caret line="0" column="1" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/files/upload/history2">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
+          <caret line="0" column="1" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/files/upload/history1">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="626">
+          <caret line="0" column="1" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaApi.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.5416665" vertical-offset="3722" max-vertical-offset="4020">
+          <caret line="615" column="0" selection-start-line="615" selection-start-column="0" selection-end-line="615" selection-end-column="0" />
+          <folding>
+            <element signature="n#__construct#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#getEndPoint#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#getApplicationContext#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#getAccessToken#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#setAccessToken#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#getTokenType#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#setTokenType#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#getRequestUrl#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#getSession#0;n#Credential#0;n#!!top" expanded="false" />
+            <element signature="n#authenticate#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="e#2170#2236#0#PHP" expanded="false" />
+            <element signature="n#getClientApi#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#isLinked#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#unlink#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="e#2653#2835#0#PHP" expanded="false" />
+            <element signature="n#user#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="e#2993#3178#0#PHP" expanded="false" />
+            <element signature="n#account#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#filesystem#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#getClientId#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#setClientId#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#getClientSecret#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#setClientSecret#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="n#getAccessToken#0;n#Session#0;n#!!top" expanded="false" />
+            <element signature="e#4273#4455#0#PHP" expanded="false" />
+            <element signature="n#getAccessToken#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#4531#4684#0#PHP" expanded="false" />
+            <element signature="e#5895#6266#0#PHP" expanded="false" />
+            <element signature="e#5989#6091#0#PHP" expanded="false" />
+            <element signature="e#6096#6192#0#PHP" expanded="false" />
+            <element signature="e#6197#6242#0#PHP" expanded="false" />
+            <element signature="n#getList#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#6498#6611#0#PHP" expanded="false" />
+            <element signature="n#getFileMeta#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#7227#7387#0#PHP" expanded="false" />
+            <element signature="e#7278#7387#0#PHP" expanded="false" />
+            <element signature="e#7354#7387#0#PHP" expanded="false" />
+            <element signature="e#7390#7450#0#PHP" expanded="false" />
+            <element signature="e#7613#7688#0#PHP" expanded="false" />
+            <element signature="n#getFolderMeta#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#8234#8309#0#PHP" expanded="false" />
+            <element signature="n#deleteFolder#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="n#deleteFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#9904#9965#0#PHP" expanded="false" />
+            <element signature="e#9976#10074#0#PHP" expanded="false" />
+            <element signature="e#10081#10141#0#PHP" expanded="false" />
+            <element signature="n#alterFolder#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#10372#10476#0#PHP" expanded="false" />
+            <element signature="e#10611#10669#0#PHP" expanded="false" />
+            <element signature="n#alterFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#10883#10985#0#PHP" expanded="false" />
+            <element signature="e#11120#11178#0#PHP" expanded="false" />
+            <element signature="n#copyFolder#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="n#copyFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#12476#12534#0#PHP" expanded="false" />
+            <element signature="n#moveFolder#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="n#moveFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+            <element signature="e#13455#13616#0#PHP" expanded="false" />
+            <element signature="e#13675#13727#0#PHP" expanded="false" />
+            <element signature="e#13820#13878#0#PHP" expanded="false" />
+            <element signature="n#downloadFile#0;n#BitcasaApi#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cloudfs/HTTPConnect.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.2916665" vertical-offset="2927" max-vertical-offset="5040">
+          <caret line="209" column="0" selection-start-line="209" selection-start-column="0" selection-end-line="209" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cloudfs/BitcasaException.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.2916665" vertical-offset="572" max-vertical-offset="2115">
+          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/phpunit/phpunit/src/Framework/TestCase.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33221477" vertical-offset="12441" max-vertical-offset="29460">
+          <caret line="847" column="0" selection-start-line="847" selection-start-column="0" selection-end-line="847" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/BitcasaApiTest.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.59731543" vertical-offset="137" max-vertical-offset="3270">
+          <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
           <folding />
         </state>
       </provider>

@@ -462,11 +462,12 @@ class BitcasaApi {
 		$connection = new HTTPConnect($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_COPY));
-		$body = BitcasaUtils::generateParamsString(array("to" => $dest,
-														 "exists" => $exists));
+		$params = array("to" => $dest, "exists" => $exists);
 		if ($name != null) {
-			$body['name'] = $name;
+			$params['name'] = $name;
 		}
+
+		$body = BitcasaUtils::generateParamsString($params);
 		
 		$connection->sendData($body);
 		if ($connection->post($url) <= 100) {
@@ -484,11 +485,12 @@ class BitcasaApi {
 		$connection = new HTTPConnect($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_COPY));
-		$body = BitcasaUtils::generateParamsString(array("to" => $dest,
-														 "exists" => $exists));
+
+		$params = array("to" => $dest, "exists" => $exists);
 		if ($name != null) {
-			$body['name'] = $name;
+			$params['name'] = $name;
 		}
+		$body = BitcasaUtils::generateParamsString($params);
 		
 		$connection->sendData($body);
 		if ($connection->post($url) <= 100) {
