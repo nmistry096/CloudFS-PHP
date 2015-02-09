@@ -1,0 +1,12 @@
+{
+  "require": {
+    "phpunit/phpunit": "4.4.*",
+    "sphpdox/sphpdox": "dev-master"
+  },
+  "autoload": {
+    "classmap": [
+      "cloudfs/",
+      "tests/"
+    ]
+  }
+}

@@ -1,0 +1,385 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>HTTPConnect &mdash; CloudFS-PHP 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="CloudFS-PHP 1.0 documentation" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../index.html">CloudFS-PHP 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="httpconnect">
+<h1>HTTPConnect<a class="headerlink" href="#httpconnect" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="HTTPConnect">
+<em class="property">class </em><tt class="descname">HTTPConnect</tt><a class="headerlink" href="#HTTPConnect" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attr">
+<dt id="HTTPConnect::$curl">
+<em class="property">property </em><tt class="descname">curl</tt><a class="headerlink" href="#HTTPConnect::$curl" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attr">
+<dt id="HTTPConnect::$boundary">
+<em class="property">property </em><tt class="descname">boundary</tt><a class="headerlink" href="#HTTPConnect::$boundary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attr">
+<dt id="HTTPConnect::$eof">
+<em class="property">property </em><tt class="descname">eof</tt><a class="headerlink" href="#HTTPConnect::$eof" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attr">
+<dt id="HTTPConnect::$postdata">
+<em class="property">property </em><tt class="descname">postdata</tt><a class="headerlink" href="#HTTPConnect::$postdata" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::HTTPConnect">
+<tt class="descname">HTTPConnect</tt><big>(</big><em>$session = null</em><big>)</big><a class="headerlink" href="#HTTPConnect::HTTPConnect" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$session</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::raw">
+<tt class="descname">raw</tt><big>(</big><big>)</big><a class="headerlink" href="#HTTPConnect::raw" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::addHeader">
+<tt class="descname">addHeader</tt><big>(</big><em>$h</em>, <em>$v</em><big>)</big><a class="headerlink" href="#HTTPConnect::addHeader" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$h</strong> &#8211; </li>
+<li><strong>$v</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::addMissingHeader">
+<tt class="descname">addMissingHeader</tt><big>(</big><em>$h</em>, <em>$v</em><big>)</big><a class="headerlink" href="#HTTPConnect::addMissingHeader" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$h</strong> &#8211; </li>
+<li><strong>$v</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::hasHeader">
+<tt class="descname">hasHeader</tt><big>(</big><em>$h</em>, <em>$value = null</em><big>)</big><a class="headerlink" href="#HTTPConnect::hasHeader" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$h</strong> &#8211; </li>
+<li><strong>$value</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::getHeaders">
+<tt class="descname">getHeaders</tt><big>(</big><big>)</big><a class="headerlink" href="#HTTPConnect::getHeaders" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::sendData">
+<tt class="descname">sendData</tt><big>(</big><em>$data</em>, <em>$len = 0</em><big>)</big><a class="headerlink" href="#HTTPConnect::sendData" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$data</strong> &#8211; </li>
+<li><strong>$len</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::post">
+<tt class="descname">post</tt><big>(</big><em>$url</em><big>)</big><a class="headerlink" href="#HTTPConnect::post" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$url</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::read_function">
+<tt class="descname">read_function</tt><big>(</big><em>$curl</em>, <em>$fd</em>, <em>$length</em><big>)</big><a class="headerlink" href="#HTTPConnect::read_function" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$curl</strong> &#8211; </li>
+<li><strong>$fd</strong> &#8211; </li>
+<li><strong>$length</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::post_multipart">
+<tt class="descname">post_multipart</tt><big>(</big><em>$url</em>, <em>$name</em>, <em>$path</em>, <em>$exists</em><big>)</big><a class="headerlink" href="#HTTPConnect::post_multipart" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$url</strong> &#8211; </li>
+<li><strong>$name</strong> &#8211; </li>
+<li><strong>$path</strong> &#8211; </li>
+<li><strong>$exists</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::put">
+<tt class="descname">put</tt><big>(</big><em>$url</em><big>)</big><a class="headerlink" href="#HTTPConnect::put" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$url</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::get">
+<tt class="descname">get</tt><big>(</big><em>$url</em><big>)</big><a class="headerlink" href="#HTTPConnect::get" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$url</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::head">
+<tt class="descname">head</tt><big>(</big><em>$url</em><big>)</big><a class="headerlink" href="#HTTPConnect::head" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$url</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::delete">
+<tt class="descname">delete</tt><big>(</big><em>$url</em><big>)</big><a class="headerlink" href="#HTTPConnect::delete" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$url</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::getResponse">
+<tt class="descname">getResponse</tt><big>(</big><em>$json = false</em>, <em>$check = true</em><big>)</big><a class="headerlink" href="#HTTPConnect::getResponse" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$json</strong> &#8211; </li>
+<li><strong>$check</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::setUserAgent">
+<tt class="descname">setUserAgent</tt><big>(</big><em>$agent</em><big>)</big><a class="headerlink" href="#HTTPConnect::setUserAgent" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$agent</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::getUserAgent">
+<tt class="descname">getUserAgent</tt><big>(</big><big>)</big><a class="headerlink" href="#HTTPConnect::getUserAgent" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::process">
+<tt class="descname">process</tt><big>(</big><em>$url</em><big>)</big><a class="headerlink" href="#HTTPConnect::process" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$url</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="HTTPConnect::setup">
+<tt class="descname">setup</tt><big>(</big><big>)</big><a class="headerlink" href="#HTTPConnect::setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/sdk/no-namespace/HTTPConnect.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../index.html">CloudFS-PHP 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Dhanushka.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
