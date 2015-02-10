@@ -4,10 +4,13 @@ require __DIR__ . '/../vendor/autoload.php';
 
 class FileSystemTest extends BaseTest {
 
-    private $rootFolderName = 'root-test';
-    private $subFolder1Name = 'sub-folder-1';
-    private $subFolder2Name = 'sub-folder-2';
-    private $subSubFolderName = 'sub-sub-folder';
+    private $level0Folder1Name = 'level-0-folder-1';
+    private $level1Folder1Name = 'level-1-folder-1';
+    private $level1Folder2Name = 'level-1-folder-2';
+    private $level1Folder3Name = 'level-1-folder-3';
+    private $level1Folder4Name = 'level-1-folder-4';
+    private $level2Folder1Name = 'level-2-folder-1';
+    private $level2Folder2Name = 'level-2-folder-2';
 
     public function testAuthenticate(){
         $this->getSession()->authenticate(self::USERNAME, self::PASSWORD);
@@ -15,41 +18,26 @@ class FileSystemTest extends BaseTest {
     }
 
     public function testCreateRootFolder() {
-        $folder = $this->getSession()->getBitcasaClientApi()->createFolder(NULL, $this->rootFolderName, Exists::OVERWRITE);
-        $this->assertNotNull($folder);
-        $this->assertArrayHasKey("name", $folder);
-        $this->assertTrue($folder['name'] == $this->rootFolderName);
-        $this->assertTrue($folder['type'] == FileType::FOLDER);
-        $this->assertNotEmpty($folder['id']);
-        $this->assertEmpty($folder['parent_id']);
-    }
+        $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
+        $items = $fileSystem->getList('/');
+        $level0Folder1 = $this->getItemFromIndexArray($items, $this->level0Folder1Name);
+        if ($level0Folder1 != null) {
+            $level0Folder1->delete(true, true);
+        }
 
-    /**
-     * @expectedException Exception
-     * @expectedExceptionCode 409
-     */
-    public function testCreateRootFolderFailIfExists() {
-        $this->getSession()->getBitcasaClientApi()->createFolder(NULL, $this->rootFolderName, Exists::FAIL);
+        $level0Folder1 = $fileSystem->create(null, $this->level0Folder1Name, Exists::OVERWRITE);
+        $this->assertNotNull($level0Folder1);
+        $this->assertTrue($level0Folder1->name() == $this->level0Folder1Name);
+        $this->assertTrue($level0Folder1->type() == FileType::FOLDER);
+        $this->assertNotEmpty($level0Folder1->id());
     }
 
     public function testListRootFolder() {
-        $result = $this->getSession()->getBitcasaClientApi()->getList();
-        $this->assertNotNull($result);
-        $this->assertNull($result['error']);
-        $this->assertArrayHasKey('result', $result);
-        $meta = $result['result']['meta'];
-        $this->assertTrue($meta['type'] == FileType::ROOT);
-        $items = $result['result']['items'];
+        $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
+        $items = $fileSystem->getList(null);
         $this->assertTrue(count($items) > 0);
-        $folderFound = false;
-        foreach($items as $item) {
-            if ($item['name'] == $this->rootFolderName) {
-                $folderFound = true;
-                break;
-            }
-        }
-
-        $this->assertTrue($folderFound);
+        $level0Folder1 = $this->getItemFromIndexArray($items, $this->level0Folder1Name);
+        $this->assertEquals($this->level0Folder1Name, $level0Folder1->name());
     }
 
     public function testCreateSubFolders() {
@@ -58,30 +46,108 @@ class FileSystemTest extends BaseTest {
         $this->assertNotNull($root);
         $this->assertEquals(FileType::ROOT, $root->type());
 
-        $topLevelFolder = $root->create($this->rootFolderName);
-        $this->assertNotNull($topLevelFolder);
-        $this->assertNotEmpty($topLevelFolder->path());
-        $topLevelFolderPath = $topLevelFolder->path();
-        $this->assertEquals($this->rootFolderName, $topLevelFolder->name());
+        $level0Folder1 = $root->create($this->level0Folder1Name);
+        $this->assertNotNull($level0Folder1);
+        $this->assertEquals($this->level0Folder1Name, $level0Folder1->name());
 
-        $subFolder1 = $topLevelFolder->create($this->subFolder1Name);
-        $this->assertEquals($this->subFolder1Name, $subFolder1->name());
-        $this->assertNotEmpty($subFolder1->path());
+        $level1Folder1 = $level0Folder1->create($this->level1Folder1Name);
+        $this->assertEquals($this->level1Folder1Name, $level1Folder1->name());
 
-        $subFolder2 = $topLevelFolder->create($this->subFolder2Name);
-        $this->assertNotEmpty($subFolder2->path());
-        $subFolder2Path = $subFolder2->path();
+        $level1Folder2 = $level0Folder1->create($this->level1Folder2Name);
+        $this->assertEquals($this->level1Folder2Name, $level1Folder2->name());
 
-        $subSubFolder = $subFolder2->create($this->subSubFolderName);
-        $this->assertNotEmpty($subSubFolder->path());
+        $level2Folder1 = $fileSystem->create($level1Folder1->path(), $this->level2Folder1Name, Exists::OVERWRITE);
+        $this->assertEquals($this->level2Folder1Name, $level2Folder1->name());
 
-        $folder = $fileSystem->getFolder($subFolder2Path);
-        $this->assertNotNull($folder);
-        $this->assertEquals($this->subFolder2Name, $folder->name());
+        $level2Folder2 = $fileSystem->create($level1Folder1->path(), $this->level2Folder2Name, Exists::OVERWRITE);
+        $this->assertEquals($this->level2Folder2Name, $level2Folder2->name());
 
-        $items = $folder->get_list();
+        $movedItems1 = $fileSystem->move(array($level2Folder1), $level1Folder2->path(), Exists::OVERWRITE);
+        $this->assertTrue(count($movedItems1) > 0);
+
+        $movedItems2 = $level2Folder2->move_to($level1Folder2->path(), Exists::OVERWRITE);
+        $this->assertTrue(count($movedItems2) > 0);
+
+        $items1 = $fileSystem->getList($level1Folder2->path());
+        $this->assertTrue(count($items1) > 0);
+
+        $items2 = $fileSystem->getList($level1Folder1->path());
+        $this->assertTrue(count($items2) == 0);
+
+        $level2Folder1 = $this->getItemFromIndexArray($items1, $this->level2Folder1Name);
+        $this->assertNotNull($level2Folder1);
+        $level2Folder2 = $this->getItemFromIndexArray($items1, $this->level2Folder2Name);
+        $this->assertNotNull($level2Folder2);
+
+        $copiedItems1 = $fileSystem->copy(array($level2Folder1), $level1Folder1->path(), Exists::OVERWRITE);
+        $this->assertTrue(count($copiedItems1) > 0);
+        $this->assertEquals($this->level2Folder1Name, $copiedItems1[0]['result']['meta']['name']);
+        $copiedItems2 = $level2Folder2->copy_to($level1Folder1->path(), Exists::OVERWRITE);
+        $this->assertTrue(count($copiedItems2) > 0);
+        $this->assertEquals($this->level2Folder2Name, $copiedItems2[0]['result']['meta']['name']);
+
+        $deletedItems1 = $fileSystem->delete(array($level2Folder1));
+        $deletedItems2 = $level2Folder2->delete(true, true);
+
+        $items1 = $fileSystem->getList($level1Folder1->path());
+        $this->assertTrue(count($items1) == 2);
+        $items2 = $level1Folder2->get_list();
+        $this->assertTrue(count($items2) == 0);
+    }
+
+    public function testFiles() {
+        $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
+        $level0Folder1 = $this->getItemFromIndexArray($fileSystem->getList('/'), $this->level0Folder1Name);
+
+        $level1Folder3 = $level0Folder1->create($this->level1Folder3Name);
+        $this->assertNotNull($level1Folder3);
+        $this->assertEquals($this->level1Folder3Name, $level1Folder3->name());
+
+        $level1Folder4 = $level0Folder1->create($this->level1Folder4Name);
+        $this->assertNotNull($level1Folder4);
+        $this->assertEquals($this->level1Folder4Name, $level1Folder4->name());
+
+        $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
+        $textFileName = 'file1';
+        $uploadedTextFile = $level1Folder3->upload($localUploadDirectory . 'text', $textFileName, Exists::OVERWRITE);
+        $this->assertNotNull($uploadedTextFile);
+        $this->assertEquals($textFileName, $uploadedTextFile->name());
+
+        $file = $fileSystem->getFile($uploadedTextFile->path());
+        $this->assertEquals($textFileName, $file->name());
+
+        $downloadedTextFile = $fileSystem->download($uploadedTextFile);
+        $this->assertNotEmpty($downloadedTextFile);
+        $localDownloadDirectory = dirname(__FILE__) . '/files/download/';
+        file_put_contents($localDownloadDirectory . 'file1', $downloadedTextFile);
+
+        $imageFileName = 'image1.jpg';
+        $uploadedImageFile = $fileSystem->upload($level1Folder4->path(),
+            $localUploadDirectory . 'image.jpg', $imageFileName, Exists::OVERWRITE);
+        $this->assertNotNull($uploadedImageFile);
+        $this->assertEquals($imageFileName, $uploadedImageFile->name());
+
+        $downloadedImageFile = $fileSystem->download($uploadedImageFile);
+        $this->assertNotEmpty($downloadedImageFile);
+        file_put_contents($localDownloadDirectory . 'image1.jpg', $downloadedImageFile);
+
+        $movedFile = $uploadedImageFile->move_to($level1Folder3->path(), Exists::OVERWRITE);
+        $this->assertNotNull($movedFile);
+
+        $items = $fileSystem->getList($level1Folder3->path());
         $this->assertTrue(count($items) > 0);
-        $this->assertEquals($this->subSubFolderName, $items[0]->name());
+
+        $imageFile = $this->getItemFromIndexArray($items, $imageFileName);
+        $this->assertNotNull($imageFile);
+
+        $copiedFile = $imageFile->copy_to($level1Folder4->path(), Exists::OVERWRITE);
+        $this->assertNotNull($copiedFile);
+        $this->assertEquals($imageFileName, $copiedFile[0]['result']['meta']['name']);
+
+        $deletedFile = $imageFile->delete();
+
+        $this->assertNotNull($this->getItemFromIndexArray($fileSystem->getList($level1Folder3->path()), $textFileName));
+        $this->assertNotNull($this->getItemFromIndexArray($fileSystem->getList($level1Folder4->path()), $imageFileName));
     }
 
 }

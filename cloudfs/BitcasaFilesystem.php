@@ -36,7 +36,7 @@ class Filesystem {
 		$lst = array();
 		if ($items != null) {
 			foreach ($items as $item) {
-				$lst[] = Item::make($item, $dir);
+				$lst[] = Item::make($item, $dir, $this);
 			}
 		}
 		return $lst;
@@ -52,7 +52,8 @@ class Filesystem {
 			if (count($dir) <= 2) {
 				$dir = "/";
 			} else {
-				$dir = implode("/", array_pop($dir));
+				array_pop($dir);
+				$dir = implode("/", $dir);
 			}
 		}
 		$res = $this->api->getFileMeta($path);
@@ -102,16 +103,17 @@ class Filesystem {
 
 	public function create($parent, $name, $exists="overwrite") {
 		$parentItem = null;
-		$parentPath = "";
 		if ($parent == null) {
 			$parentPath = "/";
 		} else if (!is_string($parent)) {
 			$parentItem = $parent;
 			$parentPath = $parent->path();
+		} else {
+			$parentPath = $parent;
 		}
 
 		$r = $this->api->createFolder($parentPath, $name, $exists);
-		return Item::make($r, $parentItem, $this);
+		return Item::make($r, $parentPath, $this);
 	}
 
 
@@ -127,9 +129,9 @@ class Filesystem {
 		$r = null;
 		foreach ($items as $item) {
 			if ($item->type() == "folder") {
-				$r = $this->api->moveFolder($item->path(), $destination, $item->name());
+				$r = $this->api->moveFolder($item->path(), $destination, $item->name(), $exists);
 			} else {
-				$r = $this->api->moveFile($item->path(), $destination, $exists);
+				$r = $this->api->moveFile($item->path(), $destination, $item->name(), $exists);
 			}
 			$res[] = $r;
 		}
@@ -144,9 +146,9 @@ class Filesystem {
 		$r = null;
 		foreach ($items as $item) {
 			if ($item->type() == "folder") {
-				$r = $this->api->copyFolder($item, $destination, $exists);
+				$r = $this->api->copyFolder($item->path(), $destination, $item->name(), $exists);
 			} else {
-				$r = $this->api->copyFile($item, $destination, $exists);
+				$r = $this->api->copyFile($item->path(), $destination, $item->name(), $exists);
 			}
 			$res[] = $r;
 		}
@@ -171,7 +173,7 @@ class Filesystem {
 	}
 
 
-	public function upload($parent, $path, $exists = "overwrite") {
+	public function upload($parent, $path, $name = null, $exists = "overwrite") {
 		$parentpath = "/";
 		if (is_string($parent)) {
 			$parentpath = $parent;
@@ -180,9 +182,11 @@ class Filesystem {
 		}
 
 		$fp = $path;
-		$name = basename($path);
+		if ($name == null) {
+			$name = basename($path);
+		}
 		$res = $this->api->uploadFile($parentpath, $name, $fp, $exists);
-		return Item::make($res['result'], $parent, $this);
+		return Item::make($res['result'], $parentpath, $this);
 	}
 
  
@@ -192,7 +196,7 @@ class Filesystem {
 		if (!is_string($item)) {
 			$path = $item->path();
 		}
-		$this->api->downloadFile($path, $file);
+		return $this->api->downloadFile($path, $file);
 	}
 
  

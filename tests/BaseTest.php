@@ -22,7 +22,7 @@ class BaseTest extends PHPUnit_Framework_TestCase {
         return self::$session;
     }
 
-    protected function getPath($item = null, $parent_path = null) {
+    protected function getPathFromAssociativeArray($item = null, $parent_path = null) {
         if ($parent_path == null) {
             $path = '/';
         }
@@ -42,10 +42,42 @@ class BaseTest extends PHPUnit_Framework_TestCase {
         return $path;
     }
 
-    protected function getItem(array $items, $item_name) {
+    protected function getPath($item = null, $parent_path = null) {
+        if ($parent_path == null) {
+            $path = '/';
+        }
+        else {
+            $path = $parent_path . '/';
+        }
+
+        if ($item != null) {
+            if (is_string($item)) {
+                $path .= $item;
+            }
+            else {
+                $path .= $item->id();
+            }
+        }
+
+        return $path;
+    }
+
+    protected function getItemFromAssociativeArray(array $items, $item_name) {
         $result = null;
         foreach($items['result']['items'] as $item) {
             if ($item['name'] == $item_name) {
+                $result = $item;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    protected function getItemFromIndexArray(array $items, $item_name) {
+        $result = null;
+        foreach($items as $item) {
+            if ($item->name() == $item_name) {
                 $result = $item;
                 break;
             }

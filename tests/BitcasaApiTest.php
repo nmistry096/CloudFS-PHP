@@ -9,7 +9,6 @@ class BitcasaApiTest extends BaseTest {
     private $level1Folder2Name = 'level-1-folder-2';
     private $level1Folder3Name = 'level-1-folder-3';
     private $level1Folder4Name = 'level-1-folder-4';
-    private $level1Folder5Name = 'level-1-folder-5';
     private $level2Folder1Name = 'level-2-folder-1';
 
     public function testAuthenticate(){
@@ -19,9 +18,9 @@ class BitcasaApiTest extends BaseTest {
 
     public function testCreateRootFolder() {
         $api = $this->getSession()->getBitcasaClientApi();
-        $level0Folder1 = $this->getItem($api->getList(), $this->level0Folder1Name);
+        $level0Folder1 = $this->getItemFromAssociativeArray($api->getList(), $this->level0Folder1Name);
         if ($level0Folder1 != null) {
-            $api->deleteFolder($this->getPath($level0Folder1), true);
+            $api->deleteFolder($this->getPathFromAssociativeArray($level0Folder1), true);
         }
 
         $level0Folder1 = $this->getSession()->getBitcasaClientApi()->createFolder(NULL, $this->level0Folder1Name, Exists::OVERWRITE);
@@ -73,7 +72,7 @@ class BitcasaApiTest extends BaseTest {
             }
         }
 
-        $path = $this->getPath($folder);
+        $path = $this->getPathFromAssociativeArray($folder);
 
         $meta = $this->getSession()->getBitcasaClientApi()->getFolderMeta($path);
         $this->assertEquals($this->level0Folder1Name, $meta['result']['meta']['name']);
@@ -82,24 +81,24 @@ class BitcasaApiTest extends BaseTest {
     public function testFolders() {
         $api = $this->getSession()->getBitcasaClientApi();
 
-        $level0Folder1 = $this->getItem($api->getList(), $this->level0Folder1Name);
+        $level0Folder1 = $this->getItemFromAssociativeArray($api->getList(), $this->level0Folder1Name);
         $this->assertNotNull($level0Folder1);
-        $level0Folder1Path = $this->getPath($level0Folder1);
+        $level0Folder1Path = $this->getPathFromAssociativeArray($level0Folder1);
 
         $level1Folder1 = $api->createFolder($level0Folder1Path, $this->level1Folder1Name, Exists::OVERWRITE);
         $this->assertNotNull($level1Folder1);
         $this->assertEquals($this->level1Folder1Name, $level1Folder1['name']);
-        $level1Folder1Path = $this->getPath($level1Folder1, $level0Folder1Path);
+        $level1Folder1Path = $this->getPathFromAssociativeArray($level1Folder1, $level0Folder1Path);
 
         $level1Folder2 = $api->createFolder($level0Folder1Path, $this->level1Folder2Name, Exists::OVERWRITE);
         $this->assertNotNull($level1Folder2);
         $this->assertEquals($this->level1Folder2Name, $level1Folder2['name']);
-        $level1Folder2Path = $this->getPath($level1Folder2, $level0Folder1Path);
+        $level1Folder2Path = $this->getPathFromAssociativeArray($level1Folder2, $level0Folder1Path);
 
         $level2Folder1 = $api->createFolder($level1Folder2Path, $this->level2Folder1Name, Exists::OVERWRITE);
         $this->assertNotNull($level2Folder1);
         $this->assertEquals($this->level2Folder1Name, $level2Folder1['name']);
-        $level2Folder1Path = $this->getPath($level2Folder1, $level1Folder2Path);
+        $level2Folder1Path = $this->getPathFromAssociativeArray($level2Folder1, $level1Folder2Path);
 
         $meta = $api->getFolderMeta($level2Folder1Path);
         $this->assertEquals($this->level2Folder1Name, $meta['result']['meta']['name']);
@@ -108,36 +107,36 @@ class BitcasaApiTest extends BaseTest {
         $movedFolder = $api->moveFolder($level2Folder1Path, $level1Folder1Path, $newName, Exists::OVERWRITE);
         $this->assertNotNull($movedFolder);
         $this->assertEquals($newName, $movedFolder['result']['meta']['name']);
-        $newPath = $this->getPath($movedFolder['result']['meta'], $level1Folder1Path);
+        $newPath = $this->getPathFromAssociativeArray($movedFolder['result']['meta'], $level1Folder1Path);
 
-        $this->assertNotNull($this->getItem($api->getList($level1Folder1Path), $newName));
-        $this->assertNull($this->getItem($api->getList($level1Folder2Path), $this->level2Folder1Name));
+        $this->assertNotNull($this->getItemFromAssociativeArray($api->getList($level1Folder1Path), $newName));
+        $this->assertNull($this->getItemFromAssociativeArray($api->getList($level1Folder2Path), $this->level2Folder1Name));
 
         $copiedFolder = $api->copyFolder($newPath, $level1Folder2Path, $this->level2Folder1Name, Exists::OVERWRITE);
         $this->assertEquals($this->level2Folder1Name, $copiedFolder['result']['meta']['name']);
-        $this->assertNotNull($this->getItem($api->getList($level1Folder1Path), $newName));
-        $this->assertNotNull($this->getItem($api->getList($level1Folder2Path), $this->level2Folder1Name));
+        $this->assertNotNull($this->getItemFromAssociativeArray($api->getList($level1Folder1Path), $newName));
+        $this->assertNotNull($this->getItemFromAssociativeArray($api->getList($level1Folder2Path), $this->level2Folder1Name));
 
         $deletedFolder = $api->deleteFolder($newPath);
         $this->assertTrue($deletedFolder['result']['success']);
-        $this->assertNull($this->getItem($api->getList($level1Folder1Path), $newName));
-        $this->assertNotNull($this->getItem($api->getList($level1Folder2Path), $this->level2Folder1Name));
+        $this->assertNull($this->getItemFromAssociativeArray($api->getList($level1Folder1Path), $newName));
+        $this->assertNotNull($this->getItemFromAssociativeArray($api->getList($level1Folder2Path), $this->level2Folder1Name));
     }
 
     public function testFiles() {
         $api = $this->getSession()->getBitcasaClientApi();
-        $level0Folder1 = $this->getItem($api->getList(), $this->level0Folder1Name);
-        $level0Folder1Path = $this->getPath($level0Folder1);
+        $level0Folder1 = $this->getItemFromAssociativeArray($api->getList(), $this->level0Folder1Name);
+        $level0Folder1Path = $this->getPathFromAssociativeArray($level0Folder1);
 
         $level1Folder3 = $api->createFolder($level0Folder1Path, $this->level1Folder3Name, Exists::OVERWRITE);
         $this->assertNotNull($level1Folder3);
         $this->assertEquals($this->level1Folder3Name, $level1Folder3['name']);
-        $level1Folder3Path = $this->getPath($level1Folder3, $level0Folder1Path);
+        $level1Folder3Path = $this->getPathFromAssociativeArray($level1Folder3, $level0Folder1Path);
 
         $level1Folder4 = $api->createFolder($level0Folder1Path, $this->level1Folder4Name, Exists::OVERWRITE);
         $this->assertNotNull($level1Folder4);
         $this->assertEquals($this->level1Folder4Name, $level1Folder4['name']);
-        $level1Folder4Path = $this->getPath($level1Folder4, $level0Folder1Path);
+        $level1Folder4Path = $this->getPathFromAssociativeArray($level1Folder4, $level0Folder1Path);
 
         $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
         $textFileName = 'file1';
@@ -145,7 +144,7 @@ class BitcasaApiTest extends BaseTest {
             $localUploadDirectory . 'text', Exists::OVERWRITE);
         $this->assertNotNull($uploadedTextFile);
         $this->assertEquals($textFileName, $uploadedTextFile['result']['name']);
-        $uploadedTextFilePath = $this->getPath($uploadedTextFile['result'], $level1Folder3Path);
+        $uploadedTextFilePath = $this->getPathFromAssociativeArray($uploadedTextFile['result'], $level1Folder3Path);
 
         $meta = $api->getFileMeta($uploadedTextFilePath);
         $this->assertEquals($textFileName, $meta['result']['name']);
@@ -160,7 +159,7 @@ class BitcasaApiTest extends BaseTest {
             $localUploadDirectory . 'image.jpg', Exists::OVERWRITE);
         $this->assertNotNull($uploadedImageFile);
         $this->assertEquals($imageFileName, $uploadedImageFile['result']['name']);
-        $uploadedImageFilePath = $this->getPath($uploadedImageFile['result'], $level1Folder4Path);
+        $uploadedImageFilePath = $this->getPathFromAssociativeArray($uploadedImageFile['result'], $level1Folder4Path);
 
         $downloadedImageFile = $api->downloadFile($uploadedImageFilePath);
         $this->assertNotEmpty($downloadedImageFile);
@@ -170,7 +169,7 @@ class BitcasaApiTest extends BaseTest {
         $movedFile = $api->moveFile($uploadedImageFilePath, $level1Folder3Path, $newName, Exists::OVERWRITE);
         $this->assertNotNull($movedFile);
         $this->assertEquals($newName, $movedFile['result']['meta']['name']);
-        $newPath = $this->getPath($movedFile['result']['meta'], $level1Folder3Path);
+        $newPath = $this->getPathFromAssociativeArray($movedFile['result']['meta'], $level1Folder3Path);
 
         $copiedFile = $api->copyFile($newPath, $level1Folder4Path, $imageFileName, Exists::OVERWRITE);
         $this->assertNotNull($copiedFile);
@@ -179,35 +178,8 @@ class BitcasaApiTest extends BaseTest {
         $deletedFile = $api->deleteFile($newPath);
         $this->assertTrue($deletedFile['result']['success']);
 
-        $this->assertNotNull($this->getItem($api->getList($level1Folder3Path), $textFileName));
-        $this->assertNotNull($this->getItem($api->getList($level1Folder4Path), $imageFileName));
+        $this->assertNotNull($this->getItemFromAssociativeArray($api->getList($level1Folder3Path), $textFileName));
+        $this->assertNotNull($this->getItemFromAssociativeArray($api->getList($level1Folder4Path), $imageFileName));
     }
-
-//    public function testHistory() {
-//        $api = $this->getSession()->getBitcasaClientApi();
-//        $level0Folder1 = $this->getItem($api->getList(), $this->level0Folder1Name);
-//        $level0Folder1Path = $this->getPath($level0Folder1);
-//
-//        $level1Folder5 = $api->createFolder($level0Folder1Path, $this->level1Folder5Name, Exists::OVERWRITE);
-//        $this->assertNotNull($level1Folder5);
-//        $this->assertEquals($this->level1Folder5Name, $level1Folder5['name']);
-//        $level1Folder5Path = $this->getPath($level1Folder5, $level0Folder1Path);
-//
-//        $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
-//        $fileName = 'history';
-//        $uploadedFile = $api->uploadFile($level1Folder5Path, $fileName,
-//            $localUploadDirectory . 'history1');
-//
-//        $uploadedFile = $api->uploadFile($level1Folder5Path, $fileName,
-//            $localUploadDirectory . 'history2');
-//
-//        $uploadedFile = $api->uploadFile($level1Folder5Path, $fileName,
-//            $localUploadDirectory . 'history3');
-//
-//        $uploadedFilePath = $this->getPath($uploadedFile['result'], $level1Folder5Path);
-//
-//        $history = $api->fileHistory($uploadedFilePath);
-//        $test = '';
-//    }
 
 }

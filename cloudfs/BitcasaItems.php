@@ -98,7 +98,7 @@ class Item {
 	}
 
 
-	public static function make($data, $parent = null, $api = null) {
+	public static function make($data, $parentPath = null, $api = null) {
 		$item = null;
 		if (count($data) == 0) {
 			return null;
@@ -146,31 +146,14 @@ class Item {
 
 		$item->data = $data;
 
-		// parent could be an instance of Item or a path. If the value is null, empty or / then the parent is root.
-		if ($parent == null) {
+		if ($parentPath == null) {
 			$item->full_path = "/" . $item->data['id'];
 		}
+		else if ($parentPath == '/') {
+			$item->full_path = $parentPath . $item->data['id'];
+		}
 		else {
-			if ($parent instanceof Container) {
-				$item->parent = $parent;
-				if ($parent->full_path == '/') {
-					$item->full_path = $parent->full_path . $item->data['id'];
-				}
-				else {
-					$item->full_path = $parent->full_path . '/' . $item->data['id'];
-				}
-			}
-			elseif(is_string($parent) && $parent != "") {
-				if ($parent == '/') {
-					$item->full_path = $parent . $item->data['id'];
-				}
-				else {
-					$item->full_path = $parent . '/' . $item->data['id'];
-				}
-			}
-			else {
-				$item->full_path = "/" . $item->data['id'];
-			}
+			$item->full_path = $parentPath . '/' . $item->data['id'];
 		}
 
 		return $item;
@@ -307,23 +290,23 @@ class Item {
 	}
 
 
-	public function move_to($dest) {
-		return $this->fs->move($this, $dest);
+	public function move_to($dest, $exists = "fail") {
+		return $this->api()->move($this, $dest, $exists);
 	}
 
 
-    public function copy_to($dest) {
-		return $this->fs->copy($this, $dest);
+    public function copy_to($dest, $exists = "fail") {
+		return $this->api()->copy($this, $dest, $exists);
 	}
 
 
     public function delete($commit=False, $force=False) {
-        return $this->fs->delete($this);
+        return $this->api()->delete($this, $force);
 	}
 
 
     public function save($if_conflict="fail", $debug=False) {
-        return $this->fs->save($this);
+        return $this->api()->save($this);
 	}
 
 
@@ -331,11 +314,11 @@ class Item {
 		if (!is_string($dest)) {
 			$dest = $dest->path();
 		}
-        return $this->fs->restore($this, $dest);
+        return $this->api()->restore($this, $dest);
 	}
 
     public function history() {
-		return $this->fs->fileHistory($this);
+		return $this->api()->fileHistory($this);
 	}
 }
 
@@ -354,13 +337,13 @@ class Container extends Item {
 	}
 
 
-	public function create($name) {
-		return $this->api()->create($this, $name);
+	public function create($name, $exists="overwrite") {
+		return $this->api()->create($this, $name, $exists);
 	}
 
 
-	public function upload($path, $exists='fail') {
-		$this->api()->upload($this, $path, $exists);
+	public function upload($path, $name = null, $exists='fail') {
+		return $this->api()->upload($this, $path, $name, $exists);
 	}
 }
 
