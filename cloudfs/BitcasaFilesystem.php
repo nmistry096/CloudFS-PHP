@@ -308,7 +308,7 @@ class Filesystem {
     public function fileHistory($item, $start = -10, $stop = 0) {
 		return $this->api->fileHistory($item->path(), $start, $stop);
 	}
-	
+
 }
  
 ?>
