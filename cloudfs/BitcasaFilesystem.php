@@ -24,7 +24,7 @@ class Filesystem {
 	private $api;
 
 	/**
-	 * Initialize the api instance.
+	 * Initialize the Filesystem instance.
 	 *
 	 * @param $api The api instance.
 	 */
@@ -192,7 +192,7 @@ class Filesystem {
 	 * @param $items The items to be copied.
 	 * @param $destination Path to which the items should be copied to.
 	 * @param string $exists Specifies the action to take if the item already exists.
-	 * @return The success/fail response of the move operation
+	 * @return The success/fail response of the copy operation
 	 */
     public function copy($items, $destination, $exists = "fail") {
 		if (!is_array($items)) {
@@ -303,7 +303,7 @@ class Filesystem {
 	 * @param $item The item for which the file history needs to be retrieved.
 	 * @param int $start
 	 * @param int $stop
-	 * @return mixed
+	 * @return File history entries.
 	 */
     public function fileHistory($item, $start = -10, $stop = 0) {
 		return $this->api->fileHistory($item->path(), $start, $stop);
