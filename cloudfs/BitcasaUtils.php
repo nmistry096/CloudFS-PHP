@@ -11,10 +11,25 @@
 
 abstract class BitcasaUtils {
 
+	/**
+	 * Retrieves if a status code is successful or not.
+	 *
+	 * @param $status Status code to evaluate.
+	 * @return bool Flag whether the
+	 */
 	public static function isSuccess($status) {
 		return $status >= 200 && $status < 300;
 	}
-	
+
+	/***
+	 * Retrieves the request url for making bitcasa api calls.
+	 *
+	 * @param $credential Credentials for the bitcasa account.
+	 * @param $request Request parameters for api call.
+	 * @param null $method Request method variable.
+	 * @param null $queryParams Query parameters for the api call.
+	 * @return The request url.
+	 */
 	public static function getRequestUrl($credential, $request, $method = NULL, $queryParams = NULL) {
 		$url = BitcasaConstants::HTTPS;
 		$url .= $credential->getEndPoint();
@@ -32,7 +47,12 @@ abstract class BitcasaUtils {
 		return $url;
 	}
 
-
+	/**
+	 * Generate the parameter strings for a request url given an array of parameters.
+	 *
+	 * @param $params The parameter array to be converted in to a parameter string.
+	 * @return The parameter string.
+	 */
   	public static function generateParamsString($params) {
 		$paramsString = "";
 		$first = true;
@@ -48,21 +68,46 @@ abstract class BitcasaUtils {
   		}
   		return $paramsString;
   	}
-  	
+
+	/**
+	 * Replaces the spaces of a given string with '+'s.
+	 * @param $s The string to be formatted.
+	 * @return The formatted string.
+	 */
 	public static function replaceSpaceWithPlus($s) {
 		return str_replace(" ", "+", $s);
 	}
 
+	/**
+	 * Encodes the given data with MIME base64.
+	 *
+	 * @param $hex The data to be encoded.
+	 * @return The encoded data.
+	 */
 	public static function hex2base64($hex) {
 		return base64_encode(pack("H*", $hex));
 	}
 
-	
+	/**
+	 * Hashes the given data in SHA1 format.
+	 *
+	 * @param $s The data to be encoded.
+	 * @param $secret The secret key used for hashing.
+	 * @return The hashed data.
+	 */
 	public static function sha1($s, $secret)  {
 		return BitcasaUtils::hex2base64(hash_hmac('sha1', $s, $secret));
 	}
-	
 
+	/**
+	 * Generate the authorization value for the given session and parameters.
+	 *
+	 * @param $session The session instance.
+	 * @param $uri The request uri.
+	 * @param $params Request parameters.
+	 * @param $date Date of the request.
+	 * @return The authorization value.
+	 */
 	public static function generateAuthorizationValue($session, $uri, $params, $date) {
 		$stringToSign ="";
 		$stringToSign .= BitcasaConstants::REQUEST_METHOD_POST . "&" . $uri . "&" . $params . "&";
