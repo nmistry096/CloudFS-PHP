@@ -14,13 +14,19 @@
  */
 
 abstract class BitcasaConstants {
-	
+
+	/**
+	 * The api request uri components.
+	 */
 	const HTTPS = "https://";
 	const API_VERSION_2 = "/v2";
 	const FORESLASH = "/";
 	
-	const UTF_8_ENCODING = "UTF-8";	
-	
+	const UTF_8_ENCODING = "UTF-8";
+
+	/**
+	 * Http headers for http requests.
+	 */
 	const HEADER_CONTENT_TYPE = "Content-Type";
 	const HEADER_CONTENT_TYPE_APP_URLENCODED = "application/x-www-form-urlencoded; charset=\"utf-8\"";
 	const HEADER_ACCEPT_CHARSET = "Accept-Charset";
@@ -34,13 +40,19 @@ abstract class BitcasaConstants {
 	const HEADER_FILE = "file";
 	const HEADER_AUTORIZATION = "Authorization";
 	const HEADER_DATE = "Date";
-		
+
+	/**
+	 * The http request methods for HTTPConnect.
+	 */
 	const REQUEST_METHOD_GET = "GET";
 	const REQUEST_METHOD_POST = "POST";
 	const REQUEST_METHOD_PUT = "PUT";
 	const REQUEST_METHOD_DELETE = "DELETE";
 	const REQUEST_METHOD_HEAD = "HEAD";
-	
+
+	/**
+	 * Methods supported in request url for accessing bitcasa api.
+	 */
 	const METHOD_AUTHENTICATE = "/authenticate";
 	const METHOD_OAUTH2 = "/oauth2";
 	const METHOD_ACCESS_TOKEN = "/access_token";
@@ -57,7 +69,10 @@ abstract class BitcasaConstants {
 	const METHOD_INFO = "/info";
 	const METHOD_HISTORY = "/history";
 	const METHOD_TRASH = "/trash";
-	
+
+	/**
+	 * Parameters supported in request url for accessing bitcasa api.
+	 */
 	const PARAM_CLIENT_ID = "client_id";
 	const PARAM_REDIRECT = "redirect";
 	const PARAM_USER = "user";
@@ -93,7 +108,10 @@ abstract class BitcasaConstants {
 	const PARAM_EMAIL = "email";
 	const PARAM_FIRSTNAME = "first_name";
 	const PARAM_LASTNAME = "last_name";
-	
+
+	/**
+	 * Http body variables to be used with http requests.
+	 */
 	const BODY_FOLDERNAME = "folder_name";
 	const BODY_FILE = "file";
 	const BODY_FROM = "from";
@@ -104,23 +122,38 @@ abstract class BitcasaConstants {
 	const BODY_RESTORE = "restore";
 	const BODY_RESCUE_PATH = "rescue-path";
 	const BODY_RECREATE_PATH = "recreate-path";
-	
+
+	/**
+	 * Operation available for bitcasa items.
+	 */
 	const OPERATION_COPY = "copy";
 	const OPERATION_MOVE = "move";
 	const OPERATION_CREATE = "create";
 	const OPERATION_PROMOTE = "promote";
-	
+
+	/**
+	 * Actions to take if an item already exists.
+	 */
 	const EXISTS_FAIL = "fail";
 	const EXISTS_OVERWRITE = "overwrite";
 	const EXISTS_RENAME = "rename";
-	
+
+	/**
+	 * Actions to take if an item version conflict occurs.
+	 */
 	const VERSION_FAIL = "fail";
 	const VERSION_IGNORE = "ignore";
-	
+
+	/**
+	 * Actions to take if an item already exists while restoring.
+	 */
 	const RESTORE_FAIL = "fail";
 	const RESTORE_RESCUE = "rescue";
 	const RESTORE_RECREATE = "recreate";
-	
+
+	/**
+	 * Variables used when retrieving item version.
+	 */
 	const START_VERSION = "start-version";
 	const STOP_VERSION = "stop-version";
 	const LIMIT = "limit";
@@ -133,6 +166,10 @@ abstract class BitcasaConstants {
 	const OAUTH_TOKEN = "/oauth2/token";
 }
 
+/**
+ * Class FileOperation
+ * Specifies the allowed file operations.
+ */
 abstract class FileOperation {
 	const DELETE = 1;
 	const COPY = 2;
@@ -141,14 +178,22 @@ abstract class FileOperation {
 	const ALTERMETA = 5;
 	const META = 6;
 }
-	
+
+/**
+ * Class Exists
+ * Specifies the action to perform if an item already exists.
+ */
 abstract class Exists {
 	const FAIL = "fail";
 	const OVERWRITE = "overwrite";
 	const RENAME = "rename";
 	const REUSE = "reuse";
 }
-	
+
+/**
+ * Class ApiMethod
+ * Specifies the api methods available in bitcasa api.
+ */
 abstract class ApiMethod {
 	const GENERAL = 1;
 	const ACCOUNT = 2;
@@ -169,22 +214,34 @@ abstract class ApiMethod {
 	const CREATE_TEST_USER_ACCOUNT = 17;
 	const RECEIVE_SHARE = 18;
 }
-	
 
+/**
+ * Class VersionExists
+ * Specifies the action to perform if the same version exists in a file.
+ */
 abstract class VersionExists {
 	const FAIL = 1;
 	const IGNORE = 2;
 }
-	
 
+/**
+ * Class RestoreOptions
+ * Specifies the action to perform if the same file exists in the restore destination.
+ */
 abstract class RestoreOptions {
 	const FAIL = 1;
 	const RESCUE = 2;
 	const RECREATE = 3;
 }
-	
 
+/**
+ * Class HistoryActions
+ */
 class HistoryActions {
+
+	/**
+	 * Specifies the history actions available for bitcasa.
+	 */
 	const SHARE_RECEIVE = 1;
 	const SHARE_CREATE = 2;
 	const DEVICE_UPDATE = 3;
@@ -199,10 +256,19 @@ class HistoryActions {
 		
 	private $historyAction;
 
+	/**
+	 * Initializes the history action instance.
+	 * @param $result The action result.
+	 */
 	private function HistoryActions($result) {
 		$this->historyAction = $result;
 	}
-		
+
+	/**
+	 * Returns the history action according to the supplied string result.
+	 * @param $result The supplied string result.
+	 * @return The history action for the supplied string result.
+	 */
 	public static function getResult($result) {
 		if ($result == "share_receive")
 			return SHARE_RECEIVE;
@@ -231,7 +297,10 @@ class HistoryActions {
 	}
 }
 
-
+/**
+ * Class FileType
+ * Specifies the file types available in the bitcasa cloud.
+ */
 abstract class FileType {
 	const FILE = "file";
 	const FOLDER = "folder";
