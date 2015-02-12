@@ -258,7 +258,8 @@ class HistoryActions {
 
 	/**
 	 * Initializes the history action instance.
-	 * @param $result The action result.
+	 *
+	 * @param mixed $result The action result.
 	 */
 	private function HistoryActions($result) {
 		$this->historyAction = $result;
@@ -266,7 +267,8 @@ class HistoryActions {
 
 	/**
 	 * Returns the history action according to the supplied string result.
-	 * @param $result The supplied string result.
+	 *
+	 * @param string $result The supplied string result.
 	 * @return The history action for the supplied string result.
 	 */
 	public static function getResult($result) {
