@@ -80,7 +80,7 @@ class BitcasaStatus {
 
 
 class BitcasaError extends Exception {
-cloudfs/BitcasaUtils.php
+	
 	private $status;
 
 	/**
