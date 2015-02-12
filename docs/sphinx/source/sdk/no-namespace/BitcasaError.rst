@@ -24,9 +24,16 @@ BitcasaError
 
     .. php:method:: __construct($status)
 
-        :param $status:
+        Initilizes the Bitcasa Error instance.
+
+        :type $status: string
+        :param $status: The error status.
 
     .. php:method:: get_status()
+
+        Retrieves the error status.
+
+        :returns: string The error status.
 
     .. php:method:: __clone()
 

@@ -15,12 +15,28 @@ BitcasaStatus
 
     .. php:method:: __construct($response)
 
+        Initializes the Bitcasa status instance.
+
         :param $response:
 
     .. php:method:: error_code()
 
+        Retrieves the status error code.
+
+        :returns: The error code.
+
     .. php:method:: error_message()
+
+        Retrieves the status error message.
+
+        :returns: The error message.
 
     .. php:method:: success()
 
+        Retrieves the status success status.
+
+        :returns: Success status.
+
     .. php:method:: throw_on_failure()
+
+        Handles errors according to success status.

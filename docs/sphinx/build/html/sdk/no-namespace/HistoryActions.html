@@ -46,10 +46,18 @@
 <dl class="class">
 <dt id="HistoryActions">
 <em class="property">class </em><tt class="descname">HistoryActions</tt><a class="headerlink" href="#HistoryActions" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Class HistoryActions</p>
+<dl class="const">
+<dt id="HistoryActions::SHARE_RECEIVE">
+<em class="property">constant </em><tt class="descname">SHARE_RECEIVE</tt><a class="headerlink" href="#HistoryActions::SHARE_RECEIVE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies the history actions available for bitcasa.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="HistoryActions::HistoryActions">
 <tt class="descname">HistoryActions</tt><big>(</big><em>$result</em><big>)</big><a class="headerlink" href="#HistoryActions::HistoryActions" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Initializes the history action instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -65,13 +73,17 @@
 <dl class="method">
 <dt id="HistoryActions::getResult">
 <tt class="descname">getResult</tt><big>(</big><em>$result</em><big>)</big><a class="headerlink" href="#HistoryActions::getResult" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Returns the history action according to the supplied string result.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$result</strong> &#8211; </li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The history action for the supplied string result.</p>
 </td>
 </tr>
 </tbody>

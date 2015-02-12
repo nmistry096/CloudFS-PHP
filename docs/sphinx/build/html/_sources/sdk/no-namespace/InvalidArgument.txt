@@ -24,7 +24,10 @@ InvalidArgument
 
     .. php:method:: __construct($argno)
 
-        :param $argno:
+        Initializes an instance of Invalid Argument.
+
+        :type $argno: string
+        :param $argno: The argument supplied.
 
     .. php:method:: __clone()
 

@@ -1,12 +1,10 @@
-
-.. _my-label:
-
+.. _my-label
 
 ````````````
 no-namespace
 ````````````
 
-.. php:namespace: nonamespace
+.. php:namespace: no-namespace
 
 .. toctree::
 

@@ -46,10 +46,12 @@
 <dl class="class">
 <dt id="Filesystem">
 <em class="property">class </em><tt class="descname">Filesystem</tt><a class="headerlink" href="#Filesystem" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="method">
+<dd><p>Represents the Bitcasa file system information.</p>
+<dl class="method">
 <dt id="Filesystem::__construct">
 <tt class="descname">__construct</tt><big>(</big><em>$api</em><big>)</big><a class="headerlink" href="#Filesystem::__construct" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Initialize the Filesystem instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -65,13 +67,17 @@
 <dl class="method">
 <dt id="Filesystem::getList">
 <tt class="descname">getList</tt><big>(</big><em>$dir = null</em><big>)</big><a class="headerlink" href="#Filesystem::getList" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Retrieves the item array for a given directory.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$dir</strong> &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$dir</strong> (<em>null</em>) &#8211; The directory for which the items should be retrieved for, if empty root items are retrieved.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The array of items at the given directory.</p>
 </td>
 </tr>
 </tbody>
@@ -81,13 +87,17 @@
 <dl class="method">
 <dt id="Filesystem::getFile">
 <tt class="descname">getFile</tt><big>(</big><em>$path</em><big>)</big><a class="headerlink" href="#Filesystem::getFile" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Retrieves an item by the given path.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An instance of the item of type Audio|Document|Photo|Video|File.</p>
 </td>
 </tr>
 </tbody>
@@ -97,13 +107,17 @@
 <dl class="method">
 <dt id="Filesystem::getFolder">
 <tt class="descname">getFolder</tt><big>(</big><em>$path</em><big>)</big><a class="headerlink" href="#Filesystem::getFolder" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Retrieves a folder by the given path.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An instance of the item of type Folder.</p>
 </td>
 </tr>
 </tbody>
@@ -113,14 +127,18 @@
 <dl class="method">
 <dt id="Filesystem::delete">
 <tt class="descname">delete</tt><big>(</big><em>$items</em>, <em>$force = false</em><big>)</big><a class="headerlink" href="#Filesystem::delete" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Delete multiple items from cloud storage.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$items</strong> &#8211; </li>
-<li><strong>$force</strong> &#8211; </li>
+<li><strong>$force</strong> (<em>bool</em>) &#8211; The flag to force delete items from cloud storage.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the delete operation.</p>
 </td>
 </tr>
 </tbody>
@@ -130,15 +148,20 @@
 <dl class="method">
 <dt id="Filesystem::create">
 <tt class="descname">create</tt><big>(</big><em>$parent</em>, <em>$name</em>, <em>$exists = &quot;overwrite&quot;</em><big>)</big><a class="headerlink" href="#Filesystem::create" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Create a folder with supplied name under the given parent folders,
+folder path.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$parent</strong> &#8211; </li>
 <li><strong>$name</strong> &#8211; </li>
-<li><strong>$exists</strong> &#8211; </li>
+<li><strong>$exists</strong> (<em>string</em>) &#8211; Specifies the action to take if the folder already exists.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An instance of the newly created item of type Folder.</p>
 </td>
 </tr>
 </tbody>
@@ -148,15 +171,19 @@
 <dl class="method">
 <dt id="Filesystem::move">
 <tt class="descname">move</tt><big>(</big><em>$items</em>, <em>$destination</em>, <em>$exists = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#Filesystem::move" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Moves multiple items to a specified destination.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$items</strong> &#8211; </li>
 <li><strong>$destination</strong> &#8211; </li>
-<li><strong>$exists</strong> &#8211; </li>
+<li><strong>$exists</strong> (<em>string</em>) &#8211; Specifies the action to take if the item already exists.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the move operation</p>
 </td>
 </tr>
 </tbody>
@@ -166,15 +193,19 @@
 <dl class="method">
 <dt id="Filesystem::copy">
 <tt class="descname">copy</tt><big>(</big><em>$items</em>, <em>$destination</em>, <em>$exists = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#Filesystem::copy" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Copy multiple items to a specified destination.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$items</strong> &#8211; </li>
 <li><strong>$destination</strong> &#8211; </li>
-<li><strong>$exists</strong> &#8211; </li>
+<li><strong>$exists</strong> (<em>string</em>) &#8211; Specifies the action to take if the item already exists.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the copy operation</p>
 </td>
 </tr>
 </tbody>
@@ -184,14 +215,18 @@
 <dl class="method">
 <dt id="Filesystem::save">
 <tt class="descname">save</tt><big>(</big><em>$items</em>, <em>$conflict = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#Filesystem::save" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Update items on the cloud file system.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$items</strong> &#8211; </li>
-<li><strong>$conflict</strong> &#8211; </li>
+<li><strong>$conflict</strong> (<em>string</em>) &#8211; The action to take if a conflict occurs.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the update operation.</p>
 </td>
 </tr>
 </tbody>
@@ -200,16 +235,21 @@
 
 <dl class="method">
 <dt id="Filesystem::upload">
-<tt class="descname">upload</tt><big>(</big><em>$parent</em>, <em>$path</em>, <em>$exists = &quot;overwrite&quot;</em><big>)</big><a class="headerlink" href="#Filesystem::upload" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<tt class="descname">upload</tt><big>(</big><em>$parent</em>, <em>$path</em>, <em>$name = null</em>, <em>$exists = &quot;overwrite&quot;</em><big>)</big><a class="headerlink" href="#Filesystem::upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upload a file on to the given path.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$parent</strong> &#8211; </li>
 <li><strong>$path</strong> &#8211; </li>
-<li><strong>$exists</strong> &#8211; </li>
+<li><strong>$name</strong> &#8211; </li>
+<li><strong>$exists</strong> (<em>string</em>) &#8211; The action to take if the item already exists.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An instance of the uploaded item.</p>
 </td>
 </tr>
 </tbody>
@@ -219,13 +259,14 @@
 <dl class="method">
 <dt id="Filesystem::download">
 <tt class="descname">download</tt><big>(</big><em>$item</em>, <em>$file = null</em><big>)</big><a class="headerlink" href="#Filesystem::download" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Download an item from the cloud storage.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>$item</strong> &#8211; </li>
-<li><strong>$file</strong> &#8211; </li>
+<li><strong>$file</strong> (<em>null</em>) &#8211; </li>
 </ul>
 </td>
 </tr>
@@ -236,15 +277,19 @@
 <dl class="method">
 <dt id="Filesystem::restore">
 <tt class="descname">restore</tt><big>(</big><em>$items</em>, <em>$destination</em>, <em>$exists</em><big>)</big><a class="headerlink" href="#Filesystem::restore" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Restore a given set of items to the supplied destination.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$items</strong> &#8211; </li>
 <li><strong>$destination</strong> &#8211; </li>
 <li><strong>$exists</strong> &#8211; </li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the restore operation.</p>
 </td>
 </tr>
 </tbody>
@@ -254,15 +299,19 @@
 <dl class="method">
 <dt id="Filesystem::fileHistory">
 <tt class="descname">fileHistory</tt><big>(</big><em>$item</em>, <em>$start = -10</em>, <em>$stop = 0</em><big>)</big><a class="headerlink" href="#Filesystem::fileHistory" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Retrieves the file history of a given item.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$item</strong> &#8211; </li>
-<li><strong>$start</strong> &#8211; </li>
-<li><strong>$stop</strong> &#8211; </li>
+<li><strong>$start</strong> (<em>int</em>) &#8211; </li>
+<li><strong>$stop</strong> (<em>int</em>) &#8211; </li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">File history entries.</p>
 </td>
 </tr>
 </tbody>

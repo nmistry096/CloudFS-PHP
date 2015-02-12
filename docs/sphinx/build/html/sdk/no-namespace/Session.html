@@ -50,7 +50,8 @@
 <dl class="method">
 <dt id="Session::__construct">
 <tt class="descname">__construct</tt><big>(</big><em>$endpoint</em>, <em>$clientId</em>, <em>$clientSecret</em><big>)</big><a class="headerlink" href="#Session::__construct" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Initializes the Session instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -68,7 +69,7 @@
 <dl class="method">
 <dt id="Session::authenticate">
 <tt class="descname">authenticate</tt><big>(</big><em>$username</em>, <em>$password</em><big>)</big><a class="headerlink" href="#Session::authenticate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Authenticates with the bitcasa.</p>
+<dd><p>Authenticates with bitcasa.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -89,27 +90,47 @@
 <dl class="method">
 <dt id="Session::getClientApi">
 <tt class="descname">getClientApi</tt><big>(</big><big>)</big><a class="headerlink" href="#Session::getClientApi" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Session::isLinked">
-<tt class="descname">isLinked</tt><big>(</big><big>)</big><a class="headerlink" href="#Session::isLinked" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Session::unlink">
-<tt class="descname">unlink</tt><big>(</big><big>)</big><a class="headerlink" href="#Session::unlink" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="method">
-<dt id="Session::user">
-<tt class="descname">user</tt><big>(</big><big>)</big><a class="headerlink" href="#Session::user" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method requires a request to network</p>
+<dd><p>Retrieves the bitcasa client api.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">current Bitcasa User information</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The bitcasa client api.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Session::isLinked">
+<tt class="descname">isLinked</tt><big>(</big><big>)</big><a class="headerlink" href="#Session::isLinked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the linked status of the app with bitcasa.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The linked status.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Session::unlink">
+<tt class="descname">unlink</tt><big>(</big><big>)</big><a class="headerlink" href="#Session::unlink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unlink the app with bitcasa.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Session::user">
+<tt class="descname">user</tt><big>(</big><big>)</big><a class="headerlink" href="#Session::user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the user information from bitcasa.
+This method requires a request to network</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Current Bitcasa User information</td>
 </tr>
 </tbody>
 </table>
@@ -118,7 +139,8 @@
 <dl class="method">
 <dt id="Session::account">
 <tt class="descname">account</tt><big>(</big><big>)</big><a class="headerlink" href="#Session::account" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method requires a request to network</p>
+<dd><p>Retrieves the account information from bitcasa.
+This method requires a request to network</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -132,17 +154,36 @@
 <dl class="method">
 <dt id="Session::filesystem">
 <tt class="descname">filesystem</tt><big>(</big><big>)</big><a class="headerlink" href="#Session::filesystem" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Retrieves the bitcasa filesystem.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The bitcasa filesystem</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Session::getClientId">
 <tt class="descname">getClientId</tt><big>(</big><big>)</big><a class="headerlink" href="#Session::getClientId" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Retrieves the session client id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The client id.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Session::setClientId">
 <tt class="descname">setClientId</tt><big>(</big><em>$clientId</em><big>)</big><a class="headerlink" href="#Session::setClientId" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Set the session client id.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -158,12 +199,22 @@
 <dl class="method">
 <dt id="Session::getClientSecret">
 <tt class="descname">getClientSecret</tt><big>(</big><big>)</big><a class="headerlink" href="#Session::getClientSecret" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Retrieves the session client secret.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The client secret.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Session::setClientSecret">
 <tt class="descname">setClientSecret</tt><big>(</big><em>$clientSecret</em><big>)</big><a class="headerlink" href="#Session::setClientSecret" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Sets the session client secret.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -179,17 +230,27 @@
 <dl class="method">
 <dt id="Session::getBitcasaClientApi">
 <tt class="descname">getBitcasaClientApi</tt><big>(</big><big>)</big><a class="headerlink" href="#Session::getBitcasaClientApi" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Retrieves the sessions bitcasa client api.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The bitcasa client api.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="Session::setBitcasaClient">
 <tt class="descname">setBitcasaClient</tt><big>(</big><em>BitcasaClientApi $bitcasaClientApi</em><big>)</big><a class="headerlink" href="#Session::setBitcasaClient" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Sets the sessions bitcasa client api.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$bitcasaClientApi</strong> (<em>BitcasaClientApi</em>) &#8211; </li>
+<li><strong>$bitcasaClientApi</strong> (<em>BitcasaClientApi</em>) &#8211; The bitcasa client api to be set.</li>
 </ul>
 </td>
 </tr>
@@ -200,7 +261,16 @@
 <dl class="method">
 <dt id="Session::getAccessToken">
 <tt class="descname">getAccessToken</tt><big>(</big><big>)</big><a class="headerlink" href="#Session::getAccessToken" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Retrieves the access token.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The access token.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </dd></dl>
 

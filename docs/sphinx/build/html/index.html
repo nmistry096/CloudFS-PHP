@@ -59,7 +59,7 @@
 </div>
 <div class="section" id="api-reference">
 <h2><a class="toc-backref" href="#id2">API Reference</a><a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h2>
-<p>Refer the <a class="reference internal" href="sdk/no-namespace/index.html#my-label"><em>Phpdoc</em></a> documentation to view class and method details.</p>
+<p>Refer the <em class="xref std std-ref">Phpdoc</em> documentation to view class and method details.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -87,12 +87,146 @@ a client ID and a client secret. These credentials can be obtained via the Bitca
 </pre></div>
 </div>
 </dd>
-<dt>A user can be linked to the session by authenticating using a username and a password.</dt>
-<dd><div class="first last highlight-php5"><div class="highlight"><pre><span class="x">$session-&gt;authenticate($username, $password);</span>
+</dl>
+<p>A user can be linked to the session by authenticating using a username and a password.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$session-&gt;authenticate($username, $password);</span>
 </pre></div>
 </div>
-</dd>
-</dl>
+<p>You can assert whether a user is linked to the session.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$session.isLinked();</span>
+</pre></div>
+</div>
+<p>The currently linked user can be unlinked from the session.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$session.unlink();</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="file-system-operations">
+<h3>File System Operations<a class="headerlink" href="#file-system-operations" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You need to create a session in order to perform file system operations.</p>
+<ul class="last">
+<li><p class="first"><a class="reference internal" href="sdk/no-namespace/Filesystem.html#Filesystem::getFolder" title="Filesystem::getFolder"><tt class="xref php php-meth docutils literal"><span class="pre">Get</span> <span class="pre">Root</span> <span class="pre">Folder</span></tt></a></p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$fileSystem = new Filesystem($session-&gt;getBitcasaClientApi());</span>
+<span class="x">$root = $fileSystem-&gt;getFolder();</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><a class="reference internal" href="sdk/no-namespace/Filesystem.html#Filesystem::getFolder" title="Filesystem::getFolder"><tt class="xref php php-meth docutils literal"><span class="pre">Get</span> <span class="pre">Specific</span> <span class="pre">Folder</span></tt></a></p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$folder = $fileSystem-&gt;getFolder($pathOfFolder);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><a class="reference internal" href="sdk/no-namespace/Filesystem.html#Filesystem::getFile" title="Filesystem::getFile"><tt class="xref php php-meth docutils literal"><span class="pre">Get</span> <span class="pre">Specific</span> <span class="pre">File</span></tt></a></p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$file = $fileSystem-&gt;getFile($pathOfFile);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="xref php php-meth docutils literal"><span class="pre">List</span> <span class="pre">Items</span> <span class="pre">Filesystem::getList</span></tt></p>
+<p>You can list down the contents of a Folder. Below example shows how to retrieve contents of the root folder.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$items = $fileSystem-&gt;getList();</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">(<a class="reference internal" href="sdk/no-namespace/Filesystem.html#Filesystem::copy" title="Filesystem::copy"><tt class="xref php php-meth docutils literal"><span class="pre">Copy</span> <span class="pre">Items</span></tt></a></p>
+<p>You can copy a list of items to a new location in the file system. If the contents in the destination folder conflicts with the copying items you can either RENAME, OVERWRITE, REUSE or FAIL the operation.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$items = $fileSystem-&gt;copy(array($item1, $item2), $destinationPath, Exists::OVERWRITE);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><a class="reference internal" href="sdk/no-namespace/Filesystem.html#Filesystem::move" title="Filesystem::move"><tt class="xref php php-meth docutils literal"><span class="pre">Move</span> <span class="pre">Items</span></tt></a></p>
+<p>You can move a list of items to a new location in the file system. If the contents in the destination folder conflicts with the moving items you can either RENAME, OVERWRITE, REUSE or FAIL the operation.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$items = $fileSystem-&gt;move(array($item1, $item2), $destinationPath, Exists::OVERWRITE);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><a class="reference internal" href="sdk/no-namespace/Filesystem.html#Filesystem::delete" title="Filesystem::delete"><tt class="xref php php-meth docutils literal"><span class="pre">Delete</span> <span class="pre">Items</span></tt></a></p>
+<p>You can specify a list of items that needs to be deleted. This will return a list of Success/fail status of each item once the operation completes.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$items = $fileSystem-&gt;delete(array($item1, $item2));</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="folder-operations">
+<h3>Folder Operations<a class="headerlink" href="#folder-operations" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You need to create a session in order to perform folder operations.</p>
+<ul class="last">
+<li><p class="first"><a class="reference internal" href="sdk/no-namespace/Folder.html#Folder::get_list" title="Folder::get_list"><tt class="xref php php-meth docutils literal"><span class="pre">List</span> <span class="pre">Folder</span> <span class="pre">Contents</span></tt></a></p>
+<p>You can list the contents of a folder. This will return a list of top level folders and items in the specified folder.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$items = $folder-&gt;get_list();</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><a class="reference internal" href="sdk/no-namespace/Item.html#Item::copy_to" title="Item::copy_to"><tt class="xref php php-meth docutils literal"><span class="pre">Copy</span> <span class="pre">Folder</span></tt></a></p>
+<p>You can copy a folder to a new location in the file system. If the destination conflicts with the copying folder you can either RENAME, OVERWRITE, REUSE or FAIL the operation.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$newItem = $item-&gt;copy_to($destinationPath, Exists::OVERWRITE);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><a class="reference internal" href="sdk/no-namespace/Item.html#Item::move_to" title="Item::move_to"><tt class="xref php php-meth docutils literal"><span class="pre">Move</span> <span class="pre">Folder</span></tt></a></p>
+<p>You can move a folder to a new location in the file system. If the destination conflicts with the moving folder you can either RENAME, OVERWRITE, REUSE or FAIL the operation.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$newItem = $item-&gt;move_to($destinationPath, Exists::OVERWRITE);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><a class="reference internal" href="sdk/no-namespace/Item.html#Item::delete" title="Item::delete"><tt class="xref php php-meth docutils literal"><span class="pre">Delete</span> <span class="pre">Folder</span></tt></a></p>
+<p>You can perform the delete operation on a folder. This will return the Success/fail status of the operation.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">status = $item-&gt;delete();</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="xref php php-meth docutils literal"><span class="pre">Create</span> <span class="pre">Sub</span> <span class="pre">Folder</span></tt></p>
+<p>You can create a sub folder in a specific folder. If the folder already has a sub folder with the given name, the operation will fail.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$subFolder = $folder.create($subFolderName);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><tt class="xref php php-meth docutils literal"><span class="pre">Upload</span> <span class="pre">File</span></tt></p>
+<p>You can upload a file from your local file system into a specific folder. If the destination conflicts, you can either RENAME, OVERWRITE, REUSE or FAIL the operation.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$file = $folder-&gt;upload($localFilePath, $fileName, Exists::OVERWRITE);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="file-operations">
+<h3>File Operations<a class="headerlink" href="#file-operations" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You need to create a session in order to perform file operations.</p>
+<ul class="last">
+<li><p class="first"><a class="reference internal" href="sdk/no-namespace/Item.html#Item::copy_to" title="Item::copy_to"><tt class="xref php php-meth docutils literal"><span class="pre">Copy</span> <span class="pre">File</span></tt></a></p>
+<p>You can copy a file to a new location in the file system. If the destination conflicts with the copying file you can either RENAME, OVERWRITE, REUSE or FAIL the operation.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$newFile = $file-&gt;copy_to($destinationPath, Exists::OVERWRITE);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><a class="reference internal" href="sdk/no-namespace/Item.html#Item::move_to" title="Item::move_to"><tt class="xref php php-meth docutils literal"><span class="pre">Move</span> <span class="pre">File</span></tt></a></p>
+<p>You can move a file to a new location in the file system. If the destination conflicts with the moving file you can either RENAME, OVERWRITE, REUSE or FAIL the operation.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$newFile = $file-&gt;move_to($destinationPath, Exists::OVERWRITE);</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><a class="reference internal" href="sdk/no-namespace/Item.html#Item::delete" title="Item::delete"><tt class="xref php php-meth docutils literal"><span class="pre">Delete</span> <span class="pre">File</span></tt></a></p>
+<p>You can perform the delete operation on a file. This will return the Success/fail status of the operation.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$status = $file-&gt;delete();</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><a class="reference internal" href="sdk/no-namespace/Item.html#Item::delete" title="Item::delete"><tt class="xref php php-meth docutils literal"><span class="pre">Download</span> <span class="pre">File</span></tt></a></p>
+<p>You can download a file to your local file system.</p>
+<div class="highlight-php5"><div class="highlight"><pre><span class="x">$content = $fileSystem-&gt;download($file);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -110,6 +244,9 @@ a client ID and a client secret. These credentials can be obtained via the Bitca
 <li><a class="reference internal" href="#getting-the-sdk">Getting the SDK</a></li>
 <li><a class="reference internal" href="#using-the-sdk">Using the SDK</a><ul>
 <li><a class="reference internal" href="#creating-and-linking-the-cloudfs-sessions">Creating and linking the CloudFS Sessions</a></li>
+<li><a class="reference internal" href="#file-system-operations">File System Operations</a></li>
+<li><a class="reference internal" href="#folder-operations">Folder Operations</a></li>
+<li><a class="reference internal" href="#file-operations">File Operations</a></li>
 </ul>
 </li>
 </ul>

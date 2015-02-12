@@ -49,7 +49,8 @@
 <dd><dl class="method">
 <dt id="BitcasaApi::__construct">
 <tt class="descname">__construct</tt><big>(</big><em>$credential</em><big>)</big><a class="headerlink" href="#BitcasaApi::__construct" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Initializes the bitcasa api instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
@@ -65,16 +66,19 @@
 <dl class="method">
 <dt id="BitcasaApi::getAccessToken">
 <tt class="descname">getAccessToken</tt><big>(</big><em>$session</em>, <em>$username</em>, <em>$password</em><big>)</big><a class="headerlink" href="#BitcasaApi::getAccessToken" title="Permalink to this definition">¶</a></dt>
-<dd><p>an api request to CloudFS server to get access token</p>
+<dd><p>Retrieves the CloudFS access token through an api request.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$session</strong> &#8211; </li>
 <li><strong>$username</strong> &#8211; </li>
 <li><strong>$password</strong> &#8211; </li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">bool</p>
 </td>
 </tr>
 </tbody>
@@ -84,16 +88,21 @@
 <dl class="method">
 <dt id="BitcasaApi::getList">
 <tt class="descname">getList</tt><big>(</big><em>$parent = null</em>, <em>$version = 0</em>, <em>$depth = 0</em>, <em>$filter = null</em><big>)</big><a class="headerlink" href="#BitcasaApi::getList" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Retrieves the item list if a prent item is given, else returns the list
+of items under root.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>$parent</strong> &#8211; </li>
-<li><strong>$version</strong> &#8211; </li>
-<li><strong>$depth</strong> &#8211; </li>
-<li><strong>$filter</strong> &#8211; </li>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$parent</strong> (<em>null</em>) &#8211; The parent for which the items should be retrieved for.</li>
+<li><strong>$version</strong> (<em>int</em>) &#8211; Version filter for items being retrieved.</li>
+<li><strong>$depth</strong> (<em>int</em>) &#8211; Depth variable for how many levels of items to be retrieved.</li>
+<li><strong>$filter</strong> (<em>null</em>) &#8211; Variable to filter the items being retrieved.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The item list.</p>
 </td>
 </tr>
 </tbody>
@@ -103,13 +112,17 @@
 <dl class="method">
 <dt id="BitcasaApi::getFileMeta">
 <tt class="descname">getFileMeta</tt><big>(</big><em>$path</em><big>)</big><a class="headerlink" href="#BitcasaApi::getFileMeta" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Retrieves the meta data of a file at a given path.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The meta data of the item.</p>
 </td>
 </tr>
 </tbody>
@@ -119,13 +132,17 @@
 <dl class="method">
 <dt id="BitcasaApi::getFolderMeta">
 <tt class="descname">getFolderMeta</tt><big>(</big><em>$path</em><big>)</big><a class="headerlink" href="#BitcasaApi::getFolderMeta" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Retrieves the meta data of a folder at a given path.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The meta data of the item.</p>
 </td>
 </tr>
 </tbody>
@@ -135,15 +152,19 @@
 <dl class="method">
 <dt id="BitcasaApi::createFolder">
 <tt class="descname">createFolder</tt><big>(</big><em>$parentpath</em>, <em>$filename</em>, <em>$exists = Exists::FAIL</em><big>)</big><a class="headerlink" href="#BitcasaApi::createFolder" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Create a folder at a given path with the supplied name.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$parentpath</strong> &#8211; </li>
 <li><strong>$filename</strong> &#8211; </li>
-<li><strong>$exists</strong> &#8211; </li>
+<li><strong>$exists</strong> (<em>string</em>) &#8211; Specifies the action to take if the folder already exists.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An instance of the newly created item of type Folder.</p>
 </td>
 </tr>
 </tbody>
@@ -153,14 +174,18 @@
 <dl class="method">
 <dt id="BitcasaApi::deleteFolder">
 <tt class="descname">deleteFolder</tt><big>(</big><em>$path</em>, <em>$force = false</em><big>)</big><a class="headerlink" href="#BitcasaApi::deleteFolder" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Delete a folder from cloud storage.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
-<li><strong>$force</strong> &#8211; </li>
+<li><strong>$force</strong> (<em>bool</em>) &#8211; The flag to force delete the folder from cloud storage.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the delete operation.</p>
 </td>
 </tr>
 </tbody>
@@ -170,14 +195,18 @@
 <dl class="method">
 <dt id="BitcasaApi::deleteFile">
 <tt class="descname">deleteFile</tt><big>(</big><em>$path</em>, <em>$force = false</em><big>)</big><a class="headerlink" href="#BitcasaApi::deleteFile" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Delete a file from cloud storage.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
-<li><strong>$force</strong> &#8211; </li>
+<li><strong>$force</strong> (<em>bool</em>) &#8211; The flag to force delete the file from cloud storage.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the delete operation.</p>
 </td>
 </tr>
 </tbody>
@@ -187,15 +216,19 @@
 <dl class="method">
 <dt id="BitcasaApi::alterFolder">
 <tt class="descname">alterFolder</tt><big>(</big><em>$path</em>, <em>$attrs</em>, <em>$conflict = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::alterFolder" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Alter the attributes of the folder at a given path.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
 <li><strong>$attrs</strong> &#8211; </li>
-<li><strong>$conflict</strong> &#8211; </li>
+<li><strong>$conflict</strong> (<em>string</em>) &#8211; Specifies the action to take if a conflict occurs.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the alter operation.</p>
 </td>
 </tr>
 </tbody>
@@ -205,15 +238,19 @@
 <dl class="method">
 <dt id="BitcasaApi::alterFile">
 <tt class="descname">alterFile</tt><big>(</big><em>$path</em>, <em>$attrs</em>, <em>$conflict = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::alterFile" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Alter the attributes of the file at a given path.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
 <li><strong>$attrs</strong> &#8211; </li>
-<li><strong>$conflict</strong> &#8211; </li>
+<li><strong>$conflict</strong> (<em>string</em>) &#8211; Specifies the action to take if a conflict occurs.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the alter operation.</p>
 </td>
 </tr>
 </tbody>
@@ -223,16 +260,20 @@
 <dl class="method">
 <dt id="BitcasaApi::copyFolder">
 <tt class="descname">copyFolder</tt><big>(</big><em>$path</em>, <em>$dest</em>, <em>$name = null</em>, <em>$exists = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::copyFolder" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Copy a folder at a given path to a specified destination.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
 <li><strong>$dest</strong> &#8211; </li>
 <li><strong>$name</strong> &#8211; </li>
-<li><strong>$exists</strong> &#8211; </li>
+<li><strong>$exists</strong> (<em>string</em>) &#8211; Specifies the action to take if the folder already exists.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the copy operation</p>
 </td>
 </tr>
 </tbody>
@@ -242,16 +283,20 @@
 <dl class="method">
 <dt id="BitcasaApi::copyFile">
 <tt class="descname">copyFile</tt><big>(</big><em>$path</em>, <em>$dest</em>, <em>$name = null</em>, <em>$exists = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::copyFile" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Copy a file at a given path to a specified destination.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
 <li><strong>$dest</strong> &#8211; </li>
 <li><strong>$name</strong> &#8211; </li>
-<li><strong>$exists</strong> &#8211; </li>
+<li><strong>$exists</strong> (<em>string</em>) &#8211; Specifies the action to take if the file already exists.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the copy operation</p>
 </td>
 </tr>
 </tbody>
@@ -261,16 +306,20 @@
 <dl class="method">
 <dt id="BitcasaApi::moveFolder">
 <tt class="descname">moveFolder</tt><big>(</big><em>$path</em>, <em>$dest</em>, <em>$name = null</em>, <em>$exists = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::moveFolder" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Move a folder at a given path to a specified destination.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
 <li><strong>$dest</strong> &#8211; </li>
 <li><strong>$name</strong> &#8211; </li>
-<li><strong>$exists</strong> &#8211; </li>
+<li><strong>$exists</strong> (<em>string</em>) &#8211; Specifies the action to take if the folder already exists.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the move operation</p>
 </td>
 </tr>
 </tbody>
@@ -280,16 +329,20 @@
 <dl class="method">
 <dt id="BitcasaApi::moveFile">
 <tt class="descname">moveFile</tt><big>(</big><em>$path</em>, <em>$dest</em>, <em>$name = null</em>, <em>$exists = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::moveFile" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Move a file at a given path to a specified destination.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
 <li><strong>$dest</strong> &#8211; </li>
 <li><strong>$name</strong> &#8211; </li>
-<li><strong>$exists</strong> &#8211; </li>
+<li><strong>$exists</strong> (<em>string</em>) &#8211; Specifies the action to take if the file already exists.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the move operation</p>
 </td>
 </tr>
 </tbody>
@@ -299,14 +352,18 @@
 <dl class="method">
 <dt id="BitcasaApi::downloadFile">
 <tt class="descname">downloadFile</tt><big>(</big><em>$path</em>, <em>$file = null</em><big>)</big><a class="headerlink" href="#BitcasaApi::downloadFile" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Download a file from the cloud storage.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
-<li><strong>$file</strong> &#8211; </li>
+<li><strong>$file</strong> (<em>null</em>) &#8211; The file container for which the item will be downloaded to</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The download file/link</p>
 </td>
 </tr>
 </tbody>
@@ -316,16 +373,20 @@
 <dl class="method">
 <dt id="BitcasaApi::uploadFile">
 <tt class="descname">uploadFile</tt><big>(</big><em>$parentpath</em>, <em>$name</em>, <em>$filepath</em>, <em>$exists = &quot;overwrite&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::uploadFile" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Upload a file on to the given path.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$parentpath</strong> &#8211; </li>
 <li><strong>$name</strong> &#8211; </li>
 <li><strong>$filepath</strong> &#8211; </li>
-<li><strong>$exists</strong> &#8211; </li>
+<li><strong>$exists</strong> (<em>string</em>) &#8211; The action to take if the item already exists.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An instance of the uploaded item.</p>
 </td>
 </tr>
 </tbody>
@@ -335,14 +396,18 @@
 <dl class="method">
 <dt id="BitcasaApi::restore">
 <tt class="descname">restore</tt><big>(</big><em>$path</em>, <em>$dest</em><big>)</big><a class="headerlink" href="#BitcasaApi::restore" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Restores the file at a given path to a given destination.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
 <li><strong>$dest</strong> &#8211; </li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the restore operation.</p>
 </td>
 </tr>
 </tbody>
@@ -352,16 +417,20 @@
 <dl class="method">
 <dt id="BitcasaApi::fileHistory">
 <tt class="descname">fileHistory</tt><big>(</big><em>$path</em>, <em>$start = 0</em>, <em>$stop = 0</em>, <em>$limit = 0</em><big>)</big><a class="headerlink" href="#BitcasaApi::fileHistory" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Retrieves the file history of a given item.</p>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>$path</strong> &#8211; </li>
-<li><strong>$start</strong> &#8211; </li>
-<li><strong>$stop</strong> &#8211; </li>
-<li><strong>$limit</strong> &#8211; </li>
+<li><strong>$start</strong> (<em>int</em>) &#8211; Start version.</li>
+<li><strong>$stop</strong> (<em>int</em>) &#8211; Stop version.</li>
+<li><strong>$limit</strong> (<em>int</em>) &#8211; The limit of history entries.</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">File history entries.</p>
 </td>
 </tr>
 </tbody>
