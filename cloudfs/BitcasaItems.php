@@ -20,7 +20,7 @@ class Item {
 	/**
 	 * Initializes the item instance.
 	 *
-	 * @param null $api The api instance.
+	 * @param object $api The api instance.
 	 */
 	public function __construct($api = null) {
 		$this->data = NULL;
@@ -69,7 +69,7 @@ class Item {
 	/**
 	 * Returns an array of path components given a path.
 	 *
-	 * @param $path_string Path of an item.
+	 * @param string $path_string Path of an item.
 	 * @return An array of path components.
 	 */
 	public static function components_from_path($path_string) {
@@ -83,7 +83,7 @@ class Item {
 	/**
 	 * Retrieves the path given an item list.
 	 *
-	 * @param $items The items whose path needs to be retrieved.
+	 * @param object $items The items whose path needs to be retrieved.
 	 * @param bool $add_root Flag to add root to the retrieved path or not.
 	 * @return Path of the item list.
 	 */
@@ -105,7 +105,7 @@ class Item {
 	/**
 	 * Formats and returns the path of an item given an array of paths.
 	 *
-	 * @param $components The array containing path elements.
+	 * @param mixed $components The array containing path elements.
 	 * @param bool $add_root Flag to add root to the retrieved path or not.
 	 * @return Formatted path for the given array.
 	 */
@@ -120,7 +120,7 @@ class Item {
 	/**
 	 * Retrieves the path for a given item.
 	 *
-	 * @param null $item The items whose path needs to be retrieved.
+	 * @param object $item The items whose path needs to be retrieved.
 	 * @return string The path of the item.
 	 */
     public function path_from_item($item = null) {
@@ -139,9 +139,9 @@ class Item {
 	/**
 	 * Retrieves an instance of an item for the supplied data.
 	 *
-	 * @param $data The data needed to create an item.
-	 * @param null $parent Parent item for the new item.
-	 * @param null $api The api instance.
+	 * @param object $data The data needed to create an item.
+	 * @param string $parentPath Parent path for the new item.
+	 * @param object $api The api instance.
 	 * @return An instance of the new item.
 	 */
 	public static function make($data, $parentPath = null, $api = null) {
@@ -208,8 +208,8 @@ class Item {
 	/**
 	 * Retrieves the data value of a given key.
 	 *
-	 * @param $key The key for whose data value should be retrieved.
-	 * @param null $default The value to be returned if the data value does not exist.
+	 * @param string $key The key for whose data value should be retrieved.
+	 * @param string $default The value to be returned if the data value does not exist.
 	 * @return The data value for the given key.
 	 */
 	protected function value($key, $default = null) {
@@ -251,7 +251,7 @@ class Item {
 	/**
 	 * Sets the id of this item - Not Allowed.
 	 *
-	 * @param $new_id The new id to be set on the item.
+	 * @param string $new_id The new id to be set on the item.
 	 * @throws OperationNotAllowed
 	 */
     public function set_id($new_id) {
@@ -279,7 +279,7 @@ class Item {
 	/**
 	 * Set the type of this item - Not Allowed.
 	 *
-	 * @param $new_type The new type to be set on the item.
+	 * @param string $new_type The new type to be set on the item.
 	 * @throws OperationNotAllowed
 	 */
     public function set_type($new_type) {
@@ -298,7 +298,7 @@ class Item {
 	/**
 	 * Sets the is mirrored flag of this item - Not Allowed.
 	 *
-	 * @param $new_mirrored_flag The new mirrored flag to be set on the item.
+	 * @param string $new_mirrored_flag The new mirrored flag to be set on the item.
 	 * @throws OperationNotAllowed
 	 */
     public function set_mirrored($new_mirrored_flag) {
@@ -307,6 +307,7 @@ class Item {
 
 	/**
 	 * Retrieve the content last modified date of this item.
+	 *
 	 * @return The content last modified date.
 	 */
     public function date_content_last_modified() {
@@ -316,7 +317,7 @@ class Item {
 	/**
 	 * Sets the content last modified date of this item.
 	 *
-	 * @param The new content last modified date.
+	 * @param string $new_date_content_last_modified The new content last modified date.
 	 */
     public function set_date_content_last_modified($new_date_content_last_modified) {
         $this->change('date_content_last_modified');
@@ -335,7 +336,7 @@ class Item {
 	/**
 	 * Sets the created date of this item.
 	 *
-	 * @param The new created date.
+	 * @param string $new_date_created The new created date.
 	 */
     public function set_date_created($new_date_created) {
         $this->change('date_created');
@@ -354,7 +355,7 @@ class Item {
 	/**
 	 * Sets the version of this item.
 	 *
-	 * @param The new version.
+	 * @param string $new_version The new version.
 	 */
     public function set_version($new_version) {
         $this->change('version');
@@ -373,7 +374,7 @@ class Item {
 	/**
 	 * Sets the parent path id of this item.
 	 *
-	 * @param The new parent path id.
+	 * @param string $new_absolute_parent_path_id The new parent path id.
 	 */
     public function set_parent_path($new_absolute_parent_path_id) {
         $this->change('absolute_parent_path_id');
@@ -392,7 +393,7 @@ class Item {
 	/**
 	 * Sets the meta last modified date of this item.
 	 *
-	 * @param The new meta last modified date.
+	 * @param string $new_date_meta_last_modified The new meta last modified date.
 	 */
 	public function set_date_meta_last_modified($new_date_meta_last_modified) {
         $this->change('date_meta_last_modified');
@@ -411,7 +412,7 @@ class Item {
 	/**
 	 * Sets the new application data of this item.
 	 *
-	 * @param The new application data.
+	 * @param mixed $new_application_data The new application data.
 	 */
     public function set_application_data($new_application_data) {
         $this->change('application_data');
@@ -439,7 +440,7 @@ class Item {
 	/**
 	 * Moves this item to a given destination.
 	 *
-	 * @param $dest The destination of the item move.
+	 * @param string $dest The destination of the item move.
 	 * @param string $exists The action to take if the item exists.
 	 * @return The success/fail response of the move operation.
 	 */
@@ -450,7 +451,7 @@ class Item {
 	/**
 	 * Copy this item to a given destination.
 	 *
-	 * @param $dest The destination of the item copy.
+	 * @param string $dest The destination of the item copy.
 	 * @param string $exists The action to take if the item exists.
 	 * @return The success/fail response of the copy operation.
 	 */
@@ -471,6 +472,7 @@ class Item {
 
 	/**
 	 * Save this item on the cloud.
+	 *
 	 * @param string $if_conflict The action to take if a conflict occurs.
 	 * @param bool $debug Debug flag.
 	 * @return The success/fail response of the save operation.
@@ -482,7 +484,7 @@ class Item {
 	/**
 	 * Restores this item to the given destination.
 	 *
-	 * @param $dest The destination of the item restore.
+	 * @param string $dest The destination of the item restore.
 	 * @return The success/fail response of the restore operation.
 	 */
 	public function restore($dest) {
@@ -508,7 +510,8 @@ class Container extends Item {
 
 	/**
 	 * Initializes a new instance of Container.
-	 * @param null $api
+	 *
+	 * @param mixed $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -526,7 +529,7 @@ class Container extends Item {
 	/**
 	 * Creates a folder item under this item with the supplied name.
 	 *
-	 * @param $name The name of the folder being created.
+	 * @param string $name The name of the folder being created.
 	 * @param string $exists The action to take if the folder already exists.
 	 * @return Instance of the newly created folder.
 	 */
@@ -537,8 +540,8 @@ class Container extends Item {
 	/**
 	 * Uploads a file under this item.
 	 *
-	 * @param $path The path of the file to be uploaded.
-	 * @param null $name The name of the file.
+	 * @param string $path The path of the file to be uploaded.
+	 * @param string $name The name of the file.
 	 * @param string $exists The action to take if the file already exists.
 	 * @return An instance of the uploaded item.
 	 */
@@ -552,7 +555,8 @@ class Folder extends Container {
 
 	/**
 	 * Initializes a new instance of Folder.
-	 * @param null $api
+	 *
+	 * @param mixed $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -564,7 +568,8 @@ class File extends Item {
 
 	/**
 	 * Initializes a new instance of File.
-	 * @param null $api
+	 *
+	 * @param mixed $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -573,7 +578,7 @@ class File extends Item {
 	/**
 	 * Downloads this file from the cloud.
 	 *
-	 * @param $localPath The local path where the file is to be downloaded to.
+	 * @param string $localPath The local path where the file is to be downloaded to.
 	 */
 	public function download($localPath) {
     	$this->api()->downloadFile($this, $localPath);
@@ -587,7 +592,7 @@ class Video extends File {
 	/**
 	 * Initializes a new instance of Video.
 	 *
-	 * @param null $api
+	 * @param mixed $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -602,7 +607,7 @@ class Photo extends File {
 	/**
 	 * Initializes a new instance of Photo.
 	 *
-	 * @param null $api
+	 * @param mixed $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -616,7 +621,7 @@ class Document extends File {
 	/**
 	 * Initializes a new instance of Document.
 	 *
-	 * @param null $api
+	 * @param mixed $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -630,7 +635,7 @@ class Audio extends File {
 	/**
 	 * Initializes a new instance of Audio.
 	 *
-	 * @param null $api
+	 * @param mixed $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
