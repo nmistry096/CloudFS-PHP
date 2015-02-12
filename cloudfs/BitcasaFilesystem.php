@@ -35,8 +35,8 @@ class Filesystem {
 	/**
 	 * Retrieves the item array for a given directory.
 	 *
-	 * @param null $dir	The directory for which the items should be
-	 * 					retrieved for, if empty root items are retrieved.
+	 * @param mixed $dir The directory for which the items should be
+	 * 					  retrieved for, if empty root items are retrieved.
 	 * @return The array of items at the given directory.
 	 */
     public function getList($dir = null) {
@@ -62,7 +62,7 @@ class Filesystem {
 	/**
 	 * Retrieves an item by the given path.
 	 *
-	 * @param $path	The file path.
+	 * @param mixed $path	The file path.
 	 * @return An instance of the item of type Audio|Document|Photo|Video|File.
 	 */
 	public function getFile($path) {
@@ -86,7 +86,7 @@ class Filesystem {
 	/**
 	 * Retrieves a folder by the given path.
 	 *
-	 * @param $path	The folder path.
+	 * @param mixed $path	The folder path.
 	 * @return An instance of the item of type Folder.
 	 */
 	public function getFolder($path) {
@@ -111,7 +111,7 @@ class Filesystem {
 	/**
 	 * Delete multiple items from cloud storage.
 	 *
-	 * @param $items The items to be deleted.
+	 * @param object $items The items to be deleted.
 	 * @param bool $force The flag to force delete items from cloud storage.
 	 * @return The success/fail response of the delete operation.
 	 */
@@ -136,8 +136,8 @@ class Filesystem {
 	 * Create a folder with supplied name under the given parent folders,
 	 * folder path.
 	 *
-	 * @param $parent Folder item under which the new folder should be created.
-	 * @param $name The name of the folder to be created.
+	 * @param object $parent Folder item under which the new folder should be created.
+	 * @param string $name The name of the folder to be created.
 	 * @param string $exists Specifies the action to take if the folder already exists.
 	 * @return An instance of the newly created item of type Folder.
 	 */
@@ -159,8 +159,8 @@ class Filesystem {
 	/**
 	 * Moves multiple items to a specified destination.
 	 *
-	 * @param $items The items to be moved.
-	 * @param $destination Path to which the items should be moved to.
+	 * @param object $items The items to be moved.
+	 * @param object $destination Path to which the items should be moved to.
 	 * @param string $exists Specifies the action to take if the item already exists.
 	 * @return The success/fail response of the move operation
 	 * @throws InvalidArgument
@@ -189,8 +189,8 @@ class Filesystem {
 	/**
 	 * Copy multiple items to a specified destination.
 	 *
-	 * @param $items The items to be copied.
-	 * @param $destination Path to which the items should be copied to.
+	 * @param object $items The items to be copied.
+	 * @param object $destination Path to which the items should be copied to.
 	 * @param string $exists Specifies the action to take if the item already exists.
 	 * @return The success/fail response of the copy operation
 	 */
@@ -214,7 +214,7 @@ class Filesystem {
 	/**
 	 * Update items on the cloud file system.
 	 *
-	 * @param $items The items to be updated.
+	 * @param object $items The items to be updated.
 	 * @param string $conflict The action to take if a conflict occurs.
 	 * @return The success/fail response of the update operation.
 	 */
@@ -238,8 +238,8 @@ class Filesystem {
 	/**
 	 * Upload a file on to the given path.
 	 *
-	 * @param $parent The parent folder path.
-	 * @param $path The upload file path.
+	 * @param mixed $parent The parent folder path.
+	 * @param object $path The upload file path.
 	 * @param string $exists The action to take if the item already exists.
 	 * @return An instance of the uploaded item.
 	 */
@@ -262,8 +262,8 @@ class Filesystem {
 	/**
 	 * Download an item from the cloud storage.
 	 *
-	 * @param $item The item to be downloaded.
-	 * @param null $file
+	 * @param object $item The item to be downloaded.
+	 * @param mixed $file
 	 * @throws InvalidArgument
 	 */
 	public function download($item, $file = null) {
@@ -278,9 +278,9 @@ class Filesystem {
 	/**
 	 * Restore a given set of items to the supplied destination.
 	 *
-	 * @param $items The items to be restored.
-	 * @param $destination The path the files are to be restored to
-	 * @param $exists The action to take if the item already exists.
+	 * @param object $items The items to be restored.
+	 * @param string $destination The path the files are to be restored to
+	 * @param string $exists The action to take if the item already exists.
 	 * @return The success/fail response of the restore operation.
 	 */
     public function restore($items, $destination, $exists) {
@@ -300,7 +300,7 @@ class Filesystem {
 	/**
 	 * Retrieves the file history of a given item.
 	 *
-	 * @param $item The item for which the file history needs to be retrieved.
+	 * @param object $item The item for which the file history needs to be retrieved.
 	 * @param int $start
 	 * @param int $stop
 	 * @return File history entries.
