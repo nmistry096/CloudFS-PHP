@@ -35,7 +35,7 @@ class HTTPConnect {
 	/**
 	 * Initializes the http connect instance.
 	 *
-	 * @param null $session The http session instance.
+	 * @param object $session The http session instance.
 	 */
 	public function HTTPConnect($session = null) {
 		$this->curl = null;
@@ -67,8 +67,8 @@ class HTTPConnect {
 	/**
 	 * Adds the specified http header to the http request.
 	 *
-	 * @param $h The specified http header.
-	 * @param $v The http header value to be added.
+	 * @param string $h The specified http header.
+	 * @param mixed $v The http header value to be added.
 	 */
 	public function addHeader($h, $v) {
 		unset($this->headers[$h]);
@@ -77,8 +77,8 @@ class HTTPConnect {
 
 	/**
 	 * Adds the specified http header to the http request if it's missing.
-	 * @param $h The specified http header.
-	 * @param $v The http header value to be added.
+	 * @param string $h The specified http header.
+	 * @param header $v The http header value to be added.
 	 * @return bool Flag whether the operation was successful.
 	 */
 	public function addMissingHeader($h, $v) {
@@ -92,8 +92,8 @@ class HTTPConnect {
 	/**
 	 * Retrieves whether the http request has the specified http header.
 	 *
-	 * @param $h The specified http header.
-	 * @param null $value The specified http header value.
+	 * @param string $h The specified http header.
+	 * @param mixed $value The specified http header value.
 	 * @return bool The flag as to whether the http request has the specified header.
 	 */
 	public function hasHeader($h, $value = null)
@@ -124,7 +124,7 @@ class HTTPConnect {
 	/**
 	 * Sets the data and the data length of the http request.
 	 *
-	 * @param $data The data to be added to the http request.
+	 * @param mixed $data The data to be added to the http request.
 	 * @param int $len The length of the added data.
 	 */
 	public function sendData($data, $len = 0) {
@@ -138,7 +138,7 @@ class HTTPConnect {
 	/**
 	 * Posts the http request to a given url.
 	 *
-	 * @param $url The url for the http post.
+	 * @param string $url The url for the http post.
 	 * @return The posts http status.
 	 * @throws Exception
 	 */
@@ -160,7 +160,7 @@ class HTTPConnect {
 	 *
 	 * @param $curl
 	 * @param $fd
-	 * @param $length Variable to retrieve the http request data of a given length.
+	 * @param int $length Variable to retrieve the http request data of a given length.
 	 * @return The http request data.
 	 */
 	public function read_function($curl, $fd, $length) {
@@ -196,10 +196,10 @@ class HTTPConnect {
 	/**
 	 * Posts the http request with multiple parts to a given url.
 	 *
-	 * @param $url The url for the http post.
-	 * @param $name The filename to be posted.
-	 * @param $path The path of the item to be posted.
-	 * @param $exists Specifies action to take if item exists.
+	 * @param string $url The url for the http post.
+	 * @param string $name The filename to be posted.
+	 * @param string $path The path of the item to be posted.
+	 * @param string $exists Specifies action to take if item exists.
 	 * @return  The posts http status.
 	 * @throws Exception
 	 */
@@ -230,8 +230,8 @@ class HTTPConnect {
 	/**
 	 * Carries out a put http request on the given url.
 	 *
-	 * @param $url The url for the http put.
-	 * @return   The put operations http status.
+	 * @param string $url The url for the http put.
+	 * @return The put operations http status.
 	 * @throws Exception
 	 */
 	public function put($url) {
@@ -243,7 +243,7 @@ class HTTPConnect {
 	/**
 	 * Carries out a get http request on the given url.
 	 *
-	 * @param $url The url for the get request.
+	 * @param string $url The url for the get request.
 	 * @return The get operations http status.
 	 * @throws Exception
 	 */
@@ -256,7 +256,7 @@ class HTTPConnect {
 	/**
 	 * Carries out a head http request on the given url.
 	 *
-	 * @param $url	The url for the head request.
+	 * @param string $url The url for the head request.
 	 * @return  The head operations http status.
 	 * @throws Exception
 	 */
@@ -269,7 +269,7 @@ class HTTPConnect {
 	/**
 	 * Carries out a delete http request on the given url.
 	 *
-	 * @param $url	The url for the delete operation.
+	 * @param string $url The url for the delete operation.
 	 * @return  The delete operations http status.
 	 * @throws Exception
 	 */
@@ -303,7 +303,7 @@ class HTTPConnect {
 	/**
 	 * Sets the user agent of the http operation.
 	 *
-	 * @param $agent The user agent.
+	 * @param string $agent The user agent.
 	 */
 	public function setUserAgent($agent) {
 		$this->user_agent = $agent;
@@ -321,7 +321,7 @@ class HTTPConnect {
 	/**
 	 * Validates and processes the http request.
 	 *
-	 * @param $url The url variable for curl operations.
+	 * @param string $url The url variable for curl operations.
 	 * @throws Exception
 	 */
 	private function process($url) {
@@ -411,8 +411,8 @@ class HTTPConnect {
  * Reads and retrieves the data of the http request.
  *
  * @param $curl
- * @param $instance The http request instance.
- * @param $length Variable to retrieve the http request data of a given length.
+ * @param object $instance The http request instance.
+ * @param int $length Variable to retrieve the http request data of a given length.
  * @return The http request data.
  */
 function read_function($curl, $instance, $length) {
