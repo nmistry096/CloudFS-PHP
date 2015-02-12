@@ -30,8 +30,8 @@ class Credential {
 	/**
 	 * Initializes the Credentials instance.
 	 *
-	 * @param null $session
-	 * @param null $endpoint
+	 * @param mixed $session
+	 * @param string $endpoint
 	 */
 	public function __construct($session = null, $endpoint = NULL) {
 		$this->applicationContext = null;
@@ -69,7 +69,7 @@ class Credential {
 	/**
 	 * Sets the credentials access token.
 	 *
-	 * @param $token The access token to be set.
+	 * @param string $token The access token to be set.
 	 */
 	public function setAccessToken($token) {
 		$this->accessToken = $token;
@@ -87,7 +87,7 @@ class Credential {
 	/**
 	 * Sets the credential token type.
 	 *
-	 * @param $type The token type to be set.
+	 * @param string $type The token type to be set.
 	 */
 	public function setTokenType($type) {
 		$this->tokenType = $type;
@@ -96,9 +96,9 @@ class Credential {
 	/**
 	 * Retrieves the request url for credentials.
 	 *
-	 * @param $method Request url method variable.
-	 * @param null $operation Request url operation.
-	 * @param null $params Parameters for request url.
+	 * @param string $method Request url method variable.
+	 * @param string $operation Request url operation.
+	 * @param mixed $params Parameters for request url.
 	 * @return The request url.
 	 */
 	public function getRequestUrl($method, $operation = null, $params = null) {
@@ -129,9 +129,9 @@ class Session {
 	/**
 	 * Initializes the Session instance.
 	 *
-	 * @param $endpoint The bitcasa api endoint.
-	 * @param $clientId The app client id.
-	 * @param $clientSecret The app client secret.
+	 * @param string $endpoint The bitcasa api endoint.
+	 * @param string $clientId The app client id.
+	 * @param string $clientSecret The app client secret.
 	 */
     public function __construct($endpoint, $clientId, $clientSecret) {
 		$applicationConext = null;
@@ -145,9 +145,9 @@ class Session {
 	/**
 	 * Authenticates with bitcasa.
 	 *
-	 * @param $username The username.
-	 * @param $password The password.
-	 * @return bool
+	 * @param string $username The username.
+	 * @param string $password The password.
+	 * @return bool The authentication status.
 	 */
 	public function authenticate($username, $password) {
 		$api = $this->getClientApi();
@@ -191,7 +191,7 @@ class Session {
     /**
      * Retrieves the user information from bitcasa.
 	 * This method requires a request to network
-     * @return
+     * @return The user information.
      * @throws IOException
      * @throws BitcasaException
      * @return Current Bitcasa User information
@@ -204,7 +204,7 @@ class Session {
     /**
 	 * Retrieves the account information from bitcasa.
      * This method requires a request to network
-     * @return
+     * @return The account information.
      * @throws IOException
      * @throws BitcasaException
      * @return current Bitcasa Account information
@@ -235,7 +235,7 @@ class Session {
 	/**
 	 * Set the session client id.
 	 *
-	 * @param $clientId The client Id to be set.
+	 * @param string $clientId The client Id to be set.
 	 */
 	public function setClientId($clientId) {
 		$this->clientId = $clientId;
@@ -253,7 +253,7 @@ class Session {
 	/**
 	 * Sets the session client secret.
 	 *
-	 * @param $clientSecret The client secret to be set.
+	 * @param string $clientSecret The client secret to be set.
 	 */
 	public function setClientSecret($clientSecret) {
 		$this->clientSecret = $clientSecret;
@@ -279,6 +279,7 @@ class Session {
 
 	/**
 	 * Retrieves the access token.
+	 *
 	 * @return The access token.
 	 */
 	public function getAccessToken() {
@@ -296,7 +297,8 @@ class BitcasaApi {
 
 	/**
 	 * Initializes the bitcasa api instance.
-	 * @param $credential
+	 *
+	 * @param object $credential
 	 */
 	public function __construct($credential) {
 		$this->accessToken = null;
@@ -307,9 +309,9 @@ class BitcasaApi {
 	/**
 	 * Retrieves the CloudFS access token through an api request.
 	 *
-	 * @param $session
-	 * @param $username
-	 * @param $password
+	 * @param mixed $session The bitcasa session.
+	 * @param string $username Bitcasa username.
+	 * @param string $password Bitcasa password.
 	 * @return bool
 	 */
     public function getAccessToken($session, $username, $password) {
@@ -369,10 +371,10 @@ class BitcasaApi {
 	 * Retrieves the item list if a prent item is given, else returns the list
 	 * of items under root.
 	 *
-	 * @param null $parent The parent for which the items should be retrieved for.
+	 * @param string $parent The parent for which the items should be retrieved for.
 	 * @param int $version Version filter for items being retrieved.
 	 * @param int $depth Depth variable for how many levels of items to be retrieved.
-	 * @param null $filter Variable to filter the items being retrieved.
+	 * @param mixed $filter Variable to filter the items being retrieved.
 	 * @return The item list.
 	 * @throws Exception
 	 */
@@ -411,7 +413,7 @@ class BitcasaApi {
 	/**
 	 * Retrieves the meta data of a file at a given path.
 	 *
-	 * @param $path The path of the item.
+	 * @param string $path The path of the item.
 	 * @return The meta data of the item.
 	 * @throws Exception
 	 */
@@ -444,7 +446,7 @@ class BitcasaApi {
 	/**
 	 * Retrieves the meta data of a folder at a given path.
 	 *
-	 * @param $path The path of the item.
+	 * @param string $path The path of the item.
 	 * @return The meta data of the item.
 	 * @throws Exception
 	 */
@@ -477,8 +479,8 @@ class BitcasaApi {
 	/**
 	 * Create a folder at a given path with the supplied name.
 	 *
-	 * @param $parentpath The folder path under which the new folder should be created.
-	 * @param $filename The name for the folder to be created.
+	 * @param string $parentpath The folder path under which the new folder should be created.
+	 * @param string $filename The name for the folder to be created.
 	 * @param string $exists Specifies the action to take if the folder already exists.
 	 * @return An instance of the newly created item of type Folder.
 	 * @throws InvalidArgument]
@@ -492,8 +494,7 @@ class BitcasaApi {
 		assert_string($filename, 2);
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $parentpath,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_CREATE));
-		$body = BitcasaUtils::generateParamsString(array("name" => $filename,
-														 "exists" => $exists));
+		$body = BitcasaUtils::generateParamsString(array("name" => $filename, "exists" => $exists));
 		
 		$connection->sendData($body);
 		if ($this->debug) {
@@ -513,7 +514,7 @@ class BitcasaApi {
 	/**
 	 * Delete a folder from cloud storage.
 	 *
-	 * @param $path The path of the folder to be deleted.
+	 * @param string $path The path of the folder to be deleted.
 	 * @param bool $force The flag to force delete the folder from cloud storage.
 	 * @return The success/fail response of the delete operation.
 	 */
@@ -539,7 +540,7 @@ class BitcasaApi {
 	/**
 	 * Delete a file from cloud storage.
 	 *
-	 * @param $path The path of the file to be deleted.
+	 * @param string $path The path of the file to be deleted.
 	 * @param bool $force The flag to force delete the file from cloud storage.
 	 * @return The success/fail response of the delete operation.
 	 */
@@ -565,8 +566,8 @@ class BitcasaApi {
 	/**
 	 * Alter the attributes of the folder at a given path.
 	 *
-	 * @param $path The folder path.
-	 * @param $attrs The attributes to be altered.
+	 * @param string $path The folder path.
+	 * @param mixed $attrs The attributes to be altered.
 	 * @param string $conflict Specifies the action to take if a conflict occurs.
 	 * @return The success/fail response of the alter operation.
 	 * @throws InvalidArgument
@@ -590,8 +591,8 @@ class BitcasaApi {
 	/**
 	 * Alter the attributes of the file at a given path.
 	 *
-	 * @param $path The file path.
-	 * @param $attrs The attributes to be altered.
+	 * @param string $path The file path.
+	 * @param mixed $attrs The attributes to be altered.
 	 * @param string $conflict Specifies the action to take if a conflict occurs.
 	 * @return The success/fail response of the alter operation.
 	 * @throws InvalidArgument
@@ -615,9 +616,9 @@ class BitcasaApi {
 	/**
 	 * Copy a folder at a given path to a specified destination.
 	 *
-	 * @param $path The path of the folder to be copied.
-	 * @param $dest Path to which the folder should be copied to.
-	 * @param $name Name of the newly copied folder.
+	 * @param string $path The path of the folder to be copied.
+	 * @param string $dest Path to which the folder should be copied to.
+	 * @param string $name Name of the newly copied folder.
 	 * @param string $exists Specifies the action to take if the folder already exists.
 	 * @return The success/fail response of the copy operation
 	 */
@@ -645,9 +646,9 @@ class BitcasaApi {
 	/**
 	 * Copy a file at a given path to a specified destination.
 	 *
-	 * @param $path The path of the file to be copied.
-	 * @param $dest Path to which the file should be copied to.
-	 * @param $name Name of the newly copied file.
+	 * @param string $path The path of the file to be copied.
+	 * @param string $dest Path to which the file should be copied to.
+	 * @param string $name Name of the newly copied file.
 	 * @param string $exists Specifies the action to take if the file already exists.
 	 * @return The success/fail response of the copy operation
 	 */
@@ -675,9 +676,9 @@ class BitcasaApi {
 	/**
 	 * Move a folder at a given path to a specified destination.
 	 *
-	 * @param $path The path of the folder to be moved.
-	 * @param $dest Path to which the folder should be moved to.
-	 * @param $name Name of the newly moved folder.
+	 * @param string $path The path of the folder to be moved.
+	 * @param string $dest Path to which the folder should be moved to.
+	 * @param string $name Name of the newly moved folder.
 	 * @param string $exists Specifies the action to take if the folder already exists.
 	 * @return The success/fail response of the move operation
 	 */
@@ -704,9 +705,9 @@ class BitcasaApi {
 	/**
 	 * Move a file at a given path to a specified destination.
 	 *
-	 * @param $path The path of the file to be moved.
-	 * @param $dest Path to which the file should be moved to.
-	 * @param $name Name of the newly moved file.
+	 * @param string $path The path of the file to be moved.
+	 * @param string $dest Path to which the file should be moved to.
+	 * @param string $name Name of the newly moved file.
 	 * @param string $exists Specifies the action to take if the file already exists.
 	 * @return The success/fail response of the move operation
 	 */
@@ -733,8 +734,8 @@ class BitcasaApi {
 	/**
 	 * Download a file from the cloud storage.
 	 *
-	 * @param $path Path of the file to be downloaded.
-	 * @param null $file The file container for which the item will be downloaded to
+	 * @param string $path Path of the file to be downloaded.
+	 * @param mixed $file The file container for which the item will be downloaded to
 	 * @return The download file/link
 	 */
 	public function downloadFile($path, $file = null) {
@@ -753,9 +754,9 @@ class BitcasaApi {
 	/**
 	 * Upload a file on to the given path.
 	 *
-	 * @param $parentpath The parent folder path to which the file is to be uploaded.
-	 * @param $name The upload file name.
-	 * @param $filepath
+	 * @param string $parentpath The parent folder path to which the file is to be uploaded.
+	 * @param string $name The upload file name.
+	 * @param string $filepath The file path for the file to be downloaded.
 	 * @param string $exists The action to take if the item already exists.
 	 * @return An instance of the uploaded item.
 	 */
@@ -778,8 +779,8 @@ class BitcasaApi {
 	/**
 	 * Restores the file at a given path to a given destination.
 	 *
-	 * @param $path The path of the file to be restored.
-	 * @param $dest The destination of the file to be restored to.
+	 * @param string $path The path of the file to be restored.
+	 * @param string $dest The destination of the file to be restored to.
 	 * @return The success/fail response of the restore operation.
 	 * @throws InvalidArgument
 	 */
@@ -804,7 +805,7 @@ class BitcasaApi {
 	/**
 	 * Retrieves the file history of a given item.
 	 *
-	 * @param $path The path of the item for which the file history needs to be retrieved.
+	 * @param string $path The path of the item for which the file history needs to be retrieved.
 	 * @param int $start Start version.
 	 * @param int $stop Stop version.
 	 * @param int $limit The limit of history entries.
