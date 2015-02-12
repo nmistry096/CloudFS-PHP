@@ -32,7 +32,11 @@ class HTTPConnect {
 	public $eof;
 	public $postdata;
 
-
+	/**
+	 * Initializes the http connect instance.
+	 *
+	 * @param null $session The http session instance.
+	 */
 	public function HTTPConnect($session = null) {
 		$this->curl = null;
 		$this->session = $session;
@@ -53,17 +57,30 @@ class HTTPConnect {
 		}
 	}
 
-
+	/**
+	 * Sets the raw flag of the http request.
+	 */
 	public function raw() {
 		$this->is_raw = true;
 	}
 
+	/**
+	 * Adds the specified http header to the http request.
+	 *
+	 * @param $h The specified http header.
+	 * @param $v The http header value to be added.
+	 */
 	public function addHeader($h, $v) {
 		unset($this->headers[$h]);
 		$this->headers[$h] = $v;
 	}
 
-
+	/**
+	 * Adds the specified http header to the http request if it's missing.
+	 * @param $h The specified http header.
+	 * @param $v The http header value to be added.
+	 * @return bool Flag whether the operation was successful.
+	 */
 	public function addMissingHeader($h, $v) {
 		if (!isset($this->headers[$h])) {
 			$this->headers[$h] = $v;
@@ -72,7 +89,13 @@ class HTTPConnect {
 		return false;
 	}
 
-
+	/**
+	 * Retrieves whether the http request has the specified http header.
+	 *
+	 * @param $h The specified http header.
+	 * @param null $value The specified http header value.
+	 * @return bool The flag as to whether the http request has the specified header.
+	 */
 	public function hasHeader($h, $value = null)
 	{
 		if (!isset($this->headers[$h])) {
@@ -84,6 +107,11 @@ class HTTPConnect {
 		return true;
 	}
 
+	/**
+	 * Retrieves the header of an http request.
+	 *
+	 * @return array
+	 */
 	public function getHeaders() {
 		$result = array();
 		foreach ($this->headers as $k => $v) {
@@ -93,7 +121,12 @@ class HTTPConnect {
 		return $result;
 	}
 
-
+	/**
+	 * Sets the data and the data length of the http request.
+	 *
+	 * @param $data The data to be added to the http request.
+	 * @param int $len The length of the added data.
+	 */
 	public function sendData($data, $len = 0) {
 		if ($len == 0) {
 			$len = count($data);
@@ -102,7 +135,13 @@ class HTTPConnect {
 		$this->data = $data;
 	}
 
-
+	/**
+	 * Posts the http request to a given url.
+	 *
+	 * @param $url The url for the http post.
+	 * @return The posts http status.
+	 * @throws Exception
+	 */
 	public function post($url) {
 		$this->setup();
 		if ($this->data != null && $this->datalen > 0) {
@@ -116,7 +155,14 @@ class HTTPConnect {
 		return $this->http_status;
 	}
 
-
+	/**
+	 * Reads and retrieves the data of the http request.
+	 *
+	 * @param $curl
+	 * @param $fd
+	 * @param $length Variable to retrieve the http request data of a given length.
+	 * @return The http request data.
+	 */
 	public function read_function($curl, $fd, $length) {
 		$resp = null;
 		if ($this->postdata != null) {
@@ -147,7 +193,16 @@ class HTTPConnect {
 		return $resp;
 	}
 
-
+	/**
+	 * Posts the http request with multiple parts to a given url.
+	 *
+	 * @param $url The url for the http post.
+	 * @param $name The filename to be posted.
+	 * @param $path The path of the item to be posted.
+	 * @param $exists Specifies action to take if item exists.
+	 * @return  The posts http status.
+	 * @throws Exception
+	 */
 	public function post_multipart($url, $name, $path, $exists) {
 		$bdry = dechex(time(0));
 		$this->is_raw = true;
@@ -172,28 +227,52 @@ class HTTPConnect {
 		return $this->http_status;
 	}
 
-
+	/**
+	 * Carries out a put http request on the given url.
+	 *
+	 * @param $url The url for the http put.
+	 * @return   The put operations http status.
+	 * @throws Exception
+	 */
 	public function put($url) {
 		$this->setup();
 		$this->process($url);
 		return $this->http_status;
 	}
 
-
+	/**
+	 * Carries out a get http request on the given url.
+	 *
+	 * @param $url The url for the get request.
+	 * @return The get operations http status.
+	 * @throws Exception
+	 */
 	public function get($url) {
 		$this->setup();
 		$this->process($url);
 		return $this->http_status;
 	}
 
-
+	/**
+	 * Carries out a head http request on the given url.
+	 *
+	 * @param $url	The url for the head request.
+	 * @return  The head operations http status.
+	 * @throws Exception
+	 */
 	public function head($url) {
 		$this->setup();
 		$this->process($url);
 		return $this->http_status;
 	}
 
-
+	/**
+	 * Carries out a delete http request on the given url.
+	 *
+	 * @param $url	The url for the delete operation.
+	 * @return  The delete operations http status.
+	 * @throws Exception
+	 */
 	public function delete($url) {
 		$this->setup();
 		curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, "DELETE");
@@ -201,7 +280,14 @@ class HTTPConnect {
 		return $this->http_status;
 	}
 
-
+	/**
+	 * Returns the response for the http request.
+	 *
+	 * @param bool $json Json received as response.
+	 * @param bool $check Flag to check the response with bitcasa status.
+	 * @return The http response.
+	 * @throws BitcasaError
+	 */
 	public function getResponse($json = false, $check = true) {
 		if ($json && $this->hasHeader('Accept', 'application/json')) {
 			$res = json_decode($this->response, true);
@@ -214,15 +300,30 @@ class HTTPConnect {
 		return $this->response;
 	}
 
+	/**
+	 * Sets the user agent of the http operation.
+	 *
+	 * @param $agent The user agent.
+	 */
 	public function setUserAgent($agent) {
 		$this->user_agent = $agent;
 	}
 
+	/**
+	 * Retrieves the user agent of the http operation.
+	 *
+	 * @return The user agent.
+	 */
 	public function getUserAgent() {
 		return $this->user_agent;
 	}
-	
 
+	/**
+	 * Validates and processes the http request.
+	 *
+	 * @param $url The url variable for curl operations.
+	 * @throws Exception
+	 */
 	private function process($url) {
 		//if (substr($url, -1, 1) == "/") {
 		//	$url = substr($url, 0, -1);
@@ -291,6 +392,9 @@ class HTTPConnect {
 		curl_close($this->curl);
 	}
 
+	/**
+	 * Setup the http request adding the necessary headers and the access token.
+	 */
 	private function setup() {
 		$this->curl = curl_init();
 		$this->http_status = 0;
@@ -298,12 +402,19 @@ class HTTPConnect {
         $this->addMissingHeader("Authorization", $token);
 		$this->addMissingHeader("Content-Type", "application/x-www-form-urlencoded; charset=\"utf-8\"");
 		if ($this->user_agent != null) {
-			curl_setopt($curl, CURLOPT_USERAGENT, 'http://testcURL.com');
+			curl_setopt($this->curl, CURLOPT_USERAGENT, 'http://testcURL.com');
 		}
 	}
 }
 
-
+/**
+ * Reads and retrieves the data of the http request.
+ *
+ * @param $curl
+ * @param $instance The http request instance.
+ * @param $length Variable to retrieve the http request data of a given length.
+ * @return The http request data.
+ */
 function read_function($curl, $instance, $length) {
 	$resp = null;
 	if ($instance->postdata != null) {

@@ -15,7 +15,7 @@ abstract class BitcasaUtils {
 	 * Retrieves if a status code is successful or not.
 	 *
 	 * @param $status Status code to evaluate.
-	 * @return bool Flag whether the
+	 * @return bool Flag whether the operation was successful.
 	 */
 	public static function isSuccess($status) {
 		return $status >= 200 && $status < 300;
