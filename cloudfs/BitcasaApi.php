@@ -30,7 +30,7 @@ class Credential {
 	/**
 	 * Initializes the Credentials instance.
 	 *
-	 * @param mixed $session
+	 * @param Session $session
 	 * @param string $endpoint
 	 */
 	public function __construct($session = null, $endpoint = NULL) {
@@ -42,16 +42,16 @@ class Credential {
 	/**
 	 * Retrieves the credentials api endpoint.
 	 *
-	 * @return The api endpoint.
+	 * @return string The api endpoint.
 	 */
 	public function getEndPoint() {
 		return $this->endpoint;
 	}
 
 	/**
-	 * Retrieves the credentials application context.
+	 * Retrieves the application context.
 	 *
-	 * @return The application context.
+	 * @return object The application context.
 	 */
 	public function getApplicationContext() {
 		return $this->applicationContext;
@@ -60,7 +60,7 @@ class Credential {
 	/**
 	 * Retrieves the credentials access token.
 	 *
-	 * @return The access token.
+	 * @return string The access token.
 	 */
 	public function getAccessToken() {
 		return $this->accessToken;
@@ -78,7 +78,7 @@ class Credential {
 	/**
 	 * Retrieves the credential token type.
 	 *
-	 * @return The token type.
+	 * @return string The token type.
 	 */
 	public function getTokenType() {
 		return $this->tokenType;
@@ -99,7 +99,7 @@ class Credential {
 	 * @param string $method Request url method variable.
 	 * @param string $operation Request url operation.
 	 * @param mixed $params Parameters for request url.
-	 * @return The request url.
+	 * @return string The request url.
 	 */
 	public function getRequestUrl($method, $operation = null, $params = null) {
 		return BitcasaUtils::getRequestUrl($this, $method, $operation, $params);
@@ -161,7 +161,7 @@ class Session {
 	/**
 	 * Retrieves the bitcasa client api.
 	 *
-	 * @return The bitcasa client api.
+	 * @return object The bitcasa client api.
 	 */
 	public function getClientApi() {
 		return $this->bitcasaClientApi;
@@ -170,7 +170,7 @@ class Session {
 	/**
 	 * Retrieves the linked status of the app with bitcasa.
 	 *
-	 * @return The linked status.
+	 * @return bool The linked status.
 	 */
     public function isLinked() {
     	if ($this->credential->getAccessToken() == null)
@@ -190,11 +190,10 @@ class Session {
     
     /**
      * Retrieves the user information from bitcasa.
-	 * This method requires a request to network
-     * @return The user information.
+	 * This method requires a request to network.
      * @throws IOException
      * @throws BitcasaException
-     * @return Current Bitcasa User information
+     * @return mixed Current Bitcasa User information
      */
     public function user() {
      	$userInfo = $this->bitcasaClientApi->getBitcasaAccountDataApi()->requestUserInfo();
@@ -203,11 +202,10 @@ class Session {
     
     /**
 	 * Retrieves the account information from bitcasa.
-     * This method requires a request to network
-     * @return The account information.
+     * This method requires a request to network.
      * @throws IOException
-     * @throws BitcasaException
-     * @return current Bitcasa Account information
+     * @throws BitcamixedsaException
+     * @return mixed Current Bitcasa Account information
      */
     public function account() {
 		$accountInfo = $this->bitcasaClientApi->getBitcasaAccountDataApi()->requestAccountInfo();
@@ -217,7 +215,7 @@ class Session {
 	/**
 	 * Retrieves the bitcasa filesystem.
 	 *
-	 * @return The bitcasa filesystem
+	 * @return mixed The bitcasa filesystem
 	 */
     public function filesystem() {
     	return new Filesystem($this->bitcasaClientApi);
@@ -226,7 +224,7 @@ class Session {
 	/**
 	 * Retrieves the session client id.
 	 *
-	 * @return The client id.
+	 * @return int The client id.
 	 */
 	public function getClientId() {
 		return $this->clientId;
@@ -244,7 +242,7 @@ class Session {
 	/**
 	 * Retrieves the session client secret.
 	 *
-	 * @return The client secret.
+	 * @return string The client secret.
 	 */
 	public function getClientSecret() {
 		return $this->clientSecret;
@@ -262,7 +260,7 @@ class Session {
 	/**
 	 * Retrieves the sessions bitcasa client api.
 	 *
-	 * @return The bitcasa client api.
+	 * @return mixed The bitcasa client api.
 	 */
 	public function getBitcasaClientApi() {
 		return $this->bitcasaClientApi;
@@ -280,7 +278,7 @@ class Session {
 	/**
 	 * Retrieves the access token.
 	 *
-	 * @return The access token.
+	 * @return string The access token.
 	 */
 	public function getAccessToken() {
 		return $this->credential->getAccessToken();
@@ -309,10 +307,10 @@ class BitcasaApi {
 	/**
 	 * Retrieves the CloudFS access token through an api request.
 	 *
-	 * @param mixed $session The bitcasa session.
+	 * @param Session $session The bitcasa session.
 	 * @param string $username Bitcasa username.
 	 * @param string $password Bitcasa password.
-	 * @return bool
+	 * @return bool The success status of retrieving the access token.
 	 */
     public function getAccessToken($session, $username, $password) {
 
@@ -375,7 +373,7 @@ class BitcasaApi {
 	 * @param int $version Version filter for items being retrieved.
 	 * @param int $depth Depth variable for how many levels of items to be retrieved.
 	 * @param mixed $filter Variable to filter the items being retrieved.
-	 * @return The item list.
+	 * @return Item[] The item list.
 	 * @throws Exception
 	 */
 	public function getList($parent = null, $version = 0, $depth = 0, $filter = null) {
@@ -414,7 +412,7 @@ class BitcasaApi {
 	 * Retrieves the meta data of a file at a given path.
 	 *
 	 * @param string $path The path of the item.
-	 * @return The meta data of the item.
+	 * @return mixed The meta data of the item.
 	 * @throws Exception
 	 */
 	public function getFileMeta($path) {
@@ -447,7 +445,7 @@ class BitcasaApi {
 	 * Retrieves the meta data of a folder at a given path.
 	 *
 	 * @param string $path The path of the item.
-	 * @return The meta data of the item.
+	 * @return mixed The meta data of the item.
 	 * @throws Exception
 	 */
 	public function getFolderMeta($path) {
@@ -482,7 +480,7 @@ class BitcasaApi {
 	 * @param string $parentpath The folder path under which the new folder should be created.
 	 * @param string $filename The name for the folder to be created.
 	 * @param string $exists Specifies the action to take if the folder already exists.
-	 * @return An instance of the newly created item of type Folder.
+	 * @return Item An instance of the newly created item of type Folder.
 	 * @throws InvalidArgument]
 	 */
 	public function createFolder($parentpath, $filename, $exists = Exists::FAIL) {
@@ -516,7 +514,7 @@ class BitcasaApi {
 	 *
 	 * @param string $path The path of the folder to be deleted.
 	 * @param bool $force The flag to force delete the folder from cloud storage.
-	 * @return The success/fail response of the delete operation.
+	 * @return string The success/fail response of the delete operation.
 	 */
 	public function deleteFolder($path, $force = false) {
 		assert_string($path, 1);
@@ -542,7 +540,7 @@ class BitcasaApi {
 	 *
 	 * @param string $path The path of the file to be deleted.
 	 * @param bool $force The flag to force delete the file from cloud storage.
-	 * @return The success/fail response of the delete operation.
+	 * @return string The success/fail response of the delete operation.
 	 */
 	public function deleteFile($path, $force = false) {
 		assert_string($path, 1);
@@ -569,7 +567,7 @@ class BitcasaApi {
 	 * @param string $path The folder path.
 	 * @param mixed $attrs The attributes to be altered.
 	 * @param string $conflict Specifies the action to take if a conflict occurs.
-	 * @return The success/fail response of the alter operation.
+	 * @return string The success/fail response of the alter operation.
 	 * @throws InvalidArgument
 	 */
 	public function alterFolder($path, $attrs, $conflict = "fail") {
@@ -594,7 +592,7 @@ class BitcasaApi {
 	 * @param string $path The file path.
 	 * @param mixed $attrs The attributes to be altered.
 	 * @param string $conflict Specifies the action to take if a conflict occurs.
-	 * @return The success/fail response of the alter operation.
+	 * @return string The success/fail response of the alter operation.
 	 * @throws InvalidArgument
 	 */
 	public function alterFile($path, $attrs, $conflict = "fail") {
@@ -620,7 +618,7 @@ class BitcasaApi {
 	 * @param string $dest Path to which the folder should be copied to.
 	 * @param string $name Name of the newly copied folder.
 	 * @param string $exists Specifies the action to take if the folder already exists.
-	 * @return The success/fail response of the copy operation
+	 * @return string The success/fail response of the copy operation
 	 */
 	public function copyFolder($path, $dest, $name = null, $exists = "fail") {
 		assert_string($path, 1);
@@ -650,7 +648,7 @@ class BitcasaApi {
 	 * @param string $dest Path to which the file should be copied to.
 	 * @param string $name Name of the newly copied file.
 	 * @param string $exists Specifies the action to take if the file already exists.
-	 * @return The success/fail response of the copy operation
+	 * @return string The success/fail response of the copy operation
 	 */
 	public function copyFile($path, $dest, $name = null, $exists = "fail") {
 		assert_string($path, 1);
@@ -680,7 +678,7 @@ class BitcasaApi {
 	 * @param string $dest Path to which the folder should be moved to.
 	 * @param string $name Name of the newly moved folder.
 	 * @param string $exists Specifies the action to take if the folder already exists.
-	 * @return The success/fail response of the move operation
+	 * @return string The success/fail response of the move operation
 	 */
 	public function moveFolder($path, $dest, $name = null, $exists = "fail") {
 		assert_path($path, 1);
@@ -709,7 +707,7 @@ class BitcasaApi {
 	 * @param string $dest Path to which the file should be moved to.
 	 * @param string $name Name of the newly moved file.
 	 * @param string $exists Specifies the action to take if the file already exists.
-	 * @return The success/fail response of the move operation
+	 * @return string The success/fail response of the move operation
 	 */
 	public function moveFile($path, $dest, $name = null, $exists = "fail") {
 		assert_path($path, 1);
@@ -736,7 +734,7 @@ class BitcasaApi {
 	 *
 	 * @param string $path Path of the file to be downloaded.
 	 * @param mixed $file The file container for which the item will be downloaded to
-	 * @return The download file/link
+	 * @return string The download file/link
 	 */
 	public function downloadFile($path, $file = null) {
 		$params = array();
@@ -758,7 +756,7 @@ class BitcasaApi {
 	 * @param string $name The upload file name.
 	 * @param string $filepath The file path for the file to be downloaded.
 	 * @param string $exists The action to take if the item already exists.
-	 * @return An instance of the uploaded item.
+	 * @return string An instance of the uploaded item.
 	 */
 	public function uploadFile($parentpath, $name, $filepath, $exists = "overwrite") {
 		assert_string($filepath);
@@ -781,7 +779,7 @@ class BitcasaApi {
 	 *
 	 * @param string $path The path of the file to be restored.
 	 * @param string $dest The destination of the file to be restored to.
-	 * @return The success/fail response of the restore operation.
+	 * @return string The success/fail response of the restore operation.
 	 * @throws InvalidArgument
 	 */
     public function restore($path, $dest) {
@@ -809,7 +807,7 @@ class BitcasaApi {
 	 * @param int $start Start version.
 	 * @param int $stop Stop version.
 	 * @param int $limit The limit of history entries.
-	 * @return File history entries.
+	 * @return mixed File history entries.
 	 * @throws InvalidArgument
 	 */
     public function fileHistory($path, $start = 0, $stop = 0, $limit = 0) {
