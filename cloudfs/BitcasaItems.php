@@ -511,7 +511,7 @@ class Container extends Item {
 	/**
 	 * Initializes a new instance of Container.
 	 *
-	 * @param BitcasaApi $api
+	 * @param BitcasaApi $api The api instance.
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -556,7 +556,7 @@ class Folder extends Container {
 	/**
 	 * Initializes a new instance of Folder.
 	 *
-	 * @param BitcasaApi $api
+	 * @param BitcasaApi $api The api instance.
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -569,7 +569,7 @@ class File extends Item {
 	/**
 	 * Initializes a new instance of File.
 	 *
-	 * @param BitcasaApi $api
+	 * @param BitcasaApi $api The api instance.
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -592,7 +592,7 @@ class Video extends File {
 	/**
 	 * Initializes a new instance of Video.
 	 *
-	 * @param BitcasaApi $api
+	 * @param BitcasaApi $api The api instance.
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -607,7 +607,7 @@ class Photo extends File {
 	/**
 	 * Initializes a new instance of Photo.
 	 *
-	 * @param BitcasaApi $api
+	 * @param BitcasaApi $api The api instance.
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -621,7 +621,7 @@ class Document extends File {
 	/**
 	 * Initializes a new instance of Document.
 	 *
-	 * @param BitcasaApi $api
+	 * @param BitcasaApi $api The api instance.
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -635,7 +635,7 @@ class Audio extends File {
 	/**
 	 * Initializes a new instance of Audio.
 	 *
-	 * @param BitcasaApi $api
+	 * @param BitcasaApi $api The api instance.
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);

@@ -21,7 +21,7 @@ abstract class BitcasaUtils {
 		return $status >= 200 && $status < 300;
 	}
 
-	/***
+	/**
 	 * Retrieves the request url for making bitcasa api calls.
 	 *
 	 * @param Credential $credential Credentials for the bitcasa account.
