@@ -1,0 +1,775 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Audio &mdash; CloudFS-PHP 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="CloudFS-PHP 1.0 documentation" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../index.html">CloudFS-PHP 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="audio">
+<h1>Audio<a class="headerlink" href="#audio" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Audio">
+<em class="property">class </em><tt class="descname">Audio</tt><a class="headerlink" href="#Audio" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Audio::__construct">
+<tt class="descname">__construct</tt><big>(</big><em>$api = null</em><big>)</big><a class="headerlink" href="#Audio::__construct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a new instance of Audio.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$api</strong> (<a class="reference internal" href="BitcasaApi.html#BitcasaApi" title="BitcasaApi"><em>BitcasaApi</em></a>) &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::download">
+<tt class="descname">download</tt><big>(</big><em>$localPath</em><big>)</big><a class="headerlink" href="#Audio::download" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads this file from the cloud.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$localPath</strong> (<em>string</em>) &#8211; The local path where the file is to be downloaded to.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::api">
+<tt class="descname">api</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::api" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves this api instance.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The api instance.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::change">
+<tt class="descname">change</tt><big>(</big><em>$key</em><big>)</big><a class="headerlink" href="#Audio::change" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the passed change key to this items change list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; The supplied change key.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::changes">
+<tt class="descname">changes</tt><big>(</big><em>$add_version = false</em><big>)</big><a class="headerlink" href="#Audio::changes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves this items changes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$add_version</strong> (<em>bool</em>) &#8211; Flag to add version to result or not.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An array of this items changes.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::components_from_path">
+<tt class="descname">components_from_path</tt><big>(</big><em>$path_string</em><big>)</big><a class="headerlink" href="#Audio::components_from_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an array of path components given a path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$path_string</strong> (<em>string</em>) &#8211; Path of an item.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An array of path components.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::path_from_item_list">
+<tt class="descname">path_from_item_list</tt><big>(</big><em>$items</em>, <em>$add_root = False</em><big>)</big><a class="headerlink" href="#Audio::path_from_item_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the path given an item list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$items</strong> (<em>Item[]</em>) &#8211; The items whose path needs to be retrieved.</li>
+<li><strong>$add_root</strong> (<em>bool</em>) &#8211; Flag to add root to the retrieved path or not.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Path of the item list.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::path_from_components">
+<tt class="descname">path_from_components</tt><big>(</big><em>$components</em>, <em>$add_root = False</em><big>)</big><a class="headerlink" href="#Audio::path_from_components" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats and returns the path of an item given an array of paths.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$components</strong> (<em>array</em>) &#8211; The array containing path elements.</li>
+<li><strong>$add_root</strong> (<em>bool</em>) &#8211; Flag to add root to the retrieved path or not.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Formatted path for the given array.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::path_from_item">
+<tt class="descname">path_from_item</tt><big>(</big><em>$item = null</em><big>)</big><a class="headerlink" href="#Audio::path_from_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the path for a given item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$item</strong> (<a class="reference internal" href="Item.html#Item" title="Item"><em>Item</em></a>) &#8211; The item whose path needs to be retrieved.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The path of the item.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::make">
+<tt class="descname">make</tt><big>(</big><em>$data</em>, <em>$parentPath = null</em>, <em>$api = null</em><big>)</big><a class="headerlink" href="#Audio::make" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves an instance of an item for the supplied data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$data</strong> (<em>object</em>) &#8211; The data needed to create an item.</li>
+<li><strong>$parentPath</strong> (<em>string</em>) &#8211; Parent path for the new item.</li>
+<li><strong>$api</strong> (<a class="reference internal" href="BitcasaApi.html#BitcasaApi" title="BitcasaApi"><em>BitcasaApi</em></a>) &#8211; The api instance.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An instance of the new item.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::value">
+<tt class="descname">value</tt><big>(</big><em>$key</em>, <em>$default = null</em><big>)</big><a class="headerlink" href="#Audio::value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the data value of a given key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$key</strong> (<em>string</em>) &#8211; The key for whose data value should be retrieved.</li>
+<li><strong>$default</strong> (<em>string</em>) &#8211; The value to be returned if the data value does not exist.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The data value for the given key.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::name">
+<tt class="descname">name</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the name of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The name of the item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::set_name">
+<tt class="descname">set_name</tt><big>(</big><em>$new_name</em><big>)</big><a class="headerlink" href="#Audio::set_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the name of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$new_name</strong> (<em>string</em>) &#8211; The name of the item.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::id">
+<tt class="descname">id</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the id of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The data id of the item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::set_id">
+<tt class="descname">set_id</tt><big>(</big><em>$new_id</em><big>)</big><a class="headerlink" href="#Audio::set_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the id of this item - Not Allowed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$new_id</strong> (<em>string</em>) &#8211; The new id to be set on the item.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::parent_id">
+<tt class="descname">parent_id</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::parent_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the parent id of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The parent id of this item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::type">
+<tt class="descname">type</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the type of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The type of this item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::set_type">
+<tt class="descname">set_type</tt><big>(</big><em>$new_type</em><big>)</big><a class="headerlink" href="#Audio::set_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the type of this item - Not Allowed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$new_type</strong> (<em>string</em>) &#8211; The new type to be set on the item.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::is_mirrored">
+<tt class="descname">is_mirrored</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::is_mirrored" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the is mirrored flag of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Is mirrored flag of this item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::set_mirrored">
+<tt class="descname">set_mirrored</tt><big>(</big><em>$new_mirrored_flag</em><big>)</big><a class="headerlink" href="#Audio::set_mirrored" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the is mirrored flag of this item - Not Allowed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$new_mirrored_flag</strong> (<em>string</em>) &#8211; The new mirrored flag to be set on the item.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::date_content_last_modified">
+<tt class="descname">date_content_last_modified</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::date_content_last_modified" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the content last modified date of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The content last modified date.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::set_date_content_last_modified">
+<tt class="descname">set_date_content_last_modified</tt><big>(</big><em>$new_date_content_last_modified</em><big>)</big><a class="headerlink" href="#Audio::set_date_content_last_modified" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the content last modified date of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$new_date_content_last_modified</strong> (<em>string</em>) &#8211; The new content last modified date.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::date_created">
+<tt class="descname">date_created</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::date_created" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the created date of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The created date of this item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::set_date_created">
+<tt class="descname">set_date_created</tt><big>(</big><em>$new_date_created</em><big>)</big><a class="headerlink" href="#Audio::set_date_created" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the created date of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$new_date_created</strong> (<em>string</em>) &#8211; The new created date.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::version">
+<tt class="descname">version</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the version of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The version of this item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::set_version">
+<tt class="descname">set_version</tt><big>(</big><em>$new_version</em><big>)</big><a class="headerlink" href="#Audio::set_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the version of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$new_version</strong> (<em>string</em>) &#8211; The new version.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::parent_path">
+<tt class="descname">parent_path</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::parent_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve the parent path id of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The parent path id of this item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::set_parent_path">
+<tt class="descname">set_parent_path</tt><big>(</big><em>$new_absolute_parent_path_id</em><big>)</big><a class="headerlink" href="#Audio::set_parent_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the parent path id of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$new_absolute_parent_path_id</strong> (<em>string</em>) &#8211; The new parent path id.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::date_meta_last_modified">
+<tt class="descname">date_meta_last_modified</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::date_meta_last_modified" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the meta last modified date of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The meta last modified date of this item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::set_date_meta_last_modified">
+<tt class="descname">set_date_meta_last_modified</tt><big>(</big><em>$new_date_meta_last_modified</em><big>)</big><a class="headerlink" href="#Audio::set_date_meta_last_modified" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the meta last modified date of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$new_date_meta_last_modified</strong> (<em>string</em>) &#8211; The new meta last modified date.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::application_data">
+<tt class="descname">application_data</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::application_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the application data of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The application data of this item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::set_application_data">
+<tt class="descname">set_application_data</tt><big>(</big><em>$new_application_data</em><big>)</big><a class="headerlink" href="#Audio::set_application_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the new application data of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$new_application_data</strong> (<em>mixed</em>) &#8211; The new application data.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::url">
+<tt class="descname">url</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the url of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The full path of this item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::path">
+<tt class="descname">path</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the url of this item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The full path of this item.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::move_to">
+<tt class="descname">move_to</tt><big>(</big><em>$dest</em>, <em>$exists = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#Audio::move_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Moves this item to a given destination.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$dest</strong> (<em>string</em>) &#8211; The destination of the item move.</li>
+<li><strong>$exists</strong> (<em>string</em>) &#8211; The action to take if the item exists.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the move operation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::copy_to">
+<tt class="descname">copy_to</tt><big>(</big><em>$dest</em>, <em>$exists = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#Audio::copy_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy this item to a given destination.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$dest</strong> (<em>string</em>) &#8211; The destination of the item copy.</li>
+<li><strong>$exists</strong> (<em>string</em>) &#8211; The action to take if the item exists.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the copy operation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::delete">
+<tt class="descname">delete</tt><big>(</big><em>$commit = False</em>, <em>$force = False</em><big>)</big><a class="headerlink" href="#Audio::delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete this item from the cloud.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$commit</strong> (<em>bool</em>) &#8211; Flag to commit the delete operation.</li>
+<li><strong>$force</strong> (<em>bool</em>) &#8211; Flag to force the delete operation.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the delete operation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::save">
+<tt class="descname">save</tt><big>(</big><em>$if_conflict = &quot;fail&quot;</em>, <em>$debug = False</em><big>)</big><a class="headerlink" href="#Audio::save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save this item on the cloud.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$if_conflict</strong> (<em>string</em>) &#8211; The action to take if a conflict occurs.</li>
+<li><strong>$debug</strong> (<em>bool</em>) &#8211; Debug flag.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the save operation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::restore">
+<tt class="descname">restore</tt><big>(</big><em>$dest</em><big>)</big><a class="headerlink" href="#Audio::restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restores this item to the given destination.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>$dest</strong> (<em>string</em>) &#8211; The destination of the item restore.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The success/fail response of the restore operation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Audio::history">
+<tt class="descname">history</tt><big>(</big><big>)</big><a class="headerlink" href="#Audio::history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the files history of this file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The file history response.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/sdk/no-namespace/Audio.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../index.html">CloudFS-PHP 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Dhanushka.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
