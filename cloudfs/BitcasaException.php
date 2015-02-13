@@ -54,7 +54,7 @@ class BitcasaStatus {
 	/**
 	 * Retrieves the status success status.
 	 *
-	 * @return Success status.
+	 * @return The success status.
 	 */
 	public function success()
 	{
@@ -84,9 +84,9 @@ class BitcasaError extends Exception {
 	private $status;
 
 	/**
-	 * Initilizes the Bitcasa Error instance.
+	 * Initializes the Bitcasa Error instance.
 	 *
-	 * @param string $status The error status.
+	 * @param BitcasaStatus $status The error status.
 	 */
 	public function __construct($status) {
 		$this->status = $status;
@@ -96,7 +96,7 @@ class BitcasaError extends Exception {
 	/**
 	 * Retrieves the error status.
 	 *
-	 * @return string The error status.
+	 * @return The error status.
 	 */
 	public function get_status() {
 		return $this->status;
