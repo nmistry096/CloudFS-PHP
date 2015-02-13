@@ -11,7 +11,7 @@ Folder
         Initializes a new instance of Folder.
 
         :type $api: BitcasaApi
-        :param $api:
+        :param $api: The api instance.
 
     .. php:method:: get_list()
 

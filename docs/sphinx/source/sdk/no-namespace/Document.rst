@@ -11,7 +11,7 @@ Document
         Initializes a new instance of Document.
 
         :type $api: BitcasaApi
-        :param $api:
+        :param $api: The api instance.
 
     .. php:method:: download($localPath)
 

@@ -11,7 +11,7 @@ Photo
         Initializes a new instance of Photo.
 
         :type $api: BitcasaApi
-        :param $api:
+        :param $api: The api instance.
 
     .. php:method:: download($localPath)
 

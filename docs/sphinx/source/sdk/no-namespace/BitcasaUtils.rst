@@ -23,10 +23,17 @@ BitcasaUtils
 
     .. php:method:: getRequestUrl($credential, $request, $method = NULL, $queryParams = NULL)
 
-        :param $credential:
-        :param $request:
-        :param $method:
-        :param $queryParams:
+        Retrieves the request url for making bitcasa api calls.
+
+        :type $credential: Credential
+        :param $credential: Credentials for the bitcasa account.
+        :type $request: string
+        :param $request: Request parameters for api call.
+        :type $method: string
+        :param $method: Request method variable.
+        :type $queryParams: array
+        :param $queryParams: Query parameters for the api call.
+        :returns: The request url.
 
     .. php:method:: generateParamsString($params)
 

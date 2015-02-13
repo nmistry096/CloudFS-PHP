@@ -11,7 +11,7 @@ Container
         Initializes a new instance of Container.
 
         :type $api: BitcasaApi
-        :param $api:
+        :param $api: The api instance.
 
     .. php:method:: get_list()
 

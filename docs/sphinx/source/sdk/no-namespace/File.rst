@@ -11,7 +11,7 @@ File
         Initializes a new instance of File.
 
         :type $api: BitcasaApi
-        :param $api:
+        :param $api: The api instance.
 
     .. php:method:: download($localPath)
 

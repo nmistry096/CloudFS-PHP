@@ -11,7 +11,7 @@ Audio
         Initializes a new instance of Audio.
 
         :type $api: BitcasaApi
-        :param $api:
+        :param $api: The api instance.
 
     .. php:method:: download($localPath)
 

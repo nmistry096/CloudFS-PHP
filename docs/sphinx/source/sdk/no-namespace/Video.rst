@@ -11,7 +11,7 @@ Video
         Initializes a new instance of Video.
 
         :type $api: BitcasaApi
-        :param $api:
+        :param $api: The api instance.
 
     .. php:method:: download($localPath)
 
