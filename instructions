@@ -6,8 +6,8 @@ sudo apt-get install python-sphinx
 sudo pip install sphinxcontrib-phpdomain
 
 Generate rst files
-sphpdox --output="<outputpath>"
-namespace (<namespace> or "no-namespace" if namespaces are not used)
+
+./vendor/bin/sphpdox process --output="/home/dhanushka/Work/bitcasa/CloudFS-PHP/docs/sphinx/source/sdk" no-namespace "/home/dhanushka/Work/bitcasa/CloudFS-PHP/cloudfs"
 
 make html
 
