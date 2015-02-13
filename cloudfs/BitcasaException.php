@@ -19,7 +19,8 @@ class BitcasaStatus {
 
 	/**
 	 * Initializes the Bitcasa status instance.
-	 * @param $response
+	 *
+	 * @param object $response
 	 */
 	public function __construct($response) {
 		$this->response = $response;
@@ -129,7 +130,7 @@ class InvalidArgument extends Exception {
 /**
  * Check if a supplied argument in null or not.
  *
- * @param $s The argument to validate.
+ * @param mixed $s The argument to validate.
  * @param int $argno The argument number to pass to InvalidArgument.
  * @return bool The null status of the argument supplied.
  * @throws InvalidArgument
@@ -144,7 +145,7 @@ function assert_non_null($s, $argno = 0) {
 /**
  * Check if a supplied argument is of type string or not.
  *
- * @param $s The argument to validate.
+ * @param mixed $s The argument to validate.
  * @param int $argno The argument number to pass to InvalidArgument.
  * @return bool The string  status of the argument supplied.
  * @throws InvalidArgument
@@ -159,7 +160,7 @@ function assert_string($s, $argno = 0) {
 /**
  * Check if a supplied argument is null or of type string.
  *
- * @param $s The argument to validate.
+ * @param mixed $s The argument to validate.
  * @param int $argno The argument number to pass to InvalidateArgument.
  * @return bool The string or null status of the argument supplied.
  * @throws InvalidArgument
@@ -174,7 +175,7 @@ function assert_string_or_null($s, $argno = 0) {
 /**
  * Check if a supplied argument is a number or not.
  *
- * @param $s The argument to validate.
+ * @param mixed $s The argument to validate.
  * @param int $argno The argument number to pass to InvalidateArgument.
  * @return bool The number status of the argument supplied.
  * @throws InvalidArgument
@@ -189,7 +190,7 @@ function assert_number($s, $argno = 0) {
 /**
  * Check if a supplied argument is a path or not.
  *
- * @param $s The argument to validate.
+ * @param mixed $s The argument to validate.
  * @param int $argno The argument number to pass to InvalidateArgument.
  * @return bool The path status of the argument supplied.
  * @throws InvalidArgument
