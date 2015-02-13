@@ -1,0 +1,417 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BitcasaApi &mdash; CloudFS-PHP 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="CloudFS-PHP 1.0 documentation" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../index.html">CloudFS-PHP 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="bitcasaapi">
+<h1>BitcasaApi<a class="headerlink" href="#bitcasaapi" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="BitcasaApi">
+<em class="property">class </em><tt class="descname">BitcasaApi</tt><a class="headerlink" href="#BitcasaApi" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="BitcasaApi::__construct">
+<tt class="descname">__construct</tt><big>(</big><em>$credential</em><big>)</big><a class="headerlink" href="#BitcasaApi::__construct" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$credential</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::getAccessToken">
+<tt class="descname">getAccessToken</tt><big>(</big><em>$session</em>, <em>$username</em>, <em>$password</em><big>)</big><a class="headerlink" href="#BitcasaApi::getAccessToken" title="Permalink to this definition">¶</a></dt>
+<dd><p>an api request to CloudFS server to get access token</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$session</strong> &#8211; </li>
+<li><strong>$username</strong> &#8211; </li>
+<li><strong>$password</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::getList">
+<tt class="descname">getList</tt><big>(</big><em>$parent = null</em>, <em>$version = 0</em>, <em>$depth = 0</em>, <em>$filter = null</em><big>)</big><a class="headerlink" href="#BitcasaApi::getList" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$parent</strong> &#8211; </li>
+<li><strong>$version</strong> &#8211; </li>
+<li><strong>$depth</strong> &#8211; </li>
+<li><strong>$filter</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::getFileMeta">
+<tt class="descname">getFileMeta</tt><big>(</big><em>$path</em><big>)</big><a class="headerlink" href="#BitcasaApi::getFileMeta" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::getFolderMeta">
+<tt class="descname">getFolderMeta</tt><big>(</big><em>$path</em><big>)</big><a class="headerlink" href="#BitcasaApi::getFolderMeta" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::createFolder">
+<tt class="descname">createFolder</tt><big>(</big><em>$parentpath</em>, <em>$filename</em>, <em>$exists = Exists::FAIL</em><big>)</big><a class="headerlink" href="#BitcasaApi::createFolder" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$parentpath</strong> &#8211; </li>
+<li><strong>$filename</strong> &#8211; </li>
+<li><strong>$exists</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::deleteFolder">
+<tt class="descname">deleteFolder</tt><big>(</big><em>$path</em>, <em>$force = false</em><big>)</big><a class="headerlink" href="#BitcasaApi::deleteFolder" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> &#8211; </li>
+<li><strong>$force</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::deleteFile">
+<tt class="descname">deleteFile</tt><big>(</big><em>$path</em>, <em>$force = false</em><big>)</big><a class="headerlink" href="#BitcasaApi::deleteFile" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> &#8211; </li>
+<li><strong>$force</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::alterFolder">
+<tt class="descname">alterFolder</tt><big>(</big><em>$path</em>, <em>$attrs</em>, <em>$conflict = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::alterFolder" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> &#8211; </li>
+<li><strong>$attrs</strong> &#8211; </li>
+<li><strong>$conflict</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::alterFile">
+<tt class="descname">alterFile</tt><big>(</big><em>$path</em>, <em>$attrs</em>, <em>$conflict = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::alterFile" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> &#8211; </li>
+<li><strong>$attrs</strong> &#8211; </li>
+<li><strong>$conflict</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::copyFolder">
+<tt class="descname">copyFolder</tt><big>(</big><em>$path</em>, <em>$dest</em>, <em>$name = null</em>, <em>$exists = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::copyFolder" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> &#8211; </li>
+<li><strong>$dest</strong> &#8211; </li>
+<li><strong>$name</strong> &#8211; </li>
+<li><strong>$exists</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::copyFile">
+<tt class="descname">copyFile</tt><big>(</big><em>$path</em>, <em>$dest</em>, <em>$name = null</em>, <em>$exists = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::copyFile" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> &#8211; </li>
+<li><strong>$dest</strong> &#8211; </li>
+<li><strong>$name</strong> &#8211; </li>
+<li><strong>$exists</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::moveFolder">
+<tt class="descname">moveFolder</tt><big>(</big><em>$path</em>, <em>$dest</em>, <em>$name = null</em>, <em>$exists = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::moveFolder" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> &#8211; </li>
+<li><strong>$dest</strong> &#8211; </li>
+<li><strong>$name</strong> &#8211; </li>
+<li><strong>$exists</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::moveFile">
+<tt class="descname">moveFile</tt><big>(</big><em>$path</em>, <em>$dest</em>, <em>$name = null</em>, <em>$exists = &quot;fail&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::moveFile" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> &#8211; </li>
+<li><strong>$dest</strong> &#8211; </li>
+<li><strong>$name</strong> &#8211; </li>
+<li><strong>$exists</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::downloadFile">
+<tt class="descname">downloadFile</tt><big>(</big><em>$path</em>, <em>$file = null</em><big>)</big><a class="headerlink" href="#BitcasaApi::downloadFile" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> &#8211; </li>
+<li><strong>$file</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::uploadFile">
+<tt class="descname">uploadFile</tt><big>(</big><em>$parentpath</em>, <em>$name</em>, <em>$filepath</em>, <em>$exists = &quot;overwrite&quot;</em><big>)</big><a class="headerlink" href="#BitcasaApi::uploadFile" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$parentpath</strong> &#8211; </li>
+<li><strong>$name</strong> &#8211; </li>
+<li><strong>$filepath</strong> &#8211; </li>
+<li><strong>$exists</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::restore">
+<tt class="descname">restore</tt><big>(</big><em>$path</em>, <em>$dest</em><big>)</big><a class="headerlink" href="#BitcasaApi::restore" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> &#8211; </li>
+<li><strong>$dest</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaApi::fileHistory">
+<tt class="descname">fileHistory</tt><big>(</big><em>$path</em>, <em>$start = 0</em>, <em>$stop = 0</em>, <em>$limit = 0</em><big>)</big><a class="headerlink" href="#BitcasaApi::fileHistory" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$path</strong> &#8211; </li>
+<li><strong>$start</strong> &#8211; </li>
+<li><strong>$stop</strong> &#8211; </li>
+<li><strong>$limit</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/sdk/no-namespace/BitcasaApi.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../index.html">CloudFS-PHP 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Dhanushka.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

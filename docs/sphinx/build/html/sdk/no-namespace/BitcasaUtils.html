@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>BitcasaUtils &mdash; CloudFS-PHP 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="CloudFS-PHP 1.0 documentation" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../index.html">CloudFS-PHP 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="bitcasautils">
+<h1>BitcasaUtils<a class="headerlink" href="#bitcasautils" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="BitcasaUtils">
+<em class="property">class </em><tt class="descname">BitcasaUtils</tt><a class="headerlink" href="#BitcasaUtils" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bitcasa Client PHP SDK
+Copyright (C) 2014 Bitcasa, Inc.</p>
+<p>This file contains an SDK in PHP for accessing the Bitcasa infinite drive.</p>
+<p>For support, please send email to <a class="reference external" href="mailto:support&#37;&#52;&#48;bitcasa&#46;com">support<span>&#64;</span>bitcasa<span>&#46;</span>com</a>.</p>
+<dl class="method">
+<dt id="BitcasaUtils::isSuccess">
+<tt class="descname">isSuccess</tt><big>(</big><em>$status</em><big>)</big><a class="headerlink" href="#BitcasaUtils::isSuccess" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$status</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaUtils::getRequestUrl">
+<tt class="descname">getRequestUrl</tt><big>(</big><em>$credential</em>, <em>$request</em>, <em>$method = NULL</em>, <em>$queryParams = NULL</em><big>)</big><a class="headerlink" href="#BitcasaUtils::getRequestUrl" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$credential</strong> &#8211; </li>
+<li><strong>$request</strong> &#8211; </li>
+<li><strong>$method</strong> &#8211; </li>
+<li><strong>$queryParams</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaUtils::generateParamsString">
+<tt class="descname">generateParamsString</tt><big>(</big><em>$params</em><big>)</big><a class="headerlink" href="#BitcasaUtils::generateParamsString" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$params</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaUtils::replaceSpaceWithPlus">
+<tt class="descname">replaceSpaceWithPlus</tt><big>(</big><em>$s</em><big>)</big><a class="headerlink" href="#BitcasaUtils::replaceSpaceWithPlus" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$s</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaUtils::hex2base64">
+<tt class="descname">hex2base64</tt><big>(</big><em>$hex</em><big>)</big><a class="headerlink" href="#BitcasaUtils::hex2base64" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$hex</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaUtils::sha1">
+<tt class="descname">sha1</tt><big>(</big><em>$s</em>, <em>$secret</em><big>)</big><a class="headerlink" href="#BitcasaUtils::sha1" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$s</strong> &#8211; </li>
+<li><strong>$secret</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="BitcasaUtils::generateAuthorizationValue">
+<tt class="descname">generateAuthorizationValue</tt><big>(</big><em>$session</em>, <em>$uri</em>, <em>$params</em>, <em>$date</em><big>)</big><a class="headerlink" href="#BitcasaUtils::generateAuthorizationValue" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>$session</strong> &#8211; </li>
+<li><strong>$uri</strong> &#8211; </li>
+<li><strong>$params</strong> &#8211; </li>
+<li><strong>$date</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/sdk/no-namespace/BitcasaUtils.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../index.html">CloudFS-PHP 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Dhanushka.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
