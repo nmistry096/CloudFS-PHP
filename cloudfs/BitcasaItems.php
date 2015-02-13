@@ -20,7 +20,7 @@ class Item {
 	/**
 	 * Initializes the item instance.
 	 *
-	 * @param object $api The api instance.
+	 * @param BitcasaApi $api The api instance.
 	 */
 	public function __construct($api = null) {
 		$this->data = NULL;
@@ -43,7 +43,7 @@ class Item {
 	/**
 	 * Adds the passed change key to this items change list.
 	 *
-	 * @param $key The supplied change key.
+	 * @param string $key The supplied change key.
 	 */
 	public function change($key) {
 		$this->change_list[] = $key;
@@ -83,7 +83,7 @@ class Item {
 	/**
 	 * Retrieves the path given an item list.
 	 *
-	 * @param object $items The items whose path needs to be retrieved.
+	 * @param Item[] $items The items whose path needs to be retrieved.
 	 * @param bool $add_root Flag to add root to the retrieved path or not.
 	 * @return Path of the item list.
 	 */
@@ -105,7 +105,7 @@ class Item {
 	/**
 	 * Formats and returns the path of an item given an array of paths.
 	 *
-	 * @param mixed $components The array containing path elements.
+	 * @param array $components The array containing path elements.
 	 * @param bool $add_root Flag to add root to the retrieved path or not.
 	 * @return Formatted path for the given array.
 	 */
@@ -120,8 +120,8 @@ class Item {
 	/**
 	 * Retrieves the path for a given item.
 	 *
-	 * @param object $item The items whose path needs to be retrieved.
-	 * @return string The path of the item.
+	 * @param Item $item The item whose path needs to be retrieved.
+	 * @return The path of the item.
 	 */
     public function path_from_item($item = null) {
 		if ($item == null) {
@@ -141,7 +141,7 @@ class Item {
 	 *
 	 * @param object $data The data needed to create an item.
 	 * @param string $parentPath Parent path for the new item.
-	 * @param object $api The api instance.
+	 * @param BitcasaApi $api The api instance.
 	 * @return An instance of the new item.
 	 */
 	public static function make($data, $parentPath = null, $api = null) {
@@ -232,7 +232,7 @@ class Item {
 	/**
 	 * Sets the name of this item.
 	 *
-	 * @param $new_name The name of the item.
+	 * @param string $new_name The name of the item.
 	 */
 	public function set_name($new_name) {
 		$this->change('name');
@@ -289,7 +289,7 @@ class Item {
 	/**
 	 * Retrieves the is mirrored flag of this item.
 	 *
-	 * @return The is mirrored flag of this item.
+	 * @return Is mirrored flag of this item.
 	 */
     public function is_mirrored() {
         return $this->data['is_mirrored'];
@@ -365,7 +365,7 @@ class Item {
 	/**
 	 * Retrieve the parent path id of this item.
 	 *
-	 * @return the parent path id of this item.
+	 * @return The parent path id of this item.
 	 */
     public function parent_path() {
         return $this->data['absolute_parent_path_id'];
@@ -511,7 +511,7 @@ class Container extends Item {
 	/**
 	 * Initializes a new instance of Container.
 	 *
-	 * @param mixed $api
+	 * @param BitcasaApi $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -556,7 +556,7 @@ class Folder extends Container {
 	/**
 	 * Initializes a new instance of Folder.
 	 *
-	 * @param mixed $api
+	 * @param BitcasaApi $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -569,7 +569,7 @@ class File extends Item {
 	/**
 	 * Initializes a new instance of File.
 	 *
-	 * @param mixed $api
+	 * @param BitcasaApi $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -592,7 +592,7 @@ class Video extends File {
 	/**
 	 * Initializes a new instance of Video.
 	 *
-	 * @param mixed $api
+	 * @param BitcasaApi $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -607,7 +607,7 @@ class Photo extends File {
 	/**
 	 * Initializes a new instance of Photo.
 	 *
-	 * @param mixed $api
+	 * @param BitcasaApi $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -621,7 +621,7 @@ class Document extends File {
 	/**
 	 * Initializes a new instance of Document.
 	 *
-	 * @param mixed $api
+	 * @param BitcasaApi $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);
@@ -635,7 +635,7 @@ class Audio extends File {
 	/**
 	 * Initializes a new instance of Audio.
 	 *
-	 * @param mixed $api
+	 * @param BitcasaApi $api
 	 */
 	public function __construct($api = null) {
 		parent::__construct($api);

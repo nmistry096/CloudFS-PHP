@@ -24,10 +24,10 @@ abstract class BitcasaUtils {
 	/***
 	 * Retrieves the request url for making bitcasa api calls.
 	 *
-	 * @param mixed $credential Credentials for the bitcasa account.
-	 * @param mixed $request Request parameters for api call.
+	 * @param Credential $credential Credentials for the bitcasa account.
+	 * @param string $request Request parameters for api call.
 	 * @param string $method Request method variable.
-	 * @param mixed $queryParams Query parameters for the api call.
+	 * @param array $queryParams Query parameters for the api call.
 	 * @return The request url.
 	 */
 	public static function getRequestUrl($credential, $request, $method = NULL, $queryParams = NULL) {
@@ -50,7 +50,7 @@ abstract class BitcasaUtils {
 	/**
 	 * Generate the parameter strings for a request url given an array of parameters.
 	 *
-	 * @param mixed $params The parameter array to be converted in to a parameter string.
+	 * @param array $params The parameter array to be converted in to a parameter string.
 	 * @return The parameter string.
 	 */
   	public static function generateParamsString($params) {
@@ -93,7 +93,7 @@ abstract class BitcasaUtils {
 	 * Hashes the given data in SHA1 format.
 	 *
 	 * @param mixed $s The data to be encoded.
-	 * @param mixed $secret The secret key used for hashing.
+	 * @param string $secret The secret key used for hashing.
 	 * @return The hashed data.
 	 */
 	public static function sha1($s, $secret)  {
@@ -103,9 +103,9 @@ abstract class BitcasaUtils {
 	/**
 	 * Generate the authorization value for the given session and parameters.
 	 *
-	 * @param mixed $session The session instance.
+	 * @param Session $session The session instance.
 	 * @param string $uri The request uri.
-	 * @param mixed $params Request parameters.
+	 * @param string $params Request parameters.
 	 * @param string $date Date of the request.
 	 * @return The authorization value.
 	 */

@@ -35,7 +35,7 @@ class HTTPConnect {
 	/**
 	 * Initializes the http connect instance.
 	 *
-	 * @param object $session The http session instance.
+	 * @param Session $session The http session instance.
 	 */
 	public function HTTPConnect($session = null) {
 		$this->curl = null;
@@ -68,7 +68,7 @@ class HTTPConnect {
 	 * Adds the specified http header to the http request.
 	 *
 	 * @param string $h The specified http header.
-	 * @param mixed $v The http header value to be added.
+	 * @param string $v The http header value to be added.
 	 */
 	public function addHeader($h, $v) {
 		unset($this->headers[$h]);
@@ -78,8 +78,8 @@ class HTTPConnect {
 	/**
 	 * Adds the specified http header to the http request if it's missing.
 	 * @param string $h The specified http header.
-	 * @param header $v The http header value to be added.
-	 * @return bool Flag whether the operation was successful.
+	 * @param string $v The http header value to be added.
+	 * @return Flag whether the operation was successful.
 	 */
 	public function addMissingHeader($h, $v) {
 		if (!isset($this->headers[$h])) {
@@ -93,8 +93,8 @@ class HTTPConnect {
 	 * Retrieves whether the http request has the specified http header.
 	 *
 	 * @param string $h The specified http header.
-	 * @param mixed $value The specified http header value.
-	 * @return bool The flag as to whether the http request has the specified header.
+	 * @param string $value The specified http header value.
+	 * @return The flag as to whether the http request has the specified header.
 	 */
 	public function hasHeader($h, $value = null)
 	{
@@ -110,7 +110,7 @@ class HTTPConnect {
 	/**
 	 * Retrieves the header of an http request.
 	 *
-	 * @return array
+	 * @return The header result array.
 	 */
 	public function getHeaders() {
 		$result = array();
@@ -158,7 +158,7 @@ class HTTPConnect {
 	/**
 	 * Reads and retrieves the data of the http request.
 	 *
-	 * @param $curl
+	 * @param mixed $curl The curl commands.
 	 * @param $fd
 	 * @param int $length Variable to retrieve the http request data of a given length.
 	 * @return The http request data.
@@ -200,7 +200,7 @@ class HTTPConnect {
 	 * @param string $name The filename to be posted.
 	 * @param string $path The path of the item to be posted.
 	 * @param string $exists Specifies action to take if item exists.
-	 * @return  The posts http status.
+	 * @return The posts http status.
 	 * @throws Exception
 	 */
 	public function post_multipart($url, $name, $path, $exists) {
@@ -257,7 +257,7 @@ class HTTPConnect {
 	 * Carries out a head http request on the given url.
 	 *
 	 * @param string $url The url for the head request.
-	 * @return  The head operations http status.
+	 * @return The head operations http status.
 	 * @throws Exception
 	 */
 	public function head($url) {
@@ -270,7 +270,7 @@ class HTTPConnect {
 	 * Carries out a delete http request on the given url.
 	 *
 	 * @param string $url The url for the delete operation.
-	 * @return  The delete operations http status.
+	 * @return The delete operations http status.
 	 * @throws Exception
 	 */
 	public function delete($url) {
@@ -411,7 +411,7 @@ class HTTPConnect {
  * Reads and retrieves the data of the http request.
  *
  * @param $curl
- * @param object $instance The http request instance.
+ * @param mixed $instance The http request instance.
  * @param int $length Variable to retrieve the http request data of a given length.
  * @return The http request data.
  */
