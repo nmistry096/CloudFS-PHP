@@ -2,6 +2,9 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+/**
+ * Test Bitcasa file system related functionality.
+ */
 class FileSystemTest extends BaseTest {
 
     private $level0Folder1Name = 'level-0-folder-1';
@@ -12,11 +15,17 @@ class FileSystemTest extends BaseTest {
     private $level2Folder1Name = 'level-2-folder-1';
     private $level2Folder2Name = 'level-2-folder-2';
 
+    /**
+     * The session authenticate test.
+     */
     public function testAuthenticate(){
         $this->getSession()->authenticate(self::USERNAME, self::PASSWORD);
         $this->assertTrue(true, $this->getSession()->isLinked());
     }
 
+    /**
+     * The create root folder test.
+     */
     public function testCreateRootFolder() {
         $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
         $items = $fileSystem->getList('/');
@@ -32,6 +41,9 @@ class FileSystemTest extends BaseTest {
         $this->assertNotEmpty($level0Folder1->id());
     }
 
+    /**
+     * The list root folder test.
+     */
     public function testListRootFolder() {
         $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
         $items = $fileSystem->getList(null);
@@ -40,6 +52,9 @@ class FileSystemTest extends BaseTest {
         $this->assertEquals($this->level0Folder1Name, $level0Folder1->name());
     }
 
+    /**
+     * The create subfolders test.
+     */
     public function testCreateSubFolders() {
         $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
         $root = $fileSystem->getFolder(null);
@@ -95,6 +110,9 @@ class FileSystemTest extends BaseTest {
         $this->assertTrue(count($items2) == 0);
     }
 
+    /**
+     * The bitcasa files related tests.
+     */
     public function testFiles() {
         $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
         $level0Folder1 = $this->getItemFromIndexArray($fileSystem->getList('/'), $this->level0Folder1Name);
