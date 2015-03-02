@@ -5,8 +5,8 @@
   },
   "autoload": {
     "classmap": [
-      "cloudfs/",
-      "tests/"
+      "src/",
+      "test/"
     ]
   }
 }

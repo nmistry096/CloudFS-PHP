@@ -1,5 +1,217 @@
 [
     {
+        "name": "andrewsville/php-token-reflection",
+        "version": "1.4.0",
+        "version_normalized": "1.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Andrewsville/PHP-Token-Reflection.git",
+            "reference": "e6d0ac2baf66cdf154be34c3d2a2aa1bd4b426ee"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Andrewsville/PHP-Token-Reflection/zipball/e6d0ac2baf66cdf154be34c3d2a2aa1bd4b426ee",
+            "reference": "e6d0ac2baf66cdf154be34c3d2a2aa1bd4b426ee",
+            "shasum": ""
+        },
+        "require": {
+            "ext-tokenizer": "*",
+            "php": ">=5.3.0"
+        },
+        "time": "2014-08-06 16:37:08",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "TokenReflection": "./"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3"
+        ],
+        "authors": [
+            {
+                "name": "Ondřej Nešpor",
+                "homepage": "https://github.com/andrewsville"
+            },
+            {
+                "name": "Jaroslav Hanslík",
+                "homepage": "https://github.com/kukulich"
+            }
+        ],
+        "description": "Library emulating the PHP internal reflection using just the tokenized source code.",
+        "homepage": "http://andrewsville.github.com/PHP-Token-Reflection/",
+        "keywords": [
+            "library",
+            "reflection",
+            "tokenizer"
+        ]
+    },
+    {
+        "name": "symfony/process",
+        "version": "v2.6.4",
+        "version_normalized": "2.6.4.0",
+        "target-dir": "Symfony/Component/Process",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/Process.git",
+            "reference": "ecfc23e89d9967999fa5f60a1e9af7384396e9ae"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/Process/zipball/ecfc23e89d9967999fa5f60a1e9af7384396e9ae",
+            "reference": "ecfc23e89d9967999fa5f60a1e9af7384396e9ae",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "time": "2015-01-25 04:39:26",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.6-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Symfony\\Component\\Process\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Symfony Community",
+                "homepage": "http://symfony.com/contributors"
+            },
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            }
+        ],
+        "description": "Symfony Process Component",
+        "homepage": "http://symfony.com"
+    },
+    {
+        "name": "symfony/console",
+        "version": "v2.6.4",
+        "version_normalized": "2.6.4.0",
+        "target-dir": "Symfony/Component/Console",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/Console.git",
+            "reference": "e44154bfe3e41e8267d7a3794cd9da9a51cfac34"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/Console/zipball/e44154bfe3e41e8267d7a3794cd9da9a51cfac34",
+            "reference": "e44154bfe3e41e8267d7a3794cd9da9a51cfac34",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "psr/log": "~1.0",
+            "symfony/event-dispatcher": "~2.1",
+            "symfony/process": "~2.1"
+        },
+        "suggest": {
+            "psr/log": "For using the console logger",
+            "symfony/event-dispatcher": "",
+            "symfony/process": ""
+        },
+        "time": "2015-01-25 04:39:26",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.6-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Symfony\\Component\\Console\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Symfony Community",
+                "homepage": "http://symfony.com/contributors"
+            },
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            }
+        ],
+        "description": "Symfony Console Component",
+        "homepage": "http://symfony.com"
+    },
+    {
+        "name": "sphpdox/sphpdox",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/varspool/sphpdox.git",
+            "reference": "1d4dd1090e663340c16f762efcb0f7b27a3a99e8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/varspool/sphpdox/zipball/1d4dd1090e663340c16f762efcb0f7b27a3a99e8",
+            "reference": "1d4dd1090e663340c16f762efcb0f7b27a3a99e8",
+            "shasum": ""
+        },
+        "require": {
+            "andrewsville/php-token-reflection": ">=1.3.0",
+            "php": ">=5.3.2",
+            "symfony/console": ">=2.0.10",
+            "symfony/process": ">=2.0.10"
+        },
+        "require-dev": {
+            "phpunit/phpunit": ">=1.6"
+        },
+        "time": "2013-12-11 21:57:13",
+        "bin": [
+            "composer/bin/sphpdox"
+        ],
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Sphpdox": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0+"
+        ],
+        "authors": [
+            {
+                "name": "Dominic Scheirlinck",
+                "email": "dominic@varspool.com",
+                "homepage": "http://www.somethingemporium.com/"
+            }
+        ],
+        "description": "PHPDoc to Sphinx phpdomain tool",
+        "homepage": "http://github.com/varspool/sphpdox",
+        "keywords": [
+            "documentation",
+            "phpdoc",
+            "rst",
+            "sphinx"
+        ]
+    },
+    {
         "name": "sebastian/version",
         "version": "1.0.4",
         "version_normalized": "1.0.4.0",
@@ -87,6 +299,129 @@
         "homepage": "http://www.github.com/sebastianbergmann/global-state",
         "keywords": [
             "global state"
+        ]
+    },
+    {
+        "name": "sebastian/recursion-context",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/recursion-context.git",
+            "reference": "3989662bbb30a29d20d9faa04a846af79b276252"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/3989662bbb30a29d20d9faa04a846af79b276252",
+            "reference": "3989662bbb30a29d20d9faa04a846af79b276252",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.4"
+        },
+        "time": "2015-01-24 09:48:32",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Jeff Welch",
+                "email": "whatthejeff@gmail.com"
+            },
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sebastian@phpunit.de"
+            },
+            {
+                "name": "Adam Harvey",
+                "email": "aharvey@php.net"
+            }
+        ],
+        "description": "Provides functionality to recursively process PHP variables",
+        "homepage": "http://www.github.com/sebastianbergmann/recursion-context"
+    },
+    {
+        "name": "sebastian/exporter",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sebastianbergmann/exporter.git",
+            "reference": "84839970d05254c73cde183a721c7af13aede943"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/84839970d05254c73cde183a721c7af13aede943",
+            "reference": "84839970d05254c73cde183a721c7af13aede943",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3",
+            "sebastian/recursion-context": "~1.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.4"
+        },
+        "time": "2015-01-27 07:23:06",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Jeff Welch",
+                "email": "whatthejeff@gmail.com"
+            },
+            {
+                "name": "Volker Dusch",
+                "email": "github@wallbash.com"
+            },
+            {
+                "name": "Bernhard Schussek",
+                "email": "bschussek@2bepublished.at"
+            },
+            {
+                "name": "Sebastian Bergmann",
+                "email": "sebastian@phpunit.de"
+            },
+            {
+                "name": "Adam Harvey",
+                "email": "aharvey@php.net"
+            }
+        ],
+        "description": "Provides the functionality to export PHP variables for visualization",
+        "homepage": "http://www.github.com/sebastianbergmann/exporter",
+        "keywords": [
+            "export",
+            "exporter"
         ]
     },
     {
@@ -197,28 +532,28 @@
     },
     {
         "name": "sebastian/comparator",
-        "version": "1.1.0",
-        "version_normalized": "1.1.0.0",
+        "version": "1.1.1",
+        "version_normalized": "1.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/sebastianbergmann/comparator.git",
-            "reference": "c484a80f97573ab934e37826dba0135a3301b26a"
+            "reference": "1dd8869519a225f7f2b9eb663e225298fade819e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/c484a80f97573ab934e37826dba0135a3301b26a",
-            "reference": "c484a80f97573ab934e37826dba0135a3301b26a",
+            "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/1dd8869519a225f7f2b9eb663e225298fade819e",
+            "reference": "1dd8869519a225f7f2b9eb663e225298fade819e",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.3",
-            "sebastian/diff": "~1.1",
-            "sebastian/exporter": "~1.0"
+            "sebastian/diff": "~1.2",
+            "sebastian/exporter": "~1.2"
         },
         "require-dev": {
-            "phpunit/phpunit": "~4.1"
+            "phpunit/phpunit": "~4.4"
         },
-        "time": "2014-11-16 21:32:38",
+        "time": "2015-01-29 16:28:08",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -263,24 +598,24 @@
     },
     {
         "name": "symfony/yaml",
-        "version": "v2.6.3",
-        "version_normalized": "2.6.3.0",
+        "version": "v2.6.4",
+        "version_normalized": "2.6.4.0",
         "target-dir": "Symfony/Component/Yaml",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/Yaml.git",
-            "reference": "82462a90848a52c2533aa6b598b107d68076b018"
+            "reference": "60ed7751671113cf1ee7d7778e691642c2e9acd8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/Yaml/zipball/82462a90848a52c2533aa6b598b107d68076b018",
-            "reference": "82462a90848a52c2533aa6b598b107d68076b018",
+            "url": "https://api.github.com/repos/symfony/Yaml/zipball/60ed7751671113cf1ee7d7778e691642c2e9acd8",
+            "reference": "60ed7751671113cf1ee7d7778e691642c2e9acd8",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2015-01-03 15:33:07",
+        "time": "2015-01-25 04:39:26",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -614,129 +949,6 @@
         ]
     },
     {
-        "name": "sebastian/recursion-context",
-        "version": "1.0.0",
-        "version_normalized": "1.0.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/recursion-context.git",
-            "reference": "3989662bbb30a29d20d9faa04a846af79b276252"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/recursion-context/zipball/3989662bbb30a29d20d9faa04a846af79b276252",
-            "reference": "3989662bbb30a29d20d9faa04a846af79b276252",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.4"
-        },
-        "time": "2015-01-24 09:48:32",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Jeff Welch",
-                "email": "whatthejeff@gmail.com"
-            },
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sebastian@phpunit.de"
-            },
-            {
-                "name": "Adam Harvey",
-                "email": "aharvey@php.net"
-            }
-        ],
-        "description": "Provides functionality to recursively process PHP variables",
-        "homepage": "http://www.github.com/sebastianbergmann/recursion-context"
-    },
-    {
-        "name": "sebastian/exporter",
-        "version": "1.1.0",
-        "version_normalized": "1.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/sebastianbergmann/exporter.git",
-            "reference": "35ab8d385eef068186c83e23ae83c96b0288b3ee"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/35ab8d385eef068186c83e23ae83c96b0288b3ee",
-            "reference": "35ab8d385eef068186c83e23ae83c96b0288b3ee",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "sebastian/recursion-context": "~1.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.4"
-        },
-        "time": "2015-01-24 09:57:24",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.1.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "src/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Jeff Welch",
-                "email": "whatthejeff@gmail.com"
-            },
-            {
-                "name": "Volker Dusch",
-                "email": "github@wallbash.com"
-            },
-            {
-                "name": "Bernhard Schussek",
-                "email": "bschussek@2bepublished.at"
-            },
-            {
-                "name": "Sebastian Bergmann",
-                "email": "sebastian@phpunit.de"
-            },
-            {
-                "name": "Adam Harvey",
-                "email": "aharvey@php.net"
-            }
-        ],
-        "description": "Provides the functionality to export PHP variables for visualization",
-        "homepage": "http://www.github.com/sebastianbergmann/exporter",
-        "keywords": [
-            "export",
-            "exporter"
-        ]
-    },
-    {
         "name": "phpunit/php-code-coverage",
         "version": "2.0.15",
         "version_normalized": "2.0.15.0",
@@ -802,17 +1014,17 @@
     },
     {
         "name": "phpunit/phpunit",
-        "version": "4.4.3",
-        "version_normalized": "4.4.3.0",
+        "version": "4.4.5",
+        "version_normalized": "4.4.5.0",
         "source": {
             "type": "git",
             "url": "https://github.com/sebastianbergmann/phpunit.git",
-            "reference": "2fc000af4568896d6357972900d43a3300e3e2ee"
+            "reference": "2e8580deebb7d1ac92ac878595e6bffe01069c2a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2fc000af4568896d6357972900d43a3300e3e2ee",
-            "reference": "2fc000af4568896d6357972900d43a3300e3e2ee",
+            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2e8580deebb7d1ac92ac878595e6bffe01069c2a",
+            "reference": "2e8580deebb7d1ac92ac878595e6bffe01069c2a",
             "shasum": ""
         },
         "require": {
@@ -830,15 +1042,16 @@
             "sebastian/comparator": "~1.0",
             "sebastian/diff": "~1.1",
             "sebastian/environment": "~1.1",
-            "sebastian/exporter": "~1.0",
+            "sebastian/exporter": "~1.1",
             "sebastian/global-state": "~1.0",
+            "sebastian/recursion-context": "~1.0",
             "sebastian/version": "~1.0",
             "symfony/yaml": "~2.0"
         },
         "suggest": {
             "phpunit/php-invoker": "~1.1"
         },
-        "time": "2015-01-24 10:12:40",
+        "time": "2015-01-27 16:06:15",
         "bin": [
             "phpunit"
         ],
@@ -871,218 +1084,6 @@
             "phpunit",
             "testing",
             "xunit"
-        ]
-    },
-    {
-        "name": "andrewsville/php-token-reflection",
-        "version": "1.4.0",
-        "version_normalized": "1.4.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/Andrewsville/PHP-Token-Reflection.git",
-            "reference": "e6d0ac2baf66cdf154be34c3d2a2aa1bd4b426ee"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/Andrewsville/PHP-Token-Reflection/zipball/e6d0ac2baf66cdf154be34c3d2a2aa1bd4b426ee",
-            "reference": "e6d0ac2baf66cdf154be34c3d2a2aa1bd4b426ee",
-            "shasum": ""
-        },
-        "require": {
-            "ext-tokenizer": "*",
-            "php": ">=5.3.0"
-        },
-        "time": "2014-08-06 16:37:08",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "TokenReflection": "./"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3"
-        ],
-        "authors": [
-            {
-                "name": "Ondřej Nešpor",
-                "homepage": "https://github.com/Andrewsville"
-            },
-            {
-                "name": "Jaroslav Hanslík",
-                "homepage": "https://github.com/kukulich"
-            }
-        ],
-        "description": "Library emulating the PHP internal reflection using just the tokenized source code.",
-        "homepage": "http://andrewsville.github.com/PHP-Token-Reflection/",
-        "keywords": [
-            "library",
-            "reflection",
-            "tokenizer"
-        ]
-    },
-    {
-        "name": "symfony/process",
-        "version": "v2.6.3",
-        "version_normalized": "2.6.3.0",
-        "target-dir": "Symfony/Component/Process",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/Process.git",
-            "reference": "319794f611bd8bdefbac72beb3f05e847f8ebc92"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/Process/zipball/319794f611bd8bdefbac72beb3f05e847f8ebc92",
-            "reference": "319794f611bd8bdefbac72beb3f05e847f8ebc92",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "time": "2015-01-06 22:47:52",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.6-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Symfony\\Component\\Process\\": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Symfony Community",
-                "homepage": "http://symfony.com/contributors"
-            },
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            }
-        ],
-        "description": "Symfony Process Component",
-        "homepage": "http://symfony.com"
-    },
-    {
-        "name": "symfony/console",
-        "version": "v2.6.3",
-        "version_normalized": "2.6.3.0",
-        "target-dir": "Symfony/Component/Console",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/Console.git",
-            "reference": "6ac6491ff60c0e5a941db3ccdc75a07adbb61476"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/Console/zipball/6ac6491ff60c0e5a941db3ccdc75a07adbb61476",
-            "reference": "6ac6491ff60c0e5a941db3ccdc75a07adbb61476",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "require-dev": {
-            "psr/log": "~1.0",
-            "symfony/event-dispatcher": "~2.1",
-            "symfony/process": "~2.1"
-        },
-        "suggest": {
-            "psr/log": "For using the console logger",
-            "symfony/event-dispatcher": "",
-            "symfony/process": ""
-        },
-        "time": "2015-01-06 17:50:02",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "2.6-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Symfony\\Component\\Console\\": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Symfony Community",
-                "homepage": "http://symfony.com/contributors"
-            },
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            }
-        ],
-        "description": "Symfony Console Component",
-        "homepage": "http://symfony.com"
-    },
-    {
-        "name": "sphpdox/sphpdox",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/varspool/sphpdox.git",
-            "reference": "1d4dd1090e663340c16f762efcb0f7b27a3a99e8"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/varspool/sphpdox/zipball/1d4dd1090e663340c16f762efcb0f7b27a3a99e8",
-            "reference": "1d4dd1090e663340c16f762efcb0f7b27a3a99e8",
-            "shasum": ""
-        },
-        "require": {
-            "andrewsville/php-token-reflection": ">=1.3.0",
-            "php": ">=5.3.2",
-            "symfony/console": ">=2.0.10",
-            "symfony/process": ">=2.0.10"
-        },
-        "require-dev": {
-            "phpunit/phpunit": ">=1.6"
-        },
-        "time": "2013-12-11 21:57:13",
-        "bin": [
-            "composer/bin/sphpdox"
-        ],
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "Sphpdox": "lib/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-3.0+"
-        ],
-        "authors": [
-            {
-                "name": "Dominic Scheirlinck",
-                "email": "dominic@varspool.com",
-                "homepage": "http://www.somethingemporium.com/"
-            }
-        ],
-        "description": "PHPDoc to Sphinx phpdomain tool",
-        "homepage": "http://github.com/varspool/sphpdox",
-        "keywords": [
-            "documentation",
-            "phpdoc",
-            "rst",
-            "sphinx"
         ]
     }
 ]
