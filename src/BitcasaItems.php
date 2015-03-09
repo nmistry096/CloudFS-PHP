@@ -225,7 +225,7 @@ class Item {
 	 *
 	 * @return The name of the item.
 	 */
-    public function name() {
+    public function getName() {
 		return $this->data['name'];
 	}
 
@@ -291,7 +291,7 @@ class Item {
 	 *
 	 * @return Is mirrored flag of this item.
 	 */
-    public function is_mirrored() {
+    public function getIsMirrored() {
         return $this->data['is_mirrored'];
 	}
 
@@ -310,7 +310,7 @@ class Item {
 	 *
 	 * @return The content last modified date.
 	 */
-    public function date_content_last_modified() {
+    public function getDateContentLastModified() {
         return $this->data['date_content_last_modified'];
 	}
 
@@ -329,7 +329,7 @@ class Item {
 	 *
 	 * @return The created date of this item.
 	 */
-    public function date_created() {
+    public function getDateCreated() {
         return $this->data['date_created'];
 	}
 
@@ -386,7 +386,7 @@ class Item {
 	 *
 	 * @return The meta last modified date of this item.
 	 */
-    public function date_meta_last_modified() {
+    public function getDateMetaLastModified() {
         return $this->data['date_meta_last_modified'];
 	}
 
@@ -405,7 +405,7 @@ class Item {
 	 *
 	 * @return The application data of this item.
 	 */
-    public function application_data() {
+    public function getApplicationData() {
 		return $this->data['application_data'];
 	}
 
