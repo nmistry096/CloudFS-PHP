@@ -8,6 +8,8 @@
  * For support, please send email to support@bitcasa.com.
  */
 
+namespace CloudFS;
+
 /**
  * Constants used in REST api requests
  *

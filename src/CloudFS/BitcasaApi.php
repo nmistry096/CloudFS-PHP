@@ -1,5 +1,6 @@
 <?php
 
+namespace CloudFS;
 
 /**
  * Bitcasa Client PHP SDK

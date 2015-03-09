@@ -4,8 +4,10 @@
     "sphpdox/sphpdox": "dev-master"
   },
   "autoload": {
+    "psr-0": {
+      "CloudFS": "src/CloudFS/"
+    },
     "classmap": [
-      "src/",
       "test/"
     ]
   }

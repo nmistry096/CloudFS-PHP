@@ -9,6 +9,8 @@
  * For support, please send email to support@bitcasa.com.
  */
 
+namespace CloudFS;
+
 class Item {
 
 	private $parent;

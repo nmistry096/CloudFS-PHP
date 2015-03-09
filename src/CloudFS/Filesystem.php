@@ -9,6 +9,8 @@
  * For support, please send email to support@bitcasa.com.
  */
 
+namespace CloudFS;
+
 require_once("BitcasaItems.php");
 require_once("BitcasaApi.php");
 require_once("BitcasaException.php");

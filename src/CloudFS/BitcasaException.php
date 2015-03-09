@@ -9,6 +9,8 @@
  * For support, please send email to support@bitcasa.com.
  */
 
+namespace CloudFS;
+
 
 class BitcasaStatus {
 
@@ -72,6 +74,8 @@ class BitcasaStatus {
 				var_dump($this->response);
 				print "BitcasaError: " . $this->code . " => " . $this->message . "\n";
 			}
+
+
 			throw new BitcasaError($this);
 		}
 	}
@@ -79,7 +83,7 @@ class BitcasaStatus {
 }
 
 
-class BitcasaError extends Exception {
+class BitcasaError extends \Exception {
 
 	private $status;
 
@@ -137,7 +141,7 @@ class InvalidArgument extends Exception {
  */
 function assert_non_null($s, $argno = 0) {
 	if ($s == null) {
-		throw new InvalidArgument($argno) ;
+		throw new \InvalidArgument($argno) ;
 	}
 	return true;
 }
@@ -152,7 +156,7 @@ function assert_non_null($s, $argno = 0) {
  */
 function assert_string($s, $argno = 0) {
 	if (! is_string($s)) {
-		throw new InvalidArgument($argno) ;
+		throw new \InvalidArgument($argno) ;
 	}
 	return true;
 }
@@ -167,7 +171,7 @@ function assert_string($s, $argno = 0) {
  */
 function assert_string_or_null($s, $argno = 0) {
 	if ($s != null &&!is_string($s)) {
-		throw new InvalidArgument($argno) ;
+		throw new \InvalidArgument($argno) ;
 	}
 	return true;
 }
@@ -182,7 +186,7 @@ function assert_string_or_null($s, $argno = 0) {
  */
 function assert_number($s, $argno = 0) {
 	if (! is_number($s)) {
-		throw new InvalidArgument($argno) ;
+		throw new \InvalidArgument($argno) ;
 	}
 	return true;
 }
@@ -206,7 +210,7 @@ function assert_path($s, $argno = 0) {
 			return true;
 		}
 	}
-	throw new InvalidArgument($argno) ;
+	throw new \InvalidArgument($argno) ;
 }
 
 
