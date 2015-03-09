@@ -97,7 +97,7 @@ class Item {
 			} else {
 				$path .= "/";
 			}
-			$path .= $item->id();
+			$path .= $item->getId();
 		}
 		return $path;
 	}
@@ -244,7 +244,7 @@ class Item {
 	 *
 	 * @return The data id of the item.
 	 */
-    public function id() {
+    public function getId() {
 		return $this->data['id'];
 	}
 
@@ -272,7 +272,7 @@ class Item {
 	 *
 	 * @return The type of this item.
 	 */
-    public function type() {
+    public function getType() {
         return $this->data['type'];
 	}
 
@@ -433,7 +433,7 @@ class Item {
 	 *
 	 * @return The full path of this item.
 	 */
-    public function path() {
+    public function getPath() {
 		return $this->full_path;
 	}
 
@@ -523,7 +523,7 @@ class Container extends Item {
 	 * @return The item list array.
 	 */
 	public function get_list() {
-		return $this->api()->getList($this->path());
+		return $this->api()->getList($this->getPath());
 	}
 
 	/**
