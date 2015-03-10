@@ -128,7 +128,7 @@ class HTTPConnect {
 	 * @param mixed $data The data to be added to the http request.
 	 * @param int $len The length of the added data.
 	 */
-	public function sendData($data, $len = 0) {
+	public function setData($data, $len = 0) {
 		if ($len == 0) {
 			$len = count($data);
 		}
@@ -219,7 +219,7 @@ class HTTPConnect {
 		$this->addHeader('Accept', 'application/json');
 		assert(curl_setopt($this->curl, CURLOPT_URL, $url));
 		assert(curl_setopt($this->curl, CURLOPT_POST, 1));
-		assert(curl_setopt($this->curl, CURLOPT_READFUNCTION, array($this, 'read_function')));
+		assert(curl_setopt($this->curl, CURLOPT_READFUNCTION, array($this, 'readFunction')));
 		$len = strlen($this->postdata) + strlen("\r\n" . $this->boundary . "--\r\n") + filesize($path);
 		$this->addHeader("Content-Length", $len);
 		

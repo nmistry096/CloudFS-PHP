@@ -100,7 +100,7 @@ class Session {
      */
     public function user() {
         $connection = new HTTPConnect($this);
-        $url = $this->credential->getRequestUrl('/' . BitcasaConstants::PARAM_USER . BitcasaConstants::METHOD_PROFILE);
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_USER . BitcasaConstants::METHOD_PROFILE);
         if (!BitcasaUtils::isSuccess($connection->get($url))) {
             return null;
         }
