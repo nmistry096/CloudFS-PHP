@@ -22,7 +22,7 @@ class BitcasaError extends \Exception {
      *
      * @return The error status.
      */
-    public function get_status() {
+    public function getStatus() {
         return $this->status;
     }
 

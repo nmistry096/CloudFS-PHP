@@ -36,7 +36,7 @@ class BitcasaStatus {
      *
      * @return The error code.
      */
-    public function error_code() {
+    public function errorCode() {
         return $this->code;
     }
 
@@ -45,7 +45,7 @@ class BitcasaStatus {
      *
      * @return The error message.
      */
-    public function error_message() {
+    public function errorMessage() {
         return $this->message;
     }
 
@@ -64,7 +64,7 @@ class BitcasaStatus {
      *
      * @throws BitcasaError
      */
-    public function throw_on_failure() {
+    public function throwOnFailure() {
         if (!$this->success()) {
             if (getenv("BC_DEBUG") != null) {
                 var_dump($this->response);
