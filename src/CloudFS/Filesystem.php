@@ -11,6 +11,9 @@
 
 namespace CloudFS;
 
+use CloudFS\Utils\BitcasaConstants;
+use CloudFS\Utils\Exists;
+
 /**
  * Defines the Bitcasa file system.
  */
@@ -326,6 +329,26 @@ class Filesystem {
 	 */
     public function fileHistory($item, $start = -10, $stop = 0) {
 		return $this->api->fileHistory($item->getPath(), $start, $stop);
+	}
+
+	public function shares() {
+		return $this->api->shares();
+	}
+
+	public function createShare($path) {
+		return $this->api->createShare($path);
+	}
+
+	public function browseShare($shareKey) {
+		return $this->api->browseShare($shareKey);
+	}
+
+	public function deleteShare($shareKey) {
+		return $this->api->deleteShare($shareKey);
+	}
+
+	public function retrieveShare($shareKey, $path, $exists = Exists::OVERWRITE) {
+		return $this->api->retrieveShare($shareKey, $path, $exists);
 	}
 
 }

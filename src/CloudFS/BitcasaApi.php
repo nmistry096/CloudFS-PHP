@@ -15,6 +15,7 @@ use CloudFS\Filesystem;
 use CloudFS\Utils\BitcasaConstants;
 use CloudFS\BitcasaUtils;
 use CloudFS\HTTPConnect;
+use CloudFS\Utils\Exists;
 
 
 class BitcasaApi {
@@ -71,7 +72,7 @@ class BitcasaApi {
 		$connection->AddHeader(BitcasaConstants::HEADER_DATE, $date);
 		$connection->AddHeader(BitcasaConstants::HEADER_AUTORIZATION, $authorizationValue);
 
-		$connection->sendData($parameters);
+		$connection->setData($parameters);
 		$status = $connection->post($url);
 		$resp = null;
 
@@ -224,7 +225,7 @@ class BitcasaApi {
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_CREATE));
 		$body = BitcasaUtils::generateParamsString(array("name" => $filename, "exists" => $exists));
 		
-		$connection->sendData($body);
+		$connection->setData($body);
 		if ($this->debug) {
 			var_dump($url);
 		}
@@ -308,7 +309,7 @@ class BitcasaApi {
 		$attrs['version-conflict'] = $conflict;
 		$body = BitcasaUtils::generateParamsString($attrs);
 		
-		$connection->sendData($body);
+		$connection->setData($body);
 		if ($connection->post($url) <= 100) {
 			return false;
 		}
@@ -333,7 +334,7 @@ class BitcasaApi {
 		$attrs['version-conflict'] = $conflict;
 		$body = BitcasaUtils::generateParamsString($attrs);
 		
-		$connection->sendData($body);
+		$connection->setData($body);
 		if ($connection->post($url) <= 100) {
 			return false;
 		}
@@ -363,7 +364,7 @@ class BitcasaApi {
 
 		$body = BitcasaUtils::generateParamsString($params);
 		
-		$connection->sendData($body);
+		$connection->setData($body);
 		if ($connection->post($url) <= 100) {
 			return false;
 		}
@@ -393,7 +394,7 @@ class BitcasaApi {
 		}
 		$body = BitcasaUtils::generateParamsString($params);
 		
-		$connection->sendData($body);
+		$connection->setData($body);
 		if ($connection->post($url) <= 100) {
 			return false;
 		}
@@ -422,7 +423,7 @@ class BitcasaApi {
 		}
 		$body = BitcasaUtils::generateParamsString($params);
 		
-		$connection->sendData($body);
+		$connection->setData($body);
 		if ($connection->post($url) <= 100) {
 			return false;
 		}
@@ -451,7 +452,7 @@ class BitcasaApi {
 		}
 		$body = BitcasaUtils::generateParamsString($params);
 		
-		$connection->sendData($body);
+		$connection->setData($body);
 		if ($connection->post($url) <= 100) {
 			return false;
 		}
@@ -495,7 +496,7 @@ class BitcasaApi {
 		$connection->raw();
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $parentpath,
 												$params);
-		if ($connection->post_multipart($url, $name, $filepath, $exists) <= 100) {
+		if ($connection->postMultipart($url, $name, $filepath, $exists) <= 100) {
 			return false;
 		}
 		// upload payload is raw download is json
@@ -522,7 +523,7 @@ class BitcasaApi {
 												$params);
 		$body = BitcasaUtils::generateParamsString($body);
 		
-		$connection->sendData($body);
+		$connection->setData($body);
 		if ($connection->post($url) <= 100) {
 			return false;
 		}
@@ -560,6 +561,90 @@ class BitcasaApi {
 		}
 
 		return $connection->getResponse(true);
+	}
+
+	public function createShare($path) {
+		$share = null;
+		if (!empty($path)) {
+			$connection = new HTTPConnect($this->credential->getSession());
+			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES);
+			$body = BitcasaUtils::generateParamsString(array('path' => $path));
+			$connection->setData($body);
+			$status = $connection->post($url);
+			$response = $connection->getResponse(true);
+			if (!empty($response) && !empty($response['result'])) {
+				$share = Share::getInstance($response['result']);
+			}
+		}
+
+		return $share;
+	}
+
+	public function shares() {
+		$shares = array();
+		$connection = new HTTPConnect($this->credential->getSession());
+		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES);
+		$statusCode = $connection->get($url);
+		if ($statusCode == 200) {
+			$response = $connection->getResponse(true);
+			if (!empty($response) && !empty($response['result'])) {
+				foreach($response['result'] as $result) {
+					$shares[] = Share::getInstance($result);
+				}
+			}
+		}
+
+		return $shares;
+	}
+
+	public function browseShare($shareKey) {
+		$items = array();
+		if (!empty($shareKey)) {
+			$connection = new HTTPConnect($this->credential->getSession());
+			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/meta');
+			$statusCode = $connection->get($url);
+			if ($statusCode == 200) {
+				$response = $connection->getResponse(true);
+				if (!empty($response) && !empty($response['result'])) {
+					foreach ($response['result']['items'] as $item) {
+						$items[] = Item::make($item);
+					}
+				}
+			}
+		}
+
+		return $items;
+	}
+
+	public function retrieveShare($shareKey, $path, $exists = Exists::OVERWRITE) {
+		$success = false;
+		if (!empty($shareKey) && !empty($path)) {
+			$connection = new HTTPConnect($this->credential->getSession());
+			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/');
+			$body = BitcasaUtils::generateParamsString(array('path' => $path, 'exists' => $exists));
+			$connection->setData($body);
+			$status = $connection->post($url);
+			$response = $connection->getResponse(true);
+			if (!empty($response) && !empty($response['result'])) {
+				$success = true;
+			}
+		}
+
+		return $success;
+	}
+
+	public function deleteShare($shareKey) {
+		$deleted = false;
+		if (!empty($shareKey)) {
+			$connection = new HTTPConnect($this->credential->getSession());
+			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/');
+			$status = $connection->delete($url);
+			if ($status == 200) {
+				$deleted = true;
+			}
+		}
+
+		return $deleted;
 	}
 
 }
