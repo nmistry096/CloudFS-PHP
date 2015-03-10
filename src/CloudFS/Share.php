@@ -27,7 +27,7 @@ class Share {
         return $this->shareType;
     }
 
-    public function getShareName() {
+    public function getName() {
         return $this->shareName;
     }
 
@@ -43,7 +43,7 @@ class Share {
         return $this->dateCreated;
     }
 
-    public function getShareSize() {
+    public function getSize() {
         return $this->shareSize;
     }
 

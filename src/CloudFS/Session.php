@@ -196,4 +196,35 @@ class Session {
         return $this->credential->getAccessToken();
     }
 
+    /**
+     * Retrieves the file history of a given item.
+     *
+     * @param string $path The path of the item for which the file history needs to be retrieved.
+     * @param int $start Start version.
+     * @param int $stop Stop version.
+     * @param int $limit The limit of history entries.
+     * @return File history entries.
+     * @throws InvalidArgument
+     */
+    public function fileHistory($path, $start = 0, $stop = 0, $limit = 0) {
+        //assert_string($path, 1);
+        $connection = new HTTPConnect($this);
+        $params = array();
+        if ($start != 0) {
+            $params['start'] = $start;
+        }
+        if ($stop != 0) {
+            $params['stop'] = $stop;
+        }
+        if ($limit != 0) {
+            $params['limit'] = $limit;
+        }
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path . "/versions",
+            $params);
+        if ($connection->get($url) <= 100) {
+            return false;
+        }
+
+        return $connection->getResponse(true);
+    }
 }
