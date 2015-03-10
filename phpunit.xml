@@ -1,2 +1,2 @@
-<phpunit bootstrap="/home/kasun/projects/php/bitcasa/sdk-php/test/Bootstrap.php">
+<phpunit bootstrap="test/Bootstrap.php">
 </phpunit>
