@@ -139,6 +139,7 @@ abstract class BitcasaConstants {
 	const EXISTS_FAIL = "fail";
 	const EXISTS_OVERWRITE = "overwrite";
 	const EXISTS_RENAME = "rename";
+    const EXISTS_REUSED = "reused";
 
 	/**
 	 * Actions to take if an item version conflict occurs.
