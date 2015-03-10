@@ -164,7 +164,7 @@ class HTTPConnect {
 	 * @param int $length Variable to retrieve the http request data of a given length.
 	 * @return The http request data.
 	 */
-	public function read_function($curl, $fd, $length) {
+	public function readFunction($curl, $fd, $length) {
 		$resp = null;
 		if ($this->postdata != null) {
 			if (strlen($this->postdata) <= $length) {
@@ -204,7 +204,7 @@ class HTTPConnect {
 	 * @return The posts http status.
 	 * @throws Exception
 	 */
-	public function post_multipart($url, $name, $path, $exists) {
+	public function postMultipart($url, $name, $path, $exists) {
 		$bdry = dechex(time(0));
 		$this->is_raw = true;
 		$this->boundary = "--" . $bdry;
@@ -416,7 +416,7 @@ class HTTPConnect {
  * @param int $length Variable to retrieve the http request data of a given length.
  * @return The http request data.
  */
-function read_function($curl, $instance, $length) {
+function readFunction($curl, $instance, $length) {
 	$resp = null;
 	if ($instance->postdata != null) {
 		if (strlen($instance->postdata) <= $length) {
