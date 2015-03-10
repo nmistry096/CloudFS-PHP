@@ -236,9 +236,9 @@ class Item {
 	 *
 	 * @param string $new_name The name of the item.
 	 */
-	public function set_name($new_name) {
+	public function setName($newName) {
 		$this->change('name');
-		$this->data['name'] = $new_name;
+		$this->data['name'] = $newName;
 	}
 
 	/**
@@ -416,7 +416,7 @@ class Item {
 	 *
 	 * @param mixed $new_application_data The new application data.
 	 */
-    public function set_application_data($new_application_data) {
+    public function setApplicationData($new_application_data) {
         $this->change('application_data');
         $this->data['application_data'] = $new_application_data;
 	}
@@ -446,8 +446,8 @@ class Item {
 	 * @param string $exists The action to take if the item exists.
 	 * @return The success/fail response of the move operation.
 	 */
-	public function move_to($dest, $exists = "fail") {
-		return $this->api()->move($this, $dest, $exists);
+	public function move($destination, $exists = EXISTS_RENAME) {
+		return $this->api()->move($this, $destination, $exists);
 	}
 
 	/**
@@ -457,8 +457,8 @@ class Item {
 	 * @param string $exists The action to take if the item exists.
 	 * @return The success/fail response of the copy operation.
 	 */
-    public function copy_to($dest, $exists = "fail") {
-		return $this->api()->copy($this, $dest, $exists);
+    public function copy($destination, $exists = EXISTS_RENAME) {
+		return $this->api()->copy($this, $destination, $exists);
 	}
 
 	/**
@@ -506,8 +506,6 @@ class Item {
 	}
 }
 
-
-
 class Container extends Item {
 
 	/**
@@ -524,34 +522,11 @@ class Container extends Item {
 	 *
 	 * @return The item list array.
 	 */
-	public function get_list() {
+	public function getList() {
 		return $this->api()->getList($this->getPath());
 	}
 
-	/**
-	 * Creates a folder item under this item with the supplied name.
-	 *
-	 * @param string $name The name of the folder being created.
-	 * @param string $exists The action to take if the folder already exists.
-	 * @return Instance of the newly created folder.
-	 */
-	public function create($name, $exists="overwrite") {
-		return $this->api()->create($this, $name, $exists);
-	}
-
-	/**
-	 * Uploads a file under this item.
-	 *
-	 * @param string $path The path of the file to be uploaded.
-	 * @param string $name The name of the file.
-	 * @param string $exists The action to take if the file already exists.
-	 * @return An instance of the uploaded item.
-	 */
-	public function upload($path, $name = null, $exists='fail') {
-		return $this->api()->upload($this, $path, $name, $exists);
-	}
 }
-
 
 class Folder extends Container {
 
@@ -563,8 +538,30 @@ class Folder extends Container {
 	public function __construct($api = null) {
 		parent::__construct($api);
 	}
-}
 
+    /**
+     * Creates a folder item under this item with the supplied name.
+     *
+     * @param string $name The name of the folder being created.
+     * @param string $exists The action to take if the folder already exists.
+     * @return Instance of the newly created folder.
+     */
+    public function createFolder($name, $exists=EXISTS_FAIL) {
+        return $this->api()->create($this, $name, $exists);
+    }
+
+    /**
+     * Uploads a file under this item.
+     *
+     * @param string $path The path of the file to be uploaded.
+     * @param string $name The name of the file.
+     * @param string $exists The action to take if the file already exists.
+     * @return An instance of the uploaded item.
+     */
+    public function upload($path, $name = null, $exists=EXISTS_FAIL) {
+        return $this->api()->upload($this, $path, $name, $exists);
+    }
+}
 
 class File extends Item {
 
@@ -587,7 +584,18 @@ class File extends Item {
     }
 }
 
+class Photo extends File {
 
+    /**
+     * Initializes a new instance of Photo.
+     *
+     * @param BitcasaApi $api The api instance.
+     */
+    public function __construct($api = null) {
+        parent::__construct($api);
+    }
+
+}
 
 class Video extends File {
 
@@ -602,21 +610,18 @@ class Video extends File {
 
 }
 
+class Audio extends File {
 
-
-class Photo extends File {
-
-	/**
-	 * Initializes a new instance of Photo.
-	 *
-	 * @param BitcasaApi $api The api instance.
-	 */
-	public function __construct($api = null) {
-		parent::__construct($api);
-	}
+    /**
+     * Initializes a new instance of Audio.
+     *
+     * @param BitcasaApi $api The api instance.
+     */
+    public function __construct($api = null) {
+        parent::__construct($api);
+    }
 
 }
-
 
 class Document extends File {
 
@@ -630,20 +635,5 @@ class Document extends File {
 	}
 
 }
-
-
-class Audio extends File {
-
-	/**
-	 * Initializes a new instance of Audio.
-	 *
-	 * @param BitcasaApi $api The api instance.
-	 */
-	public function __construct($api = null) {
-		parent::__construct($api);
-	}
-
-}
-
 
 ?>
