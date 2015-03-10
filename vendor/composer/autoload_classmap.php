@@ -445,7 +445,7 @@ return array(
     'SebastianBergmann\\RecursionContext\\Exception' => $vendorDir . '/sebastian/recursion-context/src/Exception.php',
     'SebastianBergmann\\RecursionContext\\InvalidArgumentException' => $vendorDir . '/sebastian/recursion-context/src/InvalidArgumentException.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
-    'Session' => $baseDir . '/src/BitcasaApi.php',
+    'Session' => $baseDir . '/src/BitcasaSession.php',
     'SessionTest' => $baseDir . '/test/SessionTest.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/Text/Template.php',
     'UserTest' => $baseDir . '/test/UserTest.php',
