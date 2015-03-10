@@ -265,11 +265,7 @@ class Item {
 	 *
 	 * @return The parent id of this item.
 	 */
-<<<<<<< HEAD
-	public function parentId() {
-=======
 	public function getParentId() {
->>>>>>> ff310c6edff0ca2f6ac2a41536234e924254f25f
 		return $this->data['parent_id'];
 	}
 
