@@ -97,10 +97,10 @@ class Account {
     }
 
     /**
-     * Retrieves the processed account data.
+     * Retrieves an account instance from the supplied data.
      *
      * @param mixed $data The retrieved data.
-     * @return The processed account data.
+     * @return An account instance.
      */
     public static function getInstance($data) {
         $account = new Account();
