@@ -54,15 +54,15 @@ class Item {
 	/**
 	 * Retrieves this items changes.
 	 *
-	 * @param bool $add_version Flag to add version to result or not.
+	 * @param bool $addVersion Flag to add version to result or not.
 	 * @return An array of this items changes.
 	 */
-	public function changes($add_version = false) {
+	public function changes($addVersion = false) {
 		$res = array();
 		foreach ($this->change_list as $key) {
 			$res[$key] = $this->data[$key];
 		}
-		if ($add_version) {
+		if ($addVersion) {
 			$res['version'] = $this->data['version'];
 		}
 		return $res;
@@ -71,11 +71,11 @@ class Item {
 	/**
 	 * Returns an array of path components given a path.
 	 *
-	 * @param string $path_string Path of an item.
+	 * @param string $pathString Path of an item.
 	 * @return An array of path components.
 	 */
-	public static function componentsFromPath($path_string) {
-		$paths = explode("/", rtrim($path_string, "/"));
+	public static function componentsFromPath($pathString) {
+		$paths = explode("/", rtrim($pathString, "/"));
         if ($paths[0] == '') {
 			$path[0] = "/";
 		}
@@ -86,16 +86,16 @@ class Item {
 	 * Retrieves the path given an item list.
 	 *
 	 * @param Item[] $items The items whose path needs to be retrieved.
-	 * @param bool $add_root Flag to add root to the retrieved path or not.
+	 * @param bool $addRoot Flag to add root to the retrieved path or not.
 	 * @return Path of the item list.
 	 */
-	public static function pathFromItemList($items, $add_root=False) {
+	public static function pathFromItemList($items, $addRoot=False) {
 		$first = true;
 		$path = "";
 		foreach ($items as $item) {
 			if ($first) {
 				$first = false;
-				$path .= $add_root ? "/" : "";
+				$path .= $addRoot ? "/" : "";
 			} else {
 				$path .= "/";
 			}
@@ -108,12 +108,12 @@ class Item {
 	 * Formats and returns the path of an item given an array of paths.
 	 *
 	 * @param array $components The array containing path elements.
-	 * @param bool $add_root Flag to add root to the retrieved path or not.
+	 * @param bool $addRoot Flag to add root to the retrieved path or not.
 	 * @return Formatted path for the given array.
 	 */
-	public static function pathFromComponents($components, $add_root=False) {
+	public static function pathFromComponents($components, $addRoot=False) {
 		$path = implode("/", $components);
-		if ($add_root) {
+		if ($addRoot) {
 			$path = "/" . $path;
 		}
 		return $path;
@@ -234,7 +234,7 @@ class Item {
 	/**
 	 * Sets the name of this item.
 	 *
-	 * @param string $new_name The name of the item.
+	 * @param string $newName The name of the item.
 	 */
 	public function setName($newName) {
 		$this->change('name');
@@ -253,10 +253,10 @@ class Item {
 	/**
 	 * Sets the id of this item - Not Allowed.
 	 *
-	 * @param string $new_id The new id to be set on the item.
+	 * @param string $newId The new id to be set on the item.
 	 * @throws OperationNotAllowed
 	 */
-    public function setId($new_id) {
+    public function setId($newId) {
         throw new OperationNotAllowed("Setting the id of an Item");
 	}
 
@@ -281,10 +281,10 @@ class Item {
 	/**
 	 * Set the type of this item - Not Allowed.
 	 *
-	 * @param string $new_type The new type to be set on the item.
+	 * @param string $newType The new type to be set on the item.
 	 * @throws OperationNotAllowed
 	 */
-    public function setType($new_type) {
+    public function setType($newType) {
         throw new OperationNotAllowed("Setting the type of an Item");
 	}
 
@@ -300,10 +300,10 @@ class Item {
 	/**
 	 * Sets the is mirrored flag of this item - Not Allowed.
 	 *
-	 * @param string $new_mirrored_flag The new mirrored flag to be set on the item.
+	 * @param string $newMirroredFlag The new mirrored flag to be set on the item.
 	 * @throws OperationNotAllowed
 	 */
-    public function setMirrored($new_mirrored_flag) {
+    public function setMirrored($newMirroredFlag) {
         throw new OperationNotAllowed("Setting if an Item is mirrored");
 	}
 
@@ -319,11 +319,11 @@ class Item {
 	/**
 	 * Sets the content last modified date of this item.
 	 *
-	 * @param string $new_date_content_last_modified The new content last modified date.
+	 * @param string $newDateContentLastModified The new content last modified date.
 	 */
-    public function setDateContentLastModified($new_date_content_last_modified) {
+    public function setDateContentLastModified($newDateContentLastModified) {
         $this->change('date_content_last_modified');
-        $this->data['date_content_last_modified'] = $new_date_content_last_modified;
+        $this->data['date_content_last_modified'] = $newDateContentLastModified;
 	}
 
 	/**
@@ -338,11 +338,11 @@ class Item {
 	/**
 	 * Sets the created date of this item.
 	 *
-	 * @param string $new_date_created The new created date.
+	 * @param string $newDateCreated The new created date.
 	 */
-    public function setDateCreated($new_date_created) {
+    public function setDateCreated($newDateCreated) {
         $this->change('date_created');
-        $this->data['date_created'] = $new_date_created;
+        $this->data['date_created'] = $newDateCreated;
 	}
 
 	/**
@@ -357,11 +357,11 @@ class Item {
 	/**
 	 * Sets the version of this item.
 	 *
-	 * @param string $new_version The new version.
+	 * @param string $newVersion The new version.
 	 */
-    public function setVersion($new_version) {
+    public function setVersion($newVersion) {
         $this->change('version');
-        $this->data['version'] = $new_version;
+        $this->data['version'] = $newVersion;
 	}
 
 	/**
@@ -376,11 +376,11 @@ class Item {
 	/**
 	 * Sets the parent path id of this item.
 	 *
-	 * @param string $new_absolute_parent_path_id The new parent path id.
+	 * @param string $newAbsoluteParentPathId The new parent path id.
 	 */
-    public function setParentPath($new_absolute_parent_path_id) {
+    public function setParentPath($newAbsoluteParentPathId) {
         $this->change('absolute_parent_path_id');
-        $this->data['absolute_parent_path_id'] = $new_absolute_parent_path_id;
+        $this->data['absolute_parent_path_id'] = $newAbsoluteParentPathId;
 	}
 
 	/**
@@ -395,11 +395,11 @@ class Item {
 	/**
 	 * Sets the meta last modified date of this item.
 	 *
-	 * @param string $new_date_meta_last_modified The new meta last modified date.
+	 * @param string $newDateMetaLastModified The new meta last modified date.
 	 */
-	public function setDateMetaLastModified($new_date_meta_last_modified) {
+	public function setDateMetaLastModified($newDateMetaLastModified) {
         $this->change('date_meta_last_modified');
-        $this->data['date_meta_last_modified'] = $new_date_meta_last_modified;
+        $this->data['date_meta_last_modified'] = $newDateMetaLastModified;
 	}
 
 	/**
@@ -414,11 +414,11 @@ class Item {
 	/**
 	 * Sets the new application data of this item.
 	 *
-	 * @param mixed $new_application_data The new application data.
+	 * @param mixed $newApplicationData The new application data.
 	 */
-    public function setApplicationData($new_application_data) {
+    public function setApplicationData($newApplicationData) {
         $this->change('application_data');
-        $this->data['application_data'] = $new_application_data;
+        $this->data['application_data'] = $newApplicationData;
 	}
 
 	/**
@@ -439,10 +439,47 @@ class Item {
 		return $this->full_path;
 	}
 
+    /**
+     * Retrieves the extension of this item.
+     *
+     * @return The extension of this item.
+     */
+    public function getExtension() {
+        return $this->data['extension'];
+    }
+
+    /**
+     * Retrieves the mime type of this item.
+     *
+     * @return The mime type of this item.
+     */
+    public function getMime() {
+        return $this->data['mime'];
+    }
+
+    /**
+     * Sets the Mime type of this item.
+     *
+     * @param string $newMime The new Mime type of the item.
+     */
+    public function setMime($newMime) {
+        $this->change('mime');
+        $this->data['mime'] = $newMime;
+    }
+
+    /**
+     * Retrieves the size of this item.
+     *
+     * @return The size of this item.
+     */
+    public function getSize() {
+        return $this->data['size'];
+    }
+
 	/**
 	 * Moves this item to a given destination.
 	 *
-	 * @param string $dest The destination of the item move.
+	 * @param string $destination The destination of the item move.
 	 * @param string $exists The action to take if the item exists.
 	 * @return The success/fail response of the move operation.
 	 */
@@ -453,7 +490,7 @@ class Item {
 	/**
 	 * Copy this item to a given destination.
 	 *
-	 * @param string $dest The destination of the item copy.
+	 * @param string $destination The destination of the item copy.
 	 * @param string $exists The action to take if the item exists.
 	 * @return The success/fail response of the copy operation.
 	 */
@@ -475,25 +512,25 @@ class Item {
 	/**
 	 * Save this item on the cloud.
 	 *
-	 * @param string $if_conflict The action to take if a conflict occurs.
+	 * @param string $ifConflict The action to take if a conflict occurs.
 	 * @param bool $debug Debug flag.
 	 * @return The success/fail response of the save operation.
 	 */
-    public function save($if_conflict="fail", $debug=False) {
+    public function save($ifConflict="fail", $debug=False) {
         return $this->api()->save($this);
 	}
 
 	/**
 	 * Restores this item to the given destination.
 	 *
-	 * @param string $dest The destination of the item restore.
+	 * @param string $destination The destination of the item restore.
 	 * @return The success/fail response of the restore operation.
 	 */
-	public function restore($dest) {
-		if (!is_string($dest)) {
-			$dest = $dest->path();
+	public function restore($destination) {
+		if (!is_string($destination)) {
+            $destination = $destination->path();
 		}
-        return $this->api()->restore($this, $dest);
+        return $this->api()->restore($this, $destination);
 	}
 
 	/**
