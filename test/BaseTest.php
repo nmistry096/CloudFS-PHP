@@ -1,5 +1,7 @@
 <?php
 
+use CloudFS\Session;
+
 /**
  * The base unit test.
  */
@@ -8,11 +10,11 @@ class BaseTest extends PHPUnit_Framework_TestCase {
     /**
      * The bitcasa account related credential information.
      */
-    const CLIENT_ID = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
-    const CLIENT_SECRET = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
-    const END_POINT = 'xxxxxxxxx.cloudfs.io';
-    const USERNAME = 'test@test.com';
-    const PASSWORD = 'xxxxxx';
+    const CLIENT_ID = 'k-O8NxC69MIlTe1vnCpemIMQe5B3LwCk73iGXGH-hwI';
+    const CLIENT_SECRET = 'Ka7F-bNlnR7ODiqhF4T2P6Cm8fWE0_yRKI6GaT_MTwXIEww7Pkpv-DnAHvFcukr6NR25wp5hxic7M4sy5X9ksA';
+    const END_POINT = 'm1qfb0fwlz.cloudfs.io';
+    const USERNAME = 'dilshan@calcey.com';
+    const PASSWORD = 'dilshan';
 
     /**
      * The session variable of the unit test.
@@ -126,7 +128,8 @@ class BaseTest extends PHPUnit_Framework_TestCase {
     protected function getItemFromIndexArray(array $items, $item_name) {
         $result = null;
         foreach($items as $item) {
-            if ($item->name() == $item_name) {
+            /** @var \CloudFS\Item $item */
+            if ($item->getName() == $item_name) {
                 $result = $item;
                 break;
             }

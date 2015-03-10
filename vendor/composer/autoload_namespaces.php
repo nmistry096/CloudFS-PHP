@@ -12,5 +12,5 @@ return array(
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
     'Sphpdox' => array($vendorDir . '/sphpdox/sphpdox/lib'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src'),
-    'CloudFS' => array($baseDir . '/src/CloudFS'),
+    'CloudFS' => array($baseDir . '/src'),
 );

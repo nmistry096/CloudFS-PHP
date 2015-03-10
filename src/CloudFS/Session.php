@@ -11,10 +11,11 @@
 
 namespace CloudFS;
 
-require_once "HTTPConnect.php";
-require_once "BitcasaConstants.php";
-require_once "BitcasaUtils.php";
-require_once "BitcasaFilesystem.php";
+use CloudFS\Filesystem;
+use CloudFS\HTTPConnect;
+use CloudFS\BitcasaUtils;
+use CloudFS\BitcasaConstants;
+use CloudFS\Credential;
 
 
 /**
@@ -98,8 +99,16 @@ class Session {
      * @return Current Bitcasa User information
      */
     public function user() {
-        $userInfo = $this->bitcasaClientApi->getBitcasaAccountDataApi()->requestUserInfo();
-        return $userInfo;
+        $connection = new HTTPConnect($this);
+        $url = $this->credential->getRequestUrl('/' . BitcasaConstants::PARAM_USER . BitcasaConstants::METHOD_PROFILE);
+        if (!BitcasaUtils::isSuccess($connection->get($url))) {
+            return null;
+        }
+
+        $response = $connection->getResponse(true);
+
+        $user = User::getInstance($response);
+        return $user;
     }
 
     /**

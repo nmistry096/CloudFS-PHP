@@ -1,6 +1,8 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+use CloudFS\Filesystem;
+use CloudFS\Utils\Exists;
+use CloudFS\Utils\FileType;
 
 /**
  * Test Bitcasa Api related functionality.

@@ -11,7 +11,7 @@
 
 namespace CloudFS;
 
-require_once "BitcasaException.php";
+use CloudFS\Exception\BitcasaStatus;
 
 
 class HTTPConnect {
@@ -38,7 +38,7 @@ class HTTPConnect {
 	 *
 	 * @param Session $session The http session instance.
 	 */
-	public function HTTPConnect($session = null) {
+	public function __construct($session = null) {
 		$this->curl = null;
 		$this->session = $session;
 		$this->headers = array();
@@ -375,7 +375,7 @@ class HTTPConnect {
 			if ($resp == false) {
 				$resp = curl_error($this->curl);
 			}
-			throw new Exception($this->http_status . ": " . $resp, $err);
+			throw new \Exception($this->http_status . ": " . $resp, $err);
 		}
 
 		if ($resp == NULL || $resp == false) {

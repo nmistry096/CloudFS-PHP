@@ -11,112 +11,10 @@ namespace CloudFS;
  * For support, please send email to support@bitcasa.com.
  */
 
-require_once "HTTPConnect.php";
-require_once "BitcasaConstants.php";
-require_once "BitcasaUtils.php";
-require_once "BitcasaFilesystem.php";
-
-
-/**
- * Defines the credential properties.
- */
-class Credential {
-
-	private $endpoint;
-	private $applicationContext;
-	private $accessToken;
-	private $tokenType;
-	private $session;
-
-	/**
-	 * Initializes the Credentials instance.
-	 *
-	 * @param Session $session Session variable.
-	 * @param string $endpoint The bitcasa endpoint.
-	 */
-	public function __construct($session = null, $endpoint = NULL) {
-		$this->applicationContext = null;
-		$this->endpoint = $endpoint;
-		$this->session = $session;
-	}
-
-	/**
-	 * Retrieves the credentials api endpoint.
-	 *
-	 * @return The api endpoint.
-	 */
-	public function getEndPoint() {
-		return $this->endpoint;
-	}
-
-	/**
-	 * Retrieves the application context.
-	 *
-	 * @return The application context.
-	 */
-	public function getApplicationContext() {
-		return $this->applicationContext;
-	}
-
-	/**
-	 * Retrieves the credentials access token.
-	 *
-	 * @return The access token.
-	 */
-	public function getAccessToken() {
-		return $this->accessToken;
-	}
-
-	/**
-	 * Sets the credentials access token.
-	 *
-	 * @param string $token The access token to be set.
-	 */
-	public function setAccessToken($token) {
-		$this->accessToken = $token;
-	}
-
-	/**
-	 * Retrieves the credential token type.
-	 *
-	 * @return The token type.
-	 */
-	public function getTokenType() {
-		return $this->tokenType;
-	}
-
-	/**
-	 * Sets the credential token type.
-	 *
-	 * @param string $type The token type to be set.
-	 */
-	public function setTokenType($type) {
-		$this->tokenType = $type;
-	}
-
-	/**
-	 * Retrieves the request url for credentials.
-	 *
-	 * @param string $method Request url method variable.
-	 * @param string $operation Request url operation.
-	 * @param mixed $params Parameters for request url.
-	 * @return string The request url.
-	 */
-	public function getRequestUrl($method, $operation = null, $params = null) {
-		return BitcasaUtils::getRequestUrl($this, $method, $operation, $params);
-	}
-
-	/**
-	 * Retrieves the credential session.
-	 *
-	 * @return The session.
-	 */
-	public function getSession() {
-		return $this->session;
-	}
-}
-
-
+use CloudFS\Filesystem;
+use CloudFS\Utils\BitcasaConstants;
+use CloudFS\BitcasaUtils;
+use CloudFS\HTTPConnect;
 
 
 class BitcasaApi {
@@ -320,8 +218,8 @@ class BitcasaApi {
 		if ($parentpath == null) {
 			$parentpath = "/";
 		}
-		assert_path($parentpath, 1);
-		assert_string($filename, 2);
+		//assert_path($parentpath, 1);
+		//assert_string($filename, 2);
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $parentpath,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_CREATE));
 		$body = BitcasaUtils::generateParamsString(array("name" => $filename, "exists" => $exists));
@@ -349,7 +247,7 @@ class BitcasaApi {
 	 * @return The success/fail response of the delete operation.
 	 */
 	public function deleteFolder($path, $force = false) {
-		assert_string($path, 1);
+		//assert_string($path, 1);
 		$connection = new HTTPConnect($this->credential->getSession());
 		$force_option = array();
 		if ($force == true) {
@@ -375,7 +273,7 @@ class BitcasaApi {
 	 * @return The success/fail response of the delete operation.
 	 */
 	public function deleteFile($path, $force = false) {
-		assert_string($path, 1);
+		//assert_string($path, 1);
 		$connection = new HTTPConnect($this->credential->getSession());
 		$force_option = array();
 		if ($force == true) {
@@ -403,7 +301,7 @@ class BitcasaApi {
 	 * @throws InvalidArgument
 	 */
 	public function alterFolder($path, $attrs, $conflict = "fail") {
-		assert_string($path, 1);
+		//assert_string($path, 1);
 		$connection = new HTTPConnect($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path . "/meta",
 												array());
@@ -428,7 +326,7 @@ class BitcasaApi {
 	 * @throws InvalidArgument
 	 */
 	public function alterFile($path, $attrs, $conflict = "fail") {
-		assert_string($path, 1);
+		//assert_string($path, 1);
 		$connection = new HTTPConnect($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path . "/meta",
 												array());
@@ -453,8 +351,8 @@ class BitcasaApi {
 	 * @return The success/fail response of the copy operation
 	 */
 	public function copyFolder($path, $dest, $name = null, $exists = "fail") {
-		assert_string($path, 1);
-		assert_string($dest, 2);
+		//assert_string($path, 1);
+		//assert_string($dest, 2);
 		$connection = new HTTPConnect($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_COPY));
@@ -483,8 +381,8 @@ class BitcasaApi {
 	 * @return The success/fail response of the copy operation
 	 */
 	public function copyFile($path, $dest, $name = null, $exists = "fail") {
-		assert_string($path, 1);
-		assert_string($dest, 2);
+		//assert_string($path, 1);
+		//assert_string($dest, 2);
 		$connection = new HTTPConnect($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_COPY));
@@ -513,8 +411,8 @@ class BitcasaApi {
 	 * @return The success/fail response of the move operation
 	 */
 	public function moveFolder($path, $dest, $name = null, $exists = "fail") {
-		assert_path($path, 1);
-		assert_path($dest, 2);
+		//assert_path($path, 1);
+		//assert_path($dest, 2);
 		$connection = new HTTPConnect($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_MOVE));
@@ -542,8 +440,8 @@ class BitcasaApi {
 	 * @return The success/fail response of the move operation
 	 */
 	public function moveFile($path, $dest, $name = null, $exists = "fail") {
-		assert_path($path, 1);
-		assert_path($dest, 2);
+		//assert_path($path, 1);
+		//assert_path($dest, 2);
 		$connection = new HTTPConnect($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_MOVE));
@@ -591,7 +489,7 @@ class BitcasaApi {
 	 * @return An instance of the uploaded item.
 	 */
 	public function uploadFile($parentpath, $name, $filepath, $exists = "overwrite") {
-		assert_string($filepath);
+		//assert_string($filepath);
 		$params = array();
 		$connection = new HTTPConnect($this->credential->getSession());
 		$connection->raw();
@@ -615,8 +513,8 @@ class BitcasaApi {
 	 * @throws InvalidArgument
 	 */
     public function restore($path, $dest) {
-		assert_string($path, 1);
-		assert_string($dest, 2);
+		//assert_string($path, 1);
+		//assert_string($dest, 2);
 		$connection = new HTTPConnect($this->credential->getSession());
 		$params = array();
 		$body = array("rescue-path" => $dest);
@@ -643,7 +541,7 @@ class BitcasaApi {
 	 * @throws InvalidArgument
 	 */
     public function fileHistory($path, $start = 0, $stop = 0, $limit = 0) {
-		assert_string($path, 1);
+		//assert_string($path, 1);
 		$connection = new HTTPConnect($this->credential->getSession());
 		$params = array();
 		if ($start != 0) {
@@ -665,4 +563,5 @@ class BitcasaApi {
 	}
 
 }
+
 ?>

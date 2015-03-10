@@ -11,10 +11,6 @@
 
 namespace CloudFS;
 
-require_once("BitcasaItems.php");
-require_once("BitcasaApi.php");
-require_once("BitcasaException.php");
-
 /**
  * Defines the Bitcasa file system.
  */
@@ -144,10 +140,11 @@ class Filesystem {
 		$res = array();
 		$r = null;
 		foreach ($items as $item) {
-			if ($item->type() == "folder") {
-				$r = $this->api->deleteFolder($item->path(), $force);
+			/** @var \CloudFS\Item $item */
+			if ($item->getType() == "folder") {
+				$r = $this->api->deleteFolder($item->getPath(), $force);
 			} else {
-				$r = $this->api->deleteFile($item->path());
+				$r = $this->api->deleteFile($item->getPath());
 			}
 			$res[] = $r;
 		}
@@ -164,11 +161,9 @@ class Filesystem {
 	 * @return A folder instance.
 	 */
 	public function create($parent, $name, $exists="overwrite") {
-		$parentItem = null;
 		if ($parent == null) {
 			$parentPath = "/";
 		} else if (!is_string($parent)) {
-			$parentItem = $parent;
 			$parentPath = $parent->getPath();
 		} else {
 			$parentPath = $parent;
@@ -188,9 +183,9 @@ class Filesystem {
 	 * @throws InvalidArgument
 	 */
     public function move($items, $destination, $exists = "fail") {
-		assert_non_null($items, 1);
+		//assert_non_null($items, 1);
 		if (!is_string($destination)) {
-			$destination = $destination->path();
+			$destination = $destination->getPath();
 		}
 		if (!is_array($items)) {
 			$items = array($items);
@@ -198,10 +193,10 @@ class Filesystem {
 		$res = array();
 		$r = null;
 		foreach ($items as $item) {
-			if ($item->type() == "folder") {
-				$r = $this->api->moveFolder($item->path(), $destination, $item->name(), $exists);
+			if ($item->getType() == "folder") {
+				$r = $this->api->moveFolder($item->getPath(), $destination, $item->getName(), $exists);
 			} else {
-				$r = $this->api->moveFile($item->path(), $destination, $item->name(), $exists);
+				$r = $this->api->moveFile($item->getPath(), $destination, $item->getName(), $exists);
 			}
 			$res[] = $r;
 		}
@@ -223,10 +218,10 @@ class Filesystem {
 		$res = array();
 		$r = null;
 		foreach ($items as $item) {
-			if ($item->type() == "folder") {
-				$r = $this->api->copyFolder($item->path(), $destination, $item->name(), $exists);
+			if ($item->getType() == "folder") {
+				$r = $this->api->copyFolder($item->getPath(), $destination, $item->getName(), $exists);
 			} else {
-				$r = $this->api->copyFile($item->path(), $destination, $item->name(), $exists);
+				$r = $this->api->copyFile($item->getPath(), $destination, $item->getName(), $exists);
 			}
 			$res[] = $r;
 		}
@@ -248,9 +243,9 @@ class Filesystem {
 		$r = null;
 		foreach ($items as $item) {
 			if ($item->type() == "folder") {
-				$r = $this->api->alterFolder($item->path(), $item->changes(), $conflict);
+				$r = $this->api->alterFolder($item->getPath(), $item->changes(), $conflict);
 			} else {
-				$r = $this->api->alterFile($item->path(), $item->changes(), $conflict);
+				$r = $this->api->alterFile($item->getPath(), $item->changes(), $conflict);
 			}
 			$res[] = $r;
 		}
@@ -271,7 +266,7 @@ class Filesystem {
 		if (is_string($parent)) {
 			$parentPath = $parent;
 		} else if ($parent != null) {
-			$parentPath = $parent->path();
+			$parentPath = $parent->getPath();
 		}
 
 		$fp = $path;
@@ -291,7 +286,7 @@ class Filesystem {
 	 * @throws InvalidArgument
 	 */
 	public function download($item, $file = null) {
-		assert_non_null($item, 1);
+		//assert_non_null($item, 1);
 		$path = $item;
 		if (!is_string($item)) {
 			$path = $item->getPath();
@@ -315,7 +310,7 @@ class Filesystem {
 		$res = array();
 		$r = null;
 		foreach ($items as $item) {
-			$r = $this->api->restore($item->path(), $destination);
+			$r = $this->api->restore($item->getPath(), $destination);
 			$res[] = $r;
 		}
 		return $res;

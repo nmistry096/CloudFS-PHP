@@ -11,6 +11,8 @@
 
 namespace CloudFS;
 
+use CloudFS\Utils\BitcasaConstants;
+
 abstract class BitcasaUtils {
 
 	/**
