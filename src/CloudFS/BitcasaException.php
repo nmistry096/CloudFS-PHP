@@ -20,7 +20,7 @@ namespace CloudFS;
  * @return bool The null status of the argument supplied.
  * @throws InvalidArgument
  */
-function assert_non_null($s, $argno = 0) {
+function assertNonNull($s, $argno = 0) {
 	if ($s == null) {
 		throw new \InvalidArgument($argno) ;
 	}
@@ -35,7 +35,7 @@ function assert_non_null($s, $argno = 0) {
  * @return bool The string  status of the argument supplied.
  * @throws InvalidArgument
  */
-function assert_string($s, $argno = 0) {
+function assertString($s, $argno = 0) {
 	if (! is_string($s)) {
 		throw new \InvalidArgument($argno) ;
 	}
@@ -50,7 +50,7 @@ function assert_string($s, $argno = 0) {
  * @return bool The string or null status of the argument supplied.
  * @throws InvalidArgument
  */
-function assert_string_or_null($s, $argno = 0) {
+function assertStringOrNull($s, $argno = 0) {
 	if ($s != null &&!is_string($s)) {
 		throw new \InvalidArgument($argno) ;
 	}
@@ -65,7 +65,7 @@ function assert_string_or_null($s, $argno = 0) {
  * @return bool The number status of the argument supplied.
  * @throws InvalidArgument
  */
-function assert_number($s, $argno = 0) {
+function assertNumber($s, $argno = 0) {
 	if (! is_number($s)) {
 		throw new \InvalidArgument($argno) ;
 	}
@@ -81,7 +81,7 @@ function assert_number($s, $argno = 0) {
  * @throws InvalidArgument
  */
 // TODO: needs more work!
-function assert_path($s, $argno = 0) {
+function assertPath($s, $argno = 0) {
 	if (is_string($s)) {
 		if ($s == "/") {
 			return true;

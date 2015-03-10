@@ -25,7 +25,7 @@ class Container extends Item {
      *
      * @return The item list array.
      */
-    public function get_list() {
+    public function getList() {
         return $this->api()->getList($this->getPath());
     }
 
