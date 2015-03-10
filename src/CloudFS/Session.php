@@ -9,6 +9,8 @@
  * For support, please send email to support@bitcasa.com.
  */
 
+namespace CloudFS;
+
 require_once "HTTPConnect.php";
 require_once "BitcasaConstants.php";
 require_once "BitcasaUtils.php";

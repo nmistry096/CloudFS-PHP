@@ -9,8 +9,9 @@
  * For support, please send email to support@bitcasa.com.
  */
 
-require_once "BitcasaException.php";
+namespace CloudFS;
 
+require_once "BitcasaException.php";
 
 
 class HTTPConnect {

@@ -9,6 +9,8 @@
  * For support, please send email to support@bitcasa.com.
  */
 
+namespace CloudFS;
+
 class Item {
 
 	private $parent;
@@ -97,7 +99,7 @@ class Item {
 			} else {
 				$path .= "/";
 			}
-			$path .= $item->id();
+			$path .= $item->getId();
 		}
 		return $path;
 	}
@@ -225,7 +227,7 @@ class Item {
 	 *
 	 * @return The name of the item.
 	 */
-    public function name() {
+    public function getName() {
 		return $this->data['name'];
 	}
 
@@ -244,7 +246,7 @@ class Item {
 	 *
 	 * @return The data id of the item.
 	 */
-    public function id() {
+    public function getId() {
 		return $this->data['id'];
 	}
 
@@ -272,7 +274,7 @@ class Item {
 	 *
 	 * @return The type of this item.
 	 */
-    public function type() {
+    public function getType() {
         return $this->data['type'];
 	}
 
@@ -291,7 +293,7 @@ class Item {
 	 *
 	 * @return Is mirrored flag of this item.
 	 */
-    public function is_mirrored() {
+    public function getIsMirrored() {
         return $this->data['is_mirrored'];
 	}
 
@@ -310,7 +312,7 @@ class Item {
 	 *
 	 * @return The content last modified date.
 	 */
-    public function date_content_last_modified() {
+    public function getDateContentLastModified() {
         return $this->data['date_content_last_modified'];
 	}
 
@@ -329,7 +331,7 @@ class Item {
 	 *
 	 * @return The created date of this item.
 	 */
-    public function date_created() {
+    public function getDateCreated() {
         return $this->data['date_created'];
 	}
 
@@ -386,7 +388,7 @@ class Item {
 	 *
 	 * @return The meta last modified date of this item.
 	 */
-    public function date_meta_last_modified() {
+    public function getDateMetaLastModified() {
         return $this->data['date_meta_last_modified'];
 	}
 
@@ -405,7 +407,7 @@ class Item {
 	 *
 	 * @return The application data of this item.
 	 */
-    public function application_data() {
+    public function getApplicationData() {
 		return $this->data['application_data'];
 	}
 
@@ -433,7 +435,7 @@ class Item {
 	 *
 	 * @return The full path of this item.
 	 */
-    public function path() {
+    public function getPath() {
 		return $this->full_path;
 	}
 
@@ -523,7 +525,7 @@ class Container extends Item {
 	 * @return The item list array.
 	 */
 	public function get_list() {
-		return $this->api()->getList($this->path());
+		return $this->api()->getList($this->getPath());
 	}
 
 	/**

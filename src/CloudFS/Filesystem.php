@@ -9,6 +9,8 @@
  * For support, please send email to support@bitcasa.com.
  */
 
+namespace CloudFS;
+
 require_once("BitcasaItems.php");
 require_once("BitcasaApi.php");
 require_once("BitcasaException.php");
@@ -167,7 +169,7 @@ class Filesystem {
 			$parentPath = "/";
 		} else if (!is_string($parent)) {
 			$parentItem = $parent;
-			$parentPath = $parent->path();
+			$parentPath = $parent->getPath();
 		} else {
 			$parentPath = $parent;
 		}
@@ -292,7 +294,7 @@ class Filesystem {
 		assert_non_null($item, 1);
 		$path = $item;
 		if (!is_string($item)) {
-			$path = $item->path();
+			$path = $item->getPath();
 		}
 		return $this->api->downloadFile($path, $file);
 	}
@@ -328,7 +330,7 @@ class Filesystem {
 	 * @return File history entries.
 	 */
     public function fileHistory($item, $start = -10, $stop = 0) {
-		return $this->api->fileHistory($item->path(), $start, $stop);
+		return $this->api->fileHistory($item->getPath(), $start, $stop);
 	}
 
 }
