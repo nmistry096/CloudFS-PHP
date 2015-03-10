@@ -120,7 +120,7 @@ class Session {
      *
      * @return The bitcasa filesystem
      */
-    public function filesystem() {
+    public function fileSystem() {
         return new Filesystem($this->bitcasaClientApi);
     }
 

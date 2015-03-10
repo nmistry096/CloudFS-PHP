@@ -74,7 +74,7 @@ class Item {
 	 * @param string $path_string Path of an item.
 	 * @return An array of path components.
 	 */
-	public static function components_from_path($path_string) {
+	public static function componentsFromPath($path_string) {
 		$paths = explode("/", rtrim($path_string, "/"));
         if ($paths[0] == '') {
 			$path[0] = "/";
@@ -89,7 +89,7 @@ class Item {
 	 * @param bool $add_root Flag to add root to the retrieved path or not.
 	 * @return Path of the item list.
 	 */
-	public static function path_from_item_list($items, $add_root=False) {
+	public static function pathFromItemList($items, $add_root=False) {
 		$first = true;
 		$path = "";
 		foreach ($items as $item) {
@@ -111,7 +111,7 @@ class Item {
 	 * @param bool $add_root Flag to add root to the retrieved path or not.
 	 * @return Formatted path for the given array.
 	 */
-	public static function path_from_components($components, $add_root=False) {
+	public static function pathFromComponents($components, $add_root=False) {
 		$path = implode("/", $components);
 		if ($add_root) {
 			$path = "/" . $path;
@@ -125,7 +125,7 @@ class Item {
 	 * @param Item $item The item whose path needs to be retrieved.
 	 * @return The path of the item.
 	 */
-    public function path_from_item($item = null) {
+    public function pathFromItem($item = null) {
 		if ($item == null) {
 			$item = $this;
 		}
@@ -256,7 +256,7 @@ class Item {
 	 * @param string $new_id The new id to be set on the item.
 	 * @throws OperationNotAllowed
 	 */
-    public function set_id($new_id) {
+    public function setId($new_id) {
         throw new OperationNotAllowed("Setting the id of an Item");
 	}
 
@@ -265,7 +265,7 @@ class Item {
 	 *
 	 * @return The parent id of this item.
 	 */
-	public function parent_id() {
+	public function parentId() {
 		return $this->data['parent_id'];
 	}
 
@@ -284,7 +284,7 @@ class Item {
 	 * @param string $new_type The new type to be set on the item.
 	 * @throws OperationNotAllowed
 	 */
-    public function set_type($new_type) {
+    public function setType($new_type) {
         throw new OperationNotAllowed("Setting the type of an Item");
 	}
 
@@ -303,7 +303,7 @@ class Item {
 	 * @param string $new_mirrored_flag The new mirrored flag to be set on the item.
 	 * @throws OperationNotAllowed
 	 */
-    public function set_mirrored($new_mirrored_flag) {
+    public function setMirrored($new_mirrored_flag) {
         throw new OperationNotAllowed("Setting if an Item is mirrored");
 	}
 
@@ -321,7 +321,7 @@ class Item {
 	 *
 	 * @param string $new_date_content_last_modified The new content last modified date.
 	 */
-    public function set_date_content_last_modified($new_date_content_last_modified) {
+    public function setDateContentLastModified($new_date_content_last_modified) {
         $this->change('date_content_last_modified');
         $this->data['date_content_last_modified'] = $new_date_content_last_modified;
 	}
@@ -340,7 +340,7 @@ class Item {
 	 *
 	 * @param string $new_date_created The new created date.
 	 */
-    public function set_date_created($new_date_created) {
+    public function setDateCreated($new_date_created) {
         $this->change('date_created');
         $this->data['date_created'] = $new_date_created;
 	}
@@ -359,7 +359,7 @@ class Item {
 	 *
 	 * @param string $new_version The new version.
 	 */
-    public function set_version($new_version) {
+    public function setVersion($new_version) {
         $this->change('version');
         $this->data['version'] = $new_version;
 	}
@@ -369,7 +369,7 @@ class Item {
 	 *
 	 * @return The parent path id of this item.
 	 */
-    public function parent_path() {
+    public function parentPath() {
         return $this->data['absolute_parent_path_id'];
 	}
 
@@ -378,7 +378,7 @@ class Item {
 	 *
 	 * @param string $new_absolute_parent_path_id The new parent path id.
 	 */
-    public function set_parent_path($new_absolute_parent_path_id) {
+    public function setParentPath($new_absolute_parent_path_id) {
         $this->change('absolute_parent_path_id');
         $this->data['absolute_parent_path_id'] = $new_absolute_parent_path_id;
 	}
@@ -397,7 +397,7 @@ class Item {
 	 *
 	 * @param string $new_date_meta_last_modified The new meta last modified date.
 	 */
-	public function set_date_meta_last_modified($new_date_meta_last_modified) {
+	public function setDateMetaLastModified($new_date_meta_last_modified) {
         $this->change('date_meta_last_modified');
         $this->data['date_meta_last_modified'] = $new_date_meta_last_modified;
 	}
