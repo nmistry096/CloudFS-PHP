@@ -23,6 +23,15 @@ class SessionTest extends BaseTest{
     }
 
     /**
+     * Retrieve action history.
+     */
+    public function testActionHistory() {
+        $actionHistory = $this->getSession()->actionHistory();
+        $this->assertNotNull($actionHistory);
+        $this->assertTrue(count($actionHistory['result']) > 0);
+    }
+
+    /**
      * The session unlink test.
      */
     public function testUnlink() {

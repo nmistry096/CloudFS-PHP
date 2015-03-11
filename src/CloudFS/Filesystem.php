@@ -262,7 +262,7 @@ class Filesystem {
 		$res = array();
 		$r = null;
 		foreach ($items as $item) {
-			if ($item->type() == "folder") {
+			if ($item->getType() == "folder") {
 				$r = $this->api->alterFolder($item->getPath(), $item->changes(), $conflict);
 			} else {
 				$r = $this->api->alterFile($item->getPath(), $item->changes(), $conflict);
