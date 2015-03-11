@@ -125,21 +125,21 @@ class Account {
     public static function getInstance($data) {
         $account = new Account();
         $account->id = $data['result']['account_id'];
-        $account->storageUsage = $data['storage']['usage'];
+        $account->storageUsage = $data['result']['storage']['usage'];
 
-        if(!empty($data['storage']['limit']))
+        if(!empty($data['result']['storage']['limit']))
         {
-            $account->storageLimit = $data['storage']['limit'];
+            $account->storageLimit = $data['result']['storage']['limit'];
         }
 
-        $account->overStorageLimit = $data['storage']['otl'];
-        $account->stateDisplayName = $data['account_state']['display_name'];
-        $account->stateId = $data['account_state']['display_name'];
-        $account->planDisplayName = $data['account_plan']['display_name'];
-        $account->planId = $data['account_plan']['id'];
+        $account->overStorageLimit = $data['result']['storage']['otl'];
+        $account->stateDisplayName = $data['result']['account_state']['display_name'];
+        $account->stateId = $data['result']['account_state']['display_name'];
+        $account->planDisplayName = $data['result']['account_plan']['display_name'];
+        $account->planId = $data['result']['account_plan']['id'];
 
-        if(!empty($data['session']['locale'])) {
-            $account->sessionLocale = $data['session']['locale'];
+        if(!empty($data['result']['session']['locale'])) {
+            $account->sessionLocale = $data['result']['session']['locale'];
         }
 
         $account->accountLocale = $data['result']['locale'];
