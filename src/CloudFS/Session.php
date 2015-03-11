@@ -31,6 +31,7 @@ class Session {
     private $debug;
     private $adminClientId;
     private $adminClientSecret;
+    private $fileSystem;
 
     /**
      * The admin base url.
@@ -40,17 +41,17 @@ class Session {
     /**
      * Initializes the Session instance.
      *
-     * @param string $endpoint The bitcasa api endoint.
+     * @param string $endpoint The bitcasa api end point.
      * @param string $clientId The app client id.
      * @param string $clientSecret The app client secret.
      */
     public function __construct($endpoint, $clientId, $clientSecret) {
-        $applicationConext = null;
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
         $this->debug = getenv("BC_DEBUG") != null;
         $this->credential = new Credential($this, $endpoint);
         $this->bitcasaClientApi = new BitcasaApi($this->credential);
+        $this->fileSystem = new Filesystem($this->bitcasaClientApi);
     }
 
     /**
@@ -76,6 +77,15 @@ class Session {
      */
     public function getClientApi() {
         return $this->bitcasaClientApi;
+    }
+
+    /**
+     * Gets a file system instance.
+     *
+     * @return A file system instance.
+     */
+    public function getFileSystem() {
+        return $this->fileSystem;
     }
 
     /**
