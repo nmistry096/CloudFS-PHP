@@ -14,7 +14,7 @@ namespace CloudFS;
 use CloudFS\Filesystem;
 use CloudFS\HTTPConnect;
 use CloudFS\BitcasaUtils;
-use CloudFS\BitcasaConstants;
+use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Credential;
 
 
@@ -73,9 +73,9 @@ class Session {
     }
 
     /**
-     * Retrieves the linked status of the app with bitcasa.
+     * Determines whether a valid security token exists.
      *
-     * @return The linked status.
+     * @return Boolean value indicating the validity of the security token.
      */
     public function isLinked() {
         if ($this->credential->getAccessToken() == null)
@@ -85,7 +85,7 @@ class Session {
     }
 
     /**
-     * Unlink the app with bitcasa.
+     * Removes the security token.
      */
     public function unlink() {
         $this->credential->setAccessToken(null);
@@ -93,8 +93,7 @@ class Session {
     }
 
     /**
-     * Retrieves the user information from bitcasa.
-     * This method requires a request to network.
+     * Retrieves the user information.
      *
      * @throws IOException
      * @throws BitcasaException
@@ -114,11 +113,10 @@ class Session {
     }
 
     /**
-     * Retrieves the account information from bitcasa.
-     * This method requires a request to network.
+     * Retrieves the account information.
      *
      * @throws IOException
-     * @throws BitcamixedsaException
+     * @throws mixed BitcasaException
      * @return Current Bitcasa Account information
      */
     public function account() {
@@ -239,10 +237,10 @@ class Session {
     }
 
     /**
-     * Sets the session admin client secret.
+     * Sets the admin credentials.
      *
-     * @param string
-     * @param string $adminSecret The client secret to be set.
+     * @param string $adminClientId The admin client id for the bitcasa account.
+     * @param string $adminSecret The admin secret for the bitcasa account.
      */
     public function setAdminCredentials($adminClientId, $adminSecret) {
         $this->adminClientId = $adminClientId;
@@ -250,37 +248,98 @@ class Session {
     }
 
     /**
-     * @param $username
-     * @param $password
-     * @param null $email
-     * @param null $firstName
-     * @param null $lastName
-     * @param $logInToCreatedUser
-     * @return An|null
+     * Creates a bitcasa user with the specified details.
+     *
+     * @param string $username The username.
+     * @param string $password The password.
+     * @param string $email The email.
+     * @param string $firstName The user first name.
+     * @param string $lastName The user last name.
+     * @param bool $logInToCreatedUser Boolean value indicating whether to login with the created user credentials.
+     * @return The created user instance.
+     * @throws InvalidArgumentException
      */
-    public function createAccount($username, $password, $email = null, $firstName = null, $lastName = null, $logInToCreatedUser){
+    public function createAccount($username, $password, $email = null, $firstName = null,
+                                  $lastName = null, $logInToCreatedUser = false) {
         $user = null;
-        if (!empty($path)) {
-            $connection = new HTTPConnect($this->credential->getSession());
-            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_ADMIN .
-                                                    BitcasaConstants::METHOD_CLOUDFS.
-                                                    BitcasaConstants::METHOD_CUSTOMERS);
-            $body = BitcasaUtils::generateParamsString(array('username' => $username,
-                                                            'password' => $password,
-                                                            'email' => $email,
-                                                            'first_name' => $firstName,
-                                                            'last_name' => $lastName));
-            $connection->setData($body);
-            $status = $connection->post($url);
-            $response = $connection->getResponse(true);
-            if (!empty($response) && !empty($response['result'])) {
-                $user = Account::getInstance($response['result']);
+        if (empty($username)) {
+            throw new InvalidArgumentException('createAccount function accepts a valid username. Input was ' . $username);
+        }
+        else if(empty($password)) {
+            throw new InvalidArgumentException('createAccount function accepts a valid password. Input was ' . $password);
+        }
+        else {
+            $connection = new HTTPConnect($this);
 
-                if($logInToCreatedUser)
-                {
-                    $this->authenticate($username, $password);
-                }
+            $formParameters = array('password' => urlencode($password), 'username' => urlencode($username));
+            if (!empty($email)) {
+                $formParameters['email'] = $email;
             }
+
+            if (!empty($firstName)) {
+                $formParameters['first_name'] = $firstName;
+            }
+
+            if (!empty($lastName)) {
+                $formParameters['last_name'] = $lastName;
+            }
+
+            $url = 'https://access.bitcasa.com/v2/admin/cloudfs/customers/';
+
+            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_ADMIN .
+                BitcasaConstants::METHOD_CLOUDFS.
+                BitcasaConstants::METHOD_CUSTOMERS);
+
+            $authorizationDate = strftime(BitcasaConstants::DATE_FORMAT, time()); // gmdate("D, d M Y H:i:s T", time());
+            $authorizationParameters = BitcasaUtils::generateParamsString($formParameters);
+            $authorizationUrl = BitcasaConstants::API_VERSION_2 . BitcasaConstants::METHOD_ADMIN .
+                BitcasaConstants::METHOD_CLOUDFS . BitcasaConstants::METHOD_CUSTOMERS;
+            $authorizationValue = BitcasaUtils::generateAuthorizationValue($this, $authorizationUrl,
+                $authorizationParameters, $authorizationDate);
+
+            $connection->addHeader(BitcasaConstants::HEADER_AUTORIZATION, $authorizationValue);
+            $connection->addHeader(BitcasaConstants::HEADER_CONTENT_TYPE, BitcasaConstants::FORM_URLENCODED);
+            $connection->addHeader(BitcasaConstants::HEADER_DATE, $authorizationDate);
+
+            $connection->setData($authorizationParameters);
+            $status = $connection->post($url);
+
+            if (BitcasaUtils::isSuccess($status)) {
+                $resp = $connection->getResponse(true, false);
+                $debug = '';
+            }
+
+
+
+//            $connection = new HTTPConnect($this->credential->getSession());
+//            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_ADMIN .
+//                BitcasaConstants::METHOD_CLOUDFS.
+//                BitcasaConstants::METHOD_CUSTOMERS);
+//
+//            $formParameters = array('username' => $username, 'password' => $password);
+//            if (!empty($email)) {
+//                $formParameters['email'] = $email;
+//            }
+//
+//            if (!empty($firstName)) {
+//                $formParameters['first_name'] = $firstName;
+//            }
+//
+//            if (!empty($lastName)) {
+//                $formParameters['last_name'] = $lastName;
+//            }
+//
+//            $connection->setData(BitcasaUtils::generateParamsString($formParameters));
+//            $status = $connection->post($url);
+//            $response = $connection->getResponse(true);
+//            if (!empty($response) && !empty($response['result'])) {
+//                $user = User::getInstance($response['result']);
+//
+//                if($logInToCreatedUser)
+//                {
+//                    $this->authenticate($username, $password);
+//                }
+//            }
         }
 
         return $user;
