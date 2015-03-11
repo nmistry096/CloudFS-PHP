@@ -32,7 +32,7 @@ class AccountTest extends BaseTest {
         $this->assertNotNull($account->getPlanDisplayName());
         $this->assertNotNull($account->getPlanId());
         $this->assertNotNull($account->getAccountLocale());
-        
+
     }
 
 }

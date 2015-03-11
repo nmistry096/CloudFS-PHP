@@ -14,7 +14,7 @@ namespace CloudFS;
 use CloudFS\Filesystem;
 use CloudFS\HTTPConnect;
 use CloudFS\BitcasaUtils;
-use CloudFS\BitcasaConstants;
+use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Credential;
 
 
