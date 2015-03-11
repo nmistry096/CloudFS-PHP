@@ -12,8 +12,10 @@ class Account {
     private $storageUsage;
     private $storageLimit;
     private $oTL;
-    private $accountStateDisplayName;
-    private $accountPlanId;
+    private $stateDisplayName;
+    private $stateId;
+    private $planDisplayName;
+    private $planId;
     private $sessionLocale;
     private $accountLocale;
 
@@ -49,7 +51,7 @@ class Account {
      *
      * @return The OTL.
      */
-    public function getOTL() {
+    public function getOverStorageLimit() {
         return $this->oTL;
     }
 
@@ -58,8 +60,26 @@ class Account {
      *
      * @return The account state display name.
      */
-    public function getAccountStateDisplayName() {
-        return $this->accountStateDisplayName;
+    public function getStateDisplayName() {
+        return $this->stateDisplayName;
+    }
+
+    /**
+     * Retrieves the account state id.
+     *
+     * @return The account state id.
+     */
+    public function getStateId() {
+        return $this->stateId;
+    }
+
+    /**
+     * Retrieves the account plan display name.
+     *
+     * @return The account plan display name.
+     */
+    public function getPlanDisplayName() {
+        return $this->planDisplayName;
     }
 
     /**
@@ -67,8 +87,8 @@ class Account {
      *
      * @return The account plan id.
      */
-    public function getAccountPlanId() {
-        return $this->accountPlanId;
+    public function getPlanId() {
+        return $this->planId;
     }
 
     /**
@@ -113,12 +133,15 @@ class Account {
         }
 
         $account->oTL = $data['storage']['otl'];
-        $account->accountStateDisplayName = $data['account_plan']['display_name'];
-        $account->accountPlanId = $data['account_plan']['id'];
+        $account->stateDisplayName = $data['account_state']['display_name'];
+        $account->stateId = $data['account_state']['display_name'];
+        $account->planDisplayName = $data['account_plan']['display_name'];
+        $account->planId = $data['account_plan']['id'];
 
         if(!empty($data['session']['locale'])) {
             $account->sessionLocale = $data['session']['locale'];
         }
+
         $account->accountLocale = $data['result']['locale'];
         return $account;
     }
