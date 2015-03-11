@@ -84,7 +84,7 @@ class Session {
      *
      * @return A file system instance.
      */
-    public function getFileSystem() {
+    public function filesystem() {
         return $this->fileSystem;
     }
 
@@ -146,15 +146,6 @@ class Session {
 
         $accountInfo = Account::getInstance($response);
         return $accountInfo;
-    }
-
-    /**
-     * Retrieves the bitcasa filesystem.
-     *
-     * @return The bitcasa filesystem
-     */
-    public function fileSystem() {
-        return new Filesystem($this->bitcasaClientApi);
     }
 
     /**

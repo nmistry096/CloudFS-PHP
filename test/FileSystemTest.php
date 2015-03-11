@@ -29,7 +29,7 @@ class FileSystemTest extends BaseTest {
      * The create root folder test.
      */
     public function testCreateRootFolder() {
-        $fileSystem = $this->getSession()->getFileSystem();
+        $fileSystem = $this->getSession()->filesystem();
         $items = $fileSystem->getList('/');
         $level0Folder1 = $this->getItemFromIndexArray($items, $this->level0Folder1Name);
         if ($level0Folder1 != null) {
@@ -48,7 +48,7 @@ class FileSystemTest extends BaseTest {
      * The list root folder test.
      */
     public function testListRootFolder() {
-        $fileSystem = $this->getSession()->getFileSystem();
+        $fileSystem = $this->getSession()->filesystem();
         $items = $fileSystem->getList(null);
         $this->assertTrue(count($items) > 0);
         $level0Folder1 = $this->getItemFromIndexArray($items, $this->level0Folder1Name);
@@ -59,7 +59,7 @@ class FileSystemTest extends BaseTest {
      * The create sub folders test.
      */
     public function testCreateSubFolders() {
-        $fileSystem = $this->getSession()->getFileSystem();
+        $fileSystem = $this->getSession()->filesystem();
         $root = $fileSystem->root();
         $this->assertNotNull($root);
 
@@ -116,7 +116,7 @@ class FileSystemTest extends BaseTest {
      * The bitcasa files related tests.
      */
     public function testFiles() {
-        $fileSystem = $this->getSession()->getFileSystem();
+        $fileSystem = $this->getSession()->filesystem();
         $level0Folder1 = $this->getItemFromIndexArray($fileSystem->getList('/'), $this->level0Folder1Name);
 
         $level1Folder3 = $level0Folder1->createFolder($this->level1Folder3Name);
