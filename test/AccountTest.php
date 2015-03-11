@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The user related unit tests.
+ * The user account related unit tests.
  */
 class AccountTest extends BaseTest {
 
