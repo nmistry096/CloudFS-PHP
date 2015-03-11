@@ -26,9 +26,13 @@ class AccountTest extends BaseTest {
         $this->assertNotNull($account);
         $this->assertNotNull($account->getId());
         $this->assertNotNull($account->getStorageUsage());
+        $this->assertNotNull($account->getOverStorageLimit());
         $this->assertNotNull($account->getStateId());
+        $this->assertNotNull($account->getStateDisplayName());
+        $this->assertNotNull($account->getPlanDisplayName());
         $this->assertNotNull($account->getPlanId());
-
+        $this->assertNotNull($account->getAccountLocale());
+        
     }
 
 }
