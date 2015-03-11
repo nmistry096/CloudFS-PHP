@@ -14,10 +14,10 @@ class Container extends Item {
     /**
      * Initializes a new instance of Container.
      *
-     * @param BitcasaApi $api The api instance.
+     * @param Filesystem $filesystem The Filesystem instance.
      */
-    public function __construct($api = null) {
-        parent::__construct($api);
+    public function __construct($filesystem = null) {
+        parent::__construct($filesystem);
     }
 
     /**
@@ -26,7 +26,7 @@ class Container extends Item {
      * @return The item list array.
      */
     public function getList() {
-        return $this->api()->getList($this->getPath());
+        return $this->filesystem()->getList($this->getPath());
     }
 
 }
