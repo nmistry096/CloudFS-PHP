@@ -17,5 +17,4 @@ abstract class Exists {
     const FAIL = "fail";
     const OVERWRITE = "overwrite";
     const RENAME = "rename";
-    const REUSE = "reuse";
 }
