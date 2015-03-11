@@ -9,7 +9,7 @@ class Item {
 
     private $parent;
     private $full_path;
-    private $data;
+    protected $data;
     private $api;
     private $change_list;
 
@@ -149,7 +149,7 @@ class Item {
             return null;
         }
 
-        if ($data["type"] == FileType::FOLDER) {
+        if ($data["type"] == FileType::FOLDER || $data['type']  == FileType::ROOT) {
             $item = new Folder($api);
         } else if (isset($data['mime'])) {
             $t = explode("/", $data['mime']);
@@ -487,7 +487,7 @@ class Item {
         if (!is_string($destination)) {
             $destination = $destination->path();
         }
-        return $this->api()->restore($this, $destination);
+        return $this->api()->restore($this->getPath(), $destination);
     }
 
     /**

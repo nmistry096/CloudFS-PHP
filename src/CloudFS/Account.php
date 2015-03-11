@@ -11,9 +11,11 @@ class Account {
     private $id;
     private $storageUsage;
     private $storageLimit;
-    private $oTL;
-    private $accountStateDisplayName;
-    private $accountPlanId;
+    private $overStorageLimit;
+    private $stateDisplayName;
+    private $stateId;
+    private $planDisplayName;
+    private $planId;
     private $sessionLocale;
     private $accountLocale;
 
@@ -49,8 +51,8 @@ class Account {
      *
      * @return The OTL.
      */
-    public function getOTL() {
-        return $this->oTL;
+    public function getOverStorageLimit() {
+        return $this->overStorageLimit;
     }
 
     /**
@@ -58,8 +60,26 @@ class Account {
      *
      * @return The account state display name.
      */
-    public function getAccountStateDisplayName() {
-        return $this->accountStateDisplayName;
+    public function getStateDisplayName() {
+        return $this->stateDisplayName;
+    }
+
+    /**
+     * Retrieves the account state id.
+     *
+     * @return The account state id.
+     */
+    public function getStateId() {
+        return $this->stateId;
+    }
+
+    /**
+     * Retrieves the account plan display name.
+     *
+     * @return The account plan display name.
+     */
+    public function getPlanDisplayName() {
+        return $this->planDisplayName;
     }
 
     /**
@@ -67,8 +87,8 @@ class Account {
      *
      * @return The account plan id.
      */
-    public function getAccountPlanId() {
-        return $this->accountPlanId;
+    public function getPlanId() {
+        return $this->planId;
     }
 
     /**
@@ -105,20 +125,23 @@ class Account {
     public static function getInstance($data) {
         $account = new Account();
         $account->id = $data['result']['account_id'];
-        $account->storageUsage = $data['storage']['usage'];
+        $account->storageUsage = $data['result']['storage']['usage'];
 
-        if(!empty($data['storage']['limit']))
+        if(!empty($data['result']['storage']['limit']))
         {
-            $account->storageLimit = $data['storage']['limit'];
+            $account->storageLimit = $data['result']['storage']['limit'];
         }
 
-        $account->oTL = $data['storage']['otl'];
-        $account->accountStateDisplayName = $data['account_plan']['display_name'];
-        $account->accountPlanId = $data['account_plan']['id'];
+        $account->overStorageLimit = $data['result']['storage']['otl'];
+        $account->stateDisplayName = $data['result']['account_state']['display_name'];
+        $account->stateId = $data['result']['account_state']['display_name'];
+        $account->planDisplayName = $data['result']['account_plan']['display_name'];
+        $account->planId = $data['result']['account_plan']['id'];
 
-        if(!empty($data['session']['locale'])) {
-            $account->sessionLocale = $data['session']['locale'];
+        if(!empty($data['result']['session']['locale'])) {
+            $account->sessionLocale = $data['result']['session']['locale'];
         }
+
         $account->accountLocale = $data['result']['locale'];
         return $account;
     }

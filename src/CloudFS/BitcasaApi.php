@@ -173,6 +173,39 @@ class BitcasaApi {
 		return $connection->getResponse(true);
 	}
 
+    /**
+     * Retrieves the meta data of a item at a given path.
+     *
+     * @param string $path The path of the item.
+     * @return The meta data of the item.
+     * @throws Exception
+     */
+    public function getItemMeta($path) {
+        $params = array();
+        $endpoint = BitcasaConstants::METHOD_ITEMS;
+
+        if ($path == null) {
+            $endpoint .= "/";
+        } else if (!is_string($path)) {
+            throw new Exception("Invalid parent path");
+        } else {
+            $endpoint .= $path;
+        }
+        if (substr($endpoint, -1) != "/") {
+            $endpoint .= "/";
+        }
+        $endpoint .= "meta";
+
+        $connection = new HTTPConnect($this->credential->getSession());
+        $url = $this->credential->getRequestUrl($endpoint, null, $params);
+
+        if (!BitcasaUtils::isSuccess($connection->get($url))) {
+            return null;
+        }
+
+        return $connection->getResponse(true);
+    }
+
 	/**
 	 * Retrieves the meta data of a folder at a given path.
 	 *

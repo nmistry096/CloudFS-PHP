@@ -34,22 +34,15 @@ class Filesystem {
 	}
 
     /**
-     * Retrieves the item array for root directory.
+     * Retrieves the root directory.
      *
-     * @return The array of items at the root directory.
+     * @return The root directory.
      */
-    public function getRoot(){
+    public function root(){
         $path = "/";
-        $resp = $this->api->getList($path);
-        $items = $resp["result"]["items"];
-        $lst = array();
-        if ($items != null) {
-            foreach ($items as $item) {
-                $lst[] = Item::make($item, $path, $this);
-            }
-        }
-        return $lst;
-
+        $res = $this->api->getFolderMeta($path);
+        $res = $res["result"]["meta"];
+        return Item::make($res, $path, $this);
     }
 
 	/**
@@ -83,10 +76,10 @@ class Filesystem {
 	/**
 	 * Retrieves an item by the given path.
 	 *
-	 * @param string $path The file path.
-	 * @return An instance of the item of type Audio|Document|Photo|Video|File.
+	 * @param string $path The item path.
+	 * @return An instance of the item.
 	 */
-	public function getFile($path) {
+	public function getItem($path) {
 		if ($path == null) {
 			$path = "/";
 		}
@@ -99,10 +92,34 @@ class Filesystem {
 				$dir = implode("/", $dir);
 			}
 		}
-		$res = $this->api->getFileMeta($path);
+		$res = $this->api->getItemMeta($path);
 		$res = $res["result"];
 		return Item::make($res, $dir, $this);
 	}
+
+    /**
+     * Retrieves an item by the given path.
+     *
+     * @param string $path The file path.
+     * @return An instance of the item of type Audio|Document|Photo|Video|File.
+     */
+    public function getFile($path) {
+        if ($path == null) {
+            $path = "/";
+        }
+        if ($path != "/") {
+            $dir = explode("/", $path);
+            if (count($dir) <= 2) {
+                $dir = "/";
+            } else {
+                array_pop($dir);
+                $dir = implode("/", $dir);
+            }
+        }
+        $res = $this->api->getFileMeta($path);
+        $res = $res["result"];
+        return Item::make($res, $dir, $this);
+    }
 
 	/**
 	 * Retrieves a folder by the given path.
