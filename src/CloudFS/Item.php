@@ -487,7 +487,7 @@ class Item {
         if (!is_string($destination)) {
             $destination = $destination->path();
         }
-        return $this->api()->restore($this, $destination);
+        return $this->api()->restore($this->getPath(), $destination);
     }
 
     /**
