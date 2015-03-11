@@ -83,7 +83,7 @@ class FileSystemTest extends BaseTest {
         $movedItems1 = $fileSystem->move(array($level2Folder1), $level1Folder2->getPath(), Exists::OVERWRITE);
         $this->assertTrue(count($movedItems1) > 0);
 
-        $movedItems2 = $level2Folder2->move_to($level1Folder2->getPath(), Exists::OVERWRITE);
+        $movedItems2 = $level2Folder2->move($level1Folder2->getPath(), Exists::OVERWRITE);
         $this->assertTrue(count($movedItems2) > 0);
 
         $items1 = $fileSystem->getList($level1Folder2->getPath());
@@ -100,7 +100,7 @@ class FileSystemTest extends BaseTest {
         $copiedItems1 = $fileSystem->copy(array($level2Folder1), $level1Folder1->getPath(), Exists::OVERWRITE);
         $this->assertTrue(count($copiedItems1) > 0);
         $this->assertEquals($this->level2Folder1Name, $copiedItems1[0]['result']['meta']['name']);
-        $copiedItems2 = $level2Folder2->copy_to($level1Folder1->getPath(), Exists::OVERWRITE);
+        $copiedItems2 = $level2Folder2->copy($level1Folder1->getPath(), Exists::OVERWRITE);
         $this->assertTrue(count($copiedItems2) > 0);
         $this->assertEquals($this->level2Folder2Name, $copiedItems2[0]['result']['meta']['name']);
 
@@ -109,7 +109,7 @@ class FileSystemTest extends BaseTest {
 
         $items1 = $fileSystem->getList($level1Folder1->getPath());
         $this->assertTrue(count($items1) == 2);
-        $items2 = $level1Folder2->get_list();
+        $items2 = $level1Folder2->getList();
         $this->assertTrue(count($items2) == 0);
     }
 
@@ -152,7 +152,7 @@ class FileSystemTest extends BaseTest {
         $this->assertNotEmpty($downloadedImageFile);
         file_put_contents($localDownloadDirectory . 'image1.jpg', $downloadedImageFile);
 
-        $movedFile = $uploadedImageFile->move_to($level1Folder3->getPath(), Exists::OVERWRITE);
+        $movedFile = $uploadedImageFile->move($level1Folder3->getPath(), Exists::OVERWRITE);
         $this->assertNotNull($movedFile);
 
         $items = $fileSystem->getList($level1Folder3->getPath());
@@ -161,7 +161,7 @@ class FileSystemTest extends BaseTest {
         $imageFile = $this->getItemFromIndexArray($items, $imageFileName);
         $this->assertNotNull($imageFile);
 
-        $copiedFile = $imageFile->copy_to($level1Folder4->getPath(), Exists::OVERWRITE);
+        $copiedFile = $imageFile->copy($level1Folder4->getPath(), Exists::OVERWRITE);
         $this->assertNotNull($copiedFile);
         $this->assertEquals($imageFileName, $copiedFile[0]['result']['meta']['name']);
 
