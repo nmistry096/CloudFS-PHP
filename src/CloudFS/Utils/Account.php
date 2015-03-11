@@ -3,7 +3,7 @@
 namespace CloudFS;
 
 /**
- * Represents a bitcasa cloudfs user.
+ * Represents a bitcasa cloudfs account.
  * @package CloudFS
  */
 class Account {
