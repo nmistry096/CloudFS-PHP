@@ -211,30 +211,23 @@ class Session {
     }
 
     /**
-     * Retrieves the file history of a given item.
+     * Retrieves the action history.
      *
-     * @param string $path The path of the item for which the file history needs to be retrieved.
-     * @param int $start Start version.
-     * @param int $stop Stop version.
-     * @param int $limit The limit of history entries.
-     * @return File history entries.
-     * @throws InvalidArgument
+     * @param int $startVersion Integer representing which version number to start listing historical actions from.
+     * @param int $stopVersion Integer representing which version number from which to stop listing historical actions.
+     * @return The action history.
+     * @throws InvalidArgumentException
      */
-    public function actionHistory($path, $start = 0, $stop = 0, $limit = 0) {
-        //assert_string($path, 1);
+    public function actionHistory($startVersion = -10, $stopVersion = null) {
         $connection = new HTTPConnect($this);
         $params = array();
-        if ($start != 0) {
-            $params['start'] = $start;
+        if (!empty($startVersion)) {
+            $params['start'] = $startVersion;
         }
-        if ($stop != 0) {
-            $params['stop'] = $stop;
+        if (!empty($stopVersion)) {
+            $params['stop'] = $stopVersion;
         }
-        if ($limit != 0) {
-            $params['limit'] = $limit;
-        }
-        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path . "/versions",
-            $params);
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_HISTORY, null, $params);
         if ($connection->get($url) <= 100) {
             return false;
         }
@@ -332,6 +325,10 @@ class Session {
         if (BitcasaUtils::isSuccess($status)) {
             $response = $connection->getResponse(true, false);
             $user = User::getInstance($response);
+
+            if ($logInToCreatedUser) {
+                $this->authenticate($username, $password);
+            }
         }
 
         return $user;
