@@ -8,6 +8,8 @@
 
 namespace CloudFS\Exception;
 
+use CloudFS\Exception\BitcasaError;
+
 
 class BitcasaStatus {
     private $status;
@@ -22,7 +24,8 @@ class BitcasaStatus {
      */
     public function __construct($response) {
         $this->response = $response;
-        $this->status = isset($response["result"]) && $response["result"] != null && $response["result"] != false;
+//        $this->status = isset($response["result"]) && $response["result"] != null && $response["result"] != false;
+        $this->status = !isset($response["error"]);
         $this->code = 0;
         $message = isset($response["error"]) && isset($response["error"]["message"])
             ? $response["result"]["message"] : "";

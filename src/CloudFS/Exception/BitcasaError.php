@@ -14,7 +14,7 @@ class BitcasaError extends \Exception {
      */
     public function __construct($status) {
         $this->status = $status;
-        parent::__construct($status->error_message());
+        parent::__construct($status->errorMessage());
     }
 
     /**

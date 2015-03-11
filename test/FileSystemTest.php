@@ -16,8 +16,6 @@ class FileSystemTest extends BaseTest {
     private $level1Folder4Name = 'level-1-folder-4';
     private $level2Folder1Name = 'level-2-folder-1';
     private $level2Folder2Name = 'level-2-folder-2';
-    private $sharedFolderName = 'shared';
-    private $receiveSharedFolderName = 'received';
 
     /**
      * The session authenticate test.
@@ -171,47 +169,6 @@ class FileSystemTest extends BaseTest {
 
         $this->assertNotNull($this->getItemFromIndexArray($fileSystem->getList($level1Folder3->getPath()), $textFileName));
         $this->assertNotNull($this->getItemFromIndexArray($fileSystem->getList($level1Folder4->getPath()), $imageFileName));
-    }
-
-    public function testShares() {
-        $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
-        $root = $fileSystem->getFolder(null);
-        $this->assertNotNull($root);
-        $this->assertEquals(FileType::ROOT, $root->getType());
-
-        $sharedFolder = $root->create($this->sharedFolderName);
-        $this->assertNotNull($sharedFolder);
-        $this->assertEquals($this->sharedFolderName, $sharedFolder->getName());
-
-        $receivedFolder = $root->create($this->receiveSharedFolderName);
-        $this->assertNotNull($receivedFolder);
-        $this->assertEquals($this->receiveSharedFolderName, $receivedFolder->getName());
-
-        $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
-        $textFileName = 'shared-file';
-        $uploadedTextFile = $sharedFolder->upload($localUploadDirectory . 'text', $textFileName, Exists::OVERWRITE);
-        $this->assertNotNull($uploadedTextFile);
-        $this->assertEquals($textFileName, $uploadedTextFile->getName());
-
-        $share = $fileSystem->createShare($sharedFolder->getPath());
-        /** @var \CloudFS\Share $share */
-        $this->assertNotNull($share);
-        $this->assertNotEmpty($share->getShareKey());
-
-        $shares = $fileSystem->shares();
-        $this->assertTrue(count($shares) > 0);
-
-        $items = $fileSystem->browseShare($share->getShareKey());
-        $this->assertTrue(count($items) > 0);
-
-        $received = $fileSystem->retrieveShare($share->getShareKey(), $receivedFolder->getPath());
-        $this->assertTrue($received);
-
-        $items = $receivedFolder->get_list();
-        $this->assertTrue(count($items) > 0);
-
-        $deleted = $fileSystem->deleteShare($share->getShareKey());
-        $this->assertTrue($deleted);
     }
 
 }

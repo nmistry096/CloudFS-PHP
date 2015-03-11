@@ -294,7 +294,7 @@ class HTTPConnect {
 			$res = json_decode($this->response, true);
 			if ($check) {
 				$b = new BitcasaStatus($res);
-				$b->throw_on_failure();
+				$b->throwOnFailure();
 			}
 			return $res;
 		}

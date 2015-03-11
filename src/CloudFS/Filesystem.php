@@ -20,7 +20,7 @@ use CloudFS\Utils\Exists;
 class Filesystem {
 
 	/**
-	 * The bitcasa api instance.
+	 * @var \CloudFS\BitcasaApi The bitcasa api instance.
 	 */
 	private $api;
 
@@ -332,23 +332,59 @@ class Filesystem {
 	}
 
 	public function shares() {
-		return $this->api->shares();
+		$shares = array();
+		$response = $this->api->shares();
+		if (!empty($response) && !empty($response['result'])) {
+			foreach($response['result'] as $result) {
+				$shares[] = Share::getInstance($this, $result);
+			}
+		}
+
+		return $shares;
 	}
 
-	public function createShare($path) {
-		return $this->api->createShare($path);
+	public function createShare($path, $password = null) {
+		$share = null;
+		$response = $this->api->createShare($path, $password);
+		if (!empty($response) && !empty($response['result'])) {
+			$share = Share::getInstance($this, $response['result']);
+		}
+
+		return $share;
 	}
 
 	public function browseShare($shareKey) {
-		return $this->api->browseShare($shareKey);
+		$items = array();
+		$response = $this->api->browseShare($shareKey);
+		if (!empty($response) && !empty($response['result'])) {
+			foreach ($response['result']['items'] as $item) {
+				$items[] = Item::make($item, null, $this);
+			}
+		}
+
+		return $items;
 	}
 
 	public function deleteShare($shareKey) {
 		return $this->api->deleteShare($shareKey);
 	}
 
-	public function retrieveShare($shareKey, $path, $exists = Exists::OVERWRITE) {
+	public function retrieveShare($shareKey, $path, $exists = Exists::RENAME) {
 		return $this->api->retrieveShare($shareKey, $path, $exists);
+	}
+
+	public function alterShare($shareKey, array $values, $password = null) {
+		$share = null;
+		$response = $this->api->alterShare($shareKey, $values, $password);
+		if (!empty($response) && !empty($response['result'])) {
+			$share = Share::getInstance($this, $response['result']);
+		}
+
+		return $share;
+	}
+
+	public function unlockShare($shareKey, $password) {
+		return $this->api->unlockShare($shareKey, $password);
 	}
 
 }

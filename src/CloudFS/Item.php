@@ -136,7 +136,7 @@ class Item {
      *
      * @param object $data The data needed to create an item.
      * @param string $parentPath Parent path for the new item.
-     * @param BitcasaApi $api The api instance.
+     * @param Filesystem $api The file system instance.
      * @return An instance of the new item.
      */
     public static function make($data, $parentPath = null, $api = null) {

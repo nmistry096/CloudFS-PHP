@@ -2,7 +2,7 @@
 <project version="4">
   <component name="PhpUnit">
     <phpunit_settings>
-      <PhpUnitSettings />
+      <PhpUnitSettings custom_loader_path="" phpunit_phar_path="" />
     </phpunit_settings>
   </component>
 </project>

@@ -11,6 +11,7 @@ namespace CloudFS;
  * For support, please send email to support@bitcasa.com.
  */
 
+use CloudFS\Exception\InvalidArgumentException;
 use CloudFS\Filesystem;
 use CloudFS\Utils\BitcasaConstants;
 use CloudFS\BitcasaUtils;
@@ -531,57 +532,51 @@ class BitcasaApi {
 		return $connection->getResponse(true);
 	}
 
-	public function createShare($path) {
-		$share = null;
+	public function createShare($path, $password = null) {
+		$response = null;
 		if (!empty($path)) {
 			$connection = new HTTPConnect($this->credential->getSession());
 			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES);
-			$body = BitcasaUtils::generateParamsString(array('path' => $path));
+			$formParameters = array('path' => $path);
+			if (!empty($password)) {
+				$formParameters['password'] = $password;
+			}
+			$body = BitcasaUtils::generateParamsString($formParameters);
 			$connection->setData($body);
 			$status = $connection->post($url);
 			$response = $connection->getResponse(true);
-			if (!empty($response) && !empty($response['result'])) {
-				$share = Share::getInstance($response['result']);
-			}
+		}
+		else {
+			throw new InvalidArgumentException('createShare function accepts a valid path. Input was ' . $path);
 		}
 
-		return $share;
+		return $response;
 	}
 
 	public function shares() {
-		$shares = array();
+		$response = null;
 		$connection = new HTTPConnect($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES);
 		$statusCode = $connection->get($url);
 		if ($statusCode == 200) {
 			$response = $connection->getResponse(true);
-			if (!empty($response) && !empty($response['result'])) {
-				foreach($response['result'] as $result) {
-					$shares[] = Share::getInstance($result);
-				}
-			}
 		}
 
-		return $shares;
+		return $response;
 	}
 
 	public function browseShare($shareKey) {
-		$items = array();
+		$response = null;
 		if (!empty($shareKey)) {
 			$connection = new HTTPConnect($this->credential->getSession());
 			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/meta');
 			$statusCode = $connection->get($url);
 			if ($statusCode == 200) {
 				$response = $connection->getResponse(true);
-				if (!empty($response) && !empty($response['result'])) {
-					foreach ($response['result']['items'] as $item) {
-						$items[] = Item::make($item);
-					}
-				}
 			}
 		}
 
-		return $items;
+		return $response;
 	}
 
 	public function retrieveShare($shareKey, $path, $exists = Exists::OVERWRITE) {
@@ -613,6 +608,55 @@ class BitcasaApi {
 		}
 
 		return $deleted;
+	}
+
+	public function unlockShare($shareKey, $password) {
+		$success = false;
+		if (empty($shareKey)) {
+			throw new InvalidArgumentException('unlockShare function accepts a valid shareKey. Input was ' . $shareKey);
+		}
+		else if (empty($password)) {
+			throw new InvalidArgumentException('unlockShare function accepts a valid password. Input was ' . $password);
+		}
+		else {
+			$connection = new HTTPConnect($this->credential->getSession());
+			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/unlock');
+			$body = BitcasaUtils::generateParamsString(array('password' => $password));
+			$connection->setData($body);
+			$status = $connection->post($url);
+			$response = $connection->getResponse(true);
+			if (!empty($response) && !empty($response['result'])) {
+				$success = true;
+			}
+		}
+
+		return $success;
+	}
+
+	public function alterShare($shareKey, array $values, $password = null) {
+		$response = null;
+		if (!empty($shareKey)) {
+			$connection = new HTTPConnect($this->credential->getSession());
+			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/info');
+			$formParameters = array();
+			if (!empty($password)) {
+				$formParameters['current_password'] = $password;
+			}
+
+			foreach($values as $key=>$value) {
+				$formParameters[$key] = $value;
+			}
+
+			$body = BitcasaUtils::generateParamsString($formParameters);
+			$connection->setData($body);
+			$status = $connection->post($url);
+			$response = $connection->getResponse(true);
+		}
+		else {
+			throw new InvalidArgumentException('alterShare function accepts a valid shareKey. Input was ' . $shareKey);
+		}
+
+		return $response;
 	}
 
 }
