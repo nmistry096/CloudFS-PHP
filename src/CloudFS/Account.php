@@ -11,7 +11,7 @@ class Account {
     private $id;
     private $storageUsage;
     private $storageLimit;
-    private $oTL;
+    private $overStorageLimit;
     private $stateDisplayName;
     private $stateId;
     private $planDisplayName;
@@ -52,7 +52,7 @@ class Account {
      * @return The OTL.
      */
     public function getOverStorageLimit() {
-        return $this->oTL;
+        return $this->overStorageLimit;
     }
 
     /**
@@ -132,7 +132,7 @@ class Account {
             $account->storageLimit = $data['storage']['limit'];
         }
 
-        $account->oTL = $data['storage']['otl'];
+        $account->overStorageLimit = $data['storage']['otl'];
         $account->stateDisplayName = $data['account_state']['display_name'];
         $account->stateId = $data['account_state']['display_name'];
         $account->planDisplayName = $data['account_plan']['display_name'];
