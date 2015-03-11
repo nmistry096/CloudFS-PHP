@@ -102,9 +102,45 @@ File System Operations
 	  $items = $fileSystem->getList();
 
 
+- Get Trash Items
+
+  You can list down the contents of Trash folder. Below example shows how to retrieve contents of the trash folder.
+ 
+      ::
+
+	  //Add snippet here.
+
+
+- Get Shares
+
+  You can list down available Shares. Below example shows how to retrieve the list of shares.
+ 
+      ::
+
+	  //Add snippet here.
+
+
+- Create Share
+
+  You can create a share by providing the path as shown in below example. A passworded share cannot be used for anything if the password is not provided. It doesn't make sense to create a share unless the developer has the password.
+ 
+      ::
+
+	  //Add snippet here.
+
+
+- Get Specific Share
+
+  You can get a share by providing the share key and the password (If available). A passworded share cannot be used for anything if the password is not provided.
+ 
+      ::
+
+	  //Add snippet here.
+
+
 - :php:meth:`Copy Items <Filesystem::copy>`
 
-  You can copy a list of items to a new location in the file system. If the contents in the destination folder conflicts with the copying items you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can copy a list of items to a new location in the file system. If the contents in the destination folder conflicts with the copying items you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
@@ -113,7 +149,7 @@ File System Operations
 
 - :php:meth:`Move Items <Filesystem::move>`
 
-  You can move a list of items to a new location in the file system. If the contents in the destination folder conflicts with the moving items you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can move a list of items to a new location in the file system. If the contents in the destination folder conflicts with the moving items you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
@@ -142,9 +178,17 @@ Folder Operations
       $items = $folder->get_list();
 
 
+- Change Folder Attributes
+
+  You can change the attributes of a Folder by providing a hash map of field names and values. An example is given below.
+      ::
+
+	  //Add snippet here.
+
+   	 
 - :php:meth:`Copy Folder <Item::copy_to>`
 
-  You can copy a folder to a new location in the file system. If the destination conflicts with the copying folder you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can copy a folder to a new location in the file system. If the destination conflicts with the copying folder you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
@@ -153,7 +197,7 @@ Folder Operations
 
 - :php:meth:`Move Folder <Item::move_to>`
 
-  You can move a folder to a new location in the file system. If the destination conflicts with the moving folder you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can move a folder to a new location in the file system. If the destination conflicts with the moving folder you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
@@ -180,7 +224,7 @@ Folder Operations
 
 - :php:meth:`Upload File <Folder::upload>`
 
-  You can upload a file from your local file system into a specific folder. If the destination conflicts, you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can upload a file from your local file system into a specific folder. If the destination conflicts, you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
@@ -193,7 +237,7 @@ File Operations
 
 - :php:meth:`Copy File <Item::copy_to>`
 
-  You can copy a file to a new location in the file system. If the destination conflicts with the copying file you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can copy a file to a new location in the file system. If the destination conflicts with the copying file you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
@@ -202,7 +246,7 @@ File Operations
 
 - :php:meth:`Move File <Item::move_to>`
 
-  You can move a file to a new location in the file system. If the destination conflicts with the moving file you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can move a file to a new location in the file system. If the destination conflicts with the moving file you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
