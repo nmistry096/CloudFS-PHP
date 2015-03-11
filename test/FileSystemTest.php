@@ -154,6 +154,23 @@ class FileSystemTest extends BaseTest {
         $this->assertNotNull($uploadedImageFile);
         $this->assertEquals($imageFileName, $uploadedImageFile->getName());
 
+        $this->assertEquals('jpg', $uploadedImageFile->getExtension());
+        $this->assertNotNull($uploadedImageFile->getSize());
+        $this->assertEquals('image/jpeg',$uploadedImageFile->getMime());
+
+        $newImageName = 'newimage.jpg';
+        $uploadedImageFile->setName($newImageName);
+        $uploadedImageFile->setMime('image/jpeg');
+        $version = $uploadedImageFile->version();
+        $uploadedImageFile->setVersion($version);
+        $savedFile = $uploadedImageFile->save();
+
+        $this->assertEquals($newImageName,$savedFile[0]['result']['name']);
+        $this->assertEquals('image/jpeg',$savedFile[0]['result']['mime']);
+        $uploadedImageFile->setName($imageFileName);
+        $uploadedImageFile->setVersion($savedFile[0]['result']['version']);
+        $uploadedImageFile->save();
+
         $downloadedImageFile = $fileSystem->download($uploadedImageFile);
         $this->assertNotEmpty($downloadedImageFile);
         file_put_contents($localDownloadDirectory . 'image1.jpg', $downloadedImageFile);
