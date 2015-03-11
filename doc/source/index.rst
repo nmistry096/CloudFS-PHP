@@ -102,7 +102,7 @@ File System Operations
 	  $items = $fileSystem->getList();
 
 
-- Get Trash Items
+- :php:meth:`Get Trash Items <Filesystem::copy>`
 
   You can list down the contents of Trash folder. Below example shows how to retrieve contents of the trash folder.
  
@@ -111,7 +111,7 @@ File System Operations
 	  //Add snippet here.
 
 
-- Get Shares
+- :php:meth:`Get Shares <Filesystem::copy>`
 
   You can list down available Shares. Below example shows how to retrieve the list of shares.
  
@@ -120,7 +120,7 @@ File System Operations
 	  //Add snippet here.
 
 
-- Create Share
+- :php:meth:`Create Share <Filesystem::copy>`
 
   You can create a share by providing the path as shown in below example. A passworded share cannot be used for anything if the password is not provided. It doesn't make sense to create a share unless the developer has the password.
  
@@ -129,7 +129,7 @@ File System Operations
 	  //Add snippet here.
 
 
-- Get Specific Share
+- :php:meth:`Get Specific Share <Filesystem::copy>`
 
   You can get a share by providing the share key and the password (If available). A passworded share cannot be used for anything if the password is not provided.
  
@@ -178,7 +178,7 @@ Folder Operations
       $items = $folder->get_list();
 
 
-- Change Folder Attributes
+- :php:meth:`Change Folder Attributes <Filesystem::copy>`
 
   You can change the attributes of a Folder by providing a hash map of field names and values. An example is given below.
       ::
@@ -213,7 +213,7 @@ Folder Operations
       $status = $folder->delete();
 
 
-- :java:ref:`Restore Folder <com.bitcasa.cloudfs.client.Folder.restore(Container)>`
+- :php:meth:`Restore Folder <Filesystem::copy>`
 
   You can restore a Folder from the trash. The restore method can be set to either FAIL, RESCUE or RECREATE. This will return the Success/failure status of the operation.
 
@@ -244,7 +244,7 @@ File Operations
 ---------------
 .. note:: You need to create a session in order to perform file operations.
 
-- Change File Attributes
+- :php:meth:`Change File Attributes <Filesystem::copy>`
 
   You can change the attributes of a File by providing a hash map of field names and values. An example is given below.
       ::
@@ -279,7 +279,7 @@ File Operations
       $status = $file->delete();
 
 
-- :java:ref:`Restore File <com.bitcasa.cloudfs.client.File.restore(Container)>`
+- :php:meth:`Restore File <Filesystem::copy>`
 
   You can restore a File from the trash. The restore method can be set to either FAIL, RESCUE or RECREATE. This will return the Success/failure status of the operation.
 
@@ -306,4 +306,29 @@ File Operations
       $content = $fileSystem->download($file);
 
 
+Share Operations
+-----------------
+.. note:: You need to create a session in order to perform share operations.
 
+- :php:meth:`Change Share Attributes <Filesystem::copy>`
+
+  You can change the attributes of a Share by providing a hash map of field names and values. An example is given below.
+      ::
+
+	  //Add snippet here.
+
+ 
+- :php:meth:`Delete Share <Filesystem::copy>`
+
+  ::    
+
+    share.delete();
+
+- :php:meth:`Set Share Password <Filesystem::copy>`
+
+  Sets the share password. Old password is only needed if one exists.
+      ::
+
+	  //Add snippet here.
+
+ 
