@@ -58,6 +58,18 @@ The currently linked user can be unlinked from the session.
 
     $session.unlink();
 
+Admin Operations
+----------------
+.. note:: You need to create an admin session in order to perform admin operations.
+
+- :java:ref:`Create Account <com.bitcasa.cloudfs.client.Admin.createAccount(String, String, String, String, String)>`
+
+  You can create end users for an admin/paid account.
+
+  ::
+
+    User user = adminSession.getAdmin().createAccount(username, password, email, firstName, lastName);
+
 File System Operations
 ----------------------
 .. note:: You need to create a session in order to perform file system operations.
