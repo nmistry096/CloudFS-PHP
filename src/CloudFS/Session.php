@@ -28,6 +28,8 @@ class Session {
     private $credential;
     private $bitcasaClientApi;
     private $debug;
+    private $adminClientId;
+    private $adminClientSecret;
 
     /**
      * Initializes the Session instance.
@@ -214,7 +216,7 @@ class Session {
      * @return File history entries.
      * @throws InvalidArgument
      */
-    public function fileHistory($path, $start = 0, $stop = 0, $limit = 0) {
+    public function actionHistory($path, $start = 0, $stop = 0, $limit = 0) {
         //assert_string($path, 1);
         $connection = new HTTPConnect($this);
         $params = array();
@@ -234,5 +236,53 @@ class Session {
         }
 
         return $connection->getResponse(true);
+    }
+
+    /**
+     * Sets the session admin client secret.
+     *
+     * @param string
+     * @param string $adminSecret The client secret to be set.
+     */
+    public function setAdminCredentials($adminClientId, $adminSecret) {
+        $this->adminClientId = $adminClientId;
+        $this->adminClientSecret = $adminSecret;
+    }
+
+    /**
+     * @param $username
+     * @param $password
+     * @param null $email
+     * @param null $firstName
+     * @param null $lastName
+     * @param $logInToCreatedUser
+     * @return An|null
+     */
+    public function createAccount($username, $password, $email = null, $firstName = null, $lastName = null, $logInToCreatedUser){
+        $user = null;
+        if (!empty($path)) {
+            $connection = new HTTPConnect($this->credential->getSession());
+            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_ADMIN .
+                                                    BitcasaConstants::METHOD_CLOUDFS.
+                                                    BitcasaConstants::METHOD_CUSTOMERS);
+            $body = BitcasaUtils::generateParamsString(array('username' => $username,
+                                                            'password' => $password,
+                                                            'email' => $email,
+                                                            'first_name' => $firstName,
+                                                            'last_name' => $lastName));
+            $connection->setData($body);
+            $status = $connection->post($url);
+            $response = $connection->getResponse(true);
+            if (!empty($response) && !empty($response['result'])) {
+                $user = Account::getInstance($response['result']);
+
+                if($logInToCreatedUser)
+                {
+                    $this->authenticate($username, $password);
+                }
+            }
+        }
+
+        return $user;
     }
 }

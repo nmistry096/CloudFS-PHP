@@ -106,11 +106,19 @@ class Account {
         $account = new Account();
         $account->id = $data['result']['account_id'];
         $account->storageUsage = $data['storage']['usage'];
-        $account->storageLimit = $data['storage']['limit'];
+
+        if(!empty($data['storage']['limit']))
+        {
+            $account->storageLimit = $data['storage']['limit'];
+        }
+
         $account->oTL = $data['storage']['otl'];
         $account->accountStateDisplayName = $data['account_plan']['display_name'];
         $account->accountPlanId = $data['account_plan']['id'];
-        $account->sessionLocale = $data['session']['locale'];
+
+        if(!empty($data['session']['locale'])) {
+            $account->sessionLocale = $data['session']['locale'];
+        }
         $account->accountLocale = $data['result']['locale'];
         return $account;
     }

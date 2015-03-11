@@ -2,6 +2,7 @@
 
 namespace CloudFS;
 
+use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Utils\FileType;
 
 class Item {
@@ -439,7 +440,7 @@ class Item {
      * @param string $exists The action to take if the item exists.
      * @return The success/fail response of the move operation.
      */
-    public function moveTo($destination, $exists = "fail") {
+    public function move($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
         return $this->api()->move($this, $destination, $exists);
     }
 
@@ -450,7 +451,7 @@ class Item {
      * @param string $exists The action to take if the item exists.
      * @return The success/fail response of the copy operation.
      */
-    public function copyTo($destination, $exists = "fail") {
+    public function copy($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
         return $this->api()->copy($this, $destination, $exists);
     }
 

@@ -58,6 +58,9 @@ abstract class BitcasaConstants {
     const METHOD_OAUTH2 = "/oauth2";
     const METHOD_ACCESS_TOKEN = "/access_token";
     const METHOD_AUTHORIZE = "/authorize";
+    const METHOD_ADMIN = "/admin";
+    const METHOD_CLOUDFS = "/cloudfs";
+    const METHOD_CUSTOMERS = "/customers/";
     const METHOD_TOKEN = "/token";
     const METHOD_FOLDERS = "/folders";
     const METHOD_FILES = "/files";
