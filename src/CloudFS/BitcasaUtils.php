@@ -136,7 +136,7 @@ abstract class BitcasaUtils {
 	 * @param string $date Date of the request.
 	 * @return The authorization value.
 	 */
-	public static function generateAdminAuthorizationSignature($session, $uri, $params, $date) {
+	public static function generateAdminAuthorizationValue($session, $uri, $params, $date) {
 		$stringToSign ="";
 		$stringToSign .= BitcasaConstants::REQUEST_METHOD_POST . "&" . $uri . "&" . $params . "&";
 		$stringToSign .= BitcasaUtils::replaceSpaceWithPlus(urlencode(BitcasaConstants::HEADER_CONTENT_TYPE)) . ":";
@@ -144,8 +144,8 @@ abstract class BitcasaUtils {
 		$stringToSign .= BitcasaUtils::replaceSpaceWithPlus(urlencode(BitcasaConstants::HEADER_DATE)) . ":";
 		$stringToSign .= BitcasaUtils::replaceSpaceWithPlus(urlencode($date));
 
-		$authorizationValue = "BCS client_application_id" . ":";
-		$authorizationValue .= BitcasaUtils::sha1($stringToSign, $session->getClientSecret());
+		$authorizationValue = "BCS " . $session->getAdminClientId() . ":";
+		$authorizationValue .= BitcasaUtils::sha1($stringToSign, $session->getAdminClientSecret());
 
 		return $authorizationValue;
 	}
