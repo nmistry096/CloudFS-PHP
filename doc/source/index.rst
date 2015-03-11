@@ -64,11 +64,11 @@ Admin Operations
 
 - :java:ref:`Create Account <com.bitcasa.cloudfs.client.Admin.createAccount(String, String, String, String, String)>`
 
-  You can create end users for an admin/paid account.
+  You can create end users for an admin/paid account. If 'logInToCreatedUser' is true, logs in to the user after creating it.
 
   ::
 
-    User user = adminSession.getAdmin().createAccount(username, password, email, firstName, lastName);
+    User user = adminSession.getAdmin().createAccount(username, password, email, firstName, lastName, logInToCreatedUser);
 
 File System Operations
 ----------------------
@@ -213,6 +213,15 @@ Folder Operations
       $status = $folder->delete();
 
 
+- :java:ref:`Restore Folder <com.bitcasa.cloudfs.client.Folder.restore(Container)>`
+
+  You can restore a Folder from the trash. The restore method can be set to either FAIL, RESCUE or RECREATE. This will return the Success/failure status of the operation.
+
+	  ::    
+
+      //Add snippet here.
+
+
 - :php:meth:`Create Sub Folder <Container::create>`
 
   You can create a sub folder in a specific folder. If the folder already has a sub folder with the given name, the operation will fail.
@@ -235,6 +244,14 @@ File Operations
 ---------------
 .. note:: You need to create a session in order to perform file operations.
 
+- Change File Attributes
+
+  You can change the attributes of a File by providing a hash map of field names and values. An example is given below.
+      ::
+
+	  //Add snippet here.
+
+   	 
 - :php:meth:`Copy File <Item::copy_to>`
 
   You can copy a file to a new location in the file system. If the destination conflicts with the copying file you can either RENAME, OVERWRITE or FAIL the operation.
@@ -262,6 +279,15 @@ File Operations
       $status = $file->delete();
 
 
+- :java:ref:`Restore File <com.bitcasa.cloudfs.client.File.restore(Container)>`
+
+  You can restore a File from the trash. The restore method can be set to either FAIL, RESCUE or RECREATE. This will return the Success/failure status of the operation.
+
+	  ::    
+
+      //Add snippet here.
+
+
 - :php:meth:`Download File <Item::delete>`
 
   You can download a file to your local file system.
@@ -270,7 +296,14 @@ File Operations
 
       $content = $fileSystem->download($file);
 
+	  
+- :php:meth:`Get Download Url <Item::delete>`
 
+  You can get the download Url of a File.
+
+      ::
+
+      $content = $fileSystem->download($file);
 
 
 
