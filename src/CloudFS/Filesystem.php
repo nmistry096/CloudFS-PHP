@@ -404,6 +404,19 @@ class Filesystem {
 		return $this->api->unlockShare($shareKey, $password);
 	}
 
+    /**
+     * Retrieves the file history of a given file.
+     *
+     * @param File $file The item for which the file history needs to be retrieved.
+     * @param int $startVersion The start version.
+     * @param int $endVersion The end version.
+     * @param int $limit how many versions to list in the result set
+     * @return File history entries.
+     */
+    public function fileVersions($file, $startVersion = 0, $endVersion = null, $limit = 10) {
+        return $this->api->fileVersions($file->getPath(), $startVersion, $endVersion, $limit);
+    }
+
 }
  
 ?>
