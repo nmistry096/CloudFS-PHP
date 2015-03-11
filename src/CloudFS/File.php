@@ -20,7 +20,45 @@ class File extends Item {
      * @param string $localPath The local path where the file is to be downloaded to.
      */
     public function download($localPath) {
-        $this->api()->downloadFile($this, $localPath);
+        $content = $this->api()->download($this, $localPath);
+        file_put_contents($localPath, $content);
+    }
+
+    /**
+     * Retrieves the extension of this item.
+     *
+     * @return The extension of this item.
+     */
+    public function getExtension() {
+        return $this->data['extension'];
+    }
+
+    /**
+     * Retrieves the mime type of this item.
+     *
+     * @return The mime type of this item.
+     */
+    public function getMime() {
+        return $this->data['mime'];
+    }
+
+    /**
+     * Sets the Mime type of this item.
+     *
+     * @param string $newMime The new Mime type of the item.
+     */
+    public function setMime($newMime) {
+        $this->change('mime');
+        $this->data['mime'] = $newMime;
+    }
+
+    /**
+     * Retrieves the size of this item.
+     *
+     * @return The size of this item.
+     */
+    public function getSize() {
+        return $this->data['size'];
     }
 
 }

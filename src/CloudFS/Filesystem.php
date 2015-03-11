@@ -34,22 +34,15 @@ class Filesystem {
 	}
 
     /**
-     * Retrieves the item array for root directory.
+     * Retrieves the root directory.
      *
-     * @return The array of items at the root directory.
+     * @return The root directory.
      */
     public function root(){
         $path = "/";
-        $resp = $this->api->getList($path);
-        $items = $resp["result"]["items"];
-        $lst = array();
-        if ($items != null) {
-            foreach ($items as $item) {
-                $lst[] = Item::make($item, $path, $this);
-            }
-        }
-        return $lst;
-
+        $res = $this->api->getFolderMeta($path);
+        $res = $res["result"]["meta"];
+        return Item::make($res, $path, $this);
     }
 
 	/**
