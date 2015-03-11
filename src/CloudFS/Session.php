@@ -120,7 +120,15 @@ class Session {
      * @return Current Bitcasa Account information
      */
     public function account() {
-        $accountInfo = $this->bitcasaClientApi->getBitcasaAccountDataApi()->requestAccountInfo();
+        $connection = new HTTPConnect($this);
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_USER . BitcasaConstants::METHOD_PROFILE);
+        if (!BitcasaUtils::isSuccess($connection->get($url))) {
+            return null;
+        }
+
+        $response = $connection->getResponse(true);
+
+        $accountInfo = Account::getInstance($response);
         return $accountInfo;
     }
 

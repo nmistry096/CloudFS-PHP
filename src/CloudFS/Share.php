@@ -35,30 +35,65 @@ class Share {
      */
     private $fileSystem;
 
+	/**
+     * Retrieves the  share key.
+     *
+     * @return The share key.
+     */
     public function getShareKey() {
         return $this->shareKey;
     }
 
+	/**
+     * Retrieves the  share type.
+     *
+     * @return The share type.
+     */
     public function getShareType() {
         return $this->shareType;
     }
 
+	/**
+     * Retrieves the  share name.
+     *
+     * @return The share name.
+     */
     public function getName() {
         return $this->name;
     }
 
+	/**
+     * Retrieves the  url.
+     *
+     * @return The share url.
+     */
     public function getUrl() {
         return $this->url;
     }
 
+	/**
+     * Retrieves the  short url.
+     *
+     * @return The short url.
+     */
     public function getShortUrl() {
         return $this->shortUrl;
     }
 
+	/**
+     * Retrieves the created date.
+     *
+     * @return The created date.
+     */
     public function getDateCreated() {
         return $this->dateCreated;
     }
 
+	/**
+     * Retrieves the  share size.
+     *
+     * @return The share size.
+     */
     public function getSize() {
         return $this->size;
     }
@@ -75,10 +110,19 @@ class Share {
         return $this->dateMetaLastModified;
     }
 
+    /**
+     * Private constructor to avoid creating new share objects.
+     */
     private function __construct() {
 
     }
 
+	/**
+     * Retrieves a share instance from the supplied result.
+     *
+     * @param mixed $result The json response retrieved from rest api.
+     * @return A share instance.
+     */
     public static function getInstance($fileSystem, $result) {
         $share = new Share();
         $share->fileSystem = $fileSystem;
