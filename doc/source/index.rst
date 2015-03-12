@@ -39,36 +39,34 @@ Sessions represent connections to CloudFS. They use a set of credentials that co
 a client ID and a client secret. These credentials can be obtained via the Bitcasa admin console.
 
 :php:class:`Session`  - Performs regular file system operations.
-  ::
+      ::
 
-   $session = new Session($endPoint, $clientId, $clientSecret);
+      $session = new Session($endPoint, $clientId, $clientSecret);
 
 A user can be linked to the session by authenticating using a username and a password.
-  ::
+      ::
 
-    $session->authenticate($username, $password);
+      $session->authenticate($username, $password);
 
 You can assert whether a user is linked to the session.
-  ::
+      ::
 
-    $session.isLinked();
+      $session.isLinked();
 
 The currently linked user can be unlinked from the session.
-  ::
+      ::
 
-    $session.unlink();
+      $session.unlink();
 
 Admin Operations
 ----------------
 .. note:: You need to create an admin session in order to perform admin operations.
-
-- :java:ref:`Create Account <com.bitcasa.cloudfs.client.Admin.createAccount(String, String, String, String, String)>`
-
   You can create end users for an admin/paid account. If 'logInToCreatedUser' is true, logs in to the user after creating it.
 
-  ::
+- :php:meth:`Create Account <com.bitcasa.cloudfs.client.Admin.createAccount(String, String, String, String, String)>`
+      ::
 
-    User user = adminSession.getAdmin().createAccount(username, password, email, firstName, lastName, logInToCreatedUser);
+      User user = adminSession.getAdmin().createAccount(username, password, email, firstName, lastName, logInToCreatedUser);
 
 File System Operations
 ----------------------
@@ -99,7 +97,7 @@ File System Operations
 
       ::
 
-	  $items = $fileSystem->getList();
+      $items = $fileSystem->getList();
 
 
 - :php:meth:`Get Trash Items <Filesystem::copy>`
@@ -108,7 +106,7 @@ File System Operations
  
       ::
 
-	  //Add snippet here.
+      //Add snippet here.
 
 
 - :php:meth:`Get Shares <Filesystem::copy>`
@@ -117,7 +115,7 @@ File System Operations
  
       ::
 
-	  $items = $share->getList();
+      $items = $share->getList();
 
 
 - :php:meth:`Create Share <Filesystem::copy>`
@@ -126,7 +124,7 @@ File System Operations
  
       ::
 
-	  $share = $fileSystem->createShare($itemToShare->getPath());
+      $share = $fileSystem->createShare($itemToShare->getPath());
 
 
 - :php:meth:`Get Specific Share <Filesystem::copy>`
@@ -135,7 +133,7 @@ File System Operations
  
       ::
 
-	  $share = $fileSystem->createShare($shareKey);
+      $share = $fileSystem->createShare($shareKey);
 
 
 - :php:meth:`Copy Items <Filesystem::copy>`
@@ -183,7 +181,7 @@ Folder Operations
   You can change the attributes of a Folder by providing a hash map of field names and values. An example is given below.
       ::
 
-	  //Add snippet here.
+      //Add snippet here.
 
    	 
 - :php:meth:`Copy Folder <Item::copy_to>`
@@ -249,7 +247,7 @@ File Operations
   You can change the attributes of a File by providing a hash map of field names and values. An example is given below.
       ::
 
-	  //Add snippet here.
+      //Add snippet here.
 
    	 
 - :php:meth:`Copy File <Item::copy_to>`
@@ -313,24 +311,23 @@ Share Operations
 - :php:meth:`Change Share Attributes <Filesystem::copy>`
 
   You can change the attributes of a Share by providing a hash map of field names and values. An example is given below.
+
       ::
 
-	  $share->changeAttributes(
-            array('name' => $this->sharedFolderName, 'password' => 'newPassword'),
-            'password');
+      $share->changeAttributes(array('name' => $this->sharedFolderName, 'password' => 'newPassword'), 'password');
 
  
 - :php:meth:`Delete Share <Filesystem::copy>`
 
       ::    
 
-	  share.delete();
+      $share.delete();
 
 - :php:meth:`Set Share Password <Filesystem::copy>`
 
   Sets the share password. Old password is only needed if one exists.
       ::
 
-	  $share->setPassword('password');
+      $share->setPassword('password');
 
  
