@@ -134,7 +134,9 @@ class FileSystemTest extends BaseTest {
         $this->assertEquals($textFileName, $uploadedTextFile->getName());
 
         $file = $fileSystem->getFile($uploadedTextFile->getPath());
+        $item = $fileSystem->getItem($uploadedTextFile->getPath());
         $this->assertEquals($textFileName, $file->getName());
+        $this->assertEquals($textFileName, $item->getName());
 
         $localDownloadDirectory = dirname(__FILE__) . '/files/download/';
 
