@@ -63,10 +63,11 @@ Admin Operations
 .. note:: You need to create an admin session in order to perform admin operations.
   You can create end users for an admin/paid account. If 'logInToCreatedUser' is true, logs in to the user after creating it.
 
-- :php:meth:`Create Account <com.bitcasa.cloudfs.client.Admin.createAccount(String, String, String, String, String)>`
+- :php:meth:`Create Account <Session::createAccount>`
       ::
 
-      User user = adminSession.getAdmin().createAccount(username, password, email, firstName, lastName, logInToCreatedUser);
+      $session->setAdminCredentials($this::ADMIN_ID, $this::ADMIN_SECRET);
+      $user = $session->createAccount($username, $password, $email, $firstName,$lastName, $logInToCreatedUser);
 
 File System Operations
 ----------------------
@@ -181,7 +182,7 @@ Folder Operations
   You can change the attributes of a Folder by providing a hash map of field names and values. An example is given below.
       ::
 
-      //Add snippet here.
+      $folder->changeAttributes(array('application_data' => $newApplicationData, 'version' => $this->getVersion()));
 
    	 
 - :php:meth:`Copy Folder <Item::copy_to>`
@@ -247,7 +248,7 @@ File Operations
   You can change the attributes of a File by providing a hash map of field names and values. An example is given below.
       ::
 
-      //Add snippet here.
+      $file->changeAttributes(array('application_data' => $newApplicationData, 'version' => $this->getVersion()));
 
    	 
 - :php:meth:`Copy File <Item::copy_to>`
