@@ -475,13 +475,19 @@ class Filesystem {
         return $this->api->fileVersions($file->getPath(), $startVersion, $endVersion, $limit);
     }
 
+    /**
+     * Streams the content of a given file
+     *
+     * @param File $file The file to be streamed.
+     * @return The file stream.
+     * @throws Exception\InvalidArgumentException
+     */
     public function fileRead($file){
         return $this->api->fileRead($file->getPath(), $file->getName(), $file->getSize());
     }
 
 	/**
 	 * Browses the Trash metafolder on the authenticated user’s account.
-	 *
 	 */
 	public function listTrash(){
 		return $this->api->listTrash();

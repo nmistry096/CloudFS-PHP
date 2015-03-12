@@ -534,6 +534,14 @@ class BitcasaApi {
 		return $connection->getResponse(true);
 	}
 
+    /**
+     * Create a share of an item at the supplied path.
+     *
+     * @param string $path The path of the item to be shared.
+     * @param string $password The password of the shared to be created.
+     * @return An instance of the share.
+     * @throws Exception\InvalidArgumentException
+     */
 	public function createShare($path, $password = null) {
 		$response = null;
 		if (!empty($path)) {
@@ -555,6 +563,11 @@ class BitcasaApi {
 		return $response;
 	}
 
+    /**
+     * Retrieves the list of shares on the filesystem.
+     *
+     * @return The share list.
+     */
 	public function shares() {
 		$response = null;
 		$connection = new HTTPConnect($this->credential->getSession());
@@ -567,6 +580,12 @@ class BitcasaApi {
 		return $response;
 	}
 
+    /**
+     * Retrieves the items for a supplied share key.
+     *
+     * @param string $shareKey The supplied share key.
+     * @return An array of items for the share key.
+     */
 	public function browseShare($shareKey) {
 		$response = null;
 		if (!empty($shareKey)) {
@@ -581,6 +600,14 @@ class BitcasaApi {
 		return $response;
 	}
 
+    /**
+     * Retrieve the share item for a given share key to a path supplied.
+     *
+     * @param string $shareKey The supplied share key.
+     * @param string $path The path to which the share files are retrieved to.
+     * @param string $exists The action to take if the item already exists.
+     * @return The success/failure status of the retrieve operation.
+     */
 	public function retrieveShare($shareKey, $path, $exists = Exists::OVERWRITE) {
 		$success = false;
 		if (!empty($shareKey) && !empty($path)) {
@@ -598,6 +625,12 @@ class BitcasaApi {
 		return $success;
 	}
 
+    /**
+     * Deletes the share item for a supplied share key.
+     *
+     * @param string $shareKey The supplied share key.
+     * @return The success/failure status of the delete operation.
+     */
 	public function deleteShare($shareKey) {
 		$deleted = false;
 		if (!empty($shareKey)) {
@@ -612,6 +645,14 @@ class BitcasaApi {
 		return $deleted;
 	}
 
+    /**
+     * Unlocks the share item of the supplied share key for the duration of the session.
+     *
+     * @param string $shareKey The supplied share key.
+     * @param string $password The share password.
+     * @return The success/failure status of the retrieve operation.
+     * @throws Exception\InvalidArgumentException
+     */
 	public function unlockShare($shareKey, $password) {
 		$success = false;
 		if (empty($shareKey)) {
@@ -635,6 +676,15 @@ class BitcasaApi {
 		return $success;
 	}
 
+    /**
+     * Alter the properties of a share item for a given share key with the supplied data.
+     *
+     * @param string $shareKey The supplied share key.
+     * @param mixed[] $values The values to be changed.
+     * @param string $password The share password.
+     * @return An instance of the altered share.
+     * @throws Exception\InvalidArgumentException
+     */
 	public function alterShare($shareKey, array $values, $password = null) {
 		$response = null;
 		if (!empty($shareKey)) {
@@ -695,6 +745,15 @@ class BitcasaApi {
         return $response;
     }
 
+    /**
+     * Streams the content of a given file at the supplied path
+     *
+     * @param string $path The file path.
+     * @param string $fileName The name of the file.
+     * @param string $fileSize The size of the file.
+     * @return The file stream.
+     * @throws Exception\InvalidArgumentException
+     */
     public function fileRead($path, $fileName, $fileSize){
 
         $response = null;
@@ -709,16 +768,6 @@ class BitcasaApi {
         }
 
         return $response;
-
-        /*$connection = new HTTPConnect($this->credential->getSession());
-        $connection->raw();
-        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
-            array());
-        $s = $connection->get($url);
-        if ($s <= 100) {
-            return false;
-        }*/
-
     }
 
 	/**
