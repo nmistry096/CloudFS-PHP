@@ -13,6 +13,7 @@ namespace CloudFS;
 
 use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Utils\Exists;
+use CloudFS\Utils\VersionExists;
 
 /**
  * Defines the Bitcasa file system.
@@ -270,6 +271,14 @@ class Filesystem {
 			$res[] = $r;
 		}
 		return $res;
+	}
+
+	public function alterFolder($path, array $values, $ifConflict = VersionExists::FAIL) {
+		return $this->api->alterFolder($path, $values, $ifConflict);
+	}
+
+	public function alterFile($path, array $values, $ifConflict = VersionExists::FAIL) {
+		return $this->api->alterFile($path, $values, $ifConflict);
 	}
 
 	/**

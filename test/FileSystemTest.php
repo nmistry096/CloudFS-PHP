@@ -162,7 +162,7 @@ class FileSystemTest extends BaseTest {
         $newImageName = 'newimage.jpg';
         $uploadedImageFile->setName($newImageName);
         $uploadedImageFile->setMime('image/jpeg');
-        $version = $uploadedImageFile->version();
+        $version = $uploadedImageFile->getVersion();
         $uploadedImageFile->setVersion($version);
         $savedFile = $uploadedImageFile->save();
 
@@ -198,5 +198,34 @@ class FileSystemTest extends BaseTest {
 
         $this->assertNotNull($this->getItemFromIndexArray($fileSystem->getList($level1Folder3->getPath()), $textFileName));
         $this->assertNotNull($this->getItemFromIndexArray($fileSystem->getList($level1Folder4->getPath()), $imageFileName));
+    }
+
+
+    /**
+     * Test alter operations on files and folders.
+     */
+    public function testAlterOperations() {
+        /** @var \CloudFS\Filesystem $fileSystem */
+        $fileSystem = $this->getSession()->filesystem();
+        /** @var \CloudFS\Folder $root */
+        $root = $fileSystem->root();
+        /** @var \CloudFS\Folder $folder */
+        $folder = $root->createFolder($this->level0Folder1Name);
+        $newName = 'altered-folder-name';
+        $folder->setName($newName);
+
+        $folder = $fileSystem->getFolder($folder->getPath());
+        $this->assertEquals($newName, $folder->getName());
+
+        $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
+        /** @var \CloudFS\File $file */
+        $file = $folder->upload($localUploadDirectory . 'text', 'original-name', Exists::OVERWRITE);
+        $file->setName('altered-name');
+
+        $file = $fileSystem->getFile($file->getPath());
+        $this->assertEquals('altered-name', $file->getName());
+
+        $deleted = $folder->delete(true, true);
+        $this->assertTrue($deleted);
     }
 }
