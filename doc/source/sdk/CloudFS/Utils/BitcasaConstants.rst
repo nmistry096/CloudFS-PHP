@@ -18,7 +18,7 @@ CloudFS\\Utils\\BitcasaConstants
 
     .. php:const:: REQUEST_METHOD_GET
 
-        The http request methods for HTTPConnect.
+        The http request methods for HTTPConnector.
 
     .. php:const:: METHOD_AUTHENTICATE
 

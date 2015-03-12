@@ -15,11 +15,11 @@ use CloudFS\Exception\InvalidArgumentException;
 use CloudFS\Filesystem;
 use CloudFS\Utils\BitcasaConstants;
 use CloudFS\BitcasaUtils;
-use CloudFS\HTTPConnect;
+use CloudFS\HTTPConnector;
 use CloudFS\Utils\Exists;
 
 
-class BitcasaApi {
+class RESTAdapter {
 
 	private $credential;
 	private $accessToken;
@@ -53,7 +53,7 @@ class BitcasaApi {
 		}
     	
 		$now = time();
-		$connection = new HTTPConnect($session);
+		$connection = new HTTPConnector($session);
 		$this->accessToken = null;
 
 		$date = strftime(BitcasaConstants::DATE_FORMAT, $now);
@@ -130,7 +130,7 @@ class BitcasaApi {
 			$params[BitcasaConstants::PARAM_FILTER] = $filter;
 		}
 
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl($endpoint, null, $params);
 
 		if (!BitcasaUtils::isSuccess($connection->get($url))) {
@@ -163,7 +163,7 @@ class BitcasaApi {
 		}
 		$endpoint .= "meta";
 
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl($endpoint, null, $params);
 
 		if (!BitcasaUtils::isSuccess($connection->get($url))) {
@@ -198,7 +198,7 @@ class BitcasaApi {
 		}
 		$endpoint .= "meta";
 
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl($endpoint, null, $params);
 
 		if (!BitcasaUtils::isSuccess($connection->get($url))) {
@@ -218,7 +218,7 @@ class BitcasaApi {
 	 * @throws InvalidArgument]
 	 */
 	public function createFolder($parentpath, $filename, $exists = Exists::FAIL) {
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		if ($parentpath == null) {
 			$parentpath = "/";
 		}
@@ -252,7 +252,7 @@ class BitcasaApi {
 	 */
 	public function deleteFolder($path, $force = false) {
 		//assert_string($path, 1);
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$force_option = array();
 		if ($force == true) {
 			$force_option["force"] = "true";
@@ -278,7 +278,7 @@ class BitcasaApi {
 	 */
 	public function deleteFile($path, $force = false) {
 		//assert_string($path, 1);
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$force_option = array();
 		if ($force == true) {
 			$force_option["force"] = "true";
@@ -306,7 +306,7 @@ class BitcasaApi {
 	 */
 	public function alterFolder($path, $attrs, $conflict = "fail") {
 		//assert_string($path, 1);
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path . "/meta",
 												array());
 		$attrs['version-conflict'] = $conflict;
@@ -331,7 +331,7 @@ class BitcasaApi {
 	 */
 	public function alterFile($path, $attrs, $conflict = "fail") {
 		//assert_string($path, 1);
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path . "/meta",
 												array());
 		$attrs['version-conflict'] = $conflict;
@@ -357,7 +357,7 @@ class BitcasaApi {
 	public function copyFolder($path, $dest, $name = null, $exists = "fail") {
 		//assert_string($path, 1);
 		//assert_string($dest, 2);
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_COPY));
 		$params = array("to" => $dest, "exists" => $exists);
@@ -387,7 +387,7 @@ class BitcasaApi {
 	public function copyFile($path, $dest, $name = null, $exists = "fail") {
 		//assert_string($path, 1);
 		//assert_string($dest, 2);
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_COPY));
 
@@ -417,7 +417,7 @@ class BitcasaApi {
 	public function moveFolder($path, $dest, $name = null, $exists = "fail") {
 		//assert_path($path, 1);
 		//assert_path($dest, 2);
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_MOVE));
 		$params = array("to" => $dest, "exists" => $exists);
@@ -446,7 +446,7 @@ class BitcasaApi {
 	public function moveFile($path, $dest, $name = null, $exists = "fail") {
 		//assert_path($path, 1);
 		//assert_path($dest, 2);
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_MOVE));
 		$params = array("to" => $dest, "exists" => $exists);
@@ -472,7 +472,7 @@ class BitcasaApi {
 	 */
 	public function downloadFile($path, $file = null) {
 		$params = array();
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$connection->raw();
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
 												array());
@@ -495,7 +495,7 @@ class BitcasaApi {
 	public function uploadFile($parentpath, $name, $filepath, $exists = "overwrite") {
 		//assert_string($filepath);
 		$params = array();
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$connection->raw();
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $parentpath,
 												$params);
@@ -519,7 +519,7 @@ class BitcasaApi {
     public function restore($path, $dest) {
 		//assert_string($path, 1);
 		//assert_string($dest, 2);
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$params = array();
 		$body = array("rescue-path" => $dest);
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_TRASH, $path, 
@@ -534,10 +534,18 @@ class BitcasaApi {
 		return $connection->getResponse(true);
 	}
 
+    /**
+     * Create a share of an item at the supplied path.
+     *
+     * @param string $path The path of the item to be shared.
+     * @param string $password The password of the shared to be created.
+     * @return An instance of the share.
+     * @throws Exception\InvalidArgumentException
+     */
 	public function createShare($path, $password = null) {
 		$response = null;
 		if (!empty($path)) {
-			$connection = new HTTPConnect($this->credential->getSession());
+			$connection = new HTTPConnector($this->credential->getSession());
 			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES);
 			$formParameters = array('path' => $path);
 			if (!empty($password)) {
@@ -555,9 +563,14 @@ class BitcasaApi {
 		return $response;
 	}
 
+    /**
+     * Retrieves the list of shares on the filesystem.
+     *
+     * @return The share list.
+     */
 	public function shares() {
 		$response = null;
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES);
 		$statusCode = $connection->get($url);
 		if ($statusCode == 200) {
@@ -567,10 +580,16 @@ class BitcasaApi {
 		return $response;
 	}
 
+    /**
+     * Retrieves the items for a supplied share key.
+     *
+     * @param string $shareKey The supplied share key.
+     * @return An array of items for the share key.
+     */
 	public function browseShare($shareKey) {
 		$response = null;
 		if (!empty($shareKey)) {
-			$connection = new HTTPConnect($this->credential->getSession());
+			$connection = new HTTPConnector($this->credential->getSession());
 			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/meta');
 			$statusCode = $connection->get($url);
 			if ($statusCode == 200) {
@@ -581,10 +600,18 @@ class BitcasaApi {
 		return $response;
 	}
 
+    /**
+     * Retrieve the share item for a given share key to a path supplied.
+     *
+     * @param string $shareKey The supplied share key.
+     * @param string $path The path to which the share files are retrieved to.
+     * @param string $exists The action to take if the item already exists.
+     * @return The success/failure status of the retrieve operation.
+     */
 	public function retrieveShare($shareKey, $path, $exists = Exists::OVERWRITE) {
 		$success = false;
 		if (!empty($shareKey) && !empty($path)) {
-			$connection = new HTTPConnect($this->credential->getSession());
+			$connection = new HTTPConnector($this->credential->getSession());
 			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/');
 			$body = BitcasaUtils::generateParamsString(array('path' => $path, 'exists' => $exists));
 			$connection->setData($body);
@@ -598,10 +625,16 @@ class BitcasaApi {
 		return $success;
 	}
 
+    /**
+     * Deletes the share item for a supplied share key.
+     *
+     * @param string $shareKey The supplied share key.
+     * @return The success/failure status of the delete operation.
+     */
 	public function deleteShare($shareKey) {
 		$deleted = false;
 		if (!empty($shareKey)) {
-			$connection = new HTTPConnect($this->credential->getSession());
+			$connection = new HTTPConnector($this->credential->getSession());
 			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/');
 			$status = $connection->delete($url);
 			if ($status == 200) {
@@ -612,6 +645,14 @@ class BitcasaApi {
 		return $deleted;
 	}
 
+    /**
+     * Unlocks the share item of the supplied share key for the duration of the session.
+     *
+     * @param string $shareKey The supplied share key.
+     * @param string $password The share password.
+     * @return The success/failure status of the retrieve operation.
+     * @throws Exception\InvalidArgumentException
+     */
 	public function unlockShare($shareKey, $password) {
 		$success = false;
 		if (empty($shareKey)) {
@@ -621,7 +662,7 @@ class BitcasaApi {
 			throw new InvalidArgumentException('unlockShare function accepts a valid password. Input was ' . $password);
 		}
 		else {
-			$connection = new HTTPConnect($this->credential->getSession());
+			$connection = new HTTPConnector($this->credential->getSession());
 			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/unlock');
 			$body = BitcasaUtils::generateParamsString(array('password' => $password));
 			$connection->setData($body);
@@ -635,10 +676,19 @@ class BitcasaApi {
 		return $success;
 	}
 
+    /**
+     * Alter the properties of a share item for a given share key with the supplied data.
+     *
+     * @param string $shareKey The supplied share key.
+     * @param mixed[] $values The values to be changed.
+     * @param string $password The share password.
+     * @return An instance of the altered share.
+     * @throws Exception\InvalidArgumentException
+     */
 	public function alterShare($shareKey, array $values, $password = null) {
 		$response = null;
 		if (!empty($shareKey)) {
-			$connection = new HTTPConnect($this->credential->getSession());
+			$connection = new HTTPConnector($this->credential->getSession());
 			$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/info');
 			$formParameters = array();
 			if (!empty($password)) {
@@ -672,7 +722,7 @@ class BitcasaApi {
     public function fileVersions($path, $startVersion, $endVersion, $limit){
         $response = null;
         if(!empty($path)){
-            $connection = new HTTPConnect($this->credential->getSession());
+            $connection = new HTTPConnector($this->credential->getSession());
             $params = array();
             if ($startVersion != null) {
                 $params['start-version'] = $startVersion;
@@ -695,11 +745,20 @@ class BitcasaApi {
         return $response;
     }
 
+    /**
+     * Streams the content of a given file at the supplied path
+     *
+     * @param string $path The file path.
+     * @param string $fileName The name of the file.
+     * @param string $fileSize The size of the file.
+     * @return The file stream.
+     * @throws Exception\InvalidArgumentException
+     */
     public function fileRead($path, $fileName, $fileSize){
 
         $response = null;
         if(!empty($path)){
-            $connection = new HTTPConnect($this->credential->getSession());
+            $connection = new HTTPConnector($this->credential->getSession());
             $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path, array());
             $status = $connection->get($url);
             $response = $connection->getResponse();
@@ -709,16 +768,6 @@ class BitcasaApi {
         }
 
         return $response;
-
-        /*$connection = new HTTPConnect($this->credential->getSession());
-        $connection->raw();
-        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
-            array());
-        $s = $connection->get($url);
-        if ($s <= 100) {
-            return false;
-        }*/
-
     }
 
 	/**
@@ -730,7 +779,7 @@ class BitcasaApi {
 	public function listTrash($path=null){
 
 		$endpoint = BitcasaConstants::METHOD_TRASH;
-		$connection = new HTTPConnect($this->credential->getSession());
+		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl($endpoint, "/".$path);
 		$status = $connection->get($url);
 		if ($status <= 100) {

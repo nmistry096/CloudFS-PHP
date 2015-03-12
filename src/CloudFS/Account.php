@@ -47,9 +47,9 @@ class Account {
     }
 
     /**
-     * Retrieves the OTL of account.
+     * Retrieves the over storage limit of account.
      *
-     * @return The OTL.
+     * @return The over storage limit.
      */
     public function getOverStorageLimit() {
         return $this->overStorageLimit;

@@ -102,11 +102,11 @@ class File extends Item {
         return $versions;
     }
 
+    /** read the file stream.
+     * @return mixed
+     */
     public function read(){
         return $this->filesystem()->fileRead($this);
     }
 
-    public function downloadUrl(){
-        
-    }
 }
