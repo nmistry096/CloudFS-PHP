@@ -2,7 +2,11 @@
 
 namespace CloudFS;
 
-
+/**
+ * Class Container
+ * Handles the Container item type operations.
+ * @package CloudFS
+ */
 class Container extends Item {
 
     /**

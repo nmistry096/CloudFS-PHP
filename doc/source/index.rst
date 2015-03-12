@@ -117,7 +117,7 @@ File System Operations
  
       ::
 
-	  //Add snippet here.
+	  $items = $share->getList();
 
 
 - :php:meth:`Create Share <Filesystem::copy>`
@@ -126,7 +126,7 @@ File System Operations
  
       ::
 
-	  //Add snippet here.
+	  $share = $fileSystem->createShare($itemToShare->getPath());
 
 
 - :php:meth:`Get Specific Share <Filesystem::copy>`
@@ -135,7 +135,7 @@ File System Operations
  
       ::
 
-	  //Add snippet here.
+	  $share = $fileSystem->createShare($shareKey);
 
 
 - :php:meth:`Copy Items <Filesystem::copy>`
@@ -217,9 +217,9 @@ Folder Operations
 
   You can restore a Folder from the trash. The restore method can be set to either FAIL, RESCUE or RECREATE. This will return the Success/failure status of the operation.
 
-	  ::    
+      ::    
 
-      //Add snippet here.
+      $status = $folder->restore($items, $destination, Exists::Rename);
 
 
 - :php:meth:`Create Sub Folder <Container::create>`
@@ -281,11 +281,11 @@ File Operations
 
 - :php:meth:`Restore File <Filesystem::copy>`
 
-  You can restore a File from the trash. The restore method can be set to either FAIL, RESCUE or RECREATE. This will return the Success/failure status of the operation.
+  You can restore files from the trash. The restore method can be set to either FAIL, RESCUE or RECREATE. This will return the Success/failure status of the operation.
 
-	  ::    
+      ::    
 
-      //Add snippet here.
+      $status = $file->restore($items, $destination, Exists::Rename);
 
 
 - :php:meth:`Download File <Item::delete>`
@@ -315,20 +315,22 @@ Share Operations
   You can change the attributes of a Share by providing a hash map of field names and values. An example is given below.
       ::
 
-	  //Add snippet here.
+	  $share->changeAttributes(
+            array('name' => $this->sharedFolderName, 'password' => 'newPassword'),
+            'password');
 
  
 - :php:meth:`Delete Share <Filesystem::copy>`
 
-  ::    
+      ::    
 
-    share.delete();
+	  share.delete();
 
 - :php:meth:`Set Share Password <Filesystem::copy>`
 
   Sets the share password. Old password is only needed if one exists.
       ::
 
-	  //Add snippet here.
+	  $share->setPassword('password');
 
  

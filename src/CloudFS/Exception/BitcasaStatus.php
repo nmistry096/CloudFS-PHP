@@ -1,16 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dhanushka
- * Date: 3/10/15
- * Time: 1:55 PM
- */
 
 namespace CloudFS\Exception;
 
 use CloudFS\Exception\BitcasaError;
 
-
+/**
+ * Class BitcasaStatus
+ * Handles bitcasa status responses.
+ * @package CloudFS\Exception
+ */
 class BitcasaStatus {
     private $status;
     private $message;
@@ -73,7 +71,6 @@ class BitcasaStatus {
                 var_dump($this->response);
                 print "BitcasaError: " . $this->code . " => " . $this->message . "\n";
             }
-
 
             throw new BitcasaError($this);
         }

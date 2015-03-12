@@ -17,45 +17,81 @@ class User {
     private $createdAt;
 
     /**
-     *  Retrieves the email
+     *  Retrieves the user email
      *
-     * @return Retrieves the email.
+     * @return The user email.
      */
     public function getEmail() {
         return $this->email;
     }
 
     /**
-     * @return string The first name.
+     * Retrieves the users first name.
+     *
+     * @return The users first name.
      */
     public function getFirstName() {
         return $this->firstName;
     }
 
+    /**
+     * Retrieves the users last name.
+     *
+     * @return The users last name.
+     */
     public function getLastName() {
         return $this->lastName;
     }
 
+    /**
+     * Retrieves the user id.
+     *
+     * @return The user id.
+     */
     public function getId() {
         return $this->id;
     }
 
+    /**
+     * Retrieves the users user name.
+     *
+     * @return The users username.
+     */
     public function getUsername() {
         return $this->username;
     }
 
+    /**
+     * Retrieves the users last login timestamp.
+     *
+     * @return The users last login timestamp.
+     */
     public function getLastLogin() {
         return $this->lastLogin;
     }
 
+    /**
+     * Retrieves the user created timestamp.
+     *
+     * @return The user created timestamp.
+     */
     public function getCreatedAt() {
         return $this->createdAt;
     }
 
+    /**
+     * Private constructor to avoid creating new share objects.
+     */
     private function __construct() {
 
     }
 
+    /**
+     * Retrieves a user instance from the supplied result.
+     *
+     * @param mixed $data The json response retrieved from rest api.
+     * @return A user instance.
+     */
     public static function getInstance($data) {
         $user = new User();
         $user->email = $data['result']['email'];
