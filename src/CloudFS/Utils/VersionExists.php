@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dhanushka
- * Date: 3/10/15
- * Time: 2:11 PM
- */
 
 namespace CloudFS\Utils;
-
 
 /**
  * Class VersionExists

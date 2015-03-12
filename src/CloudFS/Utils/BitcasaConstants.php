@@ -1,19 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dhanushka
- * Date: 3/10/15
- * Time: 2:10 PM
- */
 
 namespace CloudFS\Utils;
 
-
 /**
  * Constants used in REST api requests
- *
  */
-
 abstract class BitcasaConstants {
 
     /**
@@ -164,9 +155,14 @@ abstract class BitcasaConstants {
     const STOP_VERSION = "stop-version";
     const LIMIT = "limit";
 
-    // update progress interval
-    const PROGRESS_UPDATE_INTERVAL			= 2000;
+    /**
+     * Update progress interval.
+     */
+    const PROGRESS_UPDATE_INTERVAL = 2000;
 
+    /**
+     * Web request related strings.
+     */
     const DATE_FORMAT = "%a, %e %b %Y %H:%M:%S %Z";
     const FORM_URLENCODED = "application/x-www-form-urlencoded; charset=\"utf-8\"";
     const OAUTH_TOKEN = "/oauth2/token";

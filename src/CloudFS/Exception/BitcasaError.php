@@ -2,7 +2,11 @@
 
 namespace CloudFS\Exception;
 
-
+/**
+ * Class BitcasaError
+ * Handles the bitcasa error responses.
+ * @package CloudFS\Exception
+ */
 class BitcasaError extends \Exception {
 
     private $status;
