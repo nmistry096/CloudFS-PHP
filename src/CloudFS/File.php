@@ -74,5 +74,14 @@ class File extends Item {
         return $versions;
     }
 
+    public function read(){
+        return $this->filesystem()->fileRead($this);
+    }
+
+    public function downloadUrl(){
+        
+    }
+
+
 
 }

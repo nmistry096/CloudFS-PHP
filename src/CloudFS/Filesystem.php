@@ -417,6 +417,10 @@ class Filesystem {
         return $this->api->fileVersions($file->getPath(), $startVersion, $endVersion, $limit);
     }
 
+    public function fileRead($file){
+        return $this->api->fileRead($file->getPath(), $file->getName(), $file->getSize());
+    }
+
 }
  
 ?>
