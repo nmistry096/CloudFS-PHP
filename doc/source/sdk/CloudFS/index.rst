@@ -1,3 +1,5 @@
+.. _cloudfs-sdk:
+
 ```````
 CloudFS
 ```````
