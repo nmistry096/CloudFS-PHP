@@ -110,6 +110,18 @@ CloudFS\\Filesystem
         :param $conflict: The action to take if a conflict occurs.
         :returns: The success/fail response of the update operation.
 
+    .. php:method:: alterFolder($path, $values, $ifConflict = VersionExists::FAIL)
+
+        :param $path:
+        :param $values:
+        :param $ifConflict:
+
+    .. php:method:: alterFile($path, $values, $ifConflict = VersionExists::FAIL)
+
+        :param $path:
+        :param $values:
+        :param $ifConflict:
+
     .. php:method:: upload($parent, $path, $name = null, $exists = "overwrite")
 
         Upload a file on to the given path.

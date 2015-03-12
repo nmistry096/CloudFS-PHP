@@ -63,10 +63,11 @@ Admin Operations
 .. note:: You need to create an admin session in order to perform admin operations.
   You can create end users for an admin/paid account. If 'logInToCreatedUser' is true, logs in to the user after creating it.
 
-- :php:meth:`Create Account <com.bitcasa.cloudfs.client.Admin.createAccount(String, String, String, String, String)>`
+- :php:meth:`Create Account <Session::createAccount>`
       ::
 
-      User user = adminSession.getAdmin().createAccount(username, password, email, firstName, lastName, logInToCreatedUser);
+      $session->setAdminCredentials($this::ADMIN_ID, $this::ADMIN_SECRET);
+      $user = $session->createAccount($username, $password, $email, $firstName,$lastName, $logInToCreatedUser);
 
 File System Operations
 ----------------------
@@ -167,7 +168,7 @@ Folder Operations
 -----------------
 .. note:: You need to create a session in order to perform folder operations.
 
-- :php:meth:`List Folder Contents <Folder::get_list>`
+- :php:meth:`List Folder Contents <Folder::getList>`
 
   You can list the contents of a folder. This will return a list of top level folders and items in the specified folder.
 
@@ -176,30 +177,30 @@ Folder Operations
       $items = $folder->get_list();
 
 
-- :php:meth:`Change Folder Attributes <Filesystem::copy>`
+- :php:meth:`Change Folder Attributes <Item::changeAttributes>`
 
   You can change the attributes of a Folder by providing a hash map of field names and values. An example is given below.
       ::
 
-      //Add snippet here.
+      $folder->changeAttributes(array('application_data' => $newApplicationData, 'version' => $this->getVersion()));
 
    	 
-- :php:meth:`Copy Folder <Item::copy_to>`
+- :php:meth:`Copy Folder <Item::copy>`
 
   You can copy a folder to a new location in the file system. If the destination conflicts with the copying folder you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
-      $newFolder = $folder->copy_to($destinationPath, Exists::OVERWRITE);
+      $newFolder = $folder->copy($destinationPath, Exists::OVERWRITE);
 
 
-- :php:meth:`Move Folder <Item::move_to>`
+- :php:meth:`Move Folder <Item::move>`
 
   You can move a folder to a new location in the file system. If the destination conflicts with the moving folder you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
-      $newFolder = $folder->move_to($destinationPath, Exists::OVERWRITE);
+      $newFolder = $folder->move($destinationPath, Exists::OVERWRITE);
 
 
 - :php:meth:`Delete Folder <Item::delete>`
@@ -211,7 +212,7 @@ Folder Operations
       $status = $folder->delete();
 
 
-- :php:meth:`Restore Folder <Filesystem::copy>`
+- :php:meth:`Restore Folder <Item::restore>`
 
   You can restore a Folder from the trash. The restore method can be set to either FAIL, RESCUE or RECREATE. This will return the Success/failure status of the operation.
 
@@ -220,7 +221,7 @@ Folder Operations
       $status = $folder->restore($items, $destination, Exists::Rename);
 
 
-- :php:meth:`Create Sub Folder <Container::create>`
+- :php:meth:`Create Sub Folder <Folder::createFolder>`
 
   You can create a sub folder in a specific folder. If the folder already has a sub folder with the given name, the operation will fail.
 
@@ -242,15 +243,15 @@ File Operations
 ---------------
 .. note:: You need to create a session in order to perform file operations.
 
-- :php:meth:`Change File Attributes <Filesystem::copy>`
+- :php:meth:`Change File Attributes <Item::changeAttributes>`
 
   You can change the attributes of a File by providing a hash map of field names and values. An example is given below.
       ::
 
-      //Add snippet here.
+      $file->changeAttributes(array('application_data' => $newApplicationData, 'version' => $this->getVersion()));
 
    	 
-- :php:meth:`Copy File <Item::copy_to>`
+- :php:meth:`Copy File <Item::copy>`
 
   You can copy a file to a new location in the file system. If the destination conflicts with the copying file you can either RENAME, OVERWRITE or FAIL the operation.
 
@@ -259,7 +260,7 @@ File Operations
       $newFile = $file->copy_to($destinationPath, Exists::OVERWRITE);
 
 
-- :php:meth:`Move File <Item::move_to>`
+- :php:meth:`Move File <Item::move>`
 
   You can move a file to a new location in the file system. If the destination conflicts with the moving file you can either RENAME, OVERWRITE or FAIL the operation.
 
@@ -277,7 +278,7 @@ File Operations
       $status = $file->delete();
 
 
-- :php:meth:`Restore File <Filesystem::copy>`
+- :php:meth:`Restore File <Item::restore>`
 
   You can restore files from the trash. The restore method can be set to either FAIL, RESCUE or RECREATE. This will return the Success/failure status of the operation.
 
@@ -286,7 +287,7 @@ File Operations
       $status = $file->restore($items, $destination, Exists::Rename);
 
 
-- :php:meth:`Download File <Item::delete>`
+- :php:meth:`Download File <Filesystem::download>`
 
   You can download a file to your local file system.
 
@@ -295,7 +296,7 @@ File Operations
       $content = $fileSystem->download($file);
 
 	  
-- :php:meth:`Get Download Url <Item::delete>`
+- :php:meth:`Get Download Url <Filesystem::download>`
 
   You can get the download Url of a File.
 
@@ -308,7 +309,7 @@ Share Operations
 -----------------
 .. note:: You need to create a session in order to perform share operations.
 
-- :php:meth:`Change Share Attributes <Filesystem::copy>`
+- :php:meth:`Change Share Attributes <Share::changeAttributes>`
 
   You can change the attributes of a Share by providing a hash map of field names and values. An example is given below.
 
@@ -317,13 +318,13 @@ Share Operations
       $share->changeAttributes(array('name' => $this->sharedFolderName, 'password' => 'newPassword'), 'password');
 
  
-- :php:meth:`Delete Share <Filesystem::copy>`
+- :php:meth:`Delete Share <Share::delete>`
 
       ::    
 
       $share.delete();
 
-- :php:meth:`Set Share Password <Filesystem::copy>`
+- :php:meth:`Set Share Password <Share::setPassword>`
 
   Sets the share password. Old password is only needed if one exists.
       ::
