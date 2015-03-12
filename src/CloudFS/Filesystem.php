@@ -21,7 +21,7 @@ use CloudFS\Utils\VersionExists;
 class Filesystem {
 
 	/**
-	 * @var \CloudFS\BitcasaApi The bitcasa api instance.
+	 * @var \CloudFS\RESTAdapter The bitcasa api instance.
 	 */
 	private $api;
 

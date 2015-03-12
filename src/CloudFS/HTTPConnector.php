@@ -14,7 +14,7 @@ namespace CloudFS;
 use CloudFS\Exception\BitcasaStatus;
 
 
-class HTTPConnect {
+class HTTPConnector {
 
 	private $headers;
 	private $user_agent;
