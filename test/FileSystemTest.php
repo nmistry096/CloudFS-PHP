@@ -28,7 +28,7 @@ class FileSystemTest extends BaseTest {
     /**
      * Clears user file system.
      */
-    public function testDeleteRootFolders() {
+    public function deleteRootFolders() {
         /** @var \CloudFS\Filesystem $fileSystem */
         $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
 
