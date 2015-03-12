@@ -158,15 +158,6 @@ class Session {
     }
 
     /**
-     * Set the session client id.
-     *
-     * @param string $clientId The client Id to be set.
-     */
-    public function setClientId($clientId) {
-        $this->clientId = $clientId;
-    }
-
-    /**
      * Retrieves the session client secret.
      *
      * @return The client secret.
@@ -176,30 +167,12 @@ class Session {
     }
 
     /**
-     * Sets the session client secret.
-     *
-     * @param string $clientSecret The client secret to be set.
-     */
-    public function setClientSecret($clientSecret) {
-        $this->clientSecret = $clientSecret;
-    }
-
-    /**
      * Retrieves the sessions bitcasa client api.
      *
      * @return The bitcasa client api.
      */
     public function getBitcasaClientApi() {
         return $this->bitcasaClientApi;
-    }
-
-    /**
-     * Sets the sessions bitcasa client api.
-     *
-     * @param BitcasaClientApi $bitcasaClientApi The bitcasa client api to be set.
-     */
-    public function setBitcasaClient(BitcasaClientApi $bitcasaClientApi) {
-        $this->bitcasaClientApi = $bitcasaClientApi;
     }
 
     /**
