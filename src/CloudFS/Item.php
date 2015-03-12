@@ -236,6 +236,7 @@ class Item {
      */
     public function changeAttributes(array $values, $ifConflict = VersionExists::FAIL) {
         $success = false;
+        $values['version'] = $this->getVersion();
         $result = $this->filesystem()->alterFolder($this->getPath(), $values, $ifConflict);
         if (empty($result['error'])) {
             $success = true;

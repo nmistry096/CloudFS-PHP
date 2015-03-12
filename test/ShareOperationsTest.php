@@ -22,7 +22,7 @@ class ShareOperationsTest extends BaseTest {
     /**
      * Clears user file system.
      */
-    public function testDeleteRootFolders() {
+    public function DeleteRootFolders() {
         /** @var \CloudFS\Filesystem $fileSystem */
         $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
 

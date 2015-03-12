@@ -70,6 +70,7 @@ class File extends Item {
      */
     public function changeAttributes(array $values, $ifConflict = VersionExists::FAIL) {
         $success = false;
+        $values['version'] = $this->getVersion();
         $result = $this->filesystem()->alterFile($this->getPath(), $values, $ifConflict);
         if (empty($result['error'])) {
             $success = true;
@@ -91,7 +92,7 @@ class File extends Item {
     /**
      * Returns the metadata for selected versions of a file as
      * recorded in the History after successful metadata changes.
-     * @param int $startVersion
+     * @param int $startVersion The f
      * @param null $endVersion
      * @param int $limit
      * @return mixed

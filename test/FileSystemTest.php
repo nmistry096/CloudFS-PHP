@@ -26,6 +26,19 @@ class FileSystemTest extends BaseTest {
     }
 
     /**
+     * Clears user file system.
+     */
+    public function testDeleteRootFolders() {
+        /** @var \CloudFS\Filesystem $fileSystem */
+        $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
+
+        $items = $fileSystem->getList('/');
+        if (count($items) > 0) {
+            $fileSystem->delete($items, true);
+        }
+    }
+
+    /**
      * The create root folder test.
      */
     public function testCreateRootFolder() {
@@ -159,22 +172,6 @@ class FileSystemTest extends BaseTest {
         $this->assertNotNull($uploadedImageFile->getSize());
         $this->assertEquals('image/jpeg',$uploadedImageFile->getMime());
 
-        $newImageName = 'newimage.jpg';
-        $uploadedImageFile->setName($newImageName);
-        $uploadedImageFile->setMime('image/jpeg');
-        $version = $uploadedImageFile->getVersion();
-        $uploadedImageFile->setVersion($version);
-        $savedFile = $uploadedImageFile->save();
-
-        $this->assertEquals($newImageName,$savedFile[0]['result']['name']);
-        $this->assertEquals('image/jpeg',$savedFile[0]['result']['mime']);
-        $uploadedImageFile->setName($imageFileName);
-        $uploadedImageFile->setVersion($savedFile[0]['result']['version']);
-        $uploadedImageFile->save();
-        $versions = $uploadedImageFile->versions();
-
-        $this->assertTrue(count($versions['result']) == 2);
-
         $content = $uploadedImageFile->read();
 
         $downloadedImageFile = $fileSystem->download($uploadedImageFile);
@@ -224,6 +221,19 @@ class FileSystemTest extends BaseTest {
 
         $file = $fileSystem->getFile($file->getPath());
         $this->assertEquals('altered-name', $file->getName());
+
+        $file->setName('altered-name-new');
+        $file = $fileSystem->getFile($file->getPath());
+
+        $newMime = 'image/png';
+        $success = $file->changeAttributes(array('mime' => $newMime));
+        $this->assertTrue($success);
+
+        $file = $fileSystem->getFile($file->getPath());
+        $this->assertEquals($newMime, $file->getMime());
+
+        $versions = $file->versions();
+        $this->assertTrue(count($versions['result']) == 2);
 
         $deleted = $folder->delete(true, true);
         $this->assertTrue($deleted);

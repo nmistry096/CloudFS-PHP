@@ -695,6 +695,32 @@ class BitcasaApi {
         return $response;
     }
 
+    public function fileRead($path, $fileName, $fileSize){
+
+        $response = null;
+        if(!empty($path)){
+            $connection = new HTTPConnect($this->credential->getSession());
+            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path, array());
+            $status = $connection->get($url);
+            $response = $connection->getResponse();
+
+        }else{
+            throw new InvalidArgumentException('fileRead function accepts a valid path. Input was ' . $path);
+        }
+
+        return $response;
+
+        /*$connection = new HTTPConnect($this->credential->getSession());
+        $connection->raw();
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
+            array());
+        $s = $connection->get($url);
+        if ($s <= 100) {
+            return false;
+        }*/
+
+    }
+
 }
 
 ?>
