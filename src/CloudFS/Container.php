@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dhanushka
- * Date: 3/10/15
- * Time: 1:29 PM
- */
 
 namespace CloudFS;
 
@@ -14,10 +8,12 @@ class Container extends Item {
     /**
      * Initializes a new instance of Container.
      *
-     * @param Filesystem $filesystem The Filesystem instance.
+     * @param array $data The item data.
+     * @param string $parentPath The item parent path.
+     * @param \CloudFS\Filesystem $filesystem The file system instance.
      */
-    public function __construct($filesystem = null) {
-        parent::__construct($filesystem);
+    protected function __construct($data, $parentPath, $filesystem) {
+        parent::__construct($data, $parentPath, $filesystem);
     }
 
     /**
