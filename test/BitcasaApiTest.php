@@ -45,10 +45,8 @@ class BitcasaApiTest extends BaseTest {
     }
 
     /**
-     * The create root folder with exit if the root folder exists test.
-     *
-     * @expectedException Exception The exception instance.
-     * @expectedExceptionCode 409 The exception code.
+     * @expectedException Exception
+     * @expectedExceptionCode 409
      */
     public function testCreateRootFolderFailIfExists() {
         $this->getSession()->getBitcasaClientApi()->createFolder(NULL, $this->level0Folder1Name, Exists::FAIL);

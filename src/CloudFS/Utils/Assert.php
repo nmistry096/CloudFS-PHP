@@ -9,9 +9,9 @@
  * For support, please send email to support@bitcasa.com.
  */
 
-namespace CloudFS;
+namespace CloudFS\Utils;
 
-class Assert
+abstract class Assert
 {
     /**
      * Check if a supplied argument in null or not.
@@ -21,7 +21,7 @@ class Assert
      * @return bool The null status of the argument supplied.
      * @throws \InvalidArgument
      */
-    function assertNonNull($s, $argno = 0)
+    public static function assertNonNull($s, $argno = 0)
     {
         if ($s == null) {
             throw new \InvalidArgument($argno);
@@ -37,7 +37,7 @@ class Assert
      * @return bool The string  status of the argument supplied.
      * @throws \InvalidArgument
      */
-    function assertString($s, $argno = 0)
+    public static function assertString($s, $argno = 0)
     {
         if (!is_string($s)) {
             throw new \InvalidArgument($argno);
@@ -53,7 +53,7 @@ class Assert
      * @return bool The string or null status of the argument supplied.
      * @throws \InvalidArgument
      */
-    function assertStringOrNull($s, $argno = 0)
+    public static function assertStringOrNull($s, $argno = 0)
     {
         if ($s != null && !is_string($s)) {
             throw new \InvalidArgument($argno);
@@ -69,7 +69,7 @@ class Assert
      * @return bool The number status of the argument supplied.
      * @throws \InvalidArgument
      */
-    function assertNumber($s, $argno = 0)
+    public static function assertNumber($s, $argno = 0)
     {
         if (!is_number($s)) {
             throw new \InvalidArgument($argno);
@@ -85,8 +85,8 @@ class Assert
      * @return bool The path status of the argument supplied.
      * @throws \InvalidArgument
      */
-// TODO: needs more work!
-    function assertPath($s, $argno = 0)
+    // TODO: needs more work!
+    public static function assertPath($s, $argno = 0)
     {
         if (is_string($s)) {
             if ($s == "/") {

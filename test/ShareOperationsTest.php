@@ -40,14 +40,14 @@ class ShareOperationsTest extends BaseTest {
 
         // /top
         /** @var \CloudFS\Item $topLevelFolder */
-        $topLevelFolder = $fileSystem->create(null, $this->topLevelFolder, Exists::OVERWRITE);
+        $topLevelFolder = $fileSystem->createFolder(null, $this->topLevelFolder, Exists::OVERWRITE);
         $this->assertNotNull($topLevelFolder);
         $this->assertTrue($topLevelFolder->getName() == $this->topLevelFolder);
         $this->assertTrue($topLevelFolder->getType() == FileType::FOLDER);
         $this->assertNotEmpty($topLevelFolder->getId());
 
         // /top/shared
-        $sharedFolder = $topLevelFolder->create($this->sharedFolderName);
+        $sharedFolder = $topLevelFolder->createFolder($this->sharedFolderName);
         $this->assertNotNull($sharedFolder);
         $this->assertEquals($this->sharedFolderName, $sharedFolder->getName());
 
