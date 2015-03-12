@@ -18,7 +18,7 @@ namespace CloudFS;
  * @param mixed $s The argument to validate.
  * @param int $argno The argument number to pass to InvalidArgument.
  * @return bool The null status of the argument supplied.
- * @throws InvalidArgument
+ * @throws \InvalidArgument
  */
 function assertNonNull($s, $argno = 0) {
 	if ($s == null) {
@@ -33,7 +33,7 @@ function assertNonNull($s, $argno = 0) {
  * @param mixed $s The argument to validate.
  * @param int $argno The argument number to pass to InvalidArgument.
  * @return bool The string  status of the argument supplied.
- * @throws InvalidArgument
+ * @throws \InvalidArgument
  */
 function assertString($s, $argno = 0) {
 	if (! is_string($s)) {
@@ -48,7 +48,7 @@ function assertString($s, $argno = 0) {
  * @param mixed $s The argument to validate.
  * @param int $argno The argument number to pass to InvalidateArgument.
  * @return bool The string or null status of the argument supplied.
- * @throws InvalidArgument
+ * @throws \InvalidArgument
  */
 function assertStringOrNull($s, $argno = 0) {
 	if ($s != null &&!is_string($s)) {
@@ -63,7 +63,7 @@ function assertStringOrNull($s, $argno = 0) {
  * @param mixed $s The argument to validate.
  * @param int $argno The argument number to pass to InvalidateArgument.
  * @return bool The number status of the argument supplied.
- * @throws InvalidArgument
+ * @throws \InvalidArgument
  */
 function assertNumber($s, $argno = 0) {
 	if (! is_number($s)) {
@@ -78,7 +78,7 @@ function assertNumber($s, $argno = 0) {
  * @param mixed $s The argument to validate.
  * @param int $argno The argument number to pass to InvalidateArgument.
  * @return bool The path status of the argument supplied.
- * @throws InvalidArgument
+ * @throws \InvalidArgument
  */
 // TODO: needs more work!
 function assertPath($s, $argno = 0) {

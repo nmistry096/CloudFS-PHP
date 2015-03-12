@@ -1,14 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dhanushka
- * Date: 3/10/15
- * Time: 1:29 PM
- */
 
 namespace CloudFS;
 
-
+/**
+ * Class Container
+ * Handles the Container item type operations.
+ * @package CloudFS
+ */
 class Container extends Item {
 
     /**
