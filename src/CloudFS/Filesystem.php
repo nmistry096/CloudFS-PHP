@@ -431,7 +431,7 @@ class Filesystem {
     }
 
 	/**
-	 * Browses the Trash metafolder on the authenticated user’s account.
+	 * Browses the Trash meta folder on the authenticated user’s account.
 	 *
 	 */
 	public function listTrash(){
