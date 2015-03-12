@@ -16,10 +16,10 @@ class Folder extends Container {
     /**
      * Initializes a new instance of Folder.
      *
-     * @param BitcasaApi $api The api instance.
+     * @param Filesystem $filesystem The Filesystem instance.
      */
-    public function __construct($api = null) {
-        parent::__construct($api);
+    public function __construct($filesystem = null) {
+        parent::__construct($filesystem);
     }
 
     /**
@@ -30,7 +30,7 @@ class Folder extends Container {
      * @return Instance of the newly created folder.
      */
     public function createFolder($name, $exists = Exists::OVERWRITE) {
-        return $this->api()->create($this, $name, $exists);
+        return $this->filesystem()->create($this, $name, $exists);
     }
 
     /**
@@ -42,6 +42,6 @@ class Folder extends Container {
      * @return An instance of the uploaded item.
      */
     public function upload($path, $name = null, $exists = Exists::FAIL) {
-        return $this->api()->upload($this, $path, $name, $exists);
+        return $this->filesystem()->upload($this, $path, $name, $exists);
     }
 }

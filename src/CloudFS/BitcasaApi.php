@@ -173,38 +173,7 @@ class BitcasaApi {
 		return $connection->getResponse(true);
 	}
 
-    /**
-     * Retrieves the meta data of a item at a given path.
-     *
-     * @param string $path The path of the item.
-     * @return The meta data of the item.
-     * @throws Exception
-     */
-    public function getItemMeta($path) {
-        $params = array();
-        $endpoint = BitcasaConstants::METHOD_ITEMS;
 
-        if ($path == null) {
-            $endpoint .= "/";
-        } else if (!is_string($path)) {
-            throw new Exception("Invalid parent path");
-        } else {
-            $endpoint .= $path;
-        }
-        if (substr($endpoint, -1) != "/") {
-            $endpoint .= "/";
-        }
-        $endpoint .= "meta";
-
-        $connection = new HTTPConnect($this->credential->getSession());
-        $url = $this->credential->getRequestUrl($endpoint, null, $params);
-
-        if (!BitcasaUtils::isSuccess($connection->get($url))) {
-            return null;
-        }
-
-        return $connection->getResponse(true);
-    }
 
 	/**
 	 * Retrieves the meta data of a folder at a given path.
@@ -691,6 +660,40 @@ class BitcasaApi {
 
 		return $response;
 	}
+
+    /**
+     * @param $path
+     * @param $startVersion
+     * @param $endVersion
+     * @param $limit
+     * @return The|null
+     * @throws InvalidArgumentException
+     */
+    public function fileVersions($path, $startVersion, $endVersion, $limit){
+        $response = null;
+        if(!empty($path)){
+            $connection = new HTTPConnect($this->credential->getSession());
+            $params = array();
+            if ($startVersion != null) {
+                $params['start-version'] = $startVersion;
+            }
+            if ($endVersion != null) {
+                $params['stop-version'] = $endVersion;
+            }
+            if ($limit != null) {
+                $params['limit'] = $limit;
+            }
+            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES,
+                $path . BitcasaConstants::METHOD_VERSIONS, $params);
+            $status = $connection->get($url);
+            $response = $connection->getResponse(true);
+
+        }else{
+            throw new InvalidArgumentException('fileVersions function accepts a valid path. Input was ' . $path);
+        }
+
+        return $response;
+    }
 
 }
 

@@ -74,6 +74,7 @@ abstract class BitcasaConstants {
     const METHOD_INFO = "/info";
     const METHOD_HISTORY = "/history";
     const METHOD_TRASH = "/trash";
+    const METHOD_VERSIONS = "/versions";
 
     /**
      * Parameters supported in request url for accessing bitcasa api.

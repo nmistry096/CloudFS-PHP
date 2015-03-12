@@ -10,20 +10,20 @@ class Item {
     private $parent;
     private $full_path;
     protected $data;
-    private $api;
+    private $filesystem;
     private $change_list;
 
     /**
      * Initializes the item instance.
      *
-     * @param BitcasaApi $api The api instance.
+     * @param Filesystem $filesystem The Filesystem instance.
      */
-    public function __construct($api = null) {
+    public function __construct($filesystem = null) {
         $this->data = NULL;
         $this->parent = Null;
         $this->full_path = Null;
         $this->data = array();
-        $this->api = $api;
+        $this->filesystem = $filesystem;
         $this->changes = array();
     }
 
@@ -32,8 +32,8 @@ class Item {
      *
      * @return The api instance.
      */
-    public function api() {
-        return $this->api;
+    public function filesystem() {
+        return $this->filesystem;
     }
 
     /**
@@ -441,7 +441,7 @@ class Item {
      * @return The success/fail response of the move operation.
      */
     public function move($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
-        return $this->api()->move($this, $destination, $exists);
+        return $this->filesystem()->move($this, $destination, $exists);
     }
 
     /**
@@ -452,7 +452,7 @@ class Item {
      * @return The success/fail response of the copy operation.
      */
     public function copy($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
-        return $this->api()->copy($this, $destination, $exists);
+        return $this->filesystem()->copy($this, $destination, $exists);
     }
 
     /**
@@ -463,7 +463,7 @@ class Item {
      * @return The success/fail response of the delete operation.
      */
     public function delete($commit=False, $force=False) {
-        return $this->api()->delete($this, $force);
+        return $this->filesystem()->delete($this, $force);
     }
 
     /**
@@ -474,7 +474,7 @@ class Item {
      * @return The success/fail response of the save operation.
      */
     public function save($ifConflict="fail", $debug=False) {
-        return $this->api()->save($this);
+        return $this->filesystem()->save($this);
     }
 
     /**
@@ -487,7 +487,7 @@ class Item {
         if (!is_string($destination)) {
             $destination = $destination->path();
         }
-        return $this->api()->restore($this->getPath(), $destination);
+        return $this->filesystem()->restore($this->getPath(), $destination);
     }
 
     /**
@@ -496,6 +496,6 @@ class Item {
      * @return The file history response.
      */
     public function history() {
-        return $this->api()->fileHistory($this);
+        return $this->filesystem()->fileHistory($this);
     }
 }

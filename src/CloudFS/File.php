@@ -8,10 +8,10 @@ class File extends Item {
     /**
      * Initializes a new instance of File.
      *
-     * @param BitcasaApi $api The api instance.
+     * @param Filesystem $filesystem The Filesystem instance.
      */
-    public function __construct($api = null) {
-        parent::__construct($api);
+    public function __construct($filesystem = null) {
+        parent::__construct($filesystem);
     }
 
     /**
@@ -20,7 +20,7 @@ class File extends Item {
      * @param string $localPath The local path where the file is to be downloaded to.
      */
     public function download($localPath) {
-        $content = $this->api()->download($this, $localPath);
+        $content = $this->filesystem()->download($this, $localPath);
         file_put_contents($localPath, $content);
     }
 
@@ -60,5 +60,19 @@ class File extends Item {
     public function getSize() {
         return $this->data['size'];
     }
+
+    /**
+     * Returns the metadata for selected versions of a file as
+     * recorded in the History after successful metadata changes.
+     * @param int $startVersion
+     * @param null $endVersion
+     * @param int $limit
+     * @return mixed
+     */
+    public function versions($startVersion = 0, $endVersion = null, $limit = 10){
+        $versions = $this->filesystem()->fileVersions($this, $startVersion, $endVersion, $limit);
+        return $versions;
+    }
+
 
 }

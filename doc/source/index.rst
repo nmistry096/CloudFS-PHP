@@ -58,6 +58,18 @@ The currently linked user can be unlinked from the session.
 
     $session.unlink();
 
+Admin Operations
+----------------
+.. note:: You need to create an admin session in order to perform admin operations.
+
+- :java:ref:`Create Account <com.bitcasa.cloudfs.client.Admin.createAccount(String, String, String, String, String)>`
+
+  You can create end users for an admin/paid account. If 'logInToCreatedUser' is true, logs in to the user after creating it.
+
+  ::
+
+    User user = adminSession.getAdmin().createAccount(username, password, email, firstName, lastName, logInToCreatedUser);
+
 File System Operations
 ----------------------
 .. note:: You need to create a session in order to perform file system operations.
@@ -90,9 +102,45 @@ File System Operations
 	  $items = $fileSystem->getList();
 
 
+- :php:meth:`Get Trash Items <Filesystem::copy>`
+
+  You can list down the contents of Trash folder. Below example shows how to retrieve contents of the trash folder.
+ 
+      ::
+
+	  //Add snippet here.
+
+
+- :php:meth:`Get Shares <Filesystem::copy>`
+
+  You can list down available Shares. Below example shows how to retrieve the list of shares.
+ 
+      ::
+
+	  //Add snippet here.
+
+
+- :php:meth:`Create Share <Filesystem::copy>`
+
+  You can create a share by providing the path as shown in below example. A passworded share cannot be used for anything if the password is not provided. It doesn't make sense to create a share unless the developer has the password.
+ 
+      ::
+
+	  //Add snippet here.
+
+
+- :php:meth:`Get Specific Share <Filesystem::copy>`
+
+  You can get a share by providing the share key and the password (If available). A passworded share cannot be used for anything if the password is not provided.
+ 
+      ::
+
+	  //Add snippet here.
+
+
 - :php:meth:`Copy Items <Filesystem::copy>`
 
-  You can copy a list of items to a new location in the file system. If the contents in the destination folder conflicts with the copying items you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can copy a list of items to a new location in the file system. If the contents in the destination folder conflicts with the copying items you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
@@ -101,7 +149,7 @@ File System Operations
 
 - :php:meth:`Move Items <Filesystem::move>`
 
-  You can move a list of items to a new location in the file system. If the contents in the destination folder conflicts with the moving items you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can move a list of items to a new location in the file system. If the contents in the destination folder conflicts with the moving items you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
@@ -130,9 +178,17 @@ Folder Operations
       $items = $folder->get_list();
 
 
+- :php:meth:`Change Folder Attributes <Filesystem::copy>`
+
+  You can change the attributes of a Folder by providing a hash map of field names and values. An example is given below.
+      ::
+
+	  //Add snippet here.
+
+   	 
 - :php:meth:`Copy Folder <Item::copy_to>`
 
-  You can copy a folder to a new location in the file system. If the destination conflicts with the copying folder you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can copy a folder to a new location in the file system. If the destination conflicts with the copying folder you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
@@ -141,7 +197,7 @@ Folder Operations
 
 - :php:meth:`Move Folder <Item::move_to>`
 
-  You can move a folder to a new location in the file system. If the destination conflicts with the moving folder you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can move a folder to a new location in the file system. If the destination conflicts with the moving folder you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
@@ -157,6 +213,15 @@ Folder Operations
       $status = $folder->delete();
 
 
+- :php:meth:`Restore Folder <Filesystem::copy>`
+
+  You can restore a Folder from the trash. The restore method can be set to either FAIL, RESCUE or RECREATE. This will return the Success/failure status of the operation.
+
+	  ::    
+
+      //Add snippet here.
+
+
 - :php:meth:`Create Sub Folder <Container::create>`
 
   You can create a sub folder in a specific folder. If the folder already has a sub folder with the given name, the operation will fail.
@@ -168,7 +233,7 @@ Folder Operations
 
 - :php:meth:`Upload File <Folder::upload>`
 
-  You can upload a file from your local file system into a specific folder. If the destination conflicts, you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can upload a file from your local file system into a specific folder. If the destination conflicts, you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
@@ -179,9 +244,17 @@ File Operations
 ---------------
 .. note:: You need to create a session in order to perform file operations.
 
+- :php:meth:`Change File Attributes <Filesystem::copy>`
+
+  You can change the attributes of a File by providing a hash map of field names and values. An example is given below.
+      ::
+
+	  //Add snippet here.
+
+   	 
 - :php:meth:`Copy File <Item::copy_to>`
 
-  You can copy a file to a new location in the file system. If the destination conflicts with the copying file you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can copy a file to a new location in the file system. If the destination conflicts with the copying file you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
@@ -190,7 +263,7 @@ File Operations
 
 - :php:meth:`Move File <Item::move_to>`
 
-  You can move a file to a new location in the file system. If the destination conflicts with the moving file you can either RENAME, OVERWRITE, REUSE or FAIL the operation.
+  You can move a file to a new location in the file system. If the destination conflicts with the moving file you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
@@ -206,6 +279,15 @@ File Operations
       $status = $file->delete();
 
 
+- :php:meth:`Restore File <Filesystem::copy>`
+
+  You can restore a File from the trash. The restore method can be set to either FAIL, RESCUE or RECREATE. This will return the Success/failure status of the operation.
+
+	  ::    
+
+      //Add snippet here.
+
+
 - :php:meth:`Download File <Item::delete>`
 
   You can download a file to your local file system.
@@ -214,7 +296,39 @@ File Operations
 
       $content = $fileSystem->download($file);
 
+	  
+- :php:meth:`Get Download Url <Item::delete>`
+
+  You can get the download Url of a File.
+
+      ::
+
+      $content = $fileSystem->download($file);
 
 
+Share Operations
+-----------------
+.. note:: You need to create a session in order to perform share operations.
 
+- :php:meth:`Change Share Attributes <Filesystem::copy>`
 
+  You can change the attributes of a Share by providing a hash map of field names and values. An example is given below.
+      ::
+
+	  //Add snippet here.
+
+ 
+- :php:meth:`Delete Share <Filesystem::copy>`
+
+  ::    
+
+    share.delete();
+
+- :php:meth:`Set Share Password <Filesystem::copy>`
+
+  Sets the share password. Old password is only needed if one exists.
+      ::
+
+	  //Add snippet here.
+
+ 
