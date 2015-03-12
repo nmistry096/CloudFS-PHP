@@ -357,7 +357,7 @@ class Filesystem {
 		return $this->api->fileHistory($item->getPath(), $start, $stop);
 	}
 
-	public function shares() {
+	public function listShares() {
 		$shares = array();
 		$response = $this->api->shares();
 		if (!empty($response) && !empty($response['result'])) {

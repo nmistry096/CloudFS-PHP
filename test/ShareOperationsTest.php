@@ -63,7 +63,7 @@ class ShareOperationsTest extends BaseTest {
         $this->assertNotNull($receivedFolder);
         $this->assertEquals($this->receiveFolderName, $receivedFolder->getName());
 
-        $shares = $fileSystem->shares();
+        $shares = $fileSystem->listShares();
         if ($shares != null) {
             foreach ($shares as $share) {
                 /** @var \CloudFS\Share $share */
@@ -86,7 +86,7 @@ class ShareOperationsTest extends BaseTest {
         $this->assertNotNull($share);
         $this->assertNotEmpty($share->getShareKey());
 
-        $shares = $fileSystem->shares();
+        $shares = $fileSystem->listShares();
         $this->assertTrue(count($shares) > 0);
 
         $items = $share->getList();
@@ -109,7 +109,7 @@ class ShareOperationsTest extends BaseTest {
             'password');
         $this->assertTrue($altered);
 
-        $shares = $fileSystem->shares();
+        $shares = $fileSystem->listShares();
         foreach($shares as $sharedItem) {
             if ($sharedItem->getName() == $this->sharedFolderName) {
                 $share = $sharedItem;
