@@ -76,3 +76,13 @@ phpunit <TestName>.php
 
 
 We would love to hear what features or functionality you're interested in, or general comments on the SDK (good and bad - especially bad).
+
+
+
+
+TODO:
+Download the source code and in the root folder run below command
+composer install
+
+To run the unit tests edit the configurations in BaseTest.php and run below command
+phpunit test
