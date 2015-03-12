@@ -193,6 +193,9 @@ class FileSystemTest extends BaseTest {
 
         $deletedFile = $imageFile->delete();
 
+        $result = $fileSystem->listTrash();
+        $this->assertNotNull($result);
+
         $this->assertNotNull($this->getItemFromIndexArray($fileSystem->getList($level1Folder3->getPath()), $textFileName));
         $this->assertNotNull($this->getItemFromIndexArray($fileSystem->getList($level1Folder4->getPath()), $imageFileName));
     }

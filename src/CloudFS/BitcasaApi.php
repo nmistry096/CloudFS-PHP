@@ -721,6 +721,29 @@ class BitcasaApi {
 
     }
 
+	/**
+	 * Browses the Trash meta folder on the authenticated user’s account.
+	 *
+	 * @param $path The supplied path.
+	 * @return The error status or the returned items in trash.
+	 */
+	public function listTrash($path=null){
+
+		$endpoint = BitcasaConstants::METHOD_TRASH;
+		$connection = new HTTPConnect($this->credential->getSession());
+		$url = $this->credential->getRequestUrl($endpoint, "/".$path);
+		$status = $connection->get($url);
+		if ($status <= 100) {
+			return false;
+		}
+
+		$resp = $connection->getResponse(true);
+		if ($resp != null && isset($resp['result']) && isset($resp['result']['items']) ) {
+			return $resp['result']['items'];
+		}
+	}
+
+
 }
 
 ?>

@@ -430,6 +430,13 @@ class Filesystem {
         return $this->api->fileRead($file->getPath(), $file->getName(), $file->getSize());
     }
 
+	/**
+	 * Browses the Trash metafolder on the authenticated user’s account.
+	 *
+	 */
+	public function listTrash(){
+		return $this->api->listTrash();
+	}
+
 }
- 
 ?>
