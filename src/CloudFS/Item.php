@@ -4,263 +4,79 @@ namespace CloudFS;
 
 use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Utils\FileType;
+use CloudFS\Utils\VersionExists;
 
 class Item {
 
-    private $parent;
     private $full_path;
-    protected $data;
     private $filesystem;
-    private $change_list;
+    private $id;
+    private $type;
+    private $isMirrored;
+    private $dateContentLastModified;
+    private $dateCreated;
+    private $dateMetaLastModified;
+    private $name;
+    private $applicationData;
+    private $version;
 
     /**
-     * Initializes the item instance.
+     * Initializes an item instance.
      *
-     * @param Filesystem $filesystem The Filesystem instance.
+     * @param array $data The item data.
+     * @param string $parentPath The item parent path.
+     * @param \CloudFS\Filesystem $filesystem The file system instance.
      */
-    public function __construct($filesystem = null) {
-        $this->data = NULL;
-        $this->parent = Null;
-        $this->full_path = Null;
-        $this->data = array();
+    protected function __construct($data, $parentPath, $filesystem) {
         $this->filesystem = $filesystem;
-        $this->changes = array();
-    }
 
-    /**
-     * Retrieves this api instance.
-     *
-     * @return The api instance.
-     */
-    public function filesystem() {
-        return $this->filesystem;
-    }
-
-    /**
-     * Adds the passed change key to this items change list.
-     *
-     * @param string $key The supplied change key.
-     */
-    public function change($key) {
-        $this->change_list[] = $key;
-    }
-
-    /**
-     * Retrieves this items changes.
-     *
-     * @param bool $add_version Flag to add version to result or not.
-     * @return An array of this items changes.
-     */
-    public function changes($add_version = false) {
-        $res = array();
-        foreach ($this->change_list as $key) {
-            $res[$key] = $this->data[$key];
-        }
-        if ($add_version) {
-            $res['version'] = $this->data['version'];
-        }
-        return $res;
-    }
-
-    /**
-     * Returns an array of path components given a path.
-     *
-     * @param string $pathString Path of an item.
-     * @return An array of path components.
-     */
-    public static function componentsFromPath($pathString) {
-        $paths = explode("/", rtrim($pathString, "/"));
-        if ($paths[0] == '') {
-            $path[0] = "/";
-        }
-        return $paths;
-    }
-
-    /**
-     * Retrieves the path given an item list.
-     *
-     * @param Item[] $items The items whose path needs to be retrieved.
-     * @param bool $addRoot Flag to add root to the retrieved path or not.
-     * @return Path of the item list.
-     */
-    public static function pathFromItemList($items, $addRoot=False) {
-        $first = true;
-        $path = "";
-        foreach ($items as $item) {
-            if ($first) {
-                $first = false;
-                $path .= $addRoot ? "/" : "";
-            } else {
-                $path .= "/";
-            }
-            $path .= $item->getId();
-        }
-        return $path;
-    }
-
-    /**
-     * Formats and returns the path of an item given an array of paths.
-     *
-     * @param array $components The array containing path elements.
-     * @param bool $addRoot Flag to add root to the retrieved path or not.
-     * @return Formatted path for the given array.
-     */
-    public static function pathFromComponents($components, $addRoot=False) {
-        $path = implode("/", $components);
-        if ($addRoot) {
-            $path = "/" . $path;
-        }
-        return $path;
-    }
-
-    /**
-     * Retrieves the path for a given item.
-     *
-     * @param Item $item The item whose path needs to be retrieved.
-     * @return The path of the item.
-     */
-    public function pathFromItem($item = null) {
-        if ($item == null) {
-            $item = $this;
-        }
-
-        $path = array();
-        while ($item != null) {
-            array_unshift($path, $item);
-            $item = $item->parent;
-        }
-        return pathFromComponents($path);
-    }
-
-    /**
-     * Retrieves an instance of an item for the supplied data.
-     *
-     * @param object $data The data needed to create an item.
-     * @param string $parentPath Parent path for the new item.
-     * @param Filesystem $api The file system instance.
-     * @return An instance of the new item.
-     */
-    public static function make($data, $parentPath = null, $api = null) {
-        $item = null;
-        if (count($data) == 0) {
-            return null;
-        }
-        if (!isset($data['id']) || !isset($data['type'])) {
-            return null;
-        }
-
-        if ($data["type"] == FileType::FOLDER || $data['type']  == FileType::ROOT) {
-            $item = new Folder($api);
-        } else if (isset($data['mime'])) {
-            $t = explode("/", $data['mime']);
-            switch ($t[0]) {
-                case 'image':
-                    $item = new Photo($api);
-                    break;
-
-                case 'audio':
-                    $item = new Audio($api);
-                    break;
-
-                case 'video':
-                    $item = new Video($api);
-                    break;
-
-                case 'text':
-                    $item = new Document($api);
-                    break;
-
-                case 'application':
-                    if ($t[1] == 'pdf') {
-                        $item = new Document($api);
-                        break;
-                    }
-
-                default:
-                    $item = new File($api);
-                    break;
-            }
-        } else if($data["type"] == FileType::FILE) {
-            $item = new File($api);
-        } else {
-            $item = new Container($api);
-        }
-
-        $item->data = $data;
+        $this->id = $data['id'];
+        $this->type = $data['type'];
+        $this->name = $data['name'];
+        $this->dateContentLastModified = $data['date_content_last_modified'];
+        $this->dateCreated = $data['date_created'];
+        $this->dateMetaLastModified = $data['date_meta_last_modified'];
+        $this->applicationData = $data['application_data'];
+        $this->isMirrored = $data['is_mirrored'];
+        $this->version = $data['version'];
 
         if ($parentPath == null) {
-            $item->full_path = "/" . $item->data['id'];
+            $this->full_path = "/" . $this->id;
         }
         else if ($parentPath == '/') {
-            $item->full_path = $parentPath . $item->data['id'];
+            $this->full_path = $parentPath . $this->id;
         }
         else {
-            $item->full_path = $parentPath . '/' . $item->data['id'];
-        }
-
-        return $item;
-    }
-
-    /**
-     * Retrieves the data value of a given key.
-     *
-     * @param string $key The key for whose data value should be retrieved.
-     * @param string $default The value to be returned if the data value does not exist.
-     * @return The data value for the given key.
-     */
-    protected function value($key, $default = null) {
-        if (isset($this->data[$key])) {
-            return $this->data[$key];
-        } else {
-            return $default;
+            $this->full_path = $parentPath . '/' . $this->id;
         }
     }
 
     /**
-     * Retrieves the name of this item.
+     * Retrieves the item name.
      *
-     * @return The name of the item.
+     * @return The item name.
      */
     public function getName() {
-        return $this->data['name'];
+        return $this->name;
     }
 
     /**
-     * Sets the name of this item.
+     * Sets the item name.
      *
-     * @param string $newName The name of the item.
+     * @param string $newName The item name.
      */
     public function setName($newName) {
-        $this->change('name');
-        $this->data['name'] = $newName;
+        $this->name = $newName;
+        $this->changeAttributes(array('name' => $newName, 'version' => $this->getVersion()));
     }
 
     /**
-     * Retrieves the id of this item.
+     * Gets the item id.
      *
      * @return The data id of the item.
      */
     public function getId() {
-        return $this->data['id'];
-    }
-
-    /**
-     * Sets the id of this item - Not Allowed.
-     *
-     * @param string $newId The new id to be set on the item.
-     * @throws OperationNotAllowed
-     */
-    public function setId($newId) {
-        throw new OperationNotAllowed("Setting the id of an Item");
-    }
-
-    /**
-     * Retrieves the parent id of this item.
-     *
-     * @return The parent id of this item.
-     */
-    public function getParentId() {
-        return $this->data['parent_id'];
+        return $this->id;
     }
 
     /**
@@ -269,36 +85,7 @@ class Item {
      * @return The type of this item.
      */
     public function getType() {
-        return $this->data['type'];
-    }
-
-    /**
-     * Set the type of this item - Not Allowed.
-     *
-     * @param string $newType The new type to be set on the item.
-     * @throws OperationNotAllowed
-     */
-    public function setType($newType) {
-        throw new OperationNotAllowed("Setting the type of an Item");
-    }
-
-    /**
-     * Retrieves the is mirrored flag of this item.
-     *
-     * @return Is mirrored flag of this item.
-     */
-    public function getIsMirrored() {
-        return $this->data['is_mirrored'];
-    }
-
-    /**
-     * Sets the is mirrored flag of this item - Not Allowed.
-     *
-     * @param string $newMirroredFlag The new mirrored flag to be set on the item.
-     * @throws OperationNotAllowed
-     */
-    public function setMirrored($newMirroredFlag) {
-        throw new OperationNotAllowed("Setting if an Item is mirrored");
+        return $this->type;
     }
 
     /**
@@ -307,17 +94,7 @@ class Item {
      * @return The content last modified date.
      */
     public function getDateContentLastModified() {
-        return $this->data['date_content_last_modified'];
-    }
-
-    /**
-     * Sets the content last modified date of this item.
-     *
-     * @param string $newDateContentLastModified The new content last modified date.
-     */
-    public function setDateContentLastModified($newDateContentLastModified) {
-        $this->change('date_content_last_modified');
-        $this->data['date_content_last_modified'] = $newDateContentLastModified;
+        return $this->dateContentLastModified;
     }
 
     /**
@@ -326,55 +103,7 @@ class Item {
      * @return The created date of this item.
      */
     public function getDateCreated() {
-        return $this->data['date_created'];
-    }
-
-    /**
-     * Sets the created date of this item.
-     *
-     * @param string $newDateCreated The new created date.
-     */
-    public function setDateCreated($newDateCreated) {
-        $this->change('date_created');
-        $this->data['date_created'] = $newDateCreated;
-    }
-
-    /**
-     * Retrieves the version of this item.
-     *
-     * @return The version of this item.
-     */
-    public function version() {
-        return $this->data['version'];
-    }
-
-    /**
-     * Sets the version of this item.
-     *
-     * @param string $newVersion The new version.
-     */
-    public function setVersion($newVersion) {
-        $this->change('version');
-        $this->data['version'] = $newVersion;
-    }
-
-    /**
-     * Retrieve the parent path id of this item.
-     *
-     * @return The parent path id of this item.
-     */
-    public function getParentPath() {
-        return $this->data['absolute_parent_path_id'];
-    }
-
-    /**
-     * Sets the parent path id of this item.
-     *
-     * @param string $newAbsoluteParentPathId The new parent path id.
-     */
-    public function setParentPath($newAbsoluteParentPathId) {
-        $this->change('absolute_parent_path_id');
-        $this->data['absolute_parent_path_id'] = $newAbsoluteParentPathId;
+        return $this->dateCreated;
     }
 
     /**
@@ -383,17 +112,7 @@ class Item {
      * @return The meta last modified date of this item.
      */
     public function getDateMetaLastModified() {
-        return $this->data['date_meta_last_modified'];
-    }
-
-    /**
-     * Sets the meta last modified date of this item.
-     *
-     * @param string $newDateMetaLastModified The new meta last modified date.
-     */
-    public function setDateMetaLastModified($newDateMetaLastModified) {
-        $this->change('date_meta_last_modified');
-        $this->data['date_meta_last_modified'] = $newDateMetaLastModified;
+        return $this->dateMetaLastModified;
     }
 
     /**
@@ -402,26 +121,17 @@ class Item {
      * @return The application data of this item.
      */
     public function getApplicationData() {
-        return $this->data['application_data'];
+        return $this->applicationData;
     }
 
     /**
-     * Sets the new application data of this item.
+     * Sets the item application data.
      *
-     * @param mixed $newApplicationData The new application data.
+     * @param array $newApplicationData The application data.
      */
-    public function setApplicationData($newApplicationData) {
-        $this->change('application_data');
-        $this->data['application_data'] = $newApplicationData;
-    }
-
-    /**
-     * Retrieves the url of this item.
-     *
-     * @return The full path of this item.
-     */
-    public function url() {
-        return $this->full_path;
+    public function setApplicationData(array $newApplicationData) {
+        $this->applicationData = $newApplicationData;
+        $this->changeAttributes(array('application_data' => $newApplicationData, 'version' => $this->getVersion()));
     }
 
     /**
@@ -431,6 +141,107 @@ class Item {
      */
     public function getPath() {
         return $this->full_path;
+    }
+
+    /**
+     * Retrieves the is mirrored flag of this item.
+     *
+     * @return Is mirrored flag of this item.
+     */
+    public function getIsMirrored() {
+        return $this->isMirrored;
+    }
+
+    /**
+     * Gets the item version number.
+     *
+     * @return The item version number.
+     */
+    public function getVersion() {
+        return $this->version;
+    }
+
+    /**
+     * Retrieves this file system instance.
+     *
+     * @return The file system instance.
+     */
+    public function filesystem() {
+        return $this->filesystem;
+    }
+
+    /**
+     * Retrieves an instance of an item for the supplied data.
+     *
+     * @param array $data The data needed to create an item.
+     * @param string $parentPath Parent path for the new item.
+     * @param Filesystem $filesystem The file system instance.
+     * @return An instance of the new item.
+     */
+    public static function make($data, $parentPath = null, $filesystem = null) {
+        $item = null;
+        if (count($data) == 0) {
+            return null;
+        }
+        if (!isset($data['id']) || !isset($data['type'])) {
+            return null;
+        }
+
+        if ($data["type"] == FileType::FOLDER || $data['type']  == FileType::ROOT) {
+            $item = new Folder($data, $parentPath, $filesystem);
+        } else if (isset($data['mime'])) {
+            $t = explode("/", $data['mime']);
+            switch ($t[0]) {
+                case 'image':
+                    $item = new Photo($data, $parentPath, $filesystem);
+                    break;
+
+                case 'audio':
+                    $item = new Audio($data, $parentPath, $filesystem);
+                    break;
+
+                case 'video':
+                    $item = new Video($data, $parentPath, $filesystem);
+                    break;
+
+                case 'text':
+                    $item = new Document($data, $parentPath, $filesystem);
+                    break;
+
+                case 'application':
+                    if ($t[1] == 'pdf') {
+                        $item = new Document($data, $parentPath, $filesystem);
+                        break;
+                    }
+
+                default:
+                    $item = new File($data, $parentPath, $filesystem);
+                    break;
+            }
+        } else if($data["type"] == FileType::FILE) {
+            $item = new File($data, $parentPath, $filesystem);
+        } else {
+            $item = new Container($data, $parentPath, $filesystem);
+        }
+
+        return $item;
+    }
+
+    /**
+     * Alters the specified attributes.
+     *
+     * @param array $values The values that need to be changed.
+     * @param int $ifConflict Defines what to do when a conflict occurs.
+     * @return The status of the operation.
+     */
+    public function changeAttributes(array $values, $ifConflict = VersionExists::FAIL) {
+        $success = false;
+        $result = $this->filesystem()->alterFolder($this->getPath(), $values, $ifConflict);
+        if (empty($result['error'])) {
+            $success = true;
+        }
+
+        return $success;
     }
 
     /**
@@ -460,10 +271,18 @@ class Item {
      *
      * @param bool $commit Flag to commit the delete operation.
      * @param bool $force Flag to force the delete operation.
-     * @return The success/fail response of the delete operation.
+     * @return Boolean value indicating the status of the delete operation.
      */
     public function delete($commit=False, $force=False) {
-        return $this->filesystem()->delete($this, $force);
+        $success = false;
+        $response = $this->filesystem()->delete($this, $force);
+        if (count($response) > 0) {
+            if (!empty($response[0]['result'])) {
+                $success = $response[0]['result']['success'];
+            }
+        }
+
+        return $success;
     }
 
     /**

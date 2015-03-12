@@ -2,16 +2,80 @@
 
 namespace CloudFS;
 
+use CloudFS\Utils\VersionExists;
+
 
 class File extends Item {
+
+    private $extension;
+    private $mime;
+    private $size;
 
     /**
      * Initializes a new instance of File.
      *
-     * @param Filesystem $filesystem The Filesystem instance.
+     * @param array $data The item data.
+     * @param string $parentPath The item parent path.
+     * @param \CloudFS\Filesystem $filesystem The file system instance.
      */
-    public function __construct($filesystem = null) {
-        parent::__construct($filesystem);
+    protected function __construct($data, $parentPath, $filesystem) {
+        parent::__construct($data, $parentPath, $filesystem);
+        $this->mime = $data['mime'];
+        $this->extension = $data['extension'];
+        $this->size = $data['size'];
+    }
+
+    /**
+     * Retrieves the extension of this item.
+     *
+     * @return The extension of this item.
+     */
+    public function getExtension() {
+        return $this->extension;
+    }
+
+    /**
+     * Retrieves the mime type of this item.
+     *
+     * @return The mime type of this item.
+     */
+    public function getMime() {
+        return $this->mime;
+    }
+
+    /**
+     * Sets the Mime type of this item.
+     *
+     * @param string $newMime The new Mime type of the item.
+     */
+    public function setMime($newMime) {
+        $this->mime = $newMime;
+    }
+
+    /**
+     * Retrieves the size of this item.
+     *
+     * @return The size of this item.
+     */
+    public function getSize() {
+        return $this->size;
+    }
+
+    /**
+     * Alters the specified attributes.
+     *
+     * @param array $values The values that need to be changed.
+     * @param int $ifConflict Defines what to do when a conflict occurs.
+     * @return The status of the operation.
+     */
+    public function changeAttributes(array $values, $ifConflict = VersionExists::FAIL) {
+        $success = false;
+        $result = $this->filesystem()->alterFile($this->getPath(), $values, $ifConflict);
+        if (empty($result['error'])) {
+            $success = true;
+        }
+
+        return $success;
     }
 
     /**
@@ -22,43 +86,6 @@ class File extends Item {
     public function download($localPath) {
         $content = $this->filesystem()->download($this, $localPath);
         file_put_contents($localPath, $content);
-    }
-
-    /**
-     * Retrieves the extension of this item.
-     *
-     * @return The extension of this item.
-     */
-    public function getExtension() {
-        return $this->data['extension'];
-    }
-
-    /**
-     * Retrieves the mime type of this item.
-     *
-     * @return The mime type of this item.
-     */
-    public function getMime() {
-        return $this->data['mime'];
-    }
-
-    /**
-     * Sets the Mime type of this item.
-     *
-     * @param string $newMime The new Mime type of the item.
-     */
-    public function setMime($newMime) {
-        $this->change('mime');
-        $this->data['mime'] = $newMime;
-    }
-
-    /**
-     * Retrieves the size of this item.
-     *
-     * @return The size of this item.
-     */
-    public function getSize() {
-        return $this->data['size'];
     }
 
     /**

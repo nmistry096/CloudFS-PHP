@@ -1,29 +1,11 @@
-
-# Bitcasa SDK for PHP Beta Release 0.6  
+# Bitcasa SDK for PHP
   
-The initial release of **Bitcasa SDK for PHP** enables PHP developers to easily work with [Bitcasa 
-Cloud Storage Platform](https://www.bitcasa.com/) and build scalable solutions.  
-Unfortunately the functionality is far from complete.
+The **Bitcasa SDK for PHP** enables PHP developers to easily work with [Bitcasa 
+Cloud Storage Platform](https://www.bitcasa.com/) and build scalable solutions.
 
 * [REST API Documentation](https://www.bitcasa.com/cloudfs-api-docs/)
 * [Blog](http://blog.bitcasa.com/) 
 
-#Current Functionality
-This release supports a subset of CloudFS functionality. Most
-operations with files and folders are supported, though objects cannot
-be restored from the trash. Reaching full REST functionality is
-expected to happen in the next few weeks.
-
-Here are the major missing features:
-
-- User Creation
-- Call to BitcasaFIlesystem::download() returns the content of the
-  file. This will change to have the caller supply a file name.
-- File Version History is untested
-- Retore from Trash is untested
-- PHP-SDK specific functionality is also planned once the REST interface is implemented.
-- Test files for this particular SDK.
-  
 ## Getting Started
 
 If you have already [signed up](https://www.bitcasa.com/cloudfs/pricing) and obtained your credentials you can get started in minutes.
@@ -33,66 +15,50 @@ If you have already [signed up](https://www.bitcasa.com/cloudfs/pricing) and obt
 Use the credentials you obtained from Bitcasa admin console to create a client session. This session can be used for all future requests to Bitcasa.
 
 ```php
-<?php
-require_once "BitcasaApi.php"; 
-require_once "BitcasaFilesystem.php";
-
 $session = new Session("bitcasa.cloudfs.io", CLIENT_ID, CLIENT_SECRET); 
-?>
-```
-
-List Contents of a folder.
-
-```php
-<?php
-
-require_once "BitcasaApi.php"; 
-require_once "BitcasaFilesystem.php";
-
-$session = new Session("bitcasa.cloudfs.io", CLIENT_ID, CLIENT_SECRET); 
-$res = $session->authenticate("myaccount@domain", "mypassword"); 
-$fs = $session->filesystem(); $api = $session->getClientApi();
-
-$parent = "/";
-
-try { 
-        $items = $fs->getList($parent); 
-        foreach ($items as $i) 
-        { 
-            print $i->name() . "\t" . $i->id() . "\n"; 
-        } 
-} 
-catch (Exception $e) 
-{ 
-    print $e->getMessage(); 
-}
-
-?>
-```
-
-Upload a file to a folder.
-
-```php
-<?
-require_once "BitcasaApi.php";
-require_once "BitcasaFilesystem.php";
-
-$session = new Session("bitcasa.cloudfs.io", CLIENT_ID, CLIENT_SECRET);
 $res = $session->authenticate("myaccount@domain", "mypassword");
-$fs = $session->filesystem();
-$api = $session->getClientApi();
+```
 
-$parent = "/";
+Getting the root folder
 
-try {
-    $file = "/tmp/hello.txt";
-    $item = $fs->upload($parent, $file);
-    print $item->name() . ": " . $item->id();
-} catch (Exception $e) {
-    print $e->getMessage();
-}
+```php
+//Folder root = session.getFileSystem().getRoot();
+```
 
-?>
+Getting the contents of root folder
+
+```php
+//Item[] itemArray = session.getFileSystem().list("");
+```
+or
+```php
+//Item[] itemArray = session.getFileSystem().list(root);
+```
+
+Deleting the contents of root folder
+
+```php
+//session.getFileSystem().delete(itemArray);
+```
+
+Uploading a file to root folder
+
+```php
+//root.upload(pathOfFile, Exists.FAIL, listener);
+```
+
+Download a file from root folder
+
+```php
+//File fileToDownload = session.getFileSystem().getFile(pathOfFileToDownload);
+//fileToDownload.download(localDestinationPath, listener);
+```
+
+Create user (for paid accounts only)
+
+```php
+//AdminSession adminSession = new AdminSession(adminEndPoint, adminClientId, adminClientSecret);
+//Profile profile = adminSession.admin().createAccount(username, password, email, firstName, lastName);
 ```
 
 ## Running the Tests
