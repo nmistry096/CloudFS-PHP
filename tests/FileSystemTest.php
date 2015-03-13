@@ -35,8 +35,9 @@ class FileSystemTest extends BaseTest {
         $items = $fileSystem->getList('/');
         if (count($items) > 0) {
             foreach($items as $item) {
+                /** @var \CloudFS\Item $item */
                 if ($item->getName() == $this->level0Folder1Name) {
-                    $item->delete();
+                    $item->delete(true, true);
                 }
             }
         }

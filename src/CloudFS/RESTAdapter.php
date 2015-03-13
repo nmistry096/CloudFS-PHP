@@ -18,6 +18,7 @@ use CloudFS\BitcasaUtils;
 use CloudFS\HTTPConnector;
 use CloudFS\Utils\Exists;
 use CloudFS\Utils\Assert;
+use CloudFS\Utils\RestoreMethod;
 
 
 class RESTAdapter {
@@ -520,7 +521,7 @@ class RESTAdapter {
      * @return bool|The
      */
     public function restore($pathId, $destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null) {
-        $connection = new HTTPConnect($this->credential->getSession());
+        $connection = new HTTPConnector($this->credential->getSession());
         $params = array();
 
         if($restoreMethod == RestoreMethod::RECREATE){

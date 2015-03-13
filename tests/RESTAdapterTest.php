@@ -7,7 +7,7 @@ use CloudFS\Utils\FileType;
 /**
  * Test Bitcasa Api related functionality.
  */
-class BitcasaApiTest extends BaseTest {
+class RESTAdapterTest extends BaseTest {
 
     private $level0Folder1Name = 'level-0-folder-1';
     private $level1Folder1Name = 'level-1-folder-1';

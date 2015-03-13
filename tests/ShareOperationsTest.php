@@ -39,8 +39,8 @@ class ShareOperationsTest extends BaseTest {
         $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
 
         // /top
-        /** @var \CloudFS\Item $topLevelFolder */
-        $topLevelFolder = $fileSystem->createFolder(null, $this->topLevelFolder, Exists::OVERWRITE);
+        /** @var \CloudFS\Folder $topLevelFolder */
+        $topLevelFolder = $fileSystem->create(null, $this->topLevelFolder, Exists::OVERWRITE);
         $this->assertNotNull($topLevelFolder);
         $this->assertTrue($topLevelFolder->getName() == $this->topLevelFolder);
         $this->assertTrue($topLevelFolder->getType() == FileType::FOLDER);
@@ -59,7 +59,7 @@ class ShareOperationsTest extends BaseTest {
         $this->assertEquals($textFileName, $uploadedTextFile->getName());
 
         // /top/receive
-        $receivedFolder = $topLevelFolder->create($this->receiveFolderName);
+        $receivedFolder = $topLevelFolder->createFolder($this->receiveFolderName);
         $this->assertNotNull($receivedFolder);
         $this->assertEquals($this->receiveFolderName, $receivedFolder->getName());
 

@@ -5,7 +5,7 @@
             <file>tests/UserTest.php</file>
             <file>tests/AccountTest.php</file>
             <file>tests/AdminTest.php</file>
-            <file>tests/BitcasaApiTest.php</file>
+            <file>tests/RESTAdapterTest.php</file>
             <file>tests/FileSystemTest.php</file>
             <file>tests/ShareOperationsTest.php</file>
         </testsuite>
