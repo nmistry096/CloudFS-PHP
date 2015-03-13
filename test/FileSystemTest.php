@@ -30,7 +30,7 @@ class FileSystemTest extends BaseTest {
      */
     public function testDeleteRootFolders() {
         /** @var \CloudFS\Filesystem $fileSystem */
-        $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
+        $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
 
         $items = $fileSystem->getList('/');
         if (count($items) > 0) {

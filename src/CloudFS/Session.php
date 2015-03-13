@@ -27,7 +27,7 @@ class Session {
     private $clientId;
     private $clientSecret;
     private $credential;
-    private $bitcasaClientApi;
+    private $restAdapter;
     private $debug;
     private $adminClientId;
     private $adminClientSecret;
@@ -50,8 +50,8 @@ class Session {
         $this->clientSecret = $clientSecret;
         $this->debug = getenv("BC_DEBUG") != null;
         $this->credential = new Credential($this, $endpoint);
-        $this->bitcasaClientApi = new RESTAdapter($this->credential);
-        $this->fileSystem = new Filesystem($this->bitcasaClientApi);
+        $this->restAdapter = new RESTAdapter($this->credential);
+        $this->fileSystem = new Filesystem($this->restAdapter);
     }
 
     /**
@@ -62,7 +62,7 @@ class Session {
      * @return The authentication status.
      */
     public function authenticate($username, $password) {
-        $api = $this->getClientApi();
+        $api = $this->getRestAdapter();
         $resp = $api->getAccessToken($this, $username, $password);
         if ($this->debug) {
             print "auth result: "; var_dump($resp);
@@ -71,12 +71,12 @@ class Session {
     }
 
     /**
-     * Retrieves the bitcasa client api.
+     * Retrieves the restAdapter.
      *
-     * @return The bitcasa client api.
+     * @return The restAdapter.
      */
-    public function getClientApi() {
-        return $this->bitcasaClientApi;
+    public function getRestAdapter() {
+        return $this->restAdapter;
     }
 
     /**
@@ -164,15 +164,6 @@ class Session {
      */
     public function getClientSecret() {
         return $this->clientSecret;
-    }
-
-    /**
-     * Retrieves the sessions bitcasa client api.
-     *
-     * @return The bitcasa client api.
-     */
-    public function getBitcasaClientApi() {
-        return $this->bitcasaClientApi;
     }
 
     /**

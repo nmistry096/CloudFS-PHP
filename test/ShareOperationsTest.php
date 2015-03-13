@@ -24,7 +24,7 @@ class ShareOperationsTest extends BaseTest {
      */
     public function DeleteRootFolders() {
         /** @var \CloudFS\Filesystem $fileSystem */
-        $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
+        $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
 
         $items = $fileSystem->getList('/');
         if (count($items) > 0) {
@@ -36,7 +36,7 @@ class ShareOperationsTest extends BaseTest {
      * Test share operations.
      */
     public function testShares() {
-        $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
+        $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
 
         // /top
         /** @var \CloudFS\Item $topLevelFolder */
