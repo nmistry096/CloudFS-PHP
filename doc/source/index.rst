@@ -134,7 +134,7 @@ File System Operations
  
       ::
 
-      //code
+      $share = $fileSystem->browseShare($shareKey);
 
 
 - :php:meth:`Copy Items <Filesystem::copy>`
