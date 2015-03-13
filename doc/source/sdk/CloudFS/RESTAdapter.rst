@@ -192,15 +192,19 @@ CloudFS\\RESTAdapter
         :param $exists: The action to take if the item already exists.
         :returns: An instance of the uploaded item.
 
-    .. php:method:: restore($path, $dest)
+    .. php:method:: restore($pathId, $destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null)
 
         Restores the file at a given path to a given destination.
 
-        :type $path: string
-        :param $path: The path of the file to be restored.
-        :type $dest: string
-        :param $dest: The destination of the file to be restored to.
-        :returns: The success/fail response of the restore operation.
+        :type $pathId: string
+        :param $pathId:
+        :type $destination: string
+        :param $destination:
+        :type $restoreMethod: string
+        :param $restoreMethod:
+        :type $restoreArgument: string
+        :param $restoreArgument:
+        :returns: bool|The
 
     .. php:method:: createShare($path, $password = null)
 
@@ -296,3 +300,7 @@ CloudFS\\RESTAdapter
 
         :param $path:
         :returns: The error status or the returned items in trash.
+
+    .. php:method:: deleteTrashItem($path)
+
+        :param $path:

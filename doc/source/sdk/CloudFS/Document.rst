@@ -210,12 +210,14 @@ CloudFS\\Document
         :param $debug: Debug flag.
         :returns: The success/fail response of the save operation.
 
-    .. php:method:: restore($destination)
+    .. php:method:: restore($destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null)
 
         Restores this item to the given destination.
 
         :type $destination: string
         :param $destination: The destination of the item restore.
+        :param $restoreMethod:
+        :param $restoreArgument:
         :returns: The success/fail response of the restore operation.
 
     .. php:method:: history()

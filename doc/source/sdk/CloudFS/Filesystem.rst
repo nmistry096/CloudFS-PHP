@@ -8,12 +8,12 @@ CloudFS\\Filesystem
 
     Defines the Bitcasa file system.
 
-    .. php:method:: __construct($api)
+    .. php:method:: __construct($restAdapter)
 
         Initialize the Filesystem instance.
 
-        :type $api: object
-        :param $api: The api instance.
+        :type $restAdapter: object
+        :param $restAdapter: The restAdapter instance.
 
     .. php:method:: root()
 
@@ -62,6 +62,10 @@ CloudFS\\Filesystem
         :type $force: bool
         :param $force: The flag to force delete items from cloud storage.
         :returns: The success/fail response of the delete operation.
+
+    .. php:method:: deleteTrash($items)
+
+        :param $items:
 
     .. php:method:: create($parent, $name, $exists = Exists::OVERWRITE)
 
@@ -146,17 +150,19 @@ CloudFS\\Filesystem
         :param $file:
         :returns: The file content.
 
-    .. php:method:: restore($items, $destination, $exists)
+    .. php:method:: restore($pathId, $destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null)
 
         Restore a given set of items to the supplied destination.
 
-        :type $items: Item[]
-        :param $items: The items to be restored.
+        :type $pathId: string
+        :param $pathId: The item id.
         :type $destination: string
         :param $destination: The path the files are to be restored to
-        :type $exists: string
-        :param $exists: The action to take if the item already exists.
-        :returns: The success/fail response of the restore operation.
+        :type $restoreMethod: string
+        :param $restoreMethod: The action to take if the item already exists.
+        :type $restoreArgument: string
+        :param $restoreArgument: The restore extra argument
+        :returns: The True/False response of the restore operation.
 
     .. php:method:: fileHistory($item, $start = -10, $stop = 0)
 
