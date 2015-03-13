@@ -112,7 +112,7 @@ CloudFS\\RESTAdapter
         :param $conflict: Specifies the action to take if a conflict occurs.
         :returns: The success/fail response of the alter operation.
 
-    .. php:method:: copyFolder($path, $dest, $name = null, $exists = "fail")
+    .. php:method:: copyFolder($path, $dest, $name = null, $exists = Exists::FAIL)
 
         Copy a folder at a given path to a specified destination.
 
@@ -126,7 +126,7 @@ CloudFS\\RESTAdapter
         :param $exists: Specifies the action to take if the folder already exists.
         :returns: The success/fail response of the copy operation
 
-    .. php:method:: copyFile($path, $dest, $name = null, $exists = "fail")
+    .. php:method:: copyFile($path, $dest, $name = null, $exists = Exists::FAIL)
 
         Copy a file at a given path to a specified destination.
 
@@ -140,7 +140,7 @@ CloudFS\\RESTAdapter
         :param $exists: Specifies the action to take if the file already exists.
         :returns: The success/fail response of the copy operation
 
-    .. php:method:: moveFolder($path, $dest, $name = null, $exists = "fail")
+    .. php:method:: moveFolder($path, $dest, $name = null, $exists = Exists::FAIL)
 
         Move a folder at a given path to a specified destination.
 
@@ -154,7 +154,7 @@ CloudFS\\RESTAdapter
         :param $exists: Specifies the action to take if the folder already exists.
         :returns: The success/fail response of the move operation
 
-    .. php:method:: moveFile($path, $dest, $name = null, $exists = "fail")
+    .. php:method:: moveFile($path, $dest, $name = null, $exists = Exists::FAIL)
 
         Move a file at a given path to a specified destination.
 
@@ -178,7 +178,7 @@ CloudFS\\RESTAdapter
         :param $file: The file container for which the item will be downloaded to
         :returns: The download file/link
 
-    .. php:method:: uploadFile($parentpath, $name, $filepath, $exists = "overwrite")
+    .. php:method:: uploadFile($parentpath, $name, $filepath, $exists = Exists::OVERWRITE)
 
         Upload a file on to the given path.
 

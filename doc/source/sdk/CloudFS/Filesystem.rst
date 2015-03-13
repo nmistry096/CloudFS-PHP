@@ -92,7 +92,7 @@ CloudFS\\Filesystem
         :param $exists: Specifies the action to take if the item already exists.
         :returns: An associative array containing the items.
 
-    .. php:method:: copy($items, $destination, $exists = "fail")
+    .. php:method:: copy($items, $destination, $exists = Exists::FAIL)
 
         Copy multiple items to a specified destination.
 
@@ -126,7 +126,7 @@ CloudFS\\Filesystem
         :param $values:
         :param $ifConflict:
 
-    .. php:method:: upload($parent, $path, $name = null, $exists = "overwrite")
+    .. php:method:: upload($parent, $path, $name = null, $exists = Exists::OVERWRITE)
 
         Upload a file on to the given path.
 
