@@ -28,13 +28,17 @@ class FileSystemTest extends BaseTest {
     /**
      * Clears user file system.
      */
-    public function testDeleteRootFolders() {
+    public function testDeleteRootLevelFolder() {
         /** @var \CloudFS\Filesystem $fileSystem */
         $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
 
         $items = $fileSystem->getList('/');
         if (count($items) > 0) {
-            $fileSystem->delete($items, true);
+            foreach($items as $item) {
+                if ($item->getName() == $this->level0Folder1Name) {
+                    $item->delete();
+                }
+            }
         }
     }
 
