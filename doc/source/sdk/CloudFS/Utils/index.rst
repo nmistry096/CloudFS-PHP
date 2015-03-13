@@ -9,6 +9,7 @@ CloudFS\\Utils
    FileOperation
    FileType
    ApiMethod
+   Assert
    Exists
    BitcasaConstants
    HistoryActions

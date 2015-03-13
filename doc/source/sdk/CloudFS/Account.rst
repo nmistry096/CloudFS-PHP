@@ -28,9 +28,9 @@ CloudFS\\Account
 
     .. php:method:: getOverStorageLimit()
 
-        Retrieves the OTL of account.
+        Retrieves the over storage limit of account.
 
-        :returns: The OTL.
+        :returns: The over storage limit.
 
     .. php:method:: getStateDisplayName()
 

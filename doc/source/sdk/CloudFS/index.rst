@@ -1,5 +1,4 @@
 .. _cloudfs-sdk:
-
 ```````
 CloudFS
 ```````
@@ -11,18 +10,18 @@ CloudFS
    Account
    Item
    Share
-   HTTPConnector
    Filesystem
    Utils/index
    User
    Audio
    Folder
+   HTTPConnector
    Document
    ActionHistory
-   RESTAdapter
    Session
    Container
    BitcasaUtils
+   RESTAdapter
    Credential
    Exception/index
    Photo

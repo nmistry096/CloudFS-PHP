@@ -65,12 +65,18 @@ CloudFS\\Document
         recorded in the History after successful metadata changes.
 
         :type $startVersion: int
-        :param $startVersion:
-        :type $endVersion: null
-        :param $endVersion:
+        :param $startVersion: The version from which the version retrieval should start.
+        :type $endVersion: int
+        :param $endVersion: Up to which version the version retrieval should be done.
         :type $limit: int
-        :param $limit:
-        :returns: mixed
+        :param $limit: The number of versions to be retrieved limit.
+        :returns: The versions list.
+
+    .. php:method:: read()
+
+        Read the file stream.
+
+        :returns: The file stream.
 
     .. php:method:: getName()
 

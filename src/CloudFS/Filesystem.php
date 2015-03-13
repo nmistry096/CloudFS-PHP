@@ -11,7 +11,6 @@
 
 namespace CloudFS;
 
-use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Utils\Exists;
 use CloudFS\Utils\VersionExists;
 
@@ -180,7 +179,7 @@ class Filesystem {
 	 * @param string $exists Specifies the action to take if the folder already exists.
 	 * @return A folder instance.
 	 */
-	public function create($parent, $name, $exists="overwrite") {
+	public function create($parent, $name, $exists= Exists::OVERWRITE) {
 		if ($parent == null) {
 			$parentPath = "/";
 		} else if (!is_string($parent)) {
@@ -202,7 +201,7 @@ class Filesystem {
 	 * @return An associative array containing the items.
 	 * @throws InvalidArgument
 	 */
-    public function move($items, $destination, $exists = "fail") {
+    public function move($items, $destination, $exists = Exists::FAIL) {
 		//assert_non_null($items, 1);
 		if (!is_string($destination)) {
 			$destination = $destination->getPath();

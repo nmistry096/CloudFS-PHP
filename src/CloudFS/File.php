@@ -92,18 +92,19 @@ class File extends Item {
     /**
      * Returns the metadata for selected versions of a file as
      * recorded in the History after successful metadata changes.
-     * @param int $startVersion The f
-     * @param null $endVersion
-     * @param int $limit
-     * @return mixed
+     * @param int $startVersion The version from which the version retrieval should start.
+     * @param int $endVersion Up to which version the version retrieval should be done.
+     * @param int $limit The number of versions to be retrieved limit.
+     * @return The versions list.
      */
     public function versions($startVersion = 0, $endVersion = null, $limit = 10){
         $versions = $this->filesystem()->fileVersions($this, $startVersion, $endVersion, $limit);
         return $versions;
     }
 
-    /** read the file stream.
-     * @return mixed
+    /**
+     * Read the file stream.
+     * @return The file stream.
      */
     public function read(){
         return $this->filesystem()->fileRead($this);
