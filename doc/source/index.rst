@@ -284,7 +284,7 @@ File Operations
 
       ::    
 
-      $status = $file->restore($items, $destination, Exists::Rename);
+      $status = $file->restore($destination, RestoreMethod::FAIL);
 
 
 - :php:meth:`Download File <File::download>`
