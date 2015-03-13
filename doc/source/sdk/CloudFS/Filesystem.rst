@@ -8,12 +8,12 @@ CloudFS\\Filesystem
 
     Defines the Bitcasa file system.
 
-    .. php:method:: __construct($api)
+    .. php:method:: __construct($restAdapter)
 
         Initialize the Filesystem instance.
 
-        :type $api: object
-        :param $api: The api instance.
+        :type $restAdapter: object
+        :param $restAdapter: The restAdapter instance.
 
     .. php:method:: root()
 
@@ -63,7 +63,11 @@ CloudFS\\Filesystem
         :param $force: The flag to force delete items from cloud storage.
         :returns: The success/fail response of the delete operation.
 
-    .. php:method:: create($parent, $name, $exists = "overwrite")
+    .. php:method:: deleteTrash($items)
+
+        :param $items:
+
+    .. php:method:: create($parent, $name, $exists = Exists::OVERWRITE)
 
         Create a folder with supplied name under the given parent folders,
         folder path.
@@ -76,7 +80,7 @@ CloudFS\\Filesystem
         :param $exists: Specifies the action to take if the folder already exists.
         :returns: A folder instance.
 
-    .. php:method:: move($items, $destination, $exists = "fail")
+    .. php:method:: move($items, $destination, $exists = Exists::FAIL)
 
         Moves multiple items to a specified destination.
 
@@ -88,7 +92,7 @@ CloudFS\\Filesystem
         :param $exists: Specifies the action to take if the item already exists.
         :returns: An associative array containing the items.
 
-    .. php:method:: copy($items, $destination, $exists = "fail")
+    .. php:method:: copy($items, $destination, $exists = Exists::FAIL)
 
         Copy multiple items to a specified destination.
 
@@ -122,7 +126,7 @@ CloudFS\\Filesystem
         :param $values:
         :param $ifConflict:
 
-    .. php:method:: upload($parent, $path, $name = null, $exists = "overwrite")
+    .. php:method:: upload($parent, $path, $name = null, $exists = Exists::OVERWRITE)
 
         Upload a file on to the given path.
 
@@ -146,17 +150,19 @@ CloudFS\\Filesystem
         :param $file:
         :returns: The file content.
 
-    .. php:method:: restore($items, $destination, $exists)
+    .. php:method:: restore($pathId, $destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null)
 
         Restore a given set of items to the supplied destination.
 
-        :type $items: Item[]
-        :param $items: The items to be restored.
+        :type $pathId: string
+        :param $pathId: The item id.
         :type $destination: string
         :param $destination: The path the files are to be restored to
-        :type $exists: string
-        :param $exists: The action to take if the item already exists.
-        :returns: The success/fail response of the restore operation.
+        :type $restoreMethod: string
+        :param $restoreMethod: The action to take if the item already exists.
+        :type $restoreArgument: string
+        :param $restoreArgument: The restore extra argument
+        :returns: The True/False response of the restore operation.
 
     .. php:method:: fileHistory($item, $start = -10, $stop = 0)
 
@@ -170,37 +176,73 @@ CloudFS\\Filesystem
         :param $stop: The end version.
         :returns: File history entries.
 
-    .. php:method:: shares()
+    .. php:method:: listShares()
+
+        Retrieves the list of shares on the filesystem.
+
+        :returns: The share list.
 
     .. php:method:: createShare($path, $password = null)
 
-        :param $path:
-        :param $password:
+        Create a share of an item at the supplied path.
+
+        :type $path: string
+        :param $path: The path of the item to be shared.
+        :type $password: string
+        :param $password: The password of the shared to be created.
+        :returns: An instance of the share.
 
     .. php:method:: browseShare($shareKey)
 
-        :param $shareKey:
+        Retrieves the items for a supplied share key.
+
+        :type $shareKey: string
+        :param $shareKey: The supplied share key.
+        :returns: An array of items for the share key.
 
     .. php:method:: deleteShare($shareKey)
 
-        :param $shareKey:
+        Deletes the share item for a supplied share key.
+
+        :type $shareKey: string
+        :param $shareKey: The supplied share key.
+        :returns: The success/failure status of the delete operation.
 
     .. php:method:: retrieveShare($shareKey, $path, $exists = Exists::RENAME)
 
-        :param $shareKey:
-        :param $path:
-        :param $exists:
+        Retrieve the share item for a given share key to a path supplied.
+
+        :type $shareKey: string
+        :param $shareKey: The supplied share key.
+        :type $path: string
+        :param $path: The path to which the share files are retrieved to.
+        :type $exists: string
+        :param $exists: The action to take if the item already exists.
+        :returns: The success/failure status of the retrieve operation.
 
     .. php:method:: alterShare($shareKey, $values, $password = null)
 
-        :param $shareKey:
-        :param $values:
-        :param $password:
+        Alter the properties of a share item for a given share key with the
+        supplied data.
+
+        :type $shareKey: string
+        :param $shareKey: The supplied share key.
+        :type $values: mixed[]
+        :param $values: The values to be changed.
+        :type $password: string
+        :param $password: The share password.
+        :returns: An instance of the altered share.
 
     .. php:method:: unlockShare($shareKey, $password)
 
-        :param $shareKey:
-        :param $password:
+        Unlocks the share item of the supplied share key for the duration of the
+        session.
+
+        :type $shareKey: string
+        :param $shareKey: The supplied share key.
+        :type $password: string
+        :param $password: The share password.
+        :returns: The success/failure status of the retrieve operation.
 
     .. php:method:: fileVersions($file, $startVersion = 0, $endVersion = null, $limit = 10)
 
@@ -215,3 +257,15 @@ CloudFS\\Filesystem
         :type $limit: int
         :param $limit: how many versions to list in the result set
         :returns: File history entries.
+
+    .. php:method:: fileRead($file)
+
+        Streams the content of a given file
+
+        :type $file: File
+        :param $file: The file to be streamed.
+        :returns: The file stream.
+
+    .. php:method:: listTrash()
+
+        Browses the Trash metafolder on the authenticated user’s account.

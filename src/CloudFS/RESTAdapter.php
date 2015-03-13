@@ -357,7 +357,7 @@ class RESTAdapter {
 	 * @param string $exists Specifies the action to take if the folder already exists.
 	 * @return The success/fail response of the copy operation
 	 */
-	public function copyFolder($path, $dest, $name = null, $exists = "fail") {
+	public function copyFolder($path, $dest, $name = null, $exists = Exists::FAIL) {
         Assert::assertString($path, 1);
         Assert::assertString($dest, 2);
 		$connection = new HTTPConnector($this->credential->getSession());
@@ -387,7 +387,7 @@ class RESTAdapter {
 	 * @param string $exists Specifies the action to take if the file already exists.
 	 * @return The success/fail response of the copy operation
 	 */
-	public function copyFile($path, $dest, $name = null, $exists = "fail") {
+	public function copyFile($path, $dest, $name = null, $exists = Exists::FAIL) {
         Assert::assertString($path, 1);
         Assert::assertString($dest, 2);
 		$connection = new HTTPConnector($this->credential->getSession());
@@ -417,7 +417,7 @@ class RESTAdapter {
 	 * @param string $exists Specifies the action to take if the folder already exists.
 	 * @return The success/fail response of the move operation
 	 */
-	public function moveFolder($path, $dest, $name = null, $exists = "fail") {
+	public function moveFolder($path, $dest, $name = null, $exists = Exists::FAIL) {
         Assert::assertPath($path, 1);
         Assert::assertPath($dest, 2);
 		$connection = new HTTPConnector($this->credential->getSession());
@@ -446,7 +446,7 @@ class RESTAdapter {
 	 * @param string $exists Specifies the action to take if the file already exists.
 	 * @return The success/fail response of the move operation
 	 */
-	public function moveFile($path, $dest, $name = null, $exists = "fail") {
+	public function moveFile($path, $dest, $name = null, $exists = Exists::FAIL) {
         Assert::assertPath($path, 1);
         Assert::assertPath($dest, 2);
 		$connection = new HTTPConnector($this->credential->getSession());
@@ -495,7 +495,7 @@ class RESTAdapter {
 	 * @param string $exists The action to take if the item already exists.
 	 * @return An instance of the uploaded item.
 	 */
-	public function uploadFile($parentpath, $name, $filepath, $exists = "overwrite") {
+	public function uploadFile($parentpath, $name, $filepath, $exists = Exists::OVERWRITE) {
         Assert::assertString($filepath);
 		$params = array();
 		$connection = new HTTPConnector($this->credential->getSession());

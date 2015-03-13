@@ -33,11 +33,11 @@ CloudFS\\Session
         :param $password: The password.
         :returns: The authentication status.
 
-    .. php:method:: getClientApi()
+    .. php:method:: getRestAdapter()
 
-        Retrieves the bitcasa client api.
+        Retrieves the restAdapter.
 
-        :returns: The bitcasa client api.
+        :returns: The restAdapter.
 
     .. php:method:: filesystem()
 
@@ -73,38 +73,11 @@ CloudFS\\Session
 
         :returns: The client id.
 
-    .. php:method:: setClientId($clientId)
-
-        Set the session client id.
-
-        :type $clientId: string
-        :param $clientId: The client Id to be set.
-
     .. php:method:: getClientSecret()
 
         Retrieves the session client secret.
 
         :returns: The client secret.
-
-    .. php:method:: setClientSecret($clientSecret)
-
-        Sets the session client secret.
-
-        :type $clientSecret: string
-        :param $clientSecret: The client secret to be set.
-
-    .. php:method:: getBitcasaClientApi()
-
-        Retrieves the sessions bitcasa client api.
-
-        :returns: The bitcasa client api.
-
-    .. php:method:: setBitcasaClient(BitcasaClientApi $bitcasaClientApi)
-
-        Sets the sessions bitcasa client api.
-
-        :type $bitcasaClientApi: BitcasaClientApi
-        :param $bitcasaClientApi: The bitcasa client api to be set.
 
     .. php:method:: getAccessToken()
 

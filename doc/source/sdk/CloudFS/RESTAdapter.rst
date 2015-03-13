@@ -1,6 +1,6 @@
--------------------
+--------------------
 CloudFS\\RESTAdapter
--------------------
+--------------------
 
 .. php:namespace: CloudFS
 
@@ -112,7 +112,7 @@ CloudFS\\RESTAdapter
         :param $conflict: Specifies the action to take if a conflict occurs.
         :returns: The success/fail response of the alter operation.
 
-    .. php:method:: copyFolder($path, $dest, $name = null, $exists = "fail")
+    .. php:method:: copyFolder($path, $dest, $name = null, $exists = Exists::FAIL)
 
         Copy a folder at a given path to a specified destination.
 
@@ -126,7 +126,7 @@ CloudFS\\RESTAdapter
         :param $exists: Specifies the action to take if the folder already exists.
         :returns: The success/fail response of the copy operation
 
-    .. php:method:: copyFile($path, $dest, $name = null, $exists = "fail")
+    .. php:method:: copyFile($path, $dest, $name = null, $exists = Exists::FAIL)
 
         Copy a file at a given path to a specified destination.
 
@@ -140,7 +140,7 @@ CloudFS\\RESTAdapter
         :param $exists: Specifies the action to take if the file already exists.
         :returns: The success/fail response of the copy operation
 
-    .. php:method:: moveFolder($path, $dest, $name = null, $exists = "fail")
+    .. php:method:: moveFolder($path, $dest, $name = null, $exists = Exists::FAIL)
 
         Move a folder at a given path to a specified destination.
 
@@ -154,7 +154,7 @@ CloudFS\\RESTAdapter
         :param $exists: Specifies the action to take if the folder already exists.
         :returns: The success/fail response of the move operation
 
-    .. php:method:: moveFile($path, $dest, $name = null, $exists = "fail")
+    .. php:method:: moveFile($path, $dest, $name = null, $exists = Exists::FAIL)
 
         Move a file at a given path to a specified destination.
 
@@ -178,7 +178,7 @@ CloudFS\\RESTAdapter
         :param $file: The file container for which the item will be downloaded to
         :returns: The download file/link
 
-    .. php:method:: uploadFile($parentpath, $name, $filepath, $exists = "overwrite")
+    .. php:method:: uploadFile($parentpath, $name, $filepath, $exists = Exists::OVERWRITE)
 
         Upload a file on to the given path.
 
@@ -192,47 +192,87 @@ CloudFS\\RESTAdapter
         :param $exists: The action to take if the item already exists.
         :returns: An instance of the uploaded item.
 
-    .. php:method:: restore($path, $dest)
+    .. php:method:: restore($pathId, $destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null)
 
         Restores the file at a given path to a given destination.
 
-        :type $path: string
-        :param $path: The path of the file to be restored.
-        :type $dest: string
-        :param $dest: The destination of the file to be restored to.
-        :returns: The success/fail response of the restore operation.
+        :type $pathId: string
+        :param $pathId:
+        :type $destination: string
+        :param $destination:
+        :type $restoreMethod: string
+        :param $restoreMethod:
+        :type $restoreArgument: string
+        :param $restoreArgument:
+        :returns: bool|The
 
     .. php:method:: createShare($path, $password = null)
 
-        :param $path:
-        :param $password:
+        Create a share of an item at the supplied path.
+
+        :type $path: string
+        :param $path: The path of the item to be shared.
+        :type $password: string
+        :param $password: The password of the shared to be created.
+        :returns: An instance of the share.
 
     .. php:method:: shares()
 
+        Retrieves the list of shares on the filesystem.
+
+        :returns: The share list.
+
     .. php:method:: browseShare($shareKey)
 
-        :param $shareKey:
+        Retrieves the items for a supplied share key.
+
+        :type $shareKey: string
+        :param $shareKey: The supplied share key.
+        :returns: An array of items for the share key.
 
     .. php:method:: retrieveShare($shareKey, $path, $exists = Exists::OVERWRITE)
 
-        :param $shareKey:
-        :param $path:
-        :param $exists:
+        Retrieve the share item for a given share key to a path supplied.
+
+        :type $shareKey: string
+        :param $shareKey: The supplied share key.
+        :type $path: string
+        :param $path: The path to which the share files are retrieved to.
+        :type $exists: string
+        :param $exists: The action to take if the item already exists.
+        :returns: The success/failure status of the retrieve operation.
 
     .. php:method:: deleteShare($shareKey)
 
-        :param $shareKey:
+        Deletes the share item for a supplied share key.
+
+        :type $shareKey: string
+        :param $shareKey: The supplied share key.
+        :returns: The success/failure status of the delete operation.
 
     .. php:method:: unlockShare($shareKey, $password)
 
-        :param $shareKey:
-        :param $password:
+        Unlocks the share item of the supplied share key for the duration of the
+        session.
+
+        :type $shareKey: string
+        :param $shareKey: The supplied share key.
+        :type $password: string
+        :param $password: The share password.
+        :returns: The success/failure status of the retrieve operation.
 
     .. php:method:: alterShare($shareKey, $values, $password = null)
 
-        :param $shareKey:
-        :param $values:
-        :param $password:
+        Alter the properties of a share item for a given share key with the
+        supplied data.
+
+        :type $shareKey: string
+        :param $shareKey: The supplied share key.
+        :type $values: mixed[]
+        :param $values: The values to be changed.
+        :type $password: string
+        :param $password: The share password.
+        :returns: An instance of the altered share.
 
     .. php:method:: fileVersions($path, $startVersion, $endVersion, $limit)
 
@@ -241,3 +281,26 @@ CloudFS\\RESTAdapter
         :param $endVersion:
         :param $limit:
         :returns: The|null
+
+    .. php:method:: fileRead($path, $fileName, $fileSize)
+
+        Streams the content of a given file at the supplied path
+
+        :type $path: string
+        :param $path: The file path.
+        :type $fileName: string
+        :param $fileName: The name of the file.
+        :type $fileSize: string
+        :param $fileSize: The size of the file.
+        :returns: The file stream.
+
+    .. php:method:: listTrash($path = null)
+
+        Browses the Trash meta folder on the authenticated user’s account.
+
+        :param $path:
+        :returns: The error status or the returned items in trash.
+
+    .. php:method:: deleteTrashItem($path)
+
+        :param $path:
