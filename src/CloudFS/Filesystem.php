@@ -249,7 +249,7 @@ class Filesystem {
 	 * @param string $exists Specifies the action to take if the item already exists.
 	 * @return An associative array containing the items.
 	 */
-    public function copy($items, $destination, $exists = "fail") {
+    public function copy($items, $destination, $exists = Exists::FAIL) {
 		if (!is_array($items)) {
 			$items = array($items);
 		}
@@ -307,7 +307,7 @@ class Filesystem {
 	 * @param string $exists The action to take if the item already exists.
 	 * @return An instance of the uploaded item.
 	 */
-	public function upload($parent, $path, $name = null, $exists = "overwrite") {
+	public function upload($parent, $path, $name = null, $exists = Exists::OVERWRITE) {
 		$parentPath = "/";
 		if (is_string($parent)) {
 			$parentPath = $parent;
