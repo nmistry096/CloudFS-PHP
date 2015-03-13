@@ -22,7 +22,7 @@ use CloudFS\Utils\RestoreMethod;
 class Filesystem {
 
 	/**
-	 * @var \CloudFS\BitcasaApi The bitcasa api instance.
+	 * @var \CloudFS\RESTAdapter The bitcasa api instance.
 	 */
 	private $api;
 
@@ -73,7 +73,6 @@ class Filesystem {
 		}
 		return $lst;
 	}
-
 
 	/**
 	 * Retrieves an item by the given path.
@@ -373,6 +372,11 @@ class Filesystem {
 		return $this->api->fileHistory($item->getPath(), $start, $stop);
 	}
 
+    /**
+     * Retrieves the list of shares on the filesystem.
+     *
+     * @return The share list.
+     */
 	public function listShares() {
 		$shares = array();
 		$response = $this->api->shares();
@@ -385,6 +389,14 @@ class Filesystem {
 		return $shares;
 	}
 
+    /**
+     * Create a share of an item at the supplied path.
+     *
+     * @param string $path The path of the item to be shared.
+     * @param string $password The password of the shared to be created.
+     * @return An instance of the share.
+     * @throws Exception\InvalidArgumentException
+     */
 	public function createShare($path, $password = null) {
 		$share = null;
 		$response = $this->api->createShare($path, $password);
@@ -395,6 +407,12 @@ class Filesystem {
 		return $share;
 	}
 
+    /**
+     * Retrieves the items for a supplied share key.
+     *
+     * @param string $shareKey The supplied share key.
+     * @return An array of items for the share key.
+     */
 	public function browseShare($shareKey) {
 		$items = array();
 		$response = $this->api->browseShare($shareKey);
@@ -407,14 +425,37 @@ class Filesystem {
 		return $items;
 	}
 
+    /**
+     * Deletes the share item for a supplied share key.
+     *
+     * @param string $shareKey The supplied share key.
+     * @return The success/failure status of the delete operation.
+     */
 	public function deleteShare($shareKey) {
 		return $this->api->deleteShare($shareKey);
 	}
 
+    /**
+     * Retrieve the share item for a given share key to a path supplied.
+     *
+     * @param string $shareKey The supplied share key.
+     * @param string $path The path to which the share files are retrieved to.
+     * @param string $exists The action to take if the item already exists.
+     * @return The success/failure status of the retrieve operation.
+     */
 	public function retrieveShare($shareKey, $path, $exists = Exists::RENAME) {
 		return $this->api->retrieveShare($shareKey, $path, $exists);
 	}
 
+    /**
+     * Alter the properties of a share item for a given share key with the supplied data.
+     *
+     * @param string $shareKey The supplied share key.
+     * @param mixed[] $values The values to be changed.
+     * @param string $password The share password.
+     * @return An instance of the altered share.
+     * @throws Exception\InvalidArgumentException
+     */
 	public function alterShare($shareKey, array $values, $password = null) {
 		$share = null;
 		$response = $this->api->alterShare($shareKey, $values, $password);
@@ -425,6 +466,14 @@ class Filesystem {
 		return $share;
 	}
 
+    /**
+     * Unlocks the share item of the supplied share key for the duration of the session.
+     *
+     * @param string $shareKey The supplied share key.
+     * @param string $password The share password.
+     * @return The success/failure status of the retrieve operation.
+     * @throws Exception\InvalidArgumentException
+     */
 	public function unlockShare($shareKey, $password) {
 		return $this->api->unlockShare($shareKey, $password);
 	}
@@ -442,13 +491,19 @@ class Filesystem {
         return $this->api->fileVersions($file->getPath(), $startVersion, $endVersion, $limit);
     }
 
+    /**
+     * Streams the content of a given file
+     *
+     * @param File $file The file to be streamed.
+     * @return The file stream.
+     * @throws Exception\InvalidArgumentException
+     */
     public function fileRead($file){
         return $this->api->fileRead($file->getPath(), $file->getName(), $file->getSize());
     }
 
 	/**
 	 * Browses the Trash metafolder on the authenticated user’s account.
-	 *
 	 */
 	public function listTrash(){
 		return $this->api->listTrash();

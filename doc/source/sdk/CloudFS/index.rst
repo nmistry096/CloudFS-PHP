@@ -11,7 +11,7 @@ CloudFS
    Account
    Item
    Share
-   HTTPConnect
+   HTTPConnector
    Filesystem
    Utils/index
    User
@@ -19,7 +19,7 @@ CloudFS
    Folder
    Document
    ActionHistory
-   BitcasaApi
+   RESTAdapter
    Session
    Container
    BitcasaUtils

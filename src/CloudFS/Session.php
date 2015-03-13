@@ -12,7 +12,7 @@
 namespace CloudFS;
 
 use CloudFS\Filesystem;
-use CloudFS\HTTPConnect;
+use CloudFS\HTTPConnector;
 use CloudFS\BitcasaUtils;
 use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Credential;
@@ -50,7 +50,7 @@ class Session {
         $this->clientSecret = $clientSecret;
         $this->debug = getenv("BC_DEBUG") != null;
         $this->credential = new Credential($this, $endpoint);
-        $this->bitcasaClientApi = new BitcasaApi($this->credential);
+        $this->bitcasaClientApi = new RESTAdapter($this->credential);
         $this->fileSystem = new Filesystem($this->bitcasaClientApi);
     }
 
@@ -116,7 +116,7 @@ class Session {
      * @return Current Bitcasa User information
      */
     public function user() {
-        $connection = new HTTPConnect($this);
+        $connection = new HTTPConnector($this);
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_USER . BitcasaConstants::METHOD_PROFILE);
         if (!BitcasaUtils::isSuccess($connection->get($url))) {
             return null;
@@ -136,7 +136,7 @@ class Session {
      * @return Current Bitcasa Account information
      */
     public function account() {
-        $connection = new HTTPConnect($this);
+        $connection = new HTTPConnector($this);
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_USER . BitcasaConstants::METHOD_PROFILE);
         if (!BitcasaUtils::isSuccess($connection->get($url))) {
             return null;
@@ -193,7 +193,7 @@ class Session {
      * @throws InvalidArgumentException
      */
     public function actionHistory($startVersion = -10, $stopVersion = null) {
-        $connection = new HTTPConnect($this);
+        $connection = new HTTPConnector($this);
         $params = array();
         if (!empty($startVersion)) {
             $params['start'] = $startVersion;
@@ -264,7 +264,7 @@ class Session {
             throw new InvalidArgumentException('createAccount function accepts a valid password. Input was ' . $password);
         }
 
-        $connection = new HTTPConnect($this);
+        $connection = new HTTPConnector($this);
 
         $formParameters = array('password' => urlencode($password), 'username' => urlencode($username));
         if (!empty($email)) {

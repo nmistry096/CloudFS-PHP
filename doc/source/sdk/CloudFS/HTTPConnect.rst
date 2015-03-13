@@ -1,10 +1,10 @@
 --------------------
-CloudFS\\HTTPConnect
+CloudFS\\HTTPConnector
 --------------------
 
 .. php:namespace: CloudFS
 
-.. php:class:: HTTPConnect
+.. php:class:: HTTPConnector
 
     .. php:attr:: curl
 

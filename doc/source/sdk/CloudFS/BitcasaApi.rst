@@ -1,10 +1,10 @@
 -------------------
-CloudFS\\BitcasaApi
+CloudFS\\RESTAdapter
 -------------------
 
 .. php:namespace: CloudFS
 
-.. php:class:: BitcasaApi
+.. php:class:: RESTAdapter
 
     .. php:method:: __construct($credential)
 

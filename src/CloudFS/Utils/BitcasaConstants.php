@@ -34,7 +34,7 @@ abstract class BitcasaConstants {
     const HEADER_DATE = "Date";
 
     /**
-     * The http request methods for HTTPConnect.
+     * The http request methods for HTTPConnector.
      */
     const REQUEST_METHOD_GET = "GET";
     const REQUEST_METHOD_POST = "POST";
