@@ -18,6 +18,7 @@ use CloudFS\BitcasaUtils;
 use CloudFS\HTTPConnector;
 use CloudFS\Utils\Exists;
 use CloudFS\Utils\Assert;
+use CloudFS\Utils\RestoreMethod;
 
 
 class RESTAdapter {
@@ -510,31 +511,44 @@ class RESTAdapter {
 		return $resp;
 	}
 
-	/**
-	 * Restores the file at a given path to a given destination.
-	 *
-	 * @param string $path The path of the file to be restored.
-	 * @param string $dest The destination of the file to be restored to.
-	 * @return The success/fail response of the restore operation.
-	 * @throws InvalidArgument
-	 */
-    public function restore($path, $dest) {
-        Assert::assertString($path, 1);
-        Assert::assertString($dest, 2);
-		$connection = new HTTPConnector($this->credential->getSession());
-		$params = array();
-		$body = array("rescue-path" => $dest);
-		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_TRASH, $path, 
-												$params);
-		$body = BitcasaUtils::generateParamsString($body);
-		
-		$connection->setData($body);
-		if ($connection->post($url) <= 100) {
-			return false;
-		}
+    /**
+     * Restores the file at a given path to a given destination.
+     *
+     * @param string $pathId
+     * @param string $destination
+     * @param string $restoreMethod
+     * @param string $restoreArgument
+     * @return bool|The
+     */
+    public function restore($pathId, $destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null) {
+        $connection = new HTTPConnector($this->credential->getSession());
+        $params = array();
 
-		return $connection->getResponse(true);
-	}
+        if($restoreMethod == RestoreMethod::RECREATE){
+            $params['recreate-path'] = $destination;
+            $params['restore'] = RestoreMethod::RECREATE;
+
+        }elseif($restoreMethod == RestoreMethod::FAIL){
+            $params['restore'] = RestoreMethod::FAIL;
+
+        }elseif($restoreMethod == RestoreMethod::RESCUE){
+            if($destination != null){
+                $params['rescue-path'] = $destination;
+            }
+            $params['restore'] = RestoreMethod::RESCUE;
+        }
+        $body = $params;
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_TRASH, '/' . $pathId,
+            array());
+        $body = BitcasaUtils::generateParamsString($body);
+
+        $connection->setData($body);
+        if ($connection->post($url) <= 100) {
+            return false;
+        }
+
+        return $connection->getResponse(true);
+    }
 
     /**
      * Create a share of an item at the supplied path.
@@ -793,6 +807,19 @@ class RESTAdapter {
 			return $resp['result']['items'];
 		}
 	}
+
+    public function deleteTrashItem($path){
+
+        $endpoint = BitcasaConstants::METHOD_TRASH;
+        $connection = new HTTPConnect($this->credential->getSession());
+        $url = $this->credential->getRequestUrl($endpoint, "/".$path);
+        $status = $connection->delete($url);
+        if ($status <= 100) {
+            return false;
+        }
+        $resp = $connection->getResponse(true);
+        return $resp;
+    }
 
 }
 

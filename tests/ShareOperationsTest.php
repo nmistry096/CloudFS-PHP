@@ -20,26 +20,27 @@ class ShareOperationsTest extends BaseTest {
     }
 
     /**
-     * Clears user file system.
+     * Clears user file system. Use with care. This deletes every thing in users folder system.
      */
-    public function DeleteRootFolders() {
-        /** @var \CloudFS\Filesystem $fileSystem */
-        $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
-
-        $items = $fileSystem->getList('/');
-        if (count($items) > 0) {
-            $fileSystem->delete($items, true);
-        }
-    }
+//    public function DeleteRootFolders() {
+//        /** @var \CloudFS\Filesystem $fileSystem */
+//        $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
+//
+//        $items = $fileSystem->getList('/');
+//        if (count($items) > 0) {
+//            $fileSystem->delete($items, true);
+//        }
+//    }
 
     /**
      * Test share operations.
      */
     public function testShares() {
-        $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
+        $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
 
         // /top
-        /** @var \CloudFS\Item $topLevelFolder */
+
+        /** @var \CloudFS\Folder $topLevelFolder */
         $topLevelFolder = $fileSystem->create(null, $this->topLevelFolder, Exists::OVERWRITE);
         $this->assertNotNull($topLevelFolder);
         $this->assertTrue($topLevelFolder->getName() == $this->topLevelFolder);
@@ -62,24 +63,6 @@ class ShareOperationsTest extends BaseTest {
         $receivedFolder = $topLevelFolder->createFolder($this->receiveFolderName);
         $this->assertNotNull($receivedFolder);
         $this->assertEquals($this->receiveFolderName, $receivedFolder->getName());
-
-        $shares = $fileSystem->listShares();
-        if ($shares != null) {
-            foreach ($shares as $share) {
-                /** @var \CloudFS\Share $share */
-                try {
-                    $unlocked = $fileSystem->unlockShare($share->getShareKey(), 'password');
-                } catch (\Exception $error) {
-                }
-
-                try {
-                    $unlocked = $fileSystem->unlockShare($share->getShareKey(), 'newPassword');
-                } catch (\Exception $error) {
-                }
-
-                $share->delete();
-            }
-        }
 
         /** @var \CloudFS\Share $share */
         $share = $fileSystem->createShare($sharedFolder->getPath());
@@ -133,5 +116,7 @@ class ShareOperationsTest extends BaseTest {
 
         $deleted = $share->delete();
         $this->assertTrue($deleted);
+
+        $topLevelFolder->delete(true, true);
     }
 }
