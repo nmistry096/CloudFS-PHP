@@ -13,17 +13,17 @@ There are two main methods of getting the CloudFS-PHP SDK.
 
 1. Cloning the git repository.
 
-```bash
-$ git clone https://github.com/bitcasa/CloudFS-PHP.git
-```
+  ```bash
+  $ git clone https://github.com/bitcasa/CloudFS-PHP.git
+  ```
   
-  2. Adding the CloudFS-PHP SDK package name to composer by editing `composer.json`.
+2. Adding the CloudFS-PHP SDK package name to composer by editing `composer.json`.
 
-```
-"require": {
-    "bitcasa/cloudfs-sdk": "dev-develop"
-  }
-```
+  ```
+  "require": {
+      "bitcasa/cloudfs-sdk": "dev-develop"
+    }
+  ```
 For the composer package to run, you should have [composer](https://getcomposer.org/) installed.
 
 ## Using the SDK
