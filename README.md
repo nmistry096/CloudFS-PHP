@@ -30,6 +30,7 @@ Getting the contents of root folder
 //Item[] itemArray = session.getFileSystem().list("");
 ```
 or
+
 ```php
 //Item[] itemArray = session.getFileSystem().list(root);
 ```
@@ -69,7 +70,8 @@ You should have PHPUnit installed to run the tests. The instructions to download
 >>WARNING!!! Never run the test suite against a production environment. It deletes all the contents of the file system.
 
 To execute the tests go the test directory and run:
-```
+
+```php
 phpunit <TestName>.php
 ```
 
