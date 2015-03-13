@@ -14,6 +14,7 @@ namespace CloudFS;
 use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Utils\Exists;
 use CloudFS\Utils\VersionExists;
+use CloudFS\Utils\RestoreMethod;
 
 /**
  * Defines the Bitcasa file system.
@@ -172,6 +173,24 @@ class Filesystem {
 		return $res;
 	}
 
+    public function deleteTrash($items){
+
+        if (!is_array($items)) {
+            $items = array($items);
+        }
+        $res = array();
+        $r = null;
+
+        foreach ($items as $item) {
+            /** @var \CloudFS\Item $item */
+            $r = $this->api->deleteTrashItem($item['id']);
+            $res[] = $r;
+        }
+        return $res;
+
+
+    }
+
 	/**
 	 * Create a folder with supplied name under the given parent folders,
 	 * folder path.
@@ -326,23 +345,20 @@ class Filesystem {
 	/**
 	 * Restore a given set of items to the supplied destination.
 	 *
-	 * @param Item[] $items The items to be restored.
+	 * @param string $pathId The item id.
 	 * @param string $destination The path the files are to be restored to
-	 * @param string $exists The action to take if the item already exists.
-	 * @return The success/fail response of the restore operation.
+	 * @param string $restoreMethod The action to take if the item already exists.
+     * @param string $restoreArgument The restore extra argument
+	 * @return The True/False response of the restore operation.
 	 */
-    public function restore($items, $destination, $exists) {
-		if (!is_array($items)) {
-			$items = array($items);
-		}
 
-		$res = array();
-		$r = null;
-		foreach ($items as $item) {
-			$r = $this->api->restore($item->getPath(), $destination);
-			$res[] = $r;
-		}
-		return $res;
+    public function restore($pathId, $destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null) {
+		$status = false;
+        $result = $this->api->restore($pathId, $destination, $restoreMethod, $restoreArgument);
+        if(isset($result['result']['success'])){
+            $status = $result['result']['success'];
+        }
+		return $status;
 	}
 
 	/**

@@ -28,7 +28,7 @@ class FileSystemTest extends BaseTest {
     /**
      * Clears user file system.
      */
-    public function deleteRootFolders() {
+    public function testDeleteRootFolders() {
         /** @var \CloudFS\Filesystem $fileSystem */
         $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
 
@@ -192,6 +192,9 @@ class FileSystemTest extends BaseTest {
         $this->assertEquals($imageFileName, $copiedFile[0]['result']['meta']['name']);
 
         $deletedFile = $imageFile->delete();
+        $result = $fileSystem->listTrash();
+        $this->assertNotNull($result);
+
 
         $this->assertNotNull($this->getItemFromIndexArray($fileSystem->getList($level1Folder3->getPath()), $textFileName));
         $this->assertNotNull($this->getItemFromIndexArray($fileSystem->getList($level1Folder4->getPath()), $imageFileName));
@@ -237,5 +240,22 @@ class FileSystemTest extends BaseTest {
 
         $deleted = $folder->delete(true, true);
         $this->assertTrue($deleted);
+    }
+
+    /**
+     * Test restore files relate operations.
+     */
+    public function testRestore(){
+        $fileSystem = $this->getSession()->filesystem();
+        $root = $fileSystem->root();
+        $folder = $root->createFolder($this->level0Folder1Name);
+        $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
+        $articleFile = $folder->upload($localUploadDirectory . 'text2', 'original-article', Exists::OVERWRITE);
+        $articleFile->delete();
+        $response = $articleFile->restore($articleFile->getPath());
+        $this->assertTrue($response);
+        $articleFileContent = $fileSystem->download($articleFile);
+        $this->assertNotEmpty($articleFileContent);
+
     }
 }
