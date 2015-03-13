@@ -77,7 +77,7 @@ File System Operations
       ::
 
       $fileSystem = new Filesystem($session->getBitcasaClientApi());
-      $root = $fileSystem->getFolder();
+      $root = $fileSystem->root();
 
 
 - :php:meth:`Get Specific Folder <Filesystem::getFolder>`
@@ -101,13 +101,13 @@ File System Operations
       $items = $fileSystem->getList();
 
 
-- :php:meth:`Get Trash Items <Filesystem::copy>`
+- :php:meth:`List Trash Items <Filesystem::listTrash()>`
 
   You can list down the contents of Trash folder. Below example shows how to retrieve contents of the trash folder.
  
       ::
 
-      //Add snippet here.
+      $trash = $fileSystem->listTrash();
 
 
 - :php:meth:`Get Shares <Filesystem::copy>`

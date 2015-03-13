@@ -28,13 +28,13 @@ class BitcasaApiTest extends BaseTest {
      * The create root folder test.
      */
     public function testCreateRootFolder() {
-        $api = $this->getSession()->getBitcasaClientApi();
+        $api = $this->getSession()->getRestAdapter();
         $level0Folder1 = $this->getItemFromAssociativeArray($api->getList(), $this->level0Folder1Name);
         if ($level0Folder1 != null) {
             $api->deleteFolder($this->getPathFromAssociativeArray($level0Folder1), true);
         }
 
-        $level0Folder1 = $this->getSession()->getBitcasaClientApi()->createFolder(NULL, $this->level0Folder1Name, Exists::OVERWRITE);
+        $level0Folder1 = $this->getSession()->getRestAdapter()->createFolder(NULL, $this->level0Folder1Name, Exists::OVERWRITE);
 
         $this->assertNotNull($level0Folder1);
         $this->assertArrayHasKey('name', $level0Folder1);
@@ -45,17 +45,15 @@ class BitcasaApiTest extends BaseTest {
     }
 
     /**
-     * The create root folder with exit if the root folder exists test.
-     *
-     * @expectedException Exception The exception instance.
-     * @expectedExceptionCode 409 The exception code.
+     * @expectedException Exception
+     * @expectedExceptionCode 409
      */
     public function testCreateRootFolderFailIfExists() {
-        $this->getSession()->getBitcasaClientApi()->createFolder(NULL, $this->level0Folder1Name, Exists::FAIL);
+        $this->getSession()->getRestAdapter()->createFolder(NULL, $this->level0Folder1Name, Exists::FAIL);
     }
 
     public function testListRootFolder() {
-        $result = $this->getSession()->getBitcasaClientApi()->getList();
+        $result = $this->getSession()->getRestAdapter()->getList();
         $this->assertNotNull($result);
         $this->assertNull($result['error']);
         $this->assertArrayHasKey('result', $result);
@@ -78,7 +76,7 @@ class BitcasaApiTest extends BaseTest {
      * The retrieve folder meta test.
      */
     public function testFolderMeta() {
-        $result = $this->getSession()->getBitcasaClientApi()->getList();
+        $result = $this->getSession()->getRestAdapter()->getList();
         $items = $result['result']['items'];
         $folder = null;
         foreach($items as $item) {
@@ -90,7 +88,7 @@ class BitcasaApiTest extends BaseTest {
 
         $path = $this->getPathFromAssociativeArray($folder);
 
-        $meta = $this->getSession()->getBitcasaClientApi()->getFolderMeta($path);
+        $meta = $this->getSession()->getRestAdapter()->getFolderMeta($path);
         $this->assertEquals($this->level0Folder1Name, $meta['result']['meta']['name']);
     }
 
@@ -98,7 +96,7 @@ class BitcasaApiTest extends BaseTest {
      * The bitcasa folders related tests.
      */
     public function testFolders() {
-        $api = $this->getSession()->getBitcasaClientApi();
+        $api = $this->getSession()->getRestAdapter();
 
         $level0Folder1 = $this->getItemFromAssociativeArray($api->getList(), $this->level0Folder1Name);
         $this->assertNotNull($level0Folder1);
@@ -146,7 +144,7 @@ class BitcasaApiTest extends BaseTest {
      * The bitcasa files related tests.
      */
     public function testFiles() {
-        $api = $this->getSession()->getBitcasaClientApi();
+        $api = $this->getSession()->getRestAdapter();
         $level0Folder1 = $this->getItemFromAssociativeArray($api->getList(), $this->level0Folder1Name);
         $level0Folder1Path = $this->getPathFromAssociativeArray($level0Folder1);
 

@@ -17,6 +17,7 @@ use CloudFS\Utils\BitcasaConstants;
 use CloudFS\BitcasaUtils;
 use CloudFS\HTTPConnector;
 use CloudFS\Utils\Exists;
+use CloudFS\Utils\Assert;
 
 
 class RESTAdapter {
@@ -222,8 +223,9 @@ class RESTAdapter {
 		if ($parentpath == null) {
 			$parentpath = "/";
 		}
-		//assert_path($parentpath, 1);
-		//assert_string($filename, 2);
+
+        Assert::assertPath($parentpath, 1);
+        Assert::assertString($filename, 2);
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $parentpath,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_CREATE));
 		$body = BitcasaUtils::generateParamsString(array("name" => $filename, "exists" => $exists));
@@ -251,7 +253,7 @@ class RESTAdapter {
 	 * @return The success/fail response of the delete operation.
 	 */
 	public function deleteFolder($path, $force = false) {
-		//assert_string($path, 1);
+        Assert::assertString($path, 1);
 		$connection = new HTTPConnector($this->credential->getSession());
 		$force_option = array();
 		if ($force == true) {
@@ -277,7 +279,7 @@ class RESTAdapter {
 	 * @return The success/fail response of the delete operation.
 	 */
 	public function deleteFile($path, $force = false) {
-		//assert_string($path, 1);
+        Assert::assertString($path, 1);
 		$connection = new HTTPConnector($this->credential->getSession());
 		$force_option = array();
 		if ($force == true) {
@@ -305,7 +307,7 @@ class RESTAdapter {
 	 * @throws InvalidArgument
 	 */
 	public function alterFolder($path, $attrs, $conflict = "fail") {
-		//assert_string($path, 1);
+        Assert::assertString($path, 1);
 		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path . "/meta",
 												array());
@@ -330,7 +332,7 @@ class RESTAdapter {
 	 * @throws InvalidArgument
 	 */
 	public function alterFile($path, $attrs, $conflict = "fail") {
-		//assert_string($path, 1);
+        Assert::assertString($path, 1);
 		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path . "/meta",
 												array());
@@ -355,8 +357,8 @@ class RESTAdapter {
 	 * @return The success/fail response of the copy operation
 	 */
 	public function copyFolder($path, $dest, $name = null, $exists = "fail") {
-		//assert_string($path, 1);
-		//assert_string($dest, 2);
+        Assert::assertString($path, 1);
+        Assert::assertString($dest, 2);
 		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_COPY));
@@ -385,8 +387,8 @@ class RESTAdapter {
 	 * @return The success/fail response of the copy operation
 	 */
 	public function copyFile($path, $dest, $name = null, $exists = "fail") {
-		//assert_string($path, 1);
-		//assert_string($dest, 2);
+        Assert::assertString($path, 1);
+        Assert::assertString($dest, 2);
 		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_COPY));
@@ -415,8 +417,8 @@ class RESTAdapter {
 	 * @return The success/fail response of the move operation
 	 */
 	public function moveFolder($path, $dest, $name = null, $exists = "fail") {
-		//assert_path($path, 1);
-		//assert_path($dest, 2);
+        Assert::assertPath($path, 1);
+        Assert::assertPath($dest, 2);
 		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_MOVE));
@@ -444,8 +446,8 @@ class RESTAdapter {
 	 * @return The success/fail response of the move operation
 	 */
 	public function moveFile($path, $dest, $name = null, $exists = "fail") {
-		//assert_path($path, 1);
-		//assert_path($dest, 2);
+        Assert::assertPath($path, 1);
+        Assert::assertPath($dest, 2);
 		$connection = new HTTPConnector($this->credential->getSession());
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
 												array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_MOVE));
@@ -493,7 +495,7 @@ class RESTAdapter {
 	 * @return An instance of the uploaded item.
 	 */
 	public function uploadFile($parentpath, $name, $filepath, $exists = "overwrite") {
-		//assert_string($filepath);
+        Assert::assertString($filepath);
 		$params = array();
 		$connection = new HTTPConnector($this->credential->getSession());
 		$connection->raw();
@@ -508,31 +510,44 @@ class RESTAdapter {
 		return $resp;
 	}
 
-	/**
-	 * Restores the file at a given path to a given destination.
-	 *
-	 * @param string $path The path of the file to be restored.
-	 * @param string $dest The destination of the file to be restored to.
-	 * @return The success/fail response of the restore operation.
-	 * @throws InvalidArgument
-	 */
-    public function restore($path, $dest) {
-		//assert_string($path, 1);
-		//assert_string($dest, 2);
-		$connection = new HTTPConnector($this->credential->getSession());
-		$params = array();
-		$body = array("rescue-path" => $dest);
-		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_TRASH, $path, 
-												$params);
-		$body = BitcasaUtils::generateParamsString($body);
-		
-		$connection->setData($body);
-		if ($connection->post($url) <= 100) {
-			return false;
-		}
+    /**
+     * Restores the file at a given path to a given destination.
+     *
+     * @param string $pathId
+     * @param string $destination
+     * @param string $restoreMethod
+     * @param string $restoreArgument
+     * @return bool|The
+     */
+    public function restore($pathId, $destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null) {
+        $connection = new HTTPConnect($this->credential->getSession());
+        $params = array();
 
-		return $connection->getResponse(true);
-	}
+        if($restoreMethod == RestoreMethod::RECREATE){
+            $params['recreate-path'] = $destination;
+            $params['restore'] = RestoreMethod::RECREATE;
+
+        }elseif($restoreMethod == RestoreMethod::FAIL){
+            $params['restore'] = RestoreMethod::FAIL;
+
+        }elseif($restoreMethod == RestoreMethod::RESCUE){
+            if($destination != null){
+                $params['rescue-path'] = $destination;
+            }
+            $params['restore'] = RestoreMethod::RESCUE;
+        }
+        $body = $params;
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_TRASH, '/' . $pathId,
+            array());
+        $body = BitcasaUtils::generateParamsString($body);
+
+        $connection->setData($body);
+        if ($connection->post($url) <= 100) {
+            return false;
+        }
+
+        return $connection->getResponse(true);
+    }
 
     /**
      * Create a share of an item at the supplied path.
@@ -792,6 +807,18 @@ class RESTAdapter {
 		}
 	}
 
+    public function deleteTrashItem($path){
+
+        $endpoint = BitcasaConstants::METHOD_TRASH;
+        $connection = new HTTPConnect($this->credential->getSession());
+        $url = $this->credential->getRequestUrl($endpoint, "/".$path);
+        $status = $connection->delete($url);
+        if ($status <= 100) {
+            return false;
+        }
+        $resp = $connection->getResponse(true);
+        return $resp;
+    }
 
 }
 

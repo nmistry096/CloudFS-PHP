@@ -5,6 +5,7 @@ namespace CloudFS;
 use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Utils\FileType;
 use CloudFS\Utils\VersionExists;
+use CloudFS\Utils\RestoreMethod;
 
 class Item {
 
@@ -303,11 +304,12 @@ class Item {
      * @param string $destination The destination of the item restore.
      * @return The success/fail response of the restore operation.
      */
-    public function restore($destination) {
+    public function restore($destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null) {
         if (!is_string($destination)) {
             $destination = $destination->path();
         }
-        return $this->filesystem()->restore($this->getPath(), $destination);
+        $path = $this->getId();
+        return $this->filesystem()->restore($path, $destination, $restoreMethod, $restoreArgument);
     }
 
     /**

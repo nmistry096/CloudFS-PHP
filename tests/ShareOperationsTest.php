@@ -24,7 +24,7 @@ class ShareOperationsTest extends BaseTest {
      */
     public function DeleteRootFolders() {
         /** @var \CloudFS\Filesystem $fileSystem */
-        $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
+        $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
 
         $items = $fileSystem->getList('/');
         if (count($items) > 0) {
@@ -36,18 +36,18 @@ class ShareOperationsTest extends BaseTest {
      * Test share operations.
      */
     public function testShares() {
-        $fileSystem = new Filesystem($this->getSession()->getBitcasaClientApi());
+        $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
 
         // /top
         /** @var \CloudFS\Item $topLevelFolder */
-        $topLevelFolder = $fileSystem->create(null, $this->topLevelFolder, Exists::OVERWRITE);
+        $topLevelFolder = $fileSystem->createFolder(null, $this->topLevelFolder, Exists::OVERWRITE);
         $this->assertNotNull($topLevelFolder);
         $this->assertTrue($topLevelFolder->getName() == $this->topLevelFolder);
         $this->assertTrue($topLevelFolder->getType() == FileType::FOLDER);
         $this->assertNotEmpty($topLevelFolder->getId());
 
         // /top/shared
-        $sharedFolder = $topLevelFolder->create($this->sharedFolderName);
+        $sharedFolder = $topLevelFolder->createFolder($this->sharedFolderName);
         $this->assertNotNull($sharedFolder);
         $this->assertEquals($this->sharedFolderName, $sharedFolder->getName());
 
