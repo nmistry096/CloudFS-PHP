@@ -116,7 +116,7 @@ File System Operations
  
       ::
 
-      $items = $share->getList();
+      $items = $fileSystem->listShares();
 
 
 - :php:meth:`Create Share <Filesystem::createShare>`
@@ -227,7 +227,7 @@ Folder Operations
 
       ::
 
-      $subFolder = $folder.create($subFolderName);
+      $subFolder = $folder->create($subFolderName);
 
 
 - :php:meth:`Upload File <Folder::upload>`
@@ -284,21 +284,12 @@ File Operations
 
       ::    
 
-      $status = $file->restore($items, $destination, Exists::Rename);
+      $status = $file->restore($destination, RestoreMethod::FAIL);
 
 
 - :php:meth:`Download File <File::download>`
 
   You can download a file to your local file system.
-
-      ::
-
-      $content = $fileSystem->download($file);
-
-	  
-- :php:meth:`Get Download Url <Filesystem::download>`
-
-  You can get the download Url of a File.
 
       ::
 
@@ -316,6 +307,14 @@ Share Operations
       ::
 
       $share->changeAttributes(array('name' => $this->sharedFolderName, 'password' => 'newPassword'), 'password');
+
+
+- :php:meth:`Receive Share <Share::receive>`
+
+  Receives all share files to the given path.
+      ::
+
+      $share->receive($path);
 
  
 - :php:meth:`Delete Share <Share::delete>`
