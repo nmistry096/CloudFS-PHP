@@ -29,14 +29,16 @@ class Folder extends Container {
     }
 
     /**
-     * Uploads a file under this item.
+     * Uploads a file to the folder.
      *
-     * @param string $path The path of the file to be uploaded.
-     * @param string $name The name of the file.
+     * @param string $filesystemPath The path of the local file upload.
+     * @param mixed $uploadProgressCallback The upload progress callback function. This function should take
+     * 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
      * @param string $exists The action to take if the file already exists.
-     * @return An instance of the uploaded item.
+     .
+     * @return A file instance representing the uploaded file..
      */
-    public function upload($path, $name = null, $exists = Exists::FAIL) {
-        return $this->filesystem()->upload($this, $path, $name, $exists);
+    public function upload($filesystemPath, $uploadProgressCallback, $exists = Exists::FAIL) {
+        return $this->filesystem()->upload($this, $filesystemPath, null, $exists, $uploadProgressCallback);
     }
 }

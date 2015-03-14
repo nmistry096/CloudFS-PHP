@@ -97,7 +97,7 @@ CloudFS\\Item
 
         :returns: The file system instance.
 
-    .. php:method:: make($data, $parentPath = null, $filesystem = null)
+    .. php:method:: make($data, $parentPath = null, $filesystem = null, $shared = false)
 
         Retrieves an instance of an item for the supplied data.
 
@@ -107,6 +107,8 @@ CloudFS\\Item
         :param $parentPath: Parent path for the new item.
         :type $filesystem: Filesystem
         :param $filesystem: The file system instance.
+        :type $shared: bool
+        :param $shared: Indicates whether the data belongs to a shared item.
         :returns: An instance of the new item.
 
     .. php:method:: changeAttributes($values, $ifConflict = VersionExists::FAIL)

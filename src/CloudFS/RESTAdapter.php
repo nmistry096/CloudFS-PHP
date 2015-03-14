@@ -470,20 +470,15 @@ class RESTAdapter {
 	 * Download a file from the cloud storage.
 	 *
 	 * @param string $path Path of the file to be downloaded.
-	 * @param mixed $file The file container for which the item will be downloaded to
-	 * @return The download file/link
+	 * @param string $localDestinationPath The local path of the file to download the content.
+	 * @param mixed $downloadProgressCallback The download progress callback function. This function should take
+	 * 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
+	 * @return The download status.
 	 */
-	public function downloadFile($path, $file = null) {
-		$params = array();
+	public function downloadFile($path, $localDestinationPath, $downloadProgressCallback) {
 		$connection = new HTTPConnector($this->credential->getSession());
-		$connection->raw();
-		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
-												array());
-		$s = $connection->get($url);
-		if ($s <= 100) {
-			return false;
-		}
-		return $connection->getResponse(true);
+		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path);
+		return $connection->download($url, $localDestinationPath, $downloadProgressCallback);
 	}
 
 	/**
@@ -493,16 +488,18 @@ class RESTAdapter {
 	 * @param string $name The upload file name.
 	 * @param string $filepath The file path for the file to be downloaded.
 	 * @param string $exists The action to take if the item already exists.
+	 * @param mixed $uploadProgressCallback The upload progress callback function. This function should take
+	 * 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
 	 * @return An instance of the uploaded item.
 	 */
-	public function uploadFile($parentpath, $name, $filepath, $exists = Exists::OVERWRITE) {
+	public function uploadFile($parentpath, $name, $filepath, $exists = Exists::OVERWRITE, $uploadProgressCallback = null) {
         Assert::assertString($filepath);
 		$params = array();
 		$connection = new HTTPConnector($this->credential->getSession());
 		$connection->raw();
 		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $parentpath,
 												$params);
-		if ($connection->postMultipart($url, $name, $filepath, $exists) <= 100) {
+		if ($connection->postMultipart($url, $name, $filepath, $exists, $uploadProgressCallback) <= 100) {
 			return false;
 		}
 		// upload payload is raw download is json

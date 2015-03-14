@@ -6,12 +6,12 @@ CloudFS\\Utils
 
 .. toctree::
 
-   FileOperation
-   FileType
-   ApiMethod
-   Assert
    Exists
-   BitcasaConstants
-   HistoryActions
    VersionExists
+   BitcasaConstants
+   ApiMethod
+   HistoryActions
+   FileType
+   Assert
+   FileOperation
    RestoreMethod

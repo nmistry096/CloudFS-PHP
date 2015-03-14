@@ -1,7 +1,6 @@
 # Bitcasa SDK for PHP
   
-The **Bitcasa SDK for PHP** enables PHP developers to easily work with [Bitcasa 
-Cloud Storage Platform](https://www.bitcasa.com/) and build scalable solutions.
+The **Bitcasa SDK for PHP** enables PHP developers to easily work with [Bitcasa Cloud Storage Platform](https://www.bitcasa.com/) and build scalable solutions.
 
 * [REST API Documentation](https://www.bitcasa.com/cloudfs-api-docs/)
 * [Blog](http://blog.bitcasa.com/) 
@@ -32,65 +31,65 @@ For the composer package to run, you should have [composer](https://getcomposer.
 Use the credentials you obtained from Bitcasa admin console to create a client session. This session can be used for all future requests to Bitcasa.
 
 ```php
-$session = new Session("bitcasa.cloudfs.io", CLIENT_ID, CLIENT_SECRET); 
-$res = $session->authenticate("myaccount@domain", "mypassword");
+$session = new Session($endPoint, $clientId, $clientSecret);
+$session->authenticate("myaccount@domain", "mypassword");
 ```
 
 Getting the root folder
 
 ```php
-//Folder root = session.getFileSystem().getRoot();
+$root = $session->filesystem()->root();
 ```
 
 Getting the contents of root folder
 
 ```php
-//Item[] itemArray = session.getFileSystem().list("");
-```
-or
-```php
-//Item[] itemArray = session.getFileSystem().list(root);
+$items = $root->getList();
 ```
 
-Deleting the contents of root folder
+Creating a subfolder under root folder
 
 ```php
-//session.getFileSystem().delete(itemArray);
+$folder = $root->createFolder($folderName);
+```
+Uploading a file to a folder
+
+```php
+$folder->upload($pathOfFile, $fileName, Exists::OVERWRITE);
 ```
 
-Uploading a file to root folder
+Download a file from a folder
 
 ```php
-//root.upload(pathOfFile, Exists.FAIL, listener);
+$file = $folder->getFile($filePath);
+$file->download($localDownloadDirectory . $fileName);
 ```
 
-Download a file from root folder
+Deleting a file or folder
 
 ```php
-//File fileToDownload = session.getFileSystem().getFile(pathOfFileToDownload);
-//fileToDownload.download(localDestinationPath, listener);
+$item->delete();
 ```
 
 Create user (for paid accounts only)
 
 ```php
-//AdminSession adminSession = new AdminSession(adminEndPoint, adminClientId, adminClientSecret);
-//Profile profile = adminSession.admin().createAccount(username, password, email, firstName, lastName);
+$session->setAdminCredentials($adminId, $adminSecret);
+$user = $session->createAccount($username, $password, email, $firstName, $lastName);
 ```
 
 ## Running the Tests
 
-Before running the tests, you should add the API credentials found in your CloudFS account to the file \test\BaseTest.php
+Before running the tests, you should add the API credentials found in your CloudFS account to the file \tests\BaseTest.php
 
-You should have PHPUnit installed to run the tests. The instructions to download and install PHPUnit can be found at https://phpunit.de/ 
+If you used the clone method to download the SDK you should have PHPUnit installed to run the tests. The instructions to download and install PHPUnit can be found at https://phpunit.de/ 
 
 >>WARNING!!! Never run the test suite against a production environment. It deletes all the contents of the file system.
 
-To execute the tests go the test directory and run:
+To execute the tests go the root source code directory and run:
 ```
-phpunit <TestName>.php
+phpunit
 ```
-
 
 We would love to hear what features or functionality you're interested in, or general comments on the SDK (good and bad - especially bad).
 

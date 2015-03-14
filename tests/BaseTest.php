@@ -140,4 +140,10 @@ class BaseTest extends PHPUnit_Framework_TestCase {
         return $result;
     }
 
+    protected function checkedAndCreateDirName($pathToDirector){
+        if (!file_exists($pathToDirector)) {
+            mkdir($pathToDirector, 0777, true);
+        }
+    }
+
 }

@@ -236,7 +236,7 @@ Folder Operations
 
       ::
 
-      $file = $folder->upload($localFilePath, $fileName, Exists::OVERWRITE);
+      $file = $folder->upload($localFilePath, $uploadProgressCallback, Exists::OVERWRITE);
 
 
 File Operations
@@ -248,7 +248,7 @@ File Operations
   You can change the attributes of a File by providing a hash map of field names and values. An example is given below.
       ::
 
-      $file->changeAttributes(array('application_data' => $newApplicationData, 'version' => $this->getVersion()));
+      $file->changeAttributes(array('application_data' => $newApplicationData));
 
    	 
 - :php:meth:`Copy File <File::copy>`
@@ -293,7 +293,7 @@ File Operations
 
       ::
 
-      $content = $fileSystem->download($file);
+      $content = $file->download($localDestinationPath, $downloadProgressCallback);
 
 
 Share Operations
