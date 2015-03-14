@@ -39,6 +39,7 @@ class ShareOperationsTest extends BaseTest {
         $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
 
         // /top
+
         /** @var \CloudFS\Folder $topLevelFolder */
         $topLevelFolder = $fileSystem->create(null, $this->topLevelFolder, Exists::OVERWRITE);
         $this->assertNotNull($topLevelFolder);
@@ -62,24 +63,6 @@ class ShareOperationsTest extends BaseTest {
         $receivedFolder = $topLevelFolder->createFolder($this->receiveFolderName);
         $this->assertNotNull($receivedFolder);
         $this->assertEquals($this->receiveFolderName, $receivedFolder->getName());
-
-//        $shares = $fileSystem->listShares();
-//        if ($shares != null) {
-//            foreach ($shares as $share) {
-//                /** @var \CloudFS\Share $share */
-//                try {
-//                    $unlocked = $fileSystem->unlockShare($share->getShareKey(), 'password');
-//                } catch (\Exception $error) {
-//                }
-//
-//                try {
-//                    $unlocked = $fileSystem->unlockShare($share->getShareKey(), 'newPassword');
-//                } catch (\Exception $error) {
-//                }
-//
-//                $share->delete();
-//            }
-//        }
 
         /** @var \CloudFS\Share $share */
         $share = $fileSystem->createShare($sharedFolder->getPath());

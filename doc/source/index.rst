@@ -101,7 +101,7 @@ File System Operations
       $items = $fileSystem->getList();
 
 
-- :php:meth:`List Trash Items <Filesystem::listTrash()>`
+- :php:meth:`List Trash Items <Filesystem::listTrash>`
 
   You can list down the contents of Trash folder. Below example shows how to retrieve contents of the trash folder.
  
@@ -110,16 +110,16 @@ File System Operations
       $trash = $fileSystem->listTrash();
 
 
-- :php:meth:`Get Shares <Filesystem::copy>`
+- :php:meth:`Get Shares <Filesystem::listShares>`
 
   You can list down available Shares. Below example shows how to retrieve the list of shares.
  
       ::
 
-      $items = $share->getList();
+      $items = $fileSystem->listShares();
 
 
-- :php:meth:`Create Share <Filesystem::copy>`
+- :php:meth:`Create Share <Filesystem::createShare>`
 
   You can create a share by providing the path as shown in below example. A passworded share cannot be used for anything if the password is not provided. It doesn't make sense to create a share unless the developer has the password.
  
@@ -128,13 +128,13 @@ File System Operations
       $share = $fileSystem->createShare($itemToShare->getPath());
 
 
-- :php:meth:`Get Specific Share <Filesystem::copy>`
+- :php:meth:`Get Specific Share <Filesystem::retrieveShare>`
 
   You can get a share by providing the share key and the password (If available). A passworded share cannot be used for anything if the password is not provided.
  
       ::
 
-      $share = $fileSystem->createShare($shareKey);
+      $share = $fileSystem->browseShare($shareKey);
 
 
 - :php:meth:`Copy Items <Filesystem::copy>`
@@ -177,7 +177,7 @@ Folder Operations
       $items = $folder->get_list();
 
 
-- :php:meth:`Change Folder Attributes <Item::changeAttributes>`
+- :php:meth:`Change Folder Attributes <Folder::changeAttributes>`
 
   You can change the attributes of a Folder by providing a hash map of field names and values. An example is given below.
       ::
@@ -185,7 +185,7 @@ Folder Operations
       $folder->changeAttributes(array('application_data' => $newApplicationData, 'version' => $this->getVersion()));
 
    	 
-- :php:meth:`Copy Folder <Item::copy>`
+- :php:meth:`Copy Folder <Folder::copy>`
 
   You can copy a folder to a new location in the file system. If the destination conflicts with the copying folder you can either RENAME, OVERWRITE or FAIL the operation.
 
@@ -194,7 +194,7 @@ Folder Operations
       $newFolder = $folder->copy($destinationPath, Exists::OVERWRITE);
 
 
-- :php:meth:`Move Folder <Item::move>`
+- :php:meth:`Move Folder <Folder::move>`
 
   You can move a folder to a new location in the file system. If the destination conflicts with the moving folder you can either RENAME, OVERWRITE or FAIL the operation.
 
@@ -203,7 +203,7 @@ Folder Operations
       $newFolder = $folder->move($destinationPath, Exists::OVERWRITE);
 
 
-- :php:meth:`Delete Folder <Item::delete>`
+- :php:meth:`Delete Folder <Folder::delete>`
 
   You can perform the delete operation on a folder. This will return the Success/fail status of the operation.
 
@@ -212,7 +212,7 @@ Folder Operations
       $status = $folder->delete();
 
 
-- :php:meth:`Restore Folder <Item::restore>`
+- :php:meth:`Restore Folder <Folder::restore>`
 
   You can restore a Folder from the trash. The restore method can be set to either FAIL, RESCUE or RECREATE. This will return the Success/failure status of the operation.
 
@@ -227,7 +227,7 @@ Folder Operations
 
       ::
 
-      $subFolder = $folder.create($subFolderName);
+      $subFolder = $folder->create($subFolderName);
 
 
 - :php:meth:`Upload File <Folder::upload>`
@@ -243,7 +243,7 @@ File Operations
 ---------------
 .. note:: You need to create a session in order to perform file operations.
 
-- :php:meth:`Change File Attributes <Item::changeAttributes>`
+- :php:meth:`Change File Attributes <File::changeAttributes>`
 
   You can change the attributes of a File by providing a hash map of field names and values. An example is given below.
       ::
@@ -251,25 +251,25 @@ File Operations
       $file->changeAttributes(array('application_data' => $newApplicationData, 'version' => $this->getVersion()));
 
    	 
-- :php:meth:`Copy File <Item::copy>`
+- :php:meth:`Copy File <File::copy>`
 
   You can copy a file to a new location in the file system. If the destination conflicts with the copying file you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
-      $newFile = $file->copy_to($destinationPath, Exists::OVERWRITE);
+      $newFile = $file->copy($destinationPath, Exists::OVERWRITE);
 
 
-- :php:meth:`Move File <Item::move>`
+- :php:meth:`Move File <File::move>`
 
   You can move a file to a new location in the file system. If the destination conflicts with the moving file you can either RENAME, OVERWRITE or FAIL the operation.
 
       ::
 
-      $newFile = $file->move_to($destinationPath, Exists::OVERWRITE);
+      $newFile = $file->move($destinationPath, Exists::OVERWRITE);
 
 
-- :php:meth:`Delete File <Item::delete>`
+- :php:meth:`Delete File <File::delete>`
 
   You can perform the delete operation on a file. This will return the Success/fail status of the operation.
 
@@ -278,27 +278,18 @@ File Operations
       $status = $file->delete();
 
 
-- :php:meth:`Restore File <Item::restore>`
+- :php:meth:`Restore File <File::restore>`
 
   You can restore files from the trash. The restore method can be set to either FAIL, RESCUE or RECREATE. This will return the Success/failure status of the operation.
 
       ::    
 
-      $status = $file->restore($items, $destination, Exists::Rename);
+      $status = $file->restore($destination, RestoreMethod::FAIL);
 
 
-- :php:meth:`Download File <Filesystem::download>`
+- :php:meth:`Download File <File::download>`
 
   You can download a file to your local file system.
-
-      ::
-
-      $content = $fileSystem->download($file);
-
-	  
-- :php:meth:`Get Download Url <Filesystem::download>`
-
-  You can get the download Url of a File.
 
       ::
 
@@ -316,6 +307,14 @@ Share Operations
       ::
 
       $share->changeAttributes(array('name' => $this->sharedFolderName, 'password' => 'newPassword'), 'password');
+
+
+- :php:meth:`Receive Share <Share::receive>`
+
+  Receives all share files to the given path.
+      ::
+
+      $share->receive($path);
 
  
 - :php:meth:`Delete Share <Share::delete>`

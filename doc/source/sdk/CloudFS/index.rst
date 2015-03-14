@@ -1,4 +1,5 @@
 .. _cloudfs-sdk:
+
 ```````
 CloudFS
 ```````
@@ -7,23 +8,23 @@ CloudFS
 
 .. toctree::
 
-   Folder
-   Exception/index
    Account
-   Utils/index
-   Session
-   BitcasaUtils
-   Credential
-   Audio
-   Container
-   File
-   Photo
    Item
-   Video
-   Filesystem
    Share
-   HTTPConnector
-   ActionHistory
-   RESTAdapter
-   Document
+   Filesystem
+   Utils/index
    User
+   Audio
+   Folder
+   HTTPConnector
+   Document
+   ActionHistory
+   Session
+   Container
+   BitcasaUtils
+   RESTAdapter
+   Credential
+   Exception/index
+   Photo
+   Video
+   File
