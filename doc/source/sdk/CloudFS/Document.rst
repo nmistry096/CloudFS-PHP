@@ -52,12 +52,15 @@ CloudFS\\Document
         :param $ifConflict: Defines what to do when a conflict occurs.
         :returns: The status of the operation.
 
-    .. php:method:: download($localPath)
+    .. php:method:: download($localDestinationPath, $downloadProgressCallback)
 
-        Downloads this file from the cloud.
+        Downloads the file from the cloud.
 
-        :type $localPath: string
-        :param $localPath: The local path where the file is to be downloaded to.
+        :type $localDestinationPath: string
+        :param $localDestinationPath: The local path of the file to download the content.
+        :type $downloadProgressCallback: mixed
+        :param $downloadProgressCallback: The download progress callback function. This function should take 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
+        :returns: The download status.
 
     .. php:method:: versions($startVersion = 0, $endVersion = null, $limit = 10)
 
@@ -158,7 +161,7 @@ CloudFS\\Document
 
         :returns: The file system instance.
 
-    .. php:method:: make($data, $parentPath = null, $filesystem = null)
+    .. php:method:: make($data, $parentPath = null, $filesystem = null, $shared = false)
 
         Retrieves an instance of an item for the supplied data.
 
@@ -168,6 +171,8 @@ CloudFS\\Document
         :param $parentPath: Parent path for the new item.
         :type $filesystem: Filesystem
         :param $filesystem: The file system instance.
+        :type $shared: bool
+        :param $shared: Indicates whether the data belongs to a shared item.
         :returns: An instance of the new item.
 
     .. php:method:: move($destination, $exists = BitcasaConstants::EXISTS_RENAME)

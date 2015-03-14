@@ -55,9 +55,8 @@ class ShareOperationsTest extends BaseTest {
         // /top/shared/shared-file
         $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
         $textFileName = 'shared-file';
-        $uploadedTextFile = $sharedFolder->upload($localUploadDirectory . 'text', $textFileName, Exists::OVERWRITE);
+        $uploadedTextFile = $sharedFolder->upload($localUploadDirectory . 'text', null, Exists::OVERWRITE);
         $this->assertNotNull($uploadedTextFile);
-        $this->assertEquals($textFileName, $uploadedTextFile->getName());
 
         // /top/receive
         $receivedFolder = $topLevelFolder->createFolder($this->receiveFolderName);
@@ -68,6 +67,13 @@ class ShareOperationsTest extends BaseTest {
         $share = $fileSystem->createShare($sharedFolder->getPath());
         $this->assertNotNull($share);
         $this->assertNotEmpty($share->getShareKey());
+
+        $items = $fileSystem->browseShare($share->getShareKey());
+        foreach($items as $item) {
+            if ($item->getType() == FileType::FILE) {
+                $this->assertTrue($item instanceof \CloudFS\ShareFile);
+            }
+        }
 
         $shares = $fileSystem->listShares();
         $this->assertTrue(count($shares) > 0);

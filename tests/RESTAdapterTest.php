@@ -144,62 +144,62 @@ class RESTAdapterTest extends BaseTest {
      * The bitcasa files related tests.
      */
     public function testFiles() {
-        $api = $this->getSession()->getRestAdapter();
-        $level0Folder1 = $this->getItemFromAssociativeArray($api->getList(), $this->level0Folder1Name);
+        $restAdapter = $this->getSession()->getRestAdapter();
+        $level0Folder1 = $this->getItemFromAssociativeArray($restAdapter->getList(), $this->level0Folder1Name);
         $level0Folder1Path = $this->getPathFromAssociativeArray($level0Folder1);
 
-        $level1Folder3 = $api->createFolder($level0Folder1Path, $this->level1Folder3Name, Exists::OVERWRITE);
+        $level1Folder3 = $restAdapter->createFolder($level0Folder1Path, $this->level1Folder3Name, Exists::OVERWRITE);
         $this->assertNotNull($level1Folder3);
         $this->assertEquals($this->level1Folder3Name, $level1Folder3['name']);
         $level1Folder3Path = $this->getPathFromAssociativeArray($level1Folder3, $level0Folder1Path);
 
-        $level1Folder4 = $api->createFolder($level0Folder1Path, $this->level1Folder4Name, Exists::OVERWRITE);
+        $level1Folder4 = $restAdapter->createFolder($level0Folder1Path, $this->level1Folder4Name, Exists::OVERWRITE);
         $this->assertNotNull($level1Folder4);
         $this->assertEquals($this->level1Folder4Name, $level1Folder4['name']);
         $level1Folder4Path = $this->getPathFromAssociativeArray($level1Folder4, $level0Folder1Path);
 
         $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
         $textFileName = 'file1';
-        $uploadedTextFile = $api->uploadFile($level1Folder3Path, $textFileName,
+        $uploadedTextFile = $restAdapter->uploadFile($level1Folder3Path, $textFileName,
             $localUploadDirectory . 'text', Exists::OVERWRITE);
         $this->assertNotNull($uploadedTextFile);
         $this->assertEquals($textFileName, $uploadedTextFile['result']['name']);
         $uploadedTextFilePath = $this->getPathFromAssociativeArray($uploadedTextFile['result'], $level1Folder3Path);
 
-        $meta = $api->getFileMeta($uploadedTextFilePath);
+        $meta = $restAdapter->getFileMeta($uploadedTextFilePath);
         $this->assertEquals($textFileName, $meta['result']['name']);
 
-        $downloadedTextFile = $api->downloadFile($uploadedTextFilePath);
-        $this->assertNotEmpty($downloadedTextFile);
         $localDownloadDirectory = dirname(__FILE__) . '/files/download/';
-        file_put_contents($localDownloadDirectory . 'file1', $downloadedTextFile);
+        $localDestinationPath = $localDownloadDirectory . 'file1';
+        $status = $restAdapter->downloadFile($uploadedTextFilePath, $localDestinationPath, null);
+        $this->assertTrue($status);
 
         $imageFileName = 'image1.jpg';
-        $uploadedImageFile = $api->uploadFile($level1Folder4Path, $imageFileName,
+        $uploadedImageFile = $restAdapter->uploadFile($level1Folder4Path, $imageFileName,
             $localUploadDirectory . 'image.jpg', Exists::OVERWRITE);
         $this->assertNotNull($uploadedImageFile);
         $this->assertEquals($imageFileName, $uploadedImageFile['result']['name']);
         $uploadedImageFilePath = $this->getPathFromAssociativeArray($uploadedImageFile['result'], $level1Folder4Path);
 
-        $downloadedImageFile = $api->downloadFile($uploadedImageFilePath);
-        $this->assertNotEmpty($downloadedImageFile);
-        file_put_contents($localDownloadDirectory . 'image1.jpg', $downloadedImageFile);
+        $localDestinationPath = $localDownloadDirectory . 'image1.jpg';
+        $status = $restAdapter->downloadFile($uploadedImageFilePath, $localDestinationPath, null);
+        $this->assertTrue($status);
 
         $newName = 'Moved' . $uploadedImageFile['result']['name'];
-        $movedFile = $api->moveFile($uploadedImageFilePath, $level1Folder3Path, $newName, Exists::OVERWRITE);
+        $movedFile = $restAdapter->moveFile($uploadedImageFilePath, $level1Folder3Path, $newName, Exists::OVERWRITE);
         $this->assertNotNull($movedFile);
         $this->assertEquals($newName, $movedFile['result']['meta']['name']);
         $newPath = $this->getPathFromAssociativeArray($movedFile['result']['meta'], $level1Folder3Path);
 
-        $copiedFile = $api->copyFile($newPath, $level1Folder4Path, $imageFileName, Exists::OVERWRITE);
+        $copiedFile = $restAdapter->copyFile($newPath, $level1Folder4Path, $imageFileName, Exists::OVERWRITE);
         $this->assertNotNull($copiedFile);
         $this->assertEquals($imageFileName, $copiedFile['result']['meta']['name']);
 
-        $deletedFile = $api->deleteFile($newPath);
+        $deletedFile = $restAdapter->deleteFile($newPath);
         $this->assertTrue($deletedFile['result']['success']);
 
-        $this->assertNotNull($this->getItemFromAssociativeArray($api->getList($level1Folder3Path), $textFileName));
-        $this->assertNotNull($this->getItemFromAssociativeArray($api->getList($level1Folder4Path), $imageFileName));
+        $this->assertNotNull($this->getItemFromAssociativeArray($restAdapter->getList($level1Folder3Path), $textFileName));
+        $this->assertNotNull($this->getItemFromAssociativeArray($restAdapter->getList($level1Folder4Path), $imageFileName));
     }
 
 }

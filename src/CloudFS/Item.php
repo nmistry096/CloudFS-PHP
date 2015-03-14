@@ -177,9 +177,10 @@ class Item {
      * @param array $data The data needed to create an item.
      * @param string $parentPath Parent path for the new item.
      * @param Filesystem $filesystem The file system instance.
+     * @param bool $shared Indicates whether the data belongs to a shared item.
      * @return An instance of the new item.
      */
-    public static function make($data, $parentPath = null, $filesystem = null) {
+    public static function make($data, $parentPath = null, $filesystem = null, $shared = false) {
         $item = null;
         if (count($data) == 0) {
             return null;
@@ -188,41 +189,51 @@ class Item {
             return null;
         }
 
-        if ($data["type"] == FileType::FOLDER || $data['type']  == FileType::ROOT) {
-            $item = new Folder($data, $parentPath, $filesystem);
-        } else if (isset($data['mime'])) {
-            $t = explode("/", $data['mime']);
-            switch ($t[0]) {
-                case 'image':
-                    $item = new Photo($data, $parentPath, $filesystem);
-                    break;
+        if ($shared) {
+            if ($data["type"] == FileType::FILE) {
+                $item = new ShareFile($data, $parentPath, $filesystem);
+            }
+            else {
+                $item = new ShareFolder($data, $parentPath, $filesystem);
+            }
+        }
+        else {
+            if ($data["type"] == FileType::FOLDER || $data['type'] == FileType::ROOT) {
+                $item = new Folder($data, $parentPath, $filesystem);
+            } else if (isset($data['mime'])) {
+                $t = explode("/", $data['mime']);
+                switch ($t[0]) {
+                    case 'image':
+                        $item = new Photo($data, $parentPath, $filesystem);
+                        break;
 
-                case 'audio':
-                    $item = new Audio($data, $parentPath, $filesystem);
-                    break;
+                    case 'audio':
+                        $item = new Audio($data, $parentPath, $filesystem);
+                        break;
 
-                case 'video':
-                    $item = new Video($data, $parentPath, $filesystem);
-                    break;
+                    case 'video':
+                        $item = new Video($data, $parentPath, $filesystem);
+                        break;
 
-                case 'text':
-                    $item = new Document($data, $parentPath, $filesystem);
-                    break;
-
-                case 'application':
-                    if ($t[1] == 'pdf') {
+                    case 'text':
                         $item = new Document($data, $parentPath, $filesystem);
                         break;
-                    }
 
-                default:
-                    $item = new File($data, $parentPath, $filesystem);
-                    break;
+                    case 'application':
+                        if ($t[1] == 'pdf') {
+                            $item = new Document($data, $parentPath, $filesystem);
+                            break;
+                        }
+
+                    default:
+                        $item = new File($data, $parentPath, $filesystem);
+                        break;
+                }
+            } else if ($data["type"] == FileType::FILE) {
+                $item = new File($data, $parentPath, $filesystem);
+            } else {
+                $item = new Container($data, $parentPath, $filesystem);
             }
-        } else if($data["type"] == FileType::FILE) {
-            $item = new File($data, $parentPath, $filesystem);
-        } else {
-            $item = new Container($data, $parentPath, $filesystem);
         }
 
         return $item;

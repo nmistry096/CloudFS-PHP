@@ -1,14 +1,14 @@
----------------
-CloudFS\\Folder
----------------
+--------------------
+CloudFS\\ShareFolder
+--------------------
 
 .. php:namespace: CloudFS
 
-.. php:class:: Folder
+.. php:class:: ShareFolder
 
     .. php:method:: __construct($data, $parentPath, $filesystem)
 
-        Initializes a new instance of Folder.
+        Initializes a new instance of shared folder.
 
         :type $data: array
         :param $data: The item data.

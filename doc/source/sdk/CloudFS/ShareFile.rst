@@ -1,14 +1,14 @@
----------------
-CloudFS\\Folder
----------------
+------------------
+CloudFS\\ShareFile
+------------------
 
 .. php:namespace: CloudFS
 
-.. php:class:: Folder
+.. php:class:: ShareFile
 
     .. php:method:: __construct($data, $parentPath, $filesystem)
 
-        Initializes a new instance of Folder.
+        Initializes a new instance of shared file.
 
         :type $data: array
         :param $data: The item data.
@@ -17,33 +17,69 @@ CloudFS\\Folder
         :type $filesystem: \CloudFS\Filesystem
         :param $filesystem: The file system instance.
 
-    .. php:method:: createFolder($name, $exists = Exists::OVERWRITE)
+    .. php:method:: getExtension()
 
-        Creates a folder item under this item with the supplied name.
+        Retrieves the extension of this item.
 
-        :type $name: string
-        :param $name: The name of the folder being created.
-        :type $exists: string
-        :param $exists: The action to take if the folder already exists.
-        :returns: Instance of the newly created folder.
+        :returns: The extension of this item.
 
-    .. php:method:: upload($filesystemPath, $uploadProgressCallback, $exists = Exists::FAIL)
+    .. php:method:: getMime()
 
-        Uploads a file to the folder.
+        Retrieves the mime type of this item.
 
-        :type $filesystemPath: string
-        :param $filesystemPath: The path of the local file upload.
-        :type $uploadProgressCallback: mixed
-        :param $uploadProgressCallback: The upload progress callback function. This function should take 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
-        :type $exists: string
-        :param $exists: The action to take if the file already exists. .
-        :returns: A file instance representing the uploaded file..
+        :returns: The mime type of this item.
 
-    .. php:method:: getList()
+    .. php:method:: setMime($newMime)
 
-        Retrieves the item list at this items path.
+        Sets the Mime type of this item.
 
-        :returns: The item list array.
+        :type $newMime: string
+        :param $newMime: The new Mime type of the item.
+
+    .. php:method:: getSize()
+
+        Retrieves the size of this item.
+
+        :returns: The size of this item.
+
+    .. php:method:: changeAttributes($values, $ifConflict = VersionExists::FAIL)
+
+        Alters the specified attributes.
+
+        :type $values: array
+        :param $values: The values that need to be changed.
+        :type $ifConflict: int
+        :param $ifConflict: Defines what to do when a conflict occurs.
+        :returns: The status of the operation.
+
+    .. php:method:: download($localDestinationPath, $downloadProgressCallback)
+
+        Downloads the file from the cloud.
+
+        :type $localDestinationPath: string
+        :param $localDestinationPath: The local path of the file to download the content.
+        :type $downloadProgressCallback: mixed
+        :param $downloadProgressCallback: The download progress callback function. This function should take 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
+        :returns: The download status.
+
+    .. php:method:: versions($startVersion = 0, $endVersion = null, $limit = 10)
+
+        Returns the metadata for selected versions of a file as
+        recorded in the History after successful metadata changes.
+
+        :type $startVersion: int
+        :param $startVersion: The version from which the version retrieval should start.
+        :type $endVersion: int
+        :param $endVersion: Up to which version the version retrieval should be done.
+        :type $limit: int
+        :param $limit: The number of versions to be retrieved limit.
+        :returns: The versions list.
+
+    .. php:method:: read()
+
+        Read the file stream.
+
+        :returns: The file stream.
 
     .. php:method:: getName()
 
@@ -138,16 +174,6 @@ CloudFS\\Folder
         :type $shared: bool
         :param $shared: Indicates whether the data belongs to a shared item.
         :returns: An instance of the new item.
-
-    .. php:method:: changeAttributes($values, $ifConflict = VersionExists::FAIL)
-
-        Alters the specified attributes.
-
-        :type $values: array
-        :param $values: The values that need to be changed.
-        :type $ifConflict: int
-        :param $ifConflict: Defines what to do when a conflict occurs.
-        :returns: The status of the operation.
 
     .. php:method:: move($destination, $exists = BitcasaConstants::EXISTS_RENAME)
 

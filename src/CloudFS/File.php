@@ -80,13 +80,15 @@ class File extends Item {
     }
 
     /**
-     * Downloads this file from the cloud.
+     * Downloads the file from the cloud.
      *
-     * @param string $localPath The local path where the file is to be downloaded to.
+     * @param string $localDestinationPath The local path of the file to download the content.
+     * @param mixed $downloadProgressCallback The download progress callback function. This function should take
+     * 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
+     * @return The download status.
      */
-    public function download($localPath) {
-        $content = $this->filesystem()->download($this, $localPath);
-        file_put_contents($localPath, $content);
+    public function download($localDestinationPath, $downloadProgressCallback) {
+        return $this->filesystem()->download($this->getPath(), $localDestinationPath, $downloadProgressCallback);
     }
 
     /**

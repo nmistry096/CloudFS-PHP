@@ -157,6 +157,39 @@ class HTTPConnector {
 	}
 
 	/**
+	 * Downloads the file at specified url.
+	 *
+	 * @param string $url The url for the resource.
+	 * @param string $localDestinationPath The path of the local file to download the content.
+	 * @param mixed $downloadProgressCallback The download progress callback function. This function should take
+	 * 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
+	 * @return The response status.
+	 */
+	public function download($url, $localDestinationPath, $downloadProgressCallback) {
+		$this->setup();
+		$targetFile = fopen($localDestinationPath, 'w');
+		curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
+		if (!empty($downloadProgressCallback)) {
+			curl_setopt($this->curl, CURLOPT_NOPROGRESS, false);
+			curl_setopt($this->curl, CURLOPT_PROGRESSFUNCTION, $downloadProgressCallback);
+		}
+		curl_setopt($this->curl, CURLOPT_FILE, $targetFile);
+
+		curl_setopt_array($this->curl, array(CURLOPT_URL => $url,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_SSL_VERIFYPEER => false,
+			CURLOPT_SSL_VERIFYHOST => 0));
+
+		curl_setopt($this->curl, CURLOPT_HTTPHEADER, $this->getHeaders());
+
+		$response = curl_exec($this->curl);
+		fclose($targetFile);
+		curl_close($this->curl);
+
+		return $response;
+	}
+
+	/**
 	 * Reads and retrieves the data of the http request.
 	 *
 	 * @param mixed $curl The curl commands.
@@ -201,10 +234,12 @@ class HTTPConnector {
 	 * @param string $name The filename to be posted.
 	 * @param string $path The path of the item to be posted.
 	 * @param string $exists Specifies action to take if item exists.
+	 * @param mixed $uploadProgressCallback The upload progress callback function. This function should take
+	 * 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
 	 * @return The posts http status.
 	 * @throws Exception
 	 */
-	public function postMultipart($url, $name, $path, $exists) {
+	public function postMultipart($url, $name, $path, $exists, $uploadProgressCallback = null) {
 		$bdry = dechex(time(0));
 		$this->is_raw = true;
 		$this->boundary = "--" . $bdry;
@@ -220,6 +255,10 @@ class HTTPConnector {
 		assert(curl_setopt($this->curl, CURLOPT_URL, $url));
 		assert(curl_setopt($this->curl, CURLOPT_POST, 1));
 		assert(curl_setopt($this->curl, CURLOPT_READFUNCTION, array($this, 'readFunction')));
+		if (!empty($uploadProgressCallback)) {
+			curl_setopt($this->curl, CURLOPT_NOPROGRESS, false);
+			curl_setopt($this->curl, CURLOPT_PROGRESSFUNCTION, $uploadProgressCallback);
+		}
 		$len = strlen($this->postdata) + strlen("\r\n" . $this->boundary . "--\r\n") + filesize($path);
 		$this->addHeader("Content-Length", $len);
 		

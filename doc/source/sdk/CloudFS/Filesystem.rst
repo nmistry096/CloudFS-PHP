@@ -126,7 +126,7 @@ CloudFS\\Filesystem
         :param $values:
         :param $ifConflict:
 
-    .. php:method:: upload($parent, $path, $name = null, $exists = Exists::OVERWRITE)
+    .. php:method:: upload($parent, $path, $name = null, $exists = Exists::OVERWRITE, $uploadProgressCallback = null)
 
         Upload a file on to the given path.
 
@@ -138,17 +138,21 @@ CloudFS\\Filesystem
         :param $name: The name under which the file should be saved. If null local file name will be used.
         :type $exists: string
         :param $exists: The action to take if the item already exists.
+        :type $uploadProgressCallback: mixed
+        :param $uploadProgressCallback: The upload progress callback function. This function should take 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
         :returns: An instance of the uploaded item.
 
-    .. php:method:: download($item, $file = null)
+    .. php:method:: download($path, $localDestinationPath, $downloadProgressCallback)
 
         Download an item from the cloud storage.
 
-        :type $item: Item
-        :param $item: The file to be downloaded.
-        :type $file: mixed
-        :param $file:
-        :returns: The file content.
+        :type $path: string
+        :param $path: The item path.
+        :type $localDestinationPath: string
+        :param $localDestinationPath: The local path of the file to download the content.
+        :type $downloadProgressCallback: mixed
+        :param $downloadProgressCallback: The download progress callback function. This function should take 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
+        :returns: The download status.
 
     .. php:method:: restore($pathId, $destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null)
 

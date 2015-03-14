@@ -305,9 +305,11 @@ class Filesystem {
 	 * @param string $path The upload file path.
 	 * @param string $name The name under which the file should be saved. If null local file name will be used.
 	 * @param string $exists The action to take if the item already exists.
+	 * @param mixed $uploadProgressCallback The upload progress callback function. This function should take
+	 * 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
 	 * @return An instance of the uploaded item.
 	 */
-	public function upload($parent, $path, $name = null, $exists = Exists::OVERWRITE) {
+	public function upload($parent, $path, $name = null, $exists = Exists::OVERWRITE, $uploadProgressCallback = null) {
 		$parentPath = "/";
 		if (is_string($parent)) {
 			$parentPath = $parent;
@@ -319,25 +321,22 @@ class Filesystem {
 		if ($name == null) {
 			$name = basename($path);
 		}
-		$res = $this->restAdapter->uploadFile($parentPath, $name, $fp, $exists);
+		$res = $this->restAdapter->uploadFile($parentPath, $name, $fp, $exists, $uploadProgressCallback);
 		return Item::make($res['result'], $parentPath, $this);
 	}
 
 	/**
 	 * Download an item from the cloud storage.
 	 *
-	 * @param Item $item The file to be downloaded.
-	 * @param mixed $file
-	 * @return The file content.
+	 * @param string $path The item path.
+	 * @param string $localDestinationPath The local path of the file to download the content.
+	 * @param mixed $downloadProgressCallback The download progress callback function. This function should take
+	 * 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
+	 * @return The download status.
 	 * @throws InvalidArgument
 	 */
-	public function download($item, $file = null) {
-		//assert_non_null($item, 1);
-		$path = $item;
-		if (!is_string($item)) {
-			$path = $item->getPath();
-		}
-		return $this->restAdapter->downloadFile($path, $file);
+	public function download($path, $localDestinationPath, $downloadProgressCallback) {
+		return $this->restAdapter->downloadFile($path, $localDestinationPath, $downloadProgressCallback);
 	}
 
 	/**
@@ -417,7 +416,7 @@ class Filesystem {
 		$response = $this->restAdapter->browseShare($shareKey);
 		if (!empty($response) && !empty($response['result'])) {
 			foreach ($response['result']['items'] as $item) {
-				$items[] = Item::make($item, null, $this);
+				$items[] = Item::make($item, null, $this, true);
 			}
 		}
 

@@ -77,6 +77,18 @@ CloudFS\\HTTPConnector
         :param $url: The url for the http post.
         :returns: The posts http status.
 
+    .. php:method:: download($url, $localDestinationPath, $downloadProgressCallback)
+
+        Downloads the file at specified url.
+
+        :type $url: string
+        :param $url: The url for the resource.
+        :type $localDestinationPath: string
+        :param $localDestinationPath: The path of the local file to download the content.
+        :type $downloadProgressCallback: mixed
+        :param $downloadProgressCallback: The download progress callback function. This function should take 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
+        :returns: The response status.
+
     .. php:method:: readFunction($curl, $fd, $length)
 
         Reads and retrieves the data of the http request.
@@ -88,7 +100,7 @@ CloudFS\\HTTPConnector
         :param $length: Variable to retrieve the http request data of a given length.
         :returns: The http request data.
 
-    .. php:method:: postMultipart($url, $name, $path, $exists)
+    .. php:method:: postMultipart($url, $name, $path, $exists, $uploadProgressCallback = null)
 
         Posts the http request with multiple parts to a given url.
 
@@ -100,6 +112,8 @@ CloudFS\\HTTPConnector
         :param $path: The path of the item to be posted.
         :type $exists: string
         :param $exists: Specifies action to take if item exists.
+        :type $uploadProgressCallback: mixed
+        :param $uploadProgressCallback: The upload progress callback function. This function should take 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
         :returns: The posts http status.
 
     .. php:method:: put($url)

@@ -26,7 +26,7 @@ class FileSystemTest extends BaseTest {
     }
 
     /**
-     * Clears user file system.
+     * Clears the root folders.
      */
     public function testDeleteRootLevelFolder() {
         /** @var \CloudFS\Filesystem $fileSystem */
@@ -147,25 +147,23 @@ class FileSystemTest extends BaseTest {
 
         $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
         $textFileName = 'file1';
-        $uploadedTextFile = $level1Folder3->upload($localUploadDirectory . 'text', $textFileName, Exists::OVERWRITE);
+        $uploadedTextFile = $level1Folder3->upload($localUploadDirectory . 'text', null, Exists::OVERWRITE);
         $this->assertNotNull($uploadedTextFile);
-        $this->assertEquals($textFileName, $uploadedTextFile->getName());
 
         $file = $fileSystem->getFile($uploadedTextFile->getPath());
-        //$item = $fileSystem->getItem($uploadedTextFile->getPath());
-        $this->assertEquals($textFileName, $file->getName());
-        //$this->assertEquals($textFileName, $item->getName());
+        $this->assertNotNull($file);
 
         $localDownloadDirectory = dirname(__FILE__) . '/files/download/';
 
-        $uploadedTextFile->download($localDownloadDirectory . 'image-download.jpg');
+        $uploadedTextFile->download($localDownloadDirectory . 'image-download.jpg', null);
         $content = file_get_contents($localDownloadDirectory . 'image-download.jpg');
         $this->assertNotEmpty($content);
 
-        $downloadedTextFile = $fileSystem->download($uploadedTextFile);
-        $this->assertNotEmpty($downloadedTextFile);
-
-        file_put_contents($localDownloadDirectory . 'file1', $downloadedTextFile);
+        $localDestinationPath = $localDownloadDirectory . 'file1';
+        $status = $fileSystem->download($uploadedTextFile->getPath(), $localDestinationPath, null);
+        $this->assertTrue($status);
+        $content = file_get_contents($localDestinationPath);
+        $this->assertNotEmpty($content);
 
         $imageFileName = 'image1.jpg';
         $uploadedImageFile = $fileSystem->upload($level1Folder4->getPath(),
@@ -179,9 +177,11 @@ class FileSystemTest extends BaseTest {
 
         $content = $uploadedImageFile->read();
 
-        $downloadedImageFile = $fileSystem->download($uploadedImageFile);
-        $this->assertNotEmpty($downloadedImageFile);
-        file_put_contents($localDownloadDirectory . 'image1.jpg', $downloadedImageFile);
+        $localDestinationPath = $localDownloadDirectory . 'image1.jpg';
+        $status = $fileSystem->download($uploadedImageFile->getPath(), $localDestinationPath, null);
+        $this->assertTrue($status);
+        $content = file_get_contents($localDestinationPath);
+        $this->assertNotEmpty($content);
 
         $movedFile = $uploadedImageFile->move($level1Folder3->getPath(), Exists::OVERWRITE);
         $this->assertNotNull($movedFile);
@@ -200,9 +200,8 @@ class FileSystemTest extends BaseTest {
         $result = $fileSystem->listTrash();
         $this->assertNotNull($result);
 
-
-        $this->assertNotNull($this->getItemFromIndexArray($fileSystem->getList($level1Folder3->getPath()), $textFileName));
-        $this->assertNotNull($this->getItemFromIndexArray($fileSystem->getList($level1Folder4->getPath()), $imageFileName));
+        $this->assertTrue(count($fileSystem->getList($level1Folder3->getPath())) > 0);
+        $this->assertTrue(count($fileSystem->getList($level1Folder4->getPath())) > 0);
     }
 
 
@@ -224,7 +223,7 @@ class FileSystemTest extends BaseTest {
 
         $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
         /** @var \CloudFS\File $file */
-        $file = $folder->upload($localUploadDirectory . 'text', 'original-name', Exists::OVERWRITE);
+        $file = $folder->upload($localUploadDirectory . 'text', null, Exists::OVERWRITE);
         $file->setName('altered-name');
 
         $file = $fileSystem->getFile($file->getPath());
@@ -255,12 +254,54 @@ class FileSystemTest extends BaseTest {
         $root = $fileSystem->root();
         $folder = $root->createFolder($this->level0Folder1Name);
         $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
-        $articleFile = $folder->upload($localUploadDirectory . 'text2', 'original-article', Exists::OVERWRITE);
+        $articleFile = $folder->upload($localUploadDirectory . 'text2', null, Exists::OVERWRITE);
         $articleFile->delete();
         $response = $articleFile->restore($articleFile->getPath());
         $this->assertTrue($response);
-        $articleFileContent = $fileSystem->download($articleFile);
-        $this->assertNotEmpty($articleFileContent);
 
+        $localDestinationPath = dirname(__FILE__) . '/files/download/article';
+        $articleFileContent = $fileSystem->download($articleFile->getPath(), $localDestinationPath, null);
+        $this->assertNotEmpty($articleFileContent);
+    }
+
+    public function testDownloadFile() {
+        $fileSystem = $this->getSession()->filesystem();
+        $root = $fileSystem->root();
+        $this->assertNotNull($root);
+
+        $level0Folder1 = $root->createFolder($this->level0Folder1Name);
+        $this->assertNotNull($level0Folder1);
+        $this->assertEquals($this->level0Folder1Name, $level0Folder1->getName());
+
+        $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
+        $uploadedTextFile = $level0Folder1->upload($localUploadDirectory . 'large',
+            array($this, 'uploadProgressCallback'), Exists::OVERWRITE);
+        $this->assertNotNull($uploadedTextFile);
+
+        $localDestinationPath = dirname(__FILE__) . '/files/download/large';
+        $status = $uploadedTextFile->download($localDestinationPath, array($this, 'downloadProgressCallback'));
+        $this->assertTrue($status);
+
+        $level0Folder1->delete(true, true);
+    }
+
+    function uploadProgressCallback($downloadSize, $downloadedSize, $uploadSize, $uploadedSize)
+    {
+        if ($uploadSize == 0 ) {
+            $progress = 0;
+        }
+        else {
+            $progress = round($uploadedSize * 100 / $uploadSize);
+        }
+    }
+
+    function downloadProgressCallback($downloadSize, $downloadedSize, $uploadSize, $uploadedSize)
+    {
+        if ($downloadSize == 0 ) {
+            $progress = 0;
+        }
+        else {
+            $progress = round($downloadedSize * 100 / $downloadSize);
+        }
     }
 }
