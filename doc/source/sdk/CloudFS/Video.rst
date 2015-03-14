@@ -65,11 +65,17 @@ CloudFS\\Video
         recorded in the History after successful metadata changes.
 
         :type $startVersion: int
-        :param $startVersion:
+        :param $startVersion: The f
         :type $endVersion: null
         :param $endVersion:
         :type $limit: int
         :param $limit:
+        :returns: mixed
+
+    .. php:method:: read()
+
+        read the file stream.
+
         :returns: mixed
 
     .. php:method:: getName()
@@ -204,12 +210,14 @@ CloudFS\\Video
         :param $debug: Debug flag.
         :returns: The success/fail response of the save operation.
 
-    .. php:method:: restore($destination)
+    .. php:method:: restore($destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null)
 
         Restores this item to the given destination.
 
         :type $destination: string
         :param $destination: The destination of the item restore.
+        :param $restoreMethod:
+        :param $restoreArgument:
         :returns: The success/fail response of the restore operation.
 
     .. php:method:: history()
