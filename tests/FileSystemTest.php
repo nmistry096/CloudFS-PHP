@@ -47,6 +47,8 @@ class FileSystemTest extends BaseTest {
      * The create root folder test.
      */
     public function testCreateRootFolder() {
+        $localDestinationDir = dirname(__FILE__) . '/files/download/';
+        $this->checkedAndCreateDirName($localDestinationDir);
         $fileSystem = $this->getSession()->filesystem();
         $items = $fileSystem->getList('/');
         $level0Folder1 = $this->getItemFromIndexArray($items, $this->level0Folder1Name);
@@ -146,6 +148,7 @@ class FileSystemTest extends BaseTest {
         $this->assertEquals($this->level1Folder4Name, $level1Folder4->getName());
 
         $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
+        $this->checkedAndCreateDirName($localUploadDirectory);
         $textFileName = 'file1';
         $uploadedTextFile = $level1Folder3->upload($localUploadDirectory . 'text', null, Exists::OVERWRITE);
         $this->assertNotNull($uploadedTextFile);
@@ -222,6 +225,7 @@ class FileSystemTest extends BaseTest {
         $this->assertEquals($newName, $folder->getName());
 
         $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
+        $this->checkedAndCreateDirName($localUploadDirectory);
         /** @var \CloudFS\File $file */
         $file = $folder->upload($localUploadDirectory . 'text', null, Exists::OVERWRITE);
         $file->setName('altered-name');
@@ -254,6 +258,7 @@ class FileSystemTest extends BaseTest {
         $root = $fileSystem->root();
         $folder = $root->createFolder($this->level0Folder1Name);
         $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
+        $this->checkedAndCreateDirName($localUploadDirectory);
         $articleFile = $folder->upload($localUploadDirectory . 'text2', null, Exists::OVERWRITE);
         $articleFile->delete();
         $response = $articleFile->restore($articleFile->getPath());

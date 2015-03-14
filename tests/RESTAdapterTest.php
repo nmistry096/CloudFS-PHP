@@ -144,6 +144,8 @@ class RESTAdapterTest extends BaseTest {
      * The bitcasa files related tests.
      */
     public function testFiles() {
+        $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
+        $this->checkedAndCreateDirName($localUploadDirectory);
         $restAdapter = $this->getSession()->getRestAdapter();
         $level0Folder1 = $this->getItemFromAssociativeArray($restAdapter->getList(), $this->level0Folder1Name);
         $level0Folder1Path = $this->getPathFromAssociativeArray($level0Folder1);
