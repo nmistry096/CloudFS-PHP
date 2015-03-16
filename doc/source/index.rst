@@ -174,7 +174,7 @@ Folder Operations
 
       ::
 
-      $items = $folder->get_list();
+      $items = $folder->getList();
 
 
 - :php:meth:`Change Folder Attributes <Folder::changeAttributes>`
