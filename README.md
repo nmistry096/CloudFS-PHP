@@ -47,7 +47,7 @@ Getting the contents of root folder
 $items = $root->getList();
 ```
 
-Creating a sub folder under root folder
+Creating a subfolder under root folder
 
 ```php
 $folder = $root->createFolder($folderName);
@@ -55,14 +55,14 @@ $folder = $root->createFolder($folderName);
 Uploading a file to a folder
 
 ```php
-$folder->upload($localFilePath, $uploadProgressCallback, Exists::OVERWRITE);
+$folder->upload($pathOfFile, $fileName, Exists::OVERWRITE);
 ```
 
 Download a file from a folder
 
 ```php
 $file = $folder->getFile($filePath);
-$file->download($localDestinationPath, $downloadProgressCallback);
+$file->download($localDownloadDirectory . $fileName);
 ```
 
 Deleting a file or folder
