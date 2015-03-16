@@ -50,6 +50,7 @@ class File extends Item {
      */
     public function setMime($newMime) {
         $this->mime = $newMime;
+        $this->changeAttributes(array('mime' => $newMime, 'version' => $this->getVersion()));
     }
 
     /**
