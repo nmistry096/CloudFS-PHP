@@ -234,9 +234,9 @@ CloudFS\\RESTAdapter
         :param $shareKey: The supplied share key.
         :returns: An array of items for the share key.
 
-    .. php:method:: retrieveShare($shareKey, $path, $exists = Exists::OVERWRITE)
+    .. php:method:: receiveShare($shareKey, $path, $exists = Exists::OVERWRITE)
 
-        Retrieve the share item for a given share key to a path supplied.
+        Receives the share item for a given share key to a path supplied.
 
         :type $shareKey: string
         :param $shareKey: The supplied share key.

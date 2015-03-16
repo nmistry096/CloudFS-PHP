@@ -185,7 +185,7 @@ class Share {
      * @return bool The success/fail response of the receive operation.
      */
     public function receive($path = '/', $exists = Exists::RENAME) {
-        return $this->fileSystem->retrieveShare($this->shareKey, $path, $exists);
+        return $this->fileSystem->receiveShare($this->shareKey, $path, $exists);
     }
 
     /**

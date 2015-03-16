@@ -186,6 +186,16 @@ CloudFS\\Filesystem
 
         :returns: The share list.
 
+    .. php:method:: retrieveShare($shareKey, $password = null)
+
+        Retrieves the shared item for the specified key.
+
+        :type $shareKey: string
+        :param $shareKey: The share key.
+        :type $password: string
+        :param $password: The password for the share.
+        :returns: An instance of share.
+
     .. php:method:: createShare($path, $password = null)
 
         Create a share of an item at the supplied path.
@@ -212,9 +222,9 @@ CloudFS\\Filesystem
         :param $shareKey: The supplied share key.
         :returns: The success/failure status of the delete operation.
 
-    .. php:method:: retrieveShare($shareKey, $path, $exists = Exists::RENAME)
+    .. php:method:: receiveShare($shareKey, $path, $exists = Exists::RENAME)
 
-        Retrieve the share item for a given share key to a path supplied.
+        Receive the share item for a given share key to a path supplied.
 
         :type $shareKey: string
         :param $shareKey: The supplied share key.
