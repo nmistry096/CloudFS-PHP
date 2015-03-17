@@ -614,14 +614,14 @@ class RESTAdapter {
 	}
 
     /**
-     * Retrieve the share item for a given share key to a path supplied.
+     * Receives the share item for a given share key to a path supplied.
      *
      * @param string $shareKey The supplied share key.
      * @param string $path The path to which the share files are retrieved to.
      * @param string $exists The action to take if the item already exists.
      * @return The success/failure status of the retrieve operation.
      */
-	public function retrieveShare($shareKey, $path, $exists = Exists::OVERWRITE) {
+	public function receiveShare($shareKey, $path, $exists = Exists::OVERWRITE) {
 		$success = false;
 		if (!empty($shareKey) && !empty($path)) {
 			$connection = new HTTPConnector($this->credential->getSession());
@@ -818,6 +818,17 @@ class RESTAdapter {
         return $resp;
     }
 
+	/**
+	 * Gets the download url for the specified file.
+	 *
+	 * @param string $path The file path.
+	 * @return The download url for the specified file.
+	 */
+	public function downloadUrl($path) {
+		$connection = new HTTPConnector($this->credential->getSession());
+		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path);
+		return $connection->getRedirectUrl($url);
+	}
 }
 
 ?>

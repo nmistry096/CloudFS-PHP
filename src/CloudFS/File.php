@@ -50,6 +50,7 @@ class File extends Item {
      */
     public function setMime($newMime) {
         $this->mime = $newMime;
+        $this->changeAttributes(array('mime' => $newMime, 'version' => $this->getVersion()));
     }
 
     /**
@@ -110,6 +111,13 @@ class File extends Item {
      */
     public function read(){
         return $this->filesystem()->fileRead($this);
+    }
+
+    /**
+     * Gets the download url for the file.
+     */
+    public function downloadUrl() {
+        return $this->filesystem()->downloadUrl($this->getPath());
     }
 
 }

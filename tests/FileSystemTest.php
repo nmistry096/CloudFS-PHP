@@ -279,9 +279,20 @@ class FileSystemTest extends BaseTest {
         $this->assertEquals($this->level0Folder1Name, $level0Folder1->getName());
 
         $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
+
+        $uploadImageFile = $level0Folder1->upload($localUploadDirectory . 'pic1.jpg',
+            array($this, 'uploadProgressCallback'), Exists::OVERWRITE);
+        $this->assertEquals('pic1.jpg', $uploadImageFile->getName());
+
+        $downloadUrl = $uploadImageFile->downloadUrl();
+        $this->assertNotEmpty($downloadUrl);
+
         $uploadedTextFile = $level0Folder1->upload($localUploadDirectory . 'large',
             array($this, 'uploadProgressCallback'), Exists::OVERWRITE);
         $this->assertNotNull($uploadedTextFile);
+
+        $localDestinationPath = dirname(__FILE__) . '/files/download/' . $uploadImageFile->getName();
+        $status = $uploadImageFile->download($localDestinationPath, array($this, 'downloadProgressCallback'));
 
         $localDestinationPath = dirname(__FILE__) . '/files/download/large';
         $status = $uploadedTextFile->download($localDestinationPath, array($this, 'downloadProgressCallback'));

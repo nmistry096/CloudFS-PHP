@@ -89,6 +89,13 @@ CloudFS\\HTTPConnector
         :param $downloadProgressCallback: The download progress callback function. This function should take 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
         :returns: The response status.
 
+    .. php:method:: getRedirectUrl($url)
+
+        Gets the redirect url for the specified url.
+
+        :param $url:
+        :returns: The redirect url if exist or an empty string.
+
     .. php:method:: readFunction($curl, $fd, $length)
 
         Reads and retrieves the data of the http request.

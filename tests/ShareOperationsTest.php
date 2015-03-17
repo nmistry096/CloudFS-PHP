@@ -78,6 +78,10 @@ class ShareOperationsTest extends BaseTest {
         $shares = $fileSystem->listShares();
         $this->assertTrue(count($shares) > 0);
 
+        $sharedItem = $fileSystem->retrieveShare($share->getShareKey());
+        $this->assertNotNull($sharedItem);
+        $this->assertEquals($share->getShareKey(), $sharedItem->getShareKey());
+
         $items = $share->getList();
         $this->assertTrue(count($items) > 0);
 

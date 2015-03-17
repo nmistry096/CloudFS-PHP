@@ -81,6 +81,10 @@ CloudFS\\Document
 
         :returns: The file stream.
 
+    .. php:method:: downloadUrl()
+
+        Gets the download url for the file.
+
     .. php:method:: getName()
 
         Retrieves the item name.

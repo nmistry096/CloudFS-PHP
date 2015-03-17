@@ -387,6 +387,27 @@ class Filesystem {
 		return $shares;
 	}
 
+	/**
+	 * Retrieves the shared item for the specified key.
+	 *
+	 * @param string $shareKey The share key.
+	 * @param string $password The password for the share.
+	 * @return An instance of share.
+	 */
+	public function retrieveShare($shareKey, $password = null) {
+		$shares = $this->listShares();
+		$sharedItem = null;
+		foreach($shares as $share) {
+			/** @var \CloudFS\Share $share */
+			if ($share->getShareKey() == $shareKey) {
+				$sharedItem = $share;
+				break;
+			}
+		}
+
+		return $sharedItem;
+	}
+
     /**
      * Create a share of an item at the supplied path.
      *
@@ -434,15 +455,15 @@ class Filesystem {
 	}
 
     /**
-     * Retrieve the share item for a given share key to a path supplied.
+     * Receive the share item for a given share key to a path supplied.
      *
      * @param string $shareKey The supplied share key.
      * @param string $path The path to which the share files are retrieved to.
      * @param string $exists The action to take if the item already exists.
      * @return The success/failure status of the retrieve operation.
      */
-	public function retrieveShare($shareKey, $path, $exists = Exists::RENAME) {
-		return $this->restAdapter->retrieveShare($shareKey, $path, $exists);
+	public function receiveShare($shareKey, $path, $exists = Exists::RENAME) {
+		return $this->restAdapter->receiveShare($shareKey, $path, $exists);
 	}
 
     /**
@@ -505,6 +526,16 @@ class Filesystem {
 	 */
 	public function listTrash(){
 		return $this->restAdapter->listTrash();
+	}
+
+	/**
+	 * Gets the url for the file at specified path.
+	 *
+	 * @param string $path The file path.
+	 * @return The download url.
+	 */
+	public function downloadUrl($path) {
+		return $this->restAdapter->downloadUrl($path);
 	}
 
 }
