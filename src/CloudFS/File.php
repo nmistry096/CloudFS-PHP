@@ -112,4 +112,11 @@ class File extends Item {
         return $this->filesystem()->fileRead($this);
     }
 
+    /**
+     * Gets the download url for the file.
+     */
+    public function downloadUrl() {
+        return $this->filesystem()->downloadUrl($this->getPath());
+    }
+
 }

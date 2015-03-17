@@ -528,5 +528,15 @@ class Filesystem {
 		return $this->restAdapter->listTrash();
 	}
 
+	/**
+	 * Gets the url for the file at specified path.
+	 *
+	 * @param string $path The file path.
+	 * @return The download url.
+	 */
+	public function downloadUrl($path) {
+		return $this->restAdapter->downloadUrl($path);
+	}
+
 }
 ?>

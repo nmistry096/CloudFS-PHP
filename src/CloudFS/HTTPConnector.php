@@ -190,6 +190,40 @@ class HTTPConnector {
 	}
 
 	/**
+	 * Gets the redirect url for the specified url.
+	 *
+	 * @param $url The request url.
+	 * @return The redirect url if exist or an empty string.
+	 */
+	public function getRedirectUrl($url) {
+		$this->setup();
+		if (!$this->is_raw) {
+			$this->addMissingHeader('Accept', 'application/json');
+		}
+		if ($this->return_xfer) {
+			assert(curl_setopt_array($this->curl, array(CURLOPT_RETURNTRANSFER => 1)));
+		}
+		curl_setopt_array($this->curl, array(CURLOPT_URL => $url,
+			CURLINFO_HEADER_OUT => true,
+			CURLOPT_HEADER => true,
+			CURLOPT_SSL_VERIFYPEER => false,
+			CURLOPT_SSL_VERIFYHOST => 0));
+
+		curl_setopt($this->curl, CURLOPT_HTTPHEADER, $this->getHeaders());
+
+		$response = curl_exec($this->curl);
+		curl_close($this->curl);
+
+		preg_match_all('/^Location:(.*)$/mi', $response, $matches);
+		$redirectUrl = '';
+		if (!empty($matches[1])) {
+			$redirectUrl = trim($matches[1][0]);
+		}
+
+		return $redirectUrl;
+	}
+
+	/**
 	 * Reads and retrieves the data of the http request.
 	 *
 	 * @param mixed $curl The curl commands.

@@ -308,3 +308,11 @@ CloudFS\\RESTAdapter
     .. php:method:: deleteTrashItem($path)
 
         :param $path:
+
+    .. php:method:: downloadUrl($path)
+
+        Gets the download url for the specified file.
+
+        :type $path: string
+        :param $path: The file path.
+        :returns: The download url for the specified file.

@@ -283,3 +283,11 @@ CloudFS\\Filesystem
     .. php:method:: listTrash()
 
         Browses the Trash metafolder on the authenticated user’s account.
+
+    .. php:method:: downloadUrl($path)
+
+        Gets the url for the file at specified path.
+
+        :type $path: string
+        :param $path: The file path.
+        :returns: The download url.

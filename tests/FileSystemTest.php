@@ -284,6 +284,9 @@ class FileSystemTest extends BaseTest {
             array($this, 'uploadProgressCallback'), Exists::OVERWRITE);
         $this->assertEquals('pic1.jpg', $uploadImageFile->getName());
 
+        $downloadUrl = $uploadImageFile->downloadUrl();
+        $this->assertNotEmpty($downloadUrl);
+
         $uploadedTextFile = $level0Folder1->upload($localUploadDirectory . 'large',
             array($this, 'uploadProgressCallback'), Exists::OVERWRITE);
         $this->assertNotNull($uploadedTextFile);

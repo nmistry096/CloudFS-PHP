@@ -818,6 +818,17 @@ class RESTAdapter {
         return $resp;
     }
 
+	/**
+	 * Gets the download url for the specified file.
+	 *
+	 * @param string $path The file path.
+	 * @return The download url for the specified file.
+	 */
+	public function downloadUrl($path) {
+		$connection = new HTTPConnector($this->credential->getSession());
+		$url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path);
+		return $connection->getRedirectUrl($url);
+	}
 }
 
 ?>
