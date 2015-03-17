@@ -60,7 +60,7 @@ The currently linked user can be unlinked from the session.
 
 Admin Operations
 ----------------
-.. note:: You need to create an admin session in order to perform admin operations.
+.. note:: You need to set the admin credentials in order to perform admin operations.
   You can create end users for an admin/paid account. If 'logInToCreatedUser' is true, logs in to the user after creating it.
 
 - :php:meth:`Create Account <Session::createAccount>`
@@ -174,7 +174,7 @@ Folder Operations
 
       ::
 
-      $items = $folder->get_list();
+      $items = $folder->getList();
 
 
 - :php:meth:`Change Folder Attributes <Folder::changeAttributes>`
