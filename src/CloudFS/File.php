@@ -115,6 +115,7 @@ class File extends Item {
 
     /**
      * Gets the download url for the file.
+     * @return The download url.
      */
     public function downloadUrl() {
         return $this->filesystem()->downloadUrl($this->getPath());
