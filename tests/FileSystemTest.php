@@ -1,6 +1,5 @@
 <?php
 
-use CloudFS\Filesystem;
 use CloudFS\Utils\Exists;
 use CloudFS\Utils\FileType;
 
@@ -30,9 +29,10 @@ class FileSystemTest extends BaseTest {
      */
     public function testDeleteRootLevelFolder() {
         /** @var \CloudFS\Filesystem $fileSystem */
-        $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
+        $fileSystem = $this->getSession()->filesystem();
+        $root = $fileSystem->root();
 
-        $items = $fileSystem->getList('/');
+        $items = $root->getList();
         if (count($items) > 0) {
             foreach($items as $item) {
                 /** @var \CloudFS\Item $item */
@@ -47,16 +47,15 @@ class FileSystemTest extends BaseTest {
      * The create root folder test.
      */
     public function testCreateRootFolder() {
-        $localDestinationDir = dirname(__FILE__) . '/files/download/';
-        $this->checkedAndCreateDirName($localDestinationDir);
         $fileSystem = $this->getSession()->filesystem();
-        $items = $fileSystem->getList('/');
-        $level0Folder1 = $this->getItemFromIndexArray($items, $this->level0Folder1Name);
+        $root = $fileSystem->root();
+        $items = $root->getList();
+        $level0Folder1 = $this->getItem($items, $this->level0Folder1Name);
         if ($level0Folder1 != null) {
             $level0Folder1->delete(true, true);
         }
 
-        $level0Folder1 = $fileSystem->create(null, $this->level0Folder1Name, Exists::OVERWRITE);
+        $level0Folder1 = $root->createFolder($this->level0Folder1Name, Exists::OVERWRITE);
         /** @var \CloudFS\Item $level0Folder1 */
         $this->assertNotNull($level0Folder1);
         $this->assertTrue($level0Folder1->getName() == $this->level0Folder1Name);
@@ -69,9 +68,10 @@ class FileSystemTest extends BaseTest {
      */
     public function testListRootFolder() {
         $fileSystem = $this->getSession()->filesystem();
-        $items = $fileSystem->getList(null);
+        $root = $fileSystem->root();
+        $items = $root->getList();
         $this->assertTrue(count($items) > 0);
-        $level0Folder1 = $this->getItemFromIndexArray($items, $this->level0Folder1Name);
+        $level0Folder1 = $this->getItem($items, $this->level0Folder1Name);
         $this->assertEquals($this->level0Folder1Name, $level0Folder1->getName());
     }
 
@@ -93,40 +93,43 @@ class FileSystemTest extends BaseTest {
         $level1Folder2 = $level0Folder1->createFolder($this->level1Folder2Name);
         $this->assertEquals($this->level1Folder2Name, $level1Folder2->getName());
 
-        $level2Folder1 = $fileSystem->create($level1Folder1->getPath(), $this->level2Folder1Name, Exists::OVERWRITE);
+        $level2Folder1 = $level1Folder1->createFolder($this->level2Folder1Name, Exists::OVERWRITE);
         $this->assertEquals($this->level2Folder1Name, $level2Folder1->getName());
 
-        $level2Folder2 = $fileSystem->create($level1Folder1->getPath(), $this->level2Folder2Name, Exists::OVERWRITE);
+        $level2Folder2 = $level1Folder1->createFolder($this->level2Folder2Name, Exists::OVERWRITE);
         $this->assertEquals($this->level2Folder2Name, $level2Folder2->getName());
 
-        $movedItems1 = $fileSystem->move(array($level2Folder1), $level1Folder2->getPath(), Exists::OVERWRITE);
-        $this->assertTrue(count($movedItems1) > 0);
+        $movedItem1 = $level2Folder1->move($level1Folder2->getPath(), Exists::OVERWRITE);
+        $this->assertEquals($this->level2Folder1Name, $movedItem1->getName());
 
-        $movedItems2 = $level2Folder2->move($level1Folder2->getPath(), Exists::OVERWRITE);
-        $this->assertTrue(count($movedItems2) > 0);
+        $movedItem2 = $level2Folder2->move($level1Folder2->getPath(), Exists::OVERWRITE);
+        $this->assertEquals($this->level2Folder2Name, $movedItem2->getName());
 
-        $items1 = $fileSystem->getList($level1Folder2->getPath());
+        $items1 = $level1Folder2->getList();
         $this->assertTrue(count($items1) > 0);
 
-        $items2 = $fileSystem->getList($level1Folder1->getPath());
+        $items2 = $level1Folder1->getList();
         $this->assertTrue(count($items2) == 0);
 
-        $level2Folder1 = $this->getItemFromIndexArray($items1, $this->level2Folder1Name);
+        $level2Folder1 = $this->getItem($items1, $this->level2Folder1Name);
         $this->assertNotNull($level2Folder1);
-        $level2Folder2 = $this->getItemFromIndexArray($items1, $this->level2Folder2Name);
+        $level2Folder2 = $this->getItem($items1, $this->level2Folder2Name);
         $this->assertNotNull($level2Folder2);
 
-        $copiedItems1 = $fileSystem->copy(array($level2Folder1), $level1Folder1->getPath(), Exists::OVERWRITE);
-        $this->assertTrue(count($copiedItems1) > 0);
-        $this->assertEquals($this->level2Folder1Name, $copiedItems1[0]['result']['meta']['name']);
-        $copiedItems2 = $level2Folder2->copy($level1Folder1->getPath(), Exists::OVERWRITE);
-        $this->assertTrue(count($copiedItems2) > 0);
-        $this->assertEquals($this->level2Folder2Name, $copiedItems2[0]['result']['meta']['name']);
+        $copiedItem1 = $level2Folder1->copy($level1Folder1->getPath(), Exists::OVERWRITE);
+        $this->assertNotNull($copiedItem1);
+        $this->assertEquals($this->level2Folder1Name, $copiedItem1->getName());
 
-        $deletedItems1 = $fileSystem->delete(array($level2Folder1));
-        $deletedItems2 = $level2Folder2->delete(true, true);
+        $copiedItem2 = $level2Folder2->copy($level1Folder1->getPath(), Exists::OVERWRITE);
+        $this->assertNotNull($copiedItem2);
+        $this->assertEquals($this->level2Folder2Name, $copiedItem2->getName());
 
-        $items1 = $fileSystem->getList($level1Folder1->getPath());
+        $deletedItem1 = $level2Folder1->delete(true, true);
+        $this->assertTrue($deletedItem1);
+        $deletedItem2 = $level2Folder2->delete(true, true);
+        $this->assertTrue($deletedItem2);
+
+        $items1 = $level1Folder1->getList();
         $this->assertTrue(count($items1) == 2);
         $items2 = $level1Folder2->getList();
         $this->assertTrue(count($items2) == 0);
@@ -136,8 +139,14 @@ class FileSystemTest extends BaseTest {
      * The bitcasa files related tests.
      */
     public function testFiles() {
+        $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
+        $localDownloadDirectory = dirname(__FILE__) . '/files/download/';
+        $this->checkedAndCreateDirName($localDownloadDirectory);
+
         $fileSystem = $this->getSession()->filesystem();
-        $level0Folder1 = $this->getItemFromIndexArray($fileSystem->getList('/'), $this->level0Folder1Name);
+        $root = $fileSystem->root();
+        $this->assertNotNull($root);
+        $level0Folder1 = $this->getItem($root->getList(), $this->level0Folder1Name);
 
         $level1Folder3 = $level0Folder1->createFolder($this->level1Folder3Name);
         $this->assertNotNull($level1Folder3);
@@ -147,64 +156,47 @@ class FileSystemTest extends BaseTest {
         $this->assertNotNull($level1Folder4);
         $this->assertEquals($this->level1Folder4Name, $level1Folder4->getName());
 
-        $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
-        $this->checkedAndCreateDirName($localUploadDirectory);
-        $textFileName = 'file1';
         $uploadedTextFile = $level1Folder3->upload($localUploadDirectory . 'text', null, Exists::OVERWRITE);
         $this->assertNotNull($uploadedTextFile);
 
-        $file = $fileSystem->getFile($uploadedTextFile->getPath());
+        $file = $fileSystem->getItem($uploadedTextFile->getPath());
         $this->assertNotNull($file);
 
-        $localDownloadDirectory = dirname(__FILE__) . '/files/download/';
-
-        $uploadedTextFile->download($localDownloadDirectory . 'image-download.jpg', null);
-        $content = file_get_contents($localDownloadDirectory . 'image-download.jpg');
-        $this->assertNotEmpty($content);
-
-        $localDestinationPath = $localDownloadDirectory . 'file1';
-        $status = $fileSystem->download($uploadedTextFile->getPath(), $localDestinationPath, null);
+        $status = $uploadedTextFile->download($localDownloadDirectory . 'text-download', null);
         $this->assertTrue($status);
-        $content = file_get_contents($localDestinationPath);
+        $content = file_get_contents($localDownloadDirectory . 'text-download');
         $this->assertNotEmpty($content);
 
         $imageFileName = 'image1.jpg';
-        $uploadedImageFile = $fileSystem->upload($level1Folder4->getPath(),
-            $localUploadDirectory . 'image.jpg', $imageFileName, Exists::OVERWRITE);
+        $uploadedImageFile = $level1Folder4->upload($localUploadDirectory . 'image.jpg', null, Exists::OVERWRITE);
         $this->assertNotNull($uploadedImageFile);
         $this->assertEquals($imageFileName, $uploadedImageFile->getName());
-
         $this->assertEquals('jpg', $uploadedImageFile->getExtension());
         $this->assertNotNull($uploadedImageFile->getSize());
         $this->assertEquals('image/jpeg',$uploadedImageFile->getMime());
-
         $content = $uploadedImageFile->read();
-
-        $localDestinationPath = $localDownloadDirectory . 'image1.jpg';
-        $status = $fileSystem->download($uploadedImageFile->getPath(), $localDestinationPath, null);
-        $this->assertTrue($status);
-        $content = file_get_contents($localDestinationPath);
         $this->assertNotEmpty($content);
 
         $movedFile = $uploadedImageFile->move($level1Folder3->getPath(), Exists::OVERWRITE);
         $this->assertNotNull($movedFile);
 
-        $items = $fileSystem->getList($level1Folder3->getPath());
+        $items = $level1Folder3->getList();
         $this->assertTrue(count($items) > 0);
 
-        $imageFile = $this->getItemFromIndexArray($items, $imageFileName);
+        $imageFile = $this->getItem($items, $imageFileName);
         $this->assertNotNull($imageFile);
 
         $copiedFile = $imageFile->copy($level1Folder4->getPath(), Exists::OVERWRITE);
         $this->assertNotNull($copiedFile);
-        $this->assertEquals($imageFileName, $copiedFile[0]['result']['meta']['name']);
+        $this->assertEquals($imageFileName, $copiedFile->getName());
 
         $deletedFile = $imageFile->delete();
+        $this->assertTrue($deletedFile);
         $result = $fileSystem->listTrash();
         $this->assertNotNull($result);
 
-        $this->assertTrue(count($fileSystem->getList($level1Folder3->getPath())) > 0);
-        $this->assertTrue(count($fileSystem->getList($level1Folder4->getPath())) > 0);
+        $this->assertTrue(count($level1Folder3->getList()) > 0);
+        $this->assertTrue(count($level1Folder4->getList()) > 0);
     }
 
 

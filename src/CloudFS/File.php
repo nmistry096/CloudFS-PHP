@@ -110,7 +110,7 @@ class File extends Item {
      * @return The file stream.
      */
     public function read(){
-        return $this->restAdapter()->fileRead($this);
+        return $this->restAdapter()->fileRead($this->getPath(), $this->getName(), $this->getSize());
     }
 
     /**

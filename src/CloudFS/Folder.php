@@ -25,7 +25,7 @@ class Folder extends Container {
      * @return Instance of the newly created folder.
      */
     public function createFolder($name, $exists = Exists::OVERWRITE) {
-        return $this->restAdapter()->create($this, $name, $exists);
+        return $this->restAdapter()->createFolder($this->getPath(), $name, $exists);
     }
 
     /**
@@ -39,6 +39,6 @@ class Folder extends Container {
      * @return A file instance representing the uploaded file..
      */
     public function upload($filesystemPath, $uploadProgressCallback, $exists = Exists::FAIL) {
-        return $this->restAdapter()->upload($this, $filesystemPath, null, $exists, $uploadProgressCallback);
+        return $this->restAdapter()->uploadFile($this->getPath(), null, $filesystemPath, $exists, $uploadProgressCallback);
     }
 }

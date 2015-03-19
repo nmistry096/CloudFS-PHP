@@ -302,6 +302,8 @@ class Item {
      * Restores this item to the given destination.
      *
      * @param string $destination The destination of the item restore.
+     * @param string $restoreMethod The restore method.
+     * @param string $restoreArgument The restore argument.
      * @return The success/fail response of the restore operation.
      */
     public function restore($destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null) {
