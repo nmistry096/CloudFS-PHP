@@ -10,10 +10,10 @@ class Document extends File {
      *
      * @param array $data The item data.
      * @param string $parentPath The item parent path.
-     * @param \CloudFS\Filesystem $filesystem The file system instance.
+     * @param \CloudFS\RESTAdapter $restAdapter The rest adapter instance.
      */
-    protected function __construct($data, $parentPath, $filesystem) {
-        parent::__construct($data, $parentPath, $filesystem);
+    protected function __construct($data, $parentPath, $restAdapter) {
+        parent::__construct($data, $parentPath, $restAdapter);
     }
 
 }

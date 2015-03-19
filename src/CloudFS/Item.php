@@ -10,7 +10,7 @@ use CloudFS\Utils\RestoreMethod;
 class Item {
 
     private $full_path;
-    private $filesystem;
+    private $restAdapter;
     private $id;
     private $type;
     private $isMirrored;
@@ -26,10 +26,10 @@ class Item {
      *
      * @param array $data The item data.
      * @param string $parentPath The item parent path.
-     * @param \CloudFS\Filesystem $filesystem The file system instance.
+     * @param \CloudFS\RESTAdapter $restAdapter The rest adapter instance.
      */
-    protected function __construct($data, $parentPath, $filesystem) {
-        $this->filesystem = $filesystem;
+    protected function __construct($data, $parentPath, $restAdapter) {
+        $this->restAdapter = $restAdapter;
 
         $this->id = $data['id'];
         $this->type = $data['type'];
@@ -163,12 +163,12 @@ class Item {
     }
 
     /**
-     * Retrieves this file system instance.
+     * Retrieves this rest adapter instance.
      *
-     * @return The file system instance.
+     * @return \CloudFS\RESTAdapter The rest adapter instance.
      */
-    public function filesystem() {
-        return $this->filesystem;
+    public function restAdapter() {
+        return $this->restAdapter;
     }
 
     /**
@@ -176,11 +176,11 @@ class Item {
      *
      * @param array $data The data needed to create an item.
      * @param string $parentPath Parent path for the new item.
-     * @param Filesystem $filesystem The file system instance.
+     * @param \CloudFS\RESTAdapter $restAdapter The rest adapter instance.
      * @param bool $shared Indicates whether the data belongs to a shared item.
      * @return An instance of the new item.
      */
-    public static function make($data, $parentPath = null, $filesystem = null, $shared = false) {
+    public static function make($data, $parentPath = null, $restAdapter = null, $shared = false) {
         $item = null;
         if (count($data) == 0) {
             return null;
@@ -191,48 +191,48 @@ class Item {
 
         if ($shared) {
             if ($data["type"] == FileType::FILE) {
-                $item = new ShareFile($data, $parentPath, $filesystem);
+                $item = new ShareFile($data, $parentPath, $restAdapter);
             }
             else {
-                $item = new ShareFolder($data, $parentPath, $filesystem);
+                $item = new ShareFolder($data, $parentPath, $restAdapter);
             }
         }
         else {
             if ($data["type"] == FileType::FOLDER || $data['type'] == FileType::ROOT) {
-                $item = new Folder($data, $parentPath, $filesystem);
+                $item = new Folder($data, $parentPath, $restAdapter);
             } else if (isset($data['mime'])) {
                 $t = explode("/", $data['mime']);
                 switch ($t[0]) {
                     case 'image':
-                        $item = new Photo($data, $parentPath, $filesystem);
+                        $item = new Photo($data, $parentPath, $restAdapter);
                         break;
 
                     case 'audio':
-                        $item = new Audio($data, $parentPath, $filesystem);
+                        $item = new Audio($data, $parentPath, $restAdapter);
                         break;
 
                     case 'video':
-                        $item = new Video($data, $parentPath, $filesystem);
+                        $item = new Video($data, $parentPath, $restAdapter);
                         break;
 
                     case 'text':
-                        $item = new Document($data, $parentPath, $filesystem);
+                        $item = new Document($data, $parentPath, $restAdapter);
                         break;
 
                     case 'application':
                         if ($t[1] == 'pdf') {
-                            $item = new Document($data, $parentPath, $filesystem);
+                            $item = new Document($data, $parentPath, $restAdapter);
                             break;
                         }
 
                     default:
-                        $item = new File($data, $parentPath, $filesystem);
+                        $item = new File($data, $parentPath, $restAdapter);
                         break;
                 }
             } else if ($data["type"] == FileType::FILE) {
-                $item = new File($data, $parentPath, $filesystem);
+                $item = new File($data, $parentPath, $restAdapter);
             } else {
-                $item = new Container($data, $parentPath, $filesystem);
+                $item = new Container($data, $parentPath, $restAdapter);
             }
         }
 
@@ -249,7 +249,7 @@ class Item {
     public function changeAttributes(array $values, $ifConflict = VersionExists::FAIL) {
         $success = false;
         $values['version'] = $this->getVersion();
-        $result = $this->filesystem()->alterFolder($this->getPath(), $values, $ifConflict);
+        $result = $this->restAdapter()->alterFolder($this->getPath(), $values, $ifConflict);
         if (empty($result['error'])) {
             $success = true;
         }
@@ -265,7 +265,7 @@ class Item {
      * @return The success/fail response of the move operation.
      */
     public function move($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
-        return $this->filesystem()->move($this, $destination, $exists);
+        return $this->restAdapter()->move($this, $destination, $exists);
     }
 
     /**
@@ -276,7 +276,7 @@ class Item {
      * @return The success/fail response of the copy operation.
      */
     public function copy($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
-        return $this->filesystem()->copy($this, $destination, $exists);
+        return $this->restAdapter()->copy($this, $destination, $exists);
     }
 
     /**
@@ -288,7 +288,7 @@ class Item {
      */
     public function delete($commit=False, $force=False) {
         $success = false;
-        $response = $this->filesystem()->delete($this, $force);
+        $response = $this->restAdapter()->delete($this, $force);
         if (count($response) > 0) {
             if (!empty($response[0]['result'])) {
                 $success = $response[0]['result']['success'];
@@ -296,17 +296,6 @@ class Item {
         }
 
         return $success;
-    }
-
-    /**
-     * Save this item on the cloud.
-     *
-     * @param string $ifConflict The action to take if a conflict occurs.
-     * @param bool $debug Debug flag.
-     * @return The success/fail response of the save operation.
-     */
-    public function save($ifConflict="fail", $debug=False) {
-        return $this->filesystem()->save($this);
     }
 
     /**
@@ -320,7 +309,7 @@ class Item {
             $destination = $destination->path();
         }
         $path = $this->getId();
-        return $this->filesystem()->restore($path, $destination, $restoreMethod, $restoreArgument);
+        return $this->restAdapter()->restore($path, $destination, $restoreMethod, $restoreArgument);
     }
 
     /**
@@ -329,6 +318,6 @@ class Item {
      * @return The file history response.
      */
     public function history() {
-        return $this->filesystem()->fileHistory($this);
+        return $this->restAdapter()->fileHistory($this);
     }
 }

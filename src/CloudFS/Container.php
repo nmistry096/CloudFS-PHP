@@ -14,10 +14,10 @@ class Container extends Item {
      *
      * @param array $data The item data.
      * @param string $parentPath The item parent path.
-     * @param \CloudFS\Filesystem $filesystem The file system instance.
+     * @param \CloudFS\RESTAdapter $restAdapter The rest adapter instance.
      */
-    protected function __construct($data, $parentPath, $filesystem) {
-        parent::__construct($data, $parentPath, $filesystem);
+    protected function __construct($data, $parentPath, $restAdapter) {
+        parent::__construct($data, $parentPath, $restAdapter);
     }
 
     /**
@@ -26,7 +26,7 @@ class Container extends Item {
      * @return The item list array.
      */
     public function getList() {
-        return $this->filesystem()->getList($this->getPath());
+        return $this->restAdapter()->getList($this->getPath());
     }
 
 }

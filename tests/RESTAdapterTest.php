@@ -5,7 +5,7 @@ use CloudFS\Utils\Exists;
 use CloudFS\Utils\FileType;
 
 /**
- * Test Bitcasa Api related functionality.
+ * Test Bitcasa rest adapter related tests.
  */
 class RESTAdapterTest extends BaseTest {
 
@@ -28,20 +28,17 @@ class RESTAdapterTest extends BaseTest {
      * The create root folder test.
      */
     public function testCreateRootFolder() {
-        $api = $this->getSession()->getRestAdapter();
-        $level0Folder1 = $this->getItemFromAssociativeArray($api->getList(), $this->level0Folder1Name);
+        /** @var \CloudFS\RESTAdapter $restAdapter */
+        $restAdapter = $this->getSession()->getRestAdapter();
+        $level0Folder1 = $this->getItem($restAdapter->getList(), $this->level0Folder1Name);
         if ($level0Folder1 != null) {
-            $api->deleteFolder($this->getPathFromAssociativeArray($level0Folder1), true);
+            $restAdapter->deleteFolder($level0Folder1->getPath());
         }
 
-        $level0Folder1 = $this->getSession()->getRestAdapter()->createFolder(NULL, $this->level0Folder1Name, Exists::OVERWRITE);
-
+        $level0Folder1 = $restAdapter->createFolder(null, $this->level0Folder1Name, Exists::OVERWRITE);
         $this->assertNotNull($level0Folder1);
-        $this->assertArrayHasKey('name', $level0Folder1);
-        $this->assertTrue($level0Folder1['name'] == $this->level0Folder1Name);
-        $this->assertTrue($level0Folder1['type'] == FileType::FOLDER);
-        $this->assertNotEmpty($level0Folder1['id']);
-        $this->assertEmpty($level0Folder1['parent_id']);
+        $this->assertEquals($this->level0Folder1Name, $level0Folder1->getName());
+        $this->assertTrue($level0Folder1->getType() == FileType::FOLDER);
     }
 
     /**
@@ -49,21 +46,19 @@ class RESTAdapterTest extends BaseTest {
      * @expectedExceptionCode 409
      */
     public function testCreateRootFolderFailIfExists() {
-        $this->getSession()->getRestAdapter()->createFolder(NULL, $this->level0Folder1Name, Exists::FAIL);
+        $this->getSession()->getRestAdapter()->createFolder(null, $this->level0Folder1Name, Exists::FAIL);
     }
 
+    /**
+     * Get the root folder item list.
+     */
     public function testListRootFolder() {
-        $result = $this->getSession()->getRestAdapter()->getList();
-        $this->assertNotNull($result);
-        $this->assertNull($result['error']);
-        $this->assertArrayHasKey('result', $result);
-        $meta = $result['result']['meta'];
-        $this->assertTrue($meta['type'] == FileType::ROOT);
-        $items = $result['result']['items'];
+        $items = $this->getSession()->getRestAdapter()->getList();
+        $this->assertNotNull($items);
         $this->assertTrue(count($items) > 0);
         $folderFound = false;
         foreach($items as $item) {
-            if ($item['name'] == $this->level0Folder1Name) {
+            if ($item->getName() == $this->level0Folder1Name) {
                 $folderFound = true;
                 break;
             }
@@ -73,71 +68,71 @@ class RESTAdapterTest extends BaseTest {
     }
 
     /**
-     * The retrieve folder meta test.
+     * Retrieve folder meta data.
      */
     public function testFolderMeta() {
-        $result = $this->getSession()->getRestAdapter()->getList();
-        $items = $result['result']['items'];
+        /** @var \CloudFS\RESTAdapter $restAdapter */
+        $restAdapter = $this->getSession()->getRestAdapter();
+        $items = $restAdapter->getList();
         $folder = null;
         foreach($items as $item) {
-            if ($item['name'] == $this->level0Folder1Name) {
+            if ($item->getName() == $this->level0Folder1Name) {
                 $folder = $item;
                 break;
             }
         }
 
-        $path = $this->getPathFromAssociativeArray($folder);
-
-        $meta = $this->getSession()->getRestAdapter()->getFolderMeta($path);
-        $this->assertEquals($this->level0Folder1Name, $meta['result']['meta']['name']);
+        $meta = $restAdapter->getFolderMeta($folder->getPath());
+        $this->assertEquals($this->level0Folder1Name, $meta->getName());
     }
 
     /**
      * The bitcasa folders related tests.
      */
     public function testFolders() {
-        $api = $this->getSession()->getRestAdapter();
+        /** @var \CloudFS\RESTAdapter $restAdapter */
+        $restAdapter = $this->getSession()->getRestAdapter();
 
-        $level0Folder1 = $this->getItemFromAssociativeArray($api->getList(), $this->level0Folder1Name);
+        $level0Folder1 = $this->getItem($restAdapter->getList(), $this->level0Folder1Name);
         $this->assertNotNull($level0Folder1);
-        $level0Folder1Path = $this->getPathFromAssociativeArray($level0Folder1);
 
-        $level1Folder1 = $api->createFolder($level0Folder1Path, $this->level1Folder1Name, Exists::OVERWRITE);
+        $level1Folder1 = $restAdapter->createFolder($level0Folder1->getPath(),
+            $this->level1Folder1Name, Exists::OVERWRITE);
         $this->assertNotNull($level1Folder1);
-        $this->assertEquals($this->level1Folder1Name, $level1Folder1['name']);
-        $level1Folder1Path = $this->getPathFromAssociativeArray($level1Folder1, $level0Folder1Path);
+        $this->assertEquals($this->level1Folder1Name, $level1Folder1->getName());
 
-        $level1Folder2 = $api->createFolder($level0Folder1Path, $this->level1Folder2Name, Exists::OVERWRITE);
+        $level1Folder2 = $restAdapter->createFolder($level0Folder1->getPath(),
+            $this->level1Folder2Name, Exists::OVERWRITE);
         $this->assertNotNull($level1Folder2);
-        $this->assertEquals($this->level1Folder2Name, $level1Folder2['name']);
-        $level1Folder2Path = $this->getPathFromAssociativeArray($level1Folder2, $level0Folder1Path);
+        $this->assertEquals($this->level1Folder2Name, $level1Folder2->getName());
 
-        $level2Folder1 = $api->createFolder($level1Folder2Path, $this->level2Folder1Name, Exists::OVERWRITE);
+        $level2Folder1 = $restAdapter->createFolder($level1Folder2->getPath(),
+            $this->level2Folder1Name, Exists::OVERWRITE);
         $this->assertNotNull($level2Folder1);
-        $this->assertEquals($this->level2Folder1Name, $level2Folder1['name']);
-        $level2Folder1Path = $this->getPathFromAssociativeArray($level2Folder1, $level1Folder2Path);
+        $this->assertEquals($this->level2Folder1Name, $level2Folder1->getName());
 
-        $meta = $api->getFolderMeta($level2Folder1Path);
-        $this->assertEquals($this->level2Folder1Name, $meta['result']['meta']['name']);
+        $meta = $restAdapter->getFolderMeta($level2Folder1->getPath());
+        $this->assertEquals($this->level2Folder1Name, $meta->getName());
 
         $newName = 'Moved ' . $this->level2Folder1Name;
-        $movedFolder = $api->moveFolder($level2Folder1Path, $level1Folder1Path, $newName, Exists::OVERWRITE);
+        $movedFolder = $restAdapter->moveFolder($level2Folder1->getPath(), $level1Folder1->getPath(),
+            $newName, Exists::OVERWRITE);
         $this->assertNotNull($movedFolder);
-        $this->assertEquals($newName, $movedFolder['result']['meta']['name']);
-        $newPath = $this->getPathFromAssociativeArray($movedFolder['result']['meta'], $level1Folder1Path);
+        $this->assertEquals($newName, $movedFolder->getName());
 
-        $this->assertNotNull($this->getItemFromAssociativeArray($api->getList($level1Folder1Path), $newName));
-        $this->assertNull($this->getItemFromAssociativeArray($api->getList($level1Folder2Path), $this->level2Folder1Name));
+        $this->assertNotNull($this->getItem($restAdapter->getList($level1Folder1->getPath()), $newName));
+        $this->assertNull($this->getItem($restAdapter->getList($level1Folder2->getPath()), $this->level2Folder1Name));
 
-        $copiedFolder = $api->copyFolder($newPath, $level1Folder2Path, $this->level2Folder1Name, Exists::OVERWRITE);
-        $this->assertEquals($this->level2Folder1Name, $copiedFolder['result']['meta']['name']);
-        $this->assertNotNull($this->getItemFromAssociativeArray($api->getList($level1Folder1Path), $newName));
-        $this->assertNotNull($this->getItemFromAssociativeArray($api->getList($level1Folder2Path), $this->level2Folder1Name));
+        $copiedFolder = $restAdapter->copyFolder($movedFolder->getPath(), $level1Folder2->getPath(),
+            $this->level2Folder1Name, Exists::OVERWRITE);
+        $this->assertEquals($this->level2Folder1Name, $copiedFolder->getName());
+        $this->assertNotNull($this->getItem($restAdapter->getList($level1Folder1->getPath()), $newName));
+        $this->assertNotNull($this->getItem($restAdapter->getList($level1Folder2->getPath()), $this->level2Folder1Name));
 
-        $deletedFolder = $api->deleteFolder($newPath);
-        $this->assertTrue($deletedFolder['result']['success']);
-        $this->assertNull($this->getItemFromAssociativeArray($api->getList($level1Folder1Path), $newName));
-        $this->assertNotNull($this->getItemFromAssociativeArray($api->getList($level1Folder2Path), $this->level2Folder1Name));
+        $deleted = $restAdapter->deleteFolder($movedFolder->getPath());
+        $this->assertTrue($deleted);
+        $this->assertNull($this->getItem($restAdapter->getList($level1Folder1->getPath()), $newName));
+        $this->assertNotNull($this->getItem($restAdapter->getList($level1Folder2->getPath()), $this->level2Folder1Name));
     }
 
     /**
@@ -145,63 +140,59 @@ class RESTAdapterTest extends BaseTest {
      */
     public function testFiles() {
         $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
+        $localDownloadDirectory = dirname(__FILE__) . '/files/download/';
         $this->checkedAndCreateDirName($localUploadDirectory);
+
+        /** @var \CloudFS\RESTAdapter $restAdapter */
         $restAdapter = $this->getSession()->getRestAdapter();
-        $level0Folder1 = $this->getItemFromAssociativeArray($restAdapter->getList(), $this->level0Folder1Name);
-        $level0Folder1Path = $this->getPathFromAssociativeArray($level0Folder1);
+        $level0Folder1 = $this->getItem($restAdapter->getList(), $this->level0Folder1Name);
 
-        $level1Folder3 = $restAdapter->createFolder($level0Folder1Path, $this->level1Folder3Name, Exists::OVERWRITE);
+        $level1Folder3 = $restAdapter->createFolder($level0Folder1->getPath(), $this->level1Folder3Name, Exists::OVERWRITE);
         $this->assertNotNull($level1Folder3);
-        $this->assertEquals($this->level1Folder3Name, $level1Folder3['name']);
-        $level1Folder3Path = $this->getPathFromAssociativeArray($level1Folder3, $level0Folder1Path);
+        $this->assertEquals($this->level1Folder3Name, $level1Folder3->getName());
 
-        $level1Folder4 = $restAdapter->createFolder($level0Folder1Path, $this->level1Folder4Name, Exists::OVERWRITE);
+        $level1Folder4 = $restAdapter->createFolder($level0Folder1->getPath(), $this->level1Folder4Name, Exists::OVERWRITE);
         $this->assertNotNull($level1Folder4);
-        $this->assertEquals($this->level1Folder4Name, $level1Folder4['name']);
-        $level1Folder4Path = $this->getPathFromAssociativeArray($level1Folder4, $level0Folder1Path);
+        $this->assertEquals($this->level1Folder4Name, $level1Folder4->getName());
 
-        $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
         $textFileName = 'file1';
-        $uploadedTextFile = $restAdapter->uploadFile($level1Folder3Path, $textFileName,
+        $uploadedTextFile = $restAdapter->uploadFile($level1Folder3->getPath(), $textFileName,
             $localUploadDirectory . 'text', Exists::OVERWRITE);
         $this->assertNotNull($uploadedTextFile);
-        $this->assertEquals($textFileName, $uploadedTextFile['result']['name']);
-        $uploadedTextFilePath = $this->getPathFromAssociativeArray($uploadedTextFile['result'], $level1Folder3Path);
+        $this->assertEquals($textFileName, $uploadedTextFile->getName());
 
-        $meta = $restAdapter->getFileMeta($uploadedTextFilePath);
-        $this->assertEquals($textFileName, $meta['result']['name']);
+        $meta = $restAdapter->getFileMeta($uploadedTextFile->getPath());
+        $this->assertEquals($textFileName, $meta->getName());
 
-        $localDownloadDirectory = dirname(__FILE__) . '/files/download/';
         $localDestinationPath = $localDownloadDirectory . 'file1';
-        $status = $restAdapter->downloadFile($uploadedTextFilePath, $localDestinationPath, null);
+        $status = $restAdapter->downloadFile($uploadedTextFile->getPath(), $localDestinationPath, null);
         $this->assertTrue($status);
 
         $imageFileName = 'image1.jpg';
-        $uploadedImageFile = $restAdapter->uploadFile($level1Folder4Path, $imageFileName,
+        $uploadedImageFile = $restAdapter->uploadFile($level1Folder4->getPath(), $imageFileName,
             $localUploadDirectory . 'image.jpg', Exists::OVERWRITE);
         $this->assertNotNull($uploadedImageFile);
-        $this->assertEquals($imageFileName, $uploadedImageFile['result']['name']);
-        $uploadedImageFilePath = $this->getPathFromAssociativeArray($uploadedImageFile['result'], $level1Folder4Path);
+        $this->assertEquals($imageFileName, $uploadedImageFile->getName());
 
         $localDestinationPath = $localDownloadDirectory . 'image1.jpg';
-        $status = $restAdapter->downloadFile($uploadedImageFilePath, $localDestinationPath, null);
+        $status = $restAdapter->downloadFile($uploadedImageFile->getPath(), $localDestinationPath, null);
         $this->assertTrue($status);
 
-        $newName = 'Moved' . $uploadedImageFile['result']['name'];
-        $movedFile = $restAdapter->moveFile($uploadedImageFilePath, $level1Folder3Path, $newName, Exists::OVERWRITE);
+        $newName = 'Moved' . $uploadedImageFile->getName();
+        $movedFile = $restAdapter->moveFile($uploadedImageFile->getPath(), $level1Folder3->getPath(),
+            $newName, Exists::OVERWRITE);
         $this->assertNotNull($movedFile);
-        $this->assertEquals($newName, $movedFile['result']['meta']['name']);
-        $newPath = $this->getPathFromAssociativeArray($movedFile['result']['meta'], $level1Folder3Path);
+        $this->assertEquals($newName, $movedFile->getName());
 
-        $copiedFile = $restAdapter->copyFile($newPath, $level1Folder4Path, $imageFileName, Exists::OVERWRITE);
+        $copiedFile = $restAdapter->copyFile($movedFile->getPath(), $level1Folder4->getPath(),
+            $imageFileName, Exists::OVERWRITE);
         $this->assertNotNull($copiedFile);
-        $this->assertEquals($imageFileName, $copiedFile['result']['meta']['name']);
+        $this->assertEquals($imageFileName, $copiedFile->getName());
 
-        $deletedFile = $restAdapter->deleteFile($newPath);
-        $this->assertTrue($deletedFile['result']['success']);
+        $deletedFile = $restAdapter->deleteFile($movedFile->getPath());
+        $this->assertTrue($deletedFile);
 
-        $this->assertNotNull($this->getItemFromAssociativeArray($restAdapter->getList($level1Folder3Path), $textFileName));
-        $this->assertNotNull($this->getItemFromAssociativeArray($restAdapter->getList($level1Folder4Path), $imageFileName));
+        $this->assertNotNull($this->getItem($restAdapter->getList($level1Folder3->getPath()), $textFileName));
+        $this->assertNotNull($this->getItem($restAdapter->getList($level1Folder4->getPath()), $imageFileName));
     }
-
 }

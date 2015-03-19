@@ -11,10 +11,10 @@ class Folder extends Container {
      *
      * @param array $data The item data.
      * @param string $parentPath The item parent path.
-     * @param \CloudFS\Filesystem $filesystem The file system instance.
+     * @param \CloudFS\RESTAdapter $restAdapter The rest adapter instance.
      */
-    protected function __construct($data, $parentPath, $filesystem) {
-        parent::__construct($data, $parentPath, $filesystem);
+    protected function __construct($data, $parentPath, $restAdapter) {
+        parent::__construct($data, $parentPath, $restAdapter);
     }
 
     /**
@@ -25,7 +25,7 @@ class Folder extends Container {
      * @return Instance of the newly created folder.
      */
     public function createFolder($name, $exists = Exists::OVERWRITE) {
-        return $this->filesystem()->create($this, $name, $exists);
+        return $this->restAdapter()->create($this, $name, $exists);
     }
 
     /**
@@ -39,6 +39,6 @@ class Folder extends Container {
      * @return A file instance representing the uploaded file..
      */
     public function upload($filesystemPath, $uploadProgressCallback, $exists = Exists::FAIL) {
-        return $this->filesystem()->upload($this, $filesystemPath, null, $exists, $uploadProgressCallback);
+        return $this->restAdapter()->upload($this, $filesystemPath, null, $exists, $uploadProgressCallback);
     }
 }
