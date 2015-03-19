@@ -16,10 +16,10 @@ class File extends Item {
      *
      * @param array $data The item data.
      * @param string $parentPath The item parent path.
-     * @param \CloudFS\Filesystem $filesystem The file system instance.
+     * @param \CloudFS\RESTAdapter $restAdapter The rest adapter instance.
      */
-    protected function __construct($data, $parentPath, $filesystem) {
-        parent::__construct($data, $parentPath, $filesystem);
+    protected function __construct($data, $parentPath, $restAdapter) {
+        parent::__construct($data, $parentPath, $restAdapter);
         $this->mime = $data['mime'];
         $this->extension = $data['extension'];
         $this->size = $data['size'];
@@ -72,7 +72,7 @@ class File extends Item {
     public function changeAttributes(array $values, $ifConflict = VersionExists::FAIL) {
         $success = false;
         $values['version'] = $this->getVersion();
-        $result = $this->filesystem()->alterFile($this->getPath(), $values, $ifConflict);
+        $result = $this->restAdapter()->alterFile($this->getPath(), $values, $ifConflict);
         if (empty($result['error'])) {
             $success = true;
         }
@@ -89,7 +89,7 @@ class File extends Item {
      * @return The download status.
      */
     public function download($localDestinationPath, $downloadProgressCallback) {
-        return $this->filesystem()->download($this->getPath(), $localDestinationPath, $downloadProgressCallback);
+        return $this->restAdapter()->download($this->getPath(), $localDestinationPath, $downloadProgressCallback);
     }
 
     /**
@@ -101,7 +101,7 @@ class File extends Item {
      * @return The versions list.
      */
     public function versions($startVersion = 0, $endVersion = null, $limit = 10){
-        $versions = $this->filesystem()->fileVersions($this, $startVersion, $endVersion, $limit);
+        $versions = $this->restAdapter()->fileVersions($this, $startVersion, $endVersion, $limit);
         return $versions;
     }
 
@@ -110,14 +110,15 @@ class File extends Item {
      * @return The file stream.
      */
     public function read(){
-        return $this->filesystem()->fileRead($this);
+        return $this->restAdapter()->fileRead($this);
     }
 
     /**
      * Gets the download url for the file.
+     * @return The download url.
      */
     public function downloadUrl() {
-        return $this->filesystem()->downloadUrl($this->getPath());
+        return $this->restAdapter()->downloadUrl($this->getPath());
     }
 
 }
