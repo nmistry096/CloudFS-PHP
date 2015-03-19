@@ -8,7 +8,7 @@ class AccountTest extends BaseTest {
     /**
      * Test authentication.
      */
-    public function testAuthenticate(){
+    public function testAuthenticate() {
         $this->getSession()->authenticate(self::USERNAME, self::PASSWORD);
         $this->assertTrue(true, $this->getSession()->isLinked());
     }

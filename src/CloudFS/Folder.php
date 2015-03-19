@@ -35,7 +35,7 @@ class Folder extends Container {
      * @param mixed $uploadProgressCallback The upload progress callback function. This function should take
      * 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
      * @param string $exists The action to take if the file already exists.
-     .
+     * .
      * @return A file instance representing the uploaded file..
      */
     public function upload($filesystemPath, $uploadProgressCallback, $exists = Exists::FAIL) {

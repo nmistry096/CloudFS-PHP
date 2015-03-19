@@ -43,11 +43,9 @@ class Item {
 
         if ($parentPath == null) {
             $this->full_path = "/" . $this->id;
-        }
-        else if ($parentPath == '/') {
+        } else if ($parentPath == '/') {
             $this->full_path = $parentPath . $this->id;
-        }
-        else {
+        } else {
             $this->full_path = $parentPath . '/' . $this->id;
         }
     }
@@ -192,12 +190,10 @@ class Item {
         if ($shared) {
             if ($data["type"] == FileType::FILE) {
                 $item = new ShareFile($data, $parentPath, $restAdapter);
-            }
-            else {
+            } else {
                 $item = new ShareFolder($data, $parentPath, $restAdapter);
             }
-        }
-        else {
+        } else {
             if ($data["type"] == FileType::FOLDER || $data['type'] == FileType::ROOT) {
                 $item = new Folder($data, $parentPath, $restAdapter);
             } else if (isset($data['mime'])) {
@@ -251,8 +247,7 @@ class Item {
         $values['version'] = $this->getVersion();
         if ($this->getType() == FileType::FILE) {
             $result = $this->restAdapter()->alterFileMeta($this->getPath(), $values, $ifConflict);
-        }
-        else {
+        } else {
             $result = $this->restAdapter()->alterFolderMeta($this->getPath(), $values, $ifConflict);
         }
 
@@ -273,8 +268,7 @@ class Item {
     public function move($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
         if ($this->getType() == FileType::FILE) {
             $item = $this->restAdapter()->moveFile($this->getPath(), $destination, $this->getName(), $exists);
-        }
-        else {
+        } else {
             $item = $this->restAdapter()->moveFolder($this->getPath(), $destination, $this->getName(), $exists);
         }
 
@@ -291,8 +285,7 @@ class Item {
     public function copy($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
         if ($this->getType() == FileType::FILE) {
             $item = $this->restAdapter()->copyFile($this->getPath(), $destination, $this->getName(), $exists);
-        }
-        else {
+        } else {
             $item = $this->restAdapter()->copyFolder($this->getPath(), $destination, $this->getName(), $exists);
         }
 
@@ -332,11 +325,11 @@ class Item {
 
         $status = $this->restAdapter()->restore($this->getId(), $destination, $restoreMethod, $restoreArgument);
 
-        if($status){
+        if ($status) {
 
             $this->full_path = $destination . '/' . $this->getId();
 
-        }else{
+        } else {
             $this->restAdapter = null;
         }
         return $status;

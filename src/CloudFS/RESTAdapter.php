@@ -50,7 +50,8 @@ class RESTAdapter {
 
         if ($this->credential != null
             && $this->credential->getAccessToken() != null
-            && $this->credential->getTokenType() != null) {
+            && $this->credential->getTokenType() != null
+        ) {
             return true;
         }
 
@@ -310,7 +311,7 @@ class RESTAdapter {
         }
 
         $response = $connection->getResponse(true);
-        if ($response != null && isset($response['result']) && isset($response['result']['items']) ) {
+        if ($response != null && isset($response['result']) && isset($response['result']['items'])) {
             $item = Item::make($response['result']['items'][0], $parentPath, $this);
         }
 
@@ -334,7 +335,7 @@ class RESTAdapter {
             $force_option['force'] = 'true';
         }
 
-        if($commit == true){
+        if ($commit == true) {
             $force_option['commit'] = 'true';
         }
 
@@ -450,7 +451,7 @@ class RESTAdapter {
         }
 
         $response = $connection->getResponse(true);
-        if ($response != null && isset($response['result']) && isset($response['result']['meta']) ) {
+        if ($response != null && isset($response['result']) && isset($response['result']['meta'])) {
             $item = Item::make($response['result']['meta'], $destination, $this);
         }
 
@@ -486,7 +487,7 @@ class RESTAdapter {
         }
 
         $response = $connection->getResponse(true);
-        if ($response != null && isset($response['result']) && isset($response['result']['meta']) ) {
+        if ($response != null && isset($response['result']) && isset($response['result']['meta'])) {
             $item = Item::make($response['result']['meta'], $destination, $this);
         }
 
@@ -521,7 +522,7 @@ class RESTAdapter {
         }
 
         $response = $connection->getResponse(true);
-        if ($response != null && isset($response['result']) && isset($response['result']['meta']) ) {
+        if ($response != null && isset($response['result']) && isset($response['result']['meta'])) {
             $item = Item::make($response['result']['meta'], $destination, $this);
         }
 
@@ -556,7 +557,7 @@ class RESTAdapter {
         }
 
         $response = $connection->getResponse(true);
-        if ($response != null && isset($response['result']) && isset($response['result']['meta']) ) {
+        if ($response != null && isset($response['result']) && isset($response['result']['meta'])) {
             $item = Item::make($response['result']['meta'], $destination, $this);
         }
 
@@ -617,15 +618,15 @@ class RESTAdapter {
         $params = array();
         $status = false;
 
-        if($restoreMethod == RestoreMethod::RECREATE){
+        if ($restoreMethod == RestoreMethod::RECREATE) {
             $params['recreate-path'] = $destination;
             $params['restore'] = RestoreMethod::RECREATE;
 
-        }elseif($restoreMethod == RestoreMethod::FAIL){
+        } elseif ($restoreMethod == RestoreMethod::FAIL) {
             $params['restore'] = RestoreMethod::FAIL;
 
-        }elseif($restoreMethod == RestoreMethod::RESCUE){
-            if($destination != null){
+        } elseif ($restoreMethod == RestoreMethod::RESCUE) {
+            if ($destination != null) {
                 $params['rescue-path'] = $destination;
             }
             $params['restore'] = RestoreMethod::RESCUE;
@@ -664,13 +665,13 @@ class RESTAdapter {
             $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES);
             $formParameters = array();
             $pathValues = array();
-            if(is_array($path)){
-                foreach($path as $value){
+            if (is_array($path)) {
+                foreach ($path as $value) {
                     $pathValues[] = $value;
                 }
                 $formParameters = array('path' => $pathValues);
 
-            }else{
+            } else {
                 $formParameters = array('path' => $path);
             }
 
@@ -684,8 +685,7 @@ class RESTAdapter {
             if (!empty($response) && !empty($response['result'])) {
                 $share = Share::getInstance($this, $response['result']);
             }
-        }
-        else {
+        } else {
             throw new InvalidArgumentException('createShare function accepts a valid path. Input was ' . $path);
         }
 
@@ -705,7 +705,7 @@ class RESTAdapter {
         if ($statusCode == 200) {
             $response = $connection->getResponse(true);
             if (!empty($response) && !empty($response['result'])) {
-                foreach($response['result'] as $result) {
+                foreach ($response['result'] as $result) {
                     $shares[] = Share::getInstance($this, $result);
                 }
             }
@@ -724,13 +724,13 @@ class RESTAdapter {
      */
     public function browseShare($shareKey, $path = null) {
         $response = null;
-        if(empty($shareKey)){
+        if (empty($shareKey)) {
             throw new InvalidArgumentException('browseShare function accepts a valid shareKey. Input was ' . $shareKey);
         }
 
         $pathParam = $shareKey;
 
-        if($path != null){
+        if ($path != null) {
             $pathParam .= '/' . $path;
         }
 
@@ -802,11 +802,9 @@ class RESTAdapter {
         $success = false;
         if (empty($shareKey)) {
             throw new InvalidArgumentException('unlockShare function accepts a valid shareKey. Input was ' . $shareKey);
-        }
-        else if (empty($password)) {
+        } else if (empty($password)) {
             throw new InvalidArgumentException('unlockShare function accepts a valid password. Input was ' . $password);
-        }
-        else {
+        } else {
             $connection = new HTTPConnector($this->credential->getSession());
             $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/unlock');
             $body = BitcasaUtils::generateParamsString(array('password' => $password));
@@ -840,7 +838,7 @@ class RESTAdapter {
                 $formParameters['current_password'] = $password;
             }
 
-            foreach($values as $key=>$value) {
+            foreach ($values as $key => $value) {
                 $formParameters[$key] = $value;
             }
 
@@ -848,8 +846,7 @@ class RESTAdapter {
             $connection->setData($body);
             $status = $connection->post($url);
             $response = $connection->getResponse(true);
-        }
-        else {
+        } else {
             throw new InvalidArgumentException('alterShare function accepts a valid shareKey. Input was ' . $shareKey);
         }
 
@@ -864,9 +861,9 @@ class RESTAdapter {
      * @return The|null
      * @throws InvalidArgumentException
      */
-    public function fileVersions($path, $startVersion, $endVersion, $limit){
+    public function fileVersions($path, $startVersion, $endVersion, $limit) {
         $response = null;
-        if(!empty($path)){
+        if (!empty($path)) {
             $connection = new HTTPConnector($this->credential->getSession());
             $params = array();
             if ($startVersion != null) {
@@ -883,7 +880,7 @@ class RESTAdapter {
             $status = $connection->get($url);
             $response = $connection->getResponse(true);
 
-        }else{
+        } else {
             throw new InvalidArgumentException('fileVersions function accepts a valid path. Input was ' . $path);
         }
 
@@ -899,16 +896,16 @@ class RESTAdapter {
      * @return The file stream.
      * @throws Exception\InvalidArgumentException
      */
-    public function fileRead($path, $fileName, $fileSize){
+    public function fileRead($path, $fileName, $fileSize) {
 
         $response = null;
-        if(!empty($path)){
+        if (!empty($path)) {
             $connection = new HTTPConnector($this->credential->getSession());
             $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path, array());
             $status = $connection->get($url);
             $response = $connection->getResponse();
 
-        }else{
+        } else {
             throw new InvalidArgumentException('fileRead function accepts a valid path. Input was ' . $path);
         }
 
@@ -921,17 +918,17 @@ class RESTAdapter {
      * @param $path The supplied path.
      * @return The error status or the returned items in trash.
      */
-    public function listTrash($path=null) {
+    public function listTrash($path = null) {
         $endpoint = BitcasaConstants::METHOD_TRASH;
         $connection = new HTTPConnector($this->credential->getSession());
-        $url = $this->credential->getRequestUrl($endpoint, "/".$path);
+        $url = $this->credential->getRequestUrl($endpoint, "/" . $path);
         $status = $connection->get($url);
         if ($status <= 100) {
             return false;
         }
 
         $resp = $connection->getResponse(true);
-        if ($resp != null && isset($resp['result']) && isset($resp['result']['items']) ) {
+        if ($resp != null && isset($resp['result']) && isset($resp['result']['items'])) {
             return $resp['result']['items'];
         }
     }
@@ -939,7 +936,7 @@ class RESTAdapter {
     public function deleteTrashItem($path) {
         $endpoint = BitcasaConstants::METHOD_TRASH;
         $connection = new HTTPConnect($this->credential->getSession());
-        $url = $this->credential->getRequestUrl($endpoint, "/".$path);
+        $url = $this->credential->getRequestUrl($endpoint, "/" . $path);
         $status = $connection->delete($url);
         if ($status <= 100) {
             return false;

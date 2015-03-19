@@ -80,7 +80,7 @@ class File extends Item {
      * @param int $limit The number of versions to be retrieved limit.
      * @return The versions list.
      */
-    public function versions($startVersion = 0, $endVersion = null, $limit = 10){
+    public function versions($startVersion = 0, $endVersion = null, $limit = 10) {
         $versions = $this->restAdapter()->fileVersions($this->getPath(), $startVersion, $endVersion, $limit);
         return $versions;
     }
@@ -89,7 +89,7 @@ class File extends Item {
      * Read the file stream.
      * @return The file stream.
      */
-    public function read(){
+    public function read() {
         return $this->restAdapter()->fileRead($this->getPath(), $this->getName(), $this->getSize());
     }
 

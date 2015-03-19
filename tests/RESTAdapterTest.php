@@ -19,7 +19,7 @@ class RESTAdapterTest extends BaseTest {
     /**
      * The session authenticate test.
      */
-    public function testAuthenticate(){
+    public function testAuthenticate() {
         $this->getSession()->authenticate(self::USERNAME, self::PASSWORD);
         $this->assertTrue(true, $this->getSession()->isLinked());
     }
@@ -57,7 +57,7 @@ class RESTAdapterTest extends BaseTest {
         $this->assertNotNull($items);
         $this->assertTrue(count($items) > 0);
         $folderFound = false;
-        foreach($items as $item) {
+        foreach ($items as $item) {
             if ($item->getName() == $this->level0Folder1Name) {
                 $folderFound = true;
                 break;
@@ -75,7 +75,7 @@ class RESTAdapterTest extends BaseTest {
         $restAdapter = $this->getSession()->getRestAdapter();
         $items = $restAdapter->getList();
         $folder = null;
-        foreach($items as $item) {
+        foreach ($items as $item) {
             if ($item->getName() == $this->level0Folder1Name) {
                 $folder = $item;
                 break;

@@ -13,7 +13,7 @@ class ShareOperationsTest extends BaseTest {
     /**
      * The session authenticate test. Needs to authenticate before doing any other operations.
      */
-    public function testAuthenticate(){
+    public function testAuthenticate() {
         $this->getSession()->authenticate(self::USERNAME, self::PASSWORD);
         $this->assertTrue(true, $this->getSession()->isLinked());
     }
@@ -84,7 +84,7 @@ class ShareOperationsTest extends BaseTest {
         $this->assertTrue($altered);
 
         $shares = $fileSystem->listShares();
-        foreach($shares as $sharedItem) {
+        foreach ($shares as $sharedItem) {
             if ($sharedItem->getName() == $this->sharedFolderName) {
                 $share = $sharedItem;
             }

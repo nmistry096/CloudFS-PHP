@@ -3,7 +3,7 @@
 /**
  * Test Bitcasa session related functionality.
  */
-class SessionTest extends BaseTest{
+class SessionTest extends BaseTest {
 
     /**
      * The session authenticate test.

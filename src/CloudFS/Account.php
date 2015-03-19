@@ -127,8 +127,7 @@ class Account {
         $account->id = $data['result']['account_id'];
         $account->storageUsage = $data['result']['storage']['usage'];
 
-        if(!empty($data['result']['storage']['limit']))
-        {
+        if (!empty($data['result']['storage']['limit'])) {
             $account->storageLimit = $data['result']['storage']['limit'];
         }
 
@@ -138,7 +137,7 @@ class Account {
         $account->planDisplayName = $data['result']['account_plan']['display_name'];
         $account->planId = $data['result']['account_plan']['id'];
 
-        if(!empty($data['result']['session']['locale'])) {
+        if (!empty($data['result']['session']['locale'])) {
             $account->sessionLocale = $data['result']['session']['locale'];
         }
 

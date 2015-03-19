@@ -56,7 +56,7 @@ class BaseTest extends PHPUnit_Framework_TestCase {
      */
     protected function getItem(array $items, $item_name) {
         $result = null;
-        foreach($items as $item) {
+        foreach ($items as $item) {
             /** @var \CloudFS\Item $item */
             if ($item->getName() == $item_name) {
                 $result = $item;
@@ -67,7 +67,7 @@ class BaseTest extends PHPUnit_Framework_TestCase {
         return $result;
     }
 
-    protected function checkedAndCreateDirName($pathToDirector){
+    protected function checkedAndCreateDirName($pathToDirector) {
         if (!file_exists($pathToDirector)) {
             mkdir($pathToDirector, 0777, true);
         }

@@ -20,7 +20,7 @@ class FileSystemTest extends BaseTest {
     /**
      * The session authenticate test.
      */
-    public function testAuthenticate(){
+    public function testAuthenticate() {
         $this->getSession()->authenticate(self::USERNAME, self::PASSWORD);
         $this->assertTrue(true, $this->getSession()->isLinked());
     }
@@ -35,7 +35,7 @@ class FileSystemTest extends BaseTest {
 
         $items = $root->getList();
         if (count($items) > 0) {
-            foreach($items as $item) {
+            foreach ($items as $item) {
                 /** @var \CloudFS\Item $item */
                 if ($item->getName() == $this->level0Folder1Name) {
                     $item->delete(true, true);
@@ -174,7 +174,7 @@ class FileSystemTest extends BaseTest {
         $this->assertEquals($imageFileName, $uploadedImageFile->getName());
         $this->assertEquals('jpg', $uploadedImageFile->getExtension());
         $this->assertNotNull($uploadedImageFile->getSize());
-        $this->assertEquals('image/jpeg',$uploadedImageFile->getMime());
+        $this->assertEquals('image/jpeg', $uploadedImageFile->getMime());
         $content = $uploadedImageFile->read();
         $this->assertNotEmpty($content);
 
@@ -246,7 +246,7 @@ class FileSystemTest extends BaseTest {
     /**
      * Test restore files relate operations.
      */
-    public function testRestore(){
+    public function testRestore() {
         $fileSystem = $this->getSession()->filesystem();
         $root = $fileSystem->root();
         $folder = $root->createFolder($this->level0Folder1Name);
@@ -293,22 +293,18 @@ class FileSystemTest extends BaseTest {
         $level0Folder1->delete(true, true);
     }
 
-    function uploadProgressCallback($downloadSize, $downloadedSize, $uploadSize, $uploadedSize)
-    {
-        if ($uploadSize == 0 ) {
+    function uploadProgressCallback($downloadSize, $downloadedSize, $uploadSize, $uploadedSize) {
+        if ($uploadSize == 0) {
             $progress = 0;
-        }
-        else {
+        } else {
             $progress = round($uploadedSize * 100 / $uploadSize);
         }
     }
 
-    function downloadProgressCallback($downloadSize, $downloadedSize, $uploadSize, $uploadedSize)
-    {
-        if ($downloadSize == 0 ) {
+    function downloadProgressCallback($downloadSize, $downloadedSize, $uploadSize, $uploadedSize) {
+        if ($downloadSize == 0) {
             $progress = 0;
-        }
-        else {
+        } else {
             $progress = round($downloadedSize * 100 / $downloadSize);
         }
     }

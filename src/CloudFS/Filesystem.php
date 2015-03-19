@@ -42,7 +42,7 @@ class Filesystem {
     /**
      * Browses the Trash meta folder on the authenticated user’s account.
      */
-    public function listTrash(){
+    public function listTrash() {
         return $this->restAdapter->listTrash();
     }
 
@@ -87,7 +87,7 @@ class Filesystem {
     public function retrieveShare($shareKey, $password = null) {
         $shares = $this->listShares();
         $sharedItem = null;
-        foreach($shares as $share) {
+        foreach ($shares as $share) {
             /** @var \CloudFS\Share $share */
             if ($share->getShareKey() == $shareKey) {
                 $sharedItem = $share;
@@ -98,4 +98,5 @@ class Filesystem {
         return $sharedItem;
     }
 }
+
 ?>

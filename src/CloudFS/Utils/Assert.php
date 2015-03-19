@@ -11,8 +11,7 @@
 
 namespace CloudFS\Utils;
 
-abstract class Assert
-{
+abstract class Assert {
     /**
      * Check if a supplied argument in null or not.
      *
@@ -21,8 +20,7 @@ abstract class Assert
      * @return bool The null status of the argument supplied.
      * @throws \InvalidArgument
      */
-    public static function assertNonNull($s, $argno = 0)
-    {
+    public static function assertNonNull($s, $argno = 0) {
         if ($s == null) {
             throw new \InvalidArgument($argno);
         }
@@ -37,8 +35,7 @@ abstract class Assert
      * @return bool The string  status of the argument supplied.
      * @throws \InvalidArgument
      */
-    public static function assertString($s, $argno = 0)
-    {
+    public static function assertString($s, $argno = 0) {
         if (!is_string($s)) {
             throw new \InvalidArgument($argno);
         }
@@ -53,8 +50,7 @@ abstract class Assert
      * @return bool The string or null status of the argument supplied.
      * @throws \InvalidArgument
      */
-    public static function assertStringOrNull($s, $argno = 0)
-    {
+    public static function assertStringOrNull($s, $argno = 0) {
         if ($s != null && !is_string($s)) {
             throw new \InvalidArgument($argno);
         }
@@ -69,8 +65,7 @@ abstract class Assert
      * @return bool The number status of the argument supplied.
      * @throws \InvalidArgument
      */
-    public static function assertNumber($s, $argno = 0)
-    {
+    public static function assertNumber($s, $argno = 0) {
         if (!is_number($s)) {
             throw new \InvalidArgument($argno);
         }
@@ -86,8 +81,7 @@ abstract class Assert
      * @throws \InvalidArgument
      */
     // TODO: needs more work!
-    public static function assertPath($s, $argno = 0)
-    {
+    public static function assertPath($s, $argno = 0) {
         if (is_string($s)) {
             if ($s == "/") {
                 return true;

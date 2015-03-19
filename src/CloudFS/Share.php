@@ -171,7 +171,7 @@ class Share {
 
     /**
      * Deletes the item for the share key.
-     * 
+     *
      * @return The success/fail response of the delete operation.
      */
     public function delete() {
@@ -182,7 +182,7 @@ class Share {
      * Adds all shared items for the given share key to the path supplied
      *
      * @param string $path The path to which the share files are added.
-     * @param string $exists  The action to take if the item already exists.
+     * @param string $exists The action to take if the item already exists.
      * @return bool The success/fail response of the receive operation.
      */
     public function receive($path = '/', $exists = Exists::RENAME) {
