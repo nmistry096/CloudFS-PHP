@@ -1,6 +1,5 @@
 <?php
 
-use CloudFS\Filesystem;
 use CloudFS\Utils\Exists;
 use CloudFS\Utils\FileType;
 
@@ -20,19 +19,6 @@ class ShareOperationsTest extends BaseTest {
     }
 
     /**
-     * Clears user file system. Use with care. This deletes every thing in users folder system.
-     */
-//    public function DeleteRootFolders() {
-//        /** @var \CloudFS\Filesystem $fileSystem */
-//        $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
-//
-//        $items = $fileSystem->getList('/');
-//        if (count($items) > 0) {
-//            $fileSystem->delete($items, true);
-//        }
-//    }
-
-    /**
      * Test share operations.
      */
     public function testShares() {
@@ -41,7 +27,6 @@ class ShareOperationsTest extends BaseTest {
         $root = $fileSystem->root();
 
         // /top
-
         /** @var \CloudFS\Folder $topLevelFolder */
         $topLevelFolder = $root->createFolder($this->topLevelFolder, Exists::OVERWRITE);
         $this->assertNotNull($topLevelFolder);

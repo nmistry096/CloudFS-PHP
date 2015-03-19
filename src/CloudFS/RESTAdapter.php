@@ -381,7 +381,7 @@ class RESTAdapter {
      * @return The success/fail response of the alter operation.
      * @throws InvalidArgument
      */
-    public function alterFolder($path, $values, $conflict = "fail") {
+    public function alterFolderMeta($path, $values, $conflict = "fail") {
         Assert::assertString($path, 1);
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path . "/meta", array());
@@ -405,7 +405,7 @@ class RESTAdapter {
      * @return The success/fail response of the alter operation.
      * @throws InvalidArgument
      */
-    public function alterFile($path, $values, $conflict = "fail") {
+    public function alterFileMeta($path, $values, $conflict = "fail") {
         Assert::assertString($path, 1);
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path . "/meta", array());

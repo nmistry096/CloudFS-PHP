@@ -34,7 +34,7 @@ class Share {
      */
     private $restAdapter;
 
-	/**
+    /**
      * Retrieves the  share key.
      *
      * @return The share key.
@@ -43,7 +43,7 @@ class Share {
         return $this->shareKey;
     }
 
-	/**
+    /**
      * Retrieves the  share type.
      *
      * @return The share type.
@@ -52,7 +52,7 @@ class Share {
         return $this->shareType;
     }
 
-	/**
+    /**
      * Retrieves the  share name.
      *
      * @return The share name.
@@ -61,7 +61,7 @@ class Share {
         return $this->name;
     }
 
-	/**
+    /**
      * Retrieves the  url.
      *
      * @return The share url.
@@ -70,7 +70,7 @@ class Share {
         return $this->url;
     }
 
-	/**
+    /**
      * Retrieves the  short url.
      *
      * @return The short url.
@@ -79,7 +79,7 @@ class Share {
         return $this->shortUrl;
     }
 
-	/**
+    /**
      * Retrieves the created date.
      *
      * @return The created date.
@@ -88,7 +88,7 @@ class Share {
         return $this->dateCreated;
     }
 
-	/**
+    /**
      * Retrieves the  share size.
      *
      * @return The share size.
@@ -131,7 +131,7 @@ class Share {
 
     }
 
-	/**
+    /**
      * Retrieves a share instance from the supplied result.
      *
      * @param \CloudFS\RESTAdapter $restAdapter The rest adapter instance.

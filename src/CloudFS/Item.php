@@ -250,10 +250,10 @@ class Item {
         $success = false;
         $values['version'] = $this->getVersion();
         if ($this->getType() == FileType::FILE) {
-            $result = $this->restAdapter()->alterFile($this->getPath(), $values, $ifConflict);
+            $result = $this->restAdapter()->alterFileMeta($this->getPath(), $values, $ifConflict);
         }
         else {
-            $result = $this->restAdapter()->alterFolder($this->getPath(), $values, $ifConflict);
+            $result = $this->restAdapter()->alterFolderMeta($this->getPath(), $values, $ifConflict);
         }
 
         if (empty($result['error'])) {
