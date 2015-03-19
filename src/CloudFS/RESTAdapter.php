@@ -285,15 +285,21 @@ class RESTAdapter {
      * Delete a folder from cloud storage.
      *
      * @param string $path The path of the folder to be deleted.
+     * @param bool $commit Either move the folder to the Trash (false) or delete it immediately (true)
      * @param bool $force The flag to force delete the folder from cloud storage.
      * @return The success/fail response of the delete operation.
      */
-    public function deleteFolder($path, $force = false) {
+    public function deleteFolder($path, $commit = false, $force = false) {
         Assert::assertString($path, 1);
         $connection = new HTTPConnector($this->credential->getSession());
         $force_option = array();
+
         if ($force == true) {
-            $force_option["force"] = "true";
+            $force_option['force'] = 'true';
+        }
+
+        if($commit == true){
+            $force_option['commit'] = 'true';
         }
 
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path, $force_option);
