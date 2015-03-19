@@ -137,7 +137,7 @@ class RESTAdapter {
         $url = $this->credential->getRequestUrl($endpoint, null, $params);
 
         if (!BitcasaUtils::isSuccess($connection->get($url))) {
-            return null;
+            throw new Exception("Invalid connection url");
         }
 
         $response = $connection->getResponse(true);
@@ -179,7 +179,7 @@ class RESTAdapter {
         $url = $this->credential->getRequestUrl($endpoint, null, $params);
 
         if (!BitcasaUtils::isSuccess($connection->get($url))) {
-            return null;
+            throw new Exception("Invalid connection url");
         }
 
         $response = $connection->getResponse(true);
@@ -214,7 +214,7 @@ class RESTAdapter {
         $url = $this->credential->getRequestUrl($endpoint, null, $params);
 
         if (!BitcasaUtils::isSuccess($connection->get($url))) {
-            return null;
+            throw new Exception("Invalid connection url");
         }
 
         $response = $connection->getResponse(true);
@@ -272,7 +272,7 @@ class RESTAdapter {
         $url = $this->credential->getRequestUrl($endpoint, null, $params);
 
         if (!BitcasaUtils::isSuccess($connection->get($url))) {
-            return null;
+            throw new Exception("Invalid connection url");
         }
 
         $response = $connection->getResponse(true);
