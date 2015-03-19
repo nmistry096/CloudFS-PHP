@@ -70,11 +70,12 @@ CloudFS\\Share
 
         Private constructor to avoid creating new share objects.
 
-    .. php:method:: getInstance($fileSystem, $result)
+    .. php:method:: getInstance($restAdapter, $result)
 
         Retrieves a share instance from the supplied result.
 
-        :param $fileSystem:
+        :type $restAdapter: \CloudFS\RESTAdapter
+        :param $restAdapter: The rest adapter instance.
         :type $result: mixed
         :param $result: The json response retrieved from rest api.
         :returns: A share instance.

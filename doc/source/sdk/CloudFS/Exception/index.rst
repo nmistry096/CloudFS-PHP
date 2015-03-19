@@ -6,6 +6,6 @@ CloudFS\\Exception
 
 .. toctree::
 
-   InvalidArgumentException
    BitcasaStatus
+   InvalidArgumentException
    BitcasaError

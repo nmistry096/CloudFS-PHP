@@ -6,7 +6,7 @@ CloudFS\\ShareFolder
 
 .. php:class:: ShareFolder
 
-    .. php:method:: __construct($data, $parentPath, $filesystem)
+    .. php:method:: __construct($data, $parentPath, $restAdapter)
 
         Initializes a new instance of shared folder.
 
@@ -14,8 +14,8 @@ CloudFS\\ShareFolder
         :param $data: The item data.
         :type $parentPath: string
         :param $parentPath: The item parent path.
-        :type $filesystem: \CloudFS\Filesystem
-        :param $filesystem: The file system instance.
+        :type $restAdapter: \CloudFS\RESTAdapter
+        :param $restAdapter: The rest adapter instance.
 
     .. php:method:: createFolder($name, $exists = Exists::OVERWRITE)
 
@@ -119,13 +119,13 @@ CloudFS\\ShareFolder
 
         :returns: The item version number.
 
-    .. php:method:: filesystem()
+    .. php:method:: restAdapter()
 
-        Retrieves this file system instance.
+        Retrieves this rest adapter instance.
 
-        :returns: The file system instance.
+        :returns: \CloudFS\RESTAdapter The rest adapter instance.
 
-    .. php:method:: make($data, $parentPath = null, $filesystem = null, $shared = false)
+    .. php:method:: make($data, $parentPath = null, $restAdapter = null, $shared = false)
 
         Retrieves an instance of an item for the supplied data.
 
@@ -133,8 +133,8 @@ CloudFS\\ShareFolder
         :param $data: The data needed to create an item.
         :type $parentPath: string
         :param $parentPath: Parent path for the new item.
-        :type $filesystem: Filesystem
-        :param $filesystem: The file system instance.
+        :type $restAdapter: \CloudFS\RESTAdapter
+        :param $restAdapter: The rest adapter instance.
         :type $shared: bool
         :param $shared: Indicates whether the data belongs to a shared item.
         :returns: An instance of the new item.
@@ -179,24 +179,16 @@ CloudFS\\ShareFolder
         :param $force: Flag to force the delete operation.
         :returns: Boolean value indicating the status of the delete operation.
 
-    .. php:method:: save($ifConflict = "fail", $debug = False)
-
-        Save this item on the cloud.
-
-        :type $ifConflict: string
-        :param $ifConflict: The action to take if a conflict occurs.
-        :type $debug: bool
-        :param $debug: Debug flag.
-        :returns: The success/fail response of the save operation.
-
     .. php:method:: restore($destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null)
 
         Restores this item to the given destination.
 
         :type $destination: string
         :param $destination: The destination of the item restore.
-        :param $restoreMethod:
-        :param $restoreArgument:
+        :type $restoreMethod: string
+        :param $restoreMethod: The restore method.
+        :type $restoreArgument: string
+        :param $restoreArgument: The restore argument.
         :returns: The success/fail response of the restore operation.
 
     .. php:method:: history()

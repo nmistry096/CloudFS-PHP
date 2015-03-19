@@ -13,9 +13,9 @@ CloudFS\\RESTAdapter
         :type $credential: Credential
         :param $credential:
 
-    .. php:method:: getAccessToken($session, $username, $password)
+    .. php:method:: authenticate($session, $username, $password)
 
-        Retrieves the CloudFS access token through an api request.
+        Authenticates with bitcasa and gets the access token.
 
         :type $session: Session
         :param $session: The bitcasa session.
@@ -40,6 +40,14 @@ CloudFS\\RESTAdapter
         :param $filter: Variable to filter the items being retrieved.
         :returns: The item list.
 
+    .. php:method:: getItemMeta($path)
+
+        Retrieves the meta data of a item at a given path.
+
+        :type $path: string
+        :param $path: The path of the item.
+        :returns: The meta data of the item.
+
     .. php:method:: getFileMeta($path)
 
         Retrieves the meta data of a file at a given path.
@@ -47,6 +55,13 @@ CloudFS\\RESTAdapter
         :type $path: string
         :param $path: The path of the item.
         :returns: The meta data of the item.
+
+    .. php:method:: getParentPath($path)
+
+        Gets the parent path from the specified item path.
+
+        :param $path:
+        :returns: The parent path.
 
     .. php:method:: getFolderMeta($path)
 
@@ -56,24 +71,26 @@ CloudFS\\RESTAdapter
         :param $path: The path of the item.
         :returns: The meta data of the item.
 
-    .. php:method:: createFolder($parentpath, $filename, $exists = Exists::FAIL)
+    .. php:method:: createFolder($parentPath, $name, $exists = Exists::FAIL)
 
         Create a folder at a given path with the supplied name.
 
-        :type $parentpath: string
-        :param $parentpath: The folder path under which the new folder should be created.
-        :type $filename: string
-        :param $filename: The name for the folder to be created.
+        :type $parentPath: string
+        :param $parentPath: The folder path under which the new folder should be created.
+        :type $name: string
+        :param $name: The name for the folder to be created.
         :type $exists: string
         :param $exists: Specifies the action to take if the folder already exists.
         :returns: An instance of the newly created item of type Folder.
 
-    .. php:method:: deleteFolder($path, $force = false)
+    .. php:method:: deleteFolder($path, $commit = false, $force = false)
 
         Delete a folder from cloud storage.
 
         :type $path: string
         :param $path: The path of the folder to be deleted.
+        :type $commit: bool
+        :param $commit: Either move the folder to the Trash (false) or delete it immediately (true)
         :type $force: bool
         :param $force: The flag to force delete the folder from cloud storage.
         :returns: The success/fail response of the delete operation.
@@ -88,85 +105,85 @@ CloudFS\\RESTAdapter
         :param $force: The flag to force delete the file from cloud storage.
         :returns: The success/fail response of the delete operation.
 
-    .. php:method:: alterFolder($path, $attrs, $conflict = "fail")
+    .. php:method:: alterFolderMeta($path, $values, $conflict = "fail")
 
         Alter the attributes of the folder at a given path.
 
         :type $path: string
         :param $path: The folder path.
-        :type $attrs: mixed
-        :param $attrs: The attributes to be altered.
+        :type $values: mixed
+        :param $values: The attributes to be altered.
         :type $conflict: string
         :param $conflict: Specifies the action to take if a conflict occurs.
         :returns: The success/fail response of the alter operation.
 
-    .. php:method:: alterFile($path, $attrs, $conflict = "fail")
+    .. php:method:: alterFileMeta($path, $values, $conflict = "fail")
 
         Alter the attributes of the file at a given path.
 
         :type $path: string
         :param $path: The file path.
-        :type $attrs: mixed
-        :param $attrs: The attributes to be altered.
+        :type $values: mixed
+        :param $values: The attributes to be altered.
         :type $conflict: string
         :param $conflict: Specifies the action to take if a conflict occurs.
         :returns: The success/fail response of the alter operation.
 
-    .. php:method:: copyFolder($path, $dest, $name = null, $exists = Exists::FAIL)
+    .. php:method:: copyFolder($path, $destination, $name = null, $exists = Exists::FAIL)
 
         Copy a folder at a given path to a specified destination.
 
         :type $path: string
         :param $path: The path of the folder to be copied.
-        :type $dest: string
-        :param $dest: Path to which the folder should be copied to.
+        :type $destination: string
+        :param $destination: Path to which the folder should be copied to.
         :type $name: string
         :param $name: Name of the newly copied folder.
         :type $exists: string
         :param $exists: Specifies the action to take if the folder already exists.
-        :returns: The success/fail response of the copy operation
+        :returns: The copied folder instance.
 
-    .. php:method:: copyFile($path, $dest, $name = null, $exists = Exists::FAIL)
+    .. php:method:: copyFile($path, $destination, $name = null, $exists = Exists::FAIL)
 
         Copy a file at a given path to a specified destination.
 
         :type $path: string
         :param $path: The path of the file to be copied.
-        :type $dest: string
-        :param $dest: Path to which the file should be copied to.
+        :type $destination: string
+        :param $destination: Path to which the file should be copied to.
         :type $name: string
         :param $name: Name of the newly copied file.
         :type $exists: string
         :param $exists: Specifies the action to take if the file already exists.
-        :returns: The success/fail response of the copy operation
+        :returns: The copied file instance.
 
-    .. php:method:: moveFolder($path, $dest, $name = null, $exists = Exists::FAIL)
+    .. php:method:: moveFolder($path, $destination, $name = null, $exists = Exists::FAIL)
 
         Move a folder at a given path to a specified destination.
 
         :type $path: string
         :param $path: The path of the folder to be moved.
-        :type $dest: string
-        :param $dest: Path to which the folder should be moved to.
+        :type $destination: string
+        :param $destination: Path to which the folder should be moved to.
         :type $name: string
         :param $name: Name of the newly moved folder.
         :type $exists: string
         :param $exists: Specifies the action to take if the folder already exists.
-        :returns: The success/fail response of the move operation
+        :returns: The moved folder instance.
 
-    .. php:method:: moveFile($path, $dest, $name = null, $exists = Exists::FAIL)
+    .. php:method:: moveFile($path, $destination, $name = null, $exists = Exists::FAIL)
 
         Move a file at a given path to a specified destination.
 
         :type $path: string
         :param $path: The path of the file to be moved.
-        :type $dest: string
-        :param $dest: Path to which the file should be moved to.
+        :type $destination: string
+        :param $destination: Path to which the file should be moved to.
         :type $name: string
         :param $name: Name of the newly moved file.
         :type $exists: string
         :param $exists: Specifies the action to take if the file already exists.
-        :returns: The success/fail response of the move operation
+        :returns: The moved file instance.
 
     .. php:method:: downloadFile($path, $localDestinationPath, $downloadProgressCallback)
 
@@ -180,42 +197,42 @@ CloudFS\\RESTAdapter
         :param $downloadProgressCallback: The download progress callback function. This function should take 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
         :returns: The download status.
 
-    .. php:method:: uploadFile($parentpath, $name, $filepath, $exists = Exists::OVERWRITE, $uploadProgressCallback = null)
+    .. php:method:: uploadFile($parentPath, $name, $filePath, $exists = Exists::OVERWRITE, $uploadProgressCallback = null)
 
         Upload a file on to the given path.
 
-        :type $parentpath: string
-        :param $parentpath: The parent folder path to which the file is to be uploaded.
+        :type $parentPath: string
+        :param $parentPath: The parent folder path to which the file is to be uploaded.
         :type $name: string
         :param $name: The upload file name.
-        :type $filepath: string
-        :param $filepath: The file path for the file to be downloaded.
+        :type $filePath: string
+        :param $filePath: The file path for the file to be downloaded.
         :type $exists: string
         :param $exists: The action to take if the item already exists.
         :type $uploadProgressCallback: mixed
         :param $uploadProgressCallback: The upload progress callback function. This function should take 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
         :returns: An instance of the uploaded item.
 
-    .. php:method:: restore($pathId, $destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null)
+    .. php:method:: restore($path, $destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null)
 
         Restores the file at a given path to a given destination.
 
-        :type $pathId: string
-        :param $pathId:
+        :type $path: string
+        :param $path: The item path.
         :type $destination: string
-        :param $destination:
+        :param $destination: The destination path.
         :type $restoreMethod: string
-        :param $restoreMethod:
+        :param $restoreMethod: The restore method.
         :type $restoreArgument: string
-        :param $restoreArgument:
-        :returns: bool|The
+        :param $restoreArgument: The restore argument.
+        :returns: The state of the restore operation.
 
     .. php:method:: createShare($path, $password = null)
 
         Create a share of an item at the supplied path.
 
-        :type $path: string
-        :param $path: The path of the item to be shared.
+        :type $path: mixed
+        :param $path: The paths of the item to be shared.
         :type $password: string
         :param $password: The password of the shared to be created.
         :returns: An instance of the share.
@@ -226,12 +243,14 @@ CloudFS\\RESTAdapter
 
         :returns: The share list.
 
-    .. php:method:: browseShare($shareKey)
+    .. php:method:: browseShare($shareKey, $path = null)
 
         Retrieves the items for a supplied share key.
 
         :type $shareKey: string
         :param $shareKey: The supplied share key.
+        :type $path: string
+        :param $path: The path to any folder inside the share
         :returns: An array of items for the share key.
 
     .. php:method:: receiveShare($shareKey, $path, $exists = Exists::OVERWRITE)
