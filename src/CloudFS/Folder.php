@@ -40,6 +40,7 @@ class Folder extends Container {
      */
     public function upload($filesystemPath, $uploadProgressCallback, $exists = Exists::FAIL) {
         $filename = basename($filesystemPath);
-        return $this->restAdapter()->uploadFile($this->getPath(), $filename, $filesystemPath, $exists, $uploadProgressCallback);
+        return $this->restAdapter()->uploadFile($this->getPath(), $filename, $filesystemPath, $exists,
+            $uploadProgressCallback);
     }
 }
