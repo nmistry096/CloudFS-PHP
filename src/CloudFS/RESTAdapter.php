@@ -652,7 +652,7 @@ class RESTAdapter {
     /**
      * Create a share of an item at the supplied path.
      *
-     * @param string $path The path of the item to be shared.
+     * @param mixed $path The paths of the item to be shared.
      * @param string $password The password of the shared to be created.
      * @return An instance of the share.
      * @throws Exception\InvalidArgumentException
@@ -662,7 +662,18 @@ class RESTAdapter {
         if (!empty($path)) {
             $connection = new HTTPConnector($this->credential->getSession());
             $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES);
-            $formParameters = array('path' => $path);
+            $formParameters = array();
+            $pathValues = array();
+            if(is_array($path)){
+                foreach($path as $value){
+                    $pathValues[] = $value;
+                }
+                $formParameters = array('path' => $pathValues);
+
+            }else{
+                $formParameters = array('path' => $path);
+            }
+
             if (!empty($password)) {
                 $formParameters['password'] = $password;
             }

@@ -62,12 +62,24 @@ abstract class BitcasaUtils {
 		$first = true;
   		if ($params != null && count($params) > 0) {
 			foreach ($params as $key => $value) {
-				if ($first == true) {
-					$first = false;
-				} else {
-					$paramsString .= "&";
-				}
-  				$paramsString .= $key . "=" . BitcasaUtils::replaceSpaceWithPlus($value);
+				if(is_array($value)){
+                    foreach($value as $index=>$data){
+                        if($index > 0){
+                            $paramsString .= "&";
+                        }
+                        $paramsString .= $key . "=" . BitcasaUtils::replaceSpaceWithPlus($data);
+                    }
+                }else{
+
+                    if ($first == true) {
+                        $first = false;
+                    } else {
+                        $paramsString .= "&";
+                    }
+
+                    $paramsString .= $key . "=" . BitcasaUtils::replaceSpaceWithPlus($value);
+                }
+
   			}
   		}
   		return $paramsString;

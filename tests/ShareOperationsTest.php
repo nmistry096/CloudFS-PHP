@@ -51,7 +51,9 @@ class ShareOperationsTest extends BaseTest {
         $this->assertEquals($this->receiveFolderName, $receivedFolder->getName());
 
         /** @var \CloudFS\Share $share */
-        $share = $fileSystem->createShare($sharedFolder->getPath());
+        $path = array($sharedFolder->getPath(), $receivedFolder->getPath());
+        //$path = $receivedFolder->getPath();
+        $share = $fileSystem->createShare($path);
         $this->assertNotNull($share);
         $this->assertNotEmpty($share->getShareKey());
 
