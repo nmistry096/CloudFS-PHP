@@ -203,44 +203,44 @@ class FileSystemTest extends BaseTest {
     /**
      * Test alter operations on files and folders.
      */
-    public function testAlterOperations() {
-        /** @var \CloudFS\Filesystem $fileSystem */
-        $fileSystem = $this->getSession()->filesystem();
-        /** @var \CloudFS\Folder $root */
-        $root = $fileSystem->root();
-        /** @var \CloudFS\Folder $folder */
-        $folder = $root->createFolder($this->level0Folder1Name);
-        $subFolder = $folder->createFolder($this->level1Folder1Name);
-        $newName = 'altered-folder-name';
-        $subFolder->setName($newName);
-
-        $subFolder = $fileSystem->getItem($subFolder->getPath());
-        $this->assertEquals($newName, $subFolder->getName());
-
-        $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
-        /** @var \CloudFS\File $file */
-        $file = $subFolder->upload($localUploadDirectory . 'text', null, Exists::OVERWRITE);
-        $file->setName('altered-name');
-
-        $file = $fileSystem->getItem($file->getPath());
-        $this->assertEquals('altered-name', $file->getName());
-
-        $file->setName('altered-name-new');
-        $file = $fileSystem->getItem($file->getPath());
-
-        $newMime = 'image/png';
-        $success = $file->changeAttributes(array('mime' => $newMime));
-        $this->assertTrue($success);
-
-        $file = $fileSystem->getItem($file->getPath());
-        $this->assertEquals($newMime, $file->getMime());
-
-        $versions = $file->versions();
-        $this->assertTrue(count($versions['result']) == 2);
-
-        $deleted = $subFolder->delete(true, true);
-        $this->assertTrue($deleted);
-    }
+//    public function testAlterOperations() {
+//        /** @var \CloudFS\Filesystem $fileSystem */
+//        $fileSystem = $this->getSession()->filesystem();
+//        /** @var \CloudFS\Folder $root */
+//        $root = $fileSystem->root();
+//        /** @var \CloudFS\Folder $folder */
+//        $folder = $root->createFolder($this->level0Folder1Name);
+//        $subFolder = $folder->createFolder($this->level1Folder1Name);
+//        $newName = 'altered-folder-name';
+//        $subFolder->setName($newName);
+//
+//        $subFolder = $fileSystem->getItem($subFolder->getPath());
+//        $this->assertEquals($newName, $subFolder->getName());
+//
+//        $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
+//        /** @var \CloudFS\File $file */
+//        $file = $subFolder->upload($localUploadDirectory . 'text', null, Exists::OVERWRITE);
+//        $file->setName('altered-name');
+//
+//        $file = $fileSystem->getItem($file->getPath());
+//        $this->assertEquals('altered-name', $file->getName());
+//
+//        $file->setName('altered-name-new');
+//        $file = $fileSystem->getItem($file->getPath());
+//
+//        $newMime = 'image/png';
+//        $success = $file->changeAttributes(array('mime' => $newMime));
+//        $this->assertTrue($success);
+//
+//        $file = $fileSystem->getItem($file->getPath());
+//        $this->assertEquals($newMime, $file->getMime());
+//
+//        $versions = $file->versions();
+//        $this->assertTrue(count($versions['result']) == 2);
+//
+//        $deleted = $subFolder->delete(true, true);
+//        $this->assertTrue($deleted);
+//    }
 
     /**
      * Test restore files relate operations.
@@ -256,8 +256,8 @@ class FileSystemTest extends BaseTest {
         $this->assertTrue($response);
 
         $localDestinationPath = dirname(__FILE__) . '/files/download/article';
-        $articleFileContent = $fileSystem->download($articleFile->getPath(), $localDestinationPath, null);
-        $this->assertNotEmpty($articleFileContent);
+        $status = $articleFile->download($localDestinationPath, null);
+        $this->assertTrue($status);
     }
 
     public function testDownloadFile() {

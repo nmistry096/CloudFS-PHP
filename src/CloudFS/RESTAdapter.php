@@ -614,6 +614,7 @@ class RESTAdapter {
     public function restore($path, $destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null) {
         $connection = new HTTPConnector($this->credential->getSession());
         $params = array();
+        $status = false;
 
         if($restoreMethod == RestoreMethod::RECREATE){
             $params['recreate-path'] = $destination;
@@ -638,7 +639,13 @@ class RESTAdapter {
             return false;
         }
 
-        return $connection->getResponse(true);
+        $response = $connection->getResponse(true);
+
+        if (!empty($response) && !empty($response['result'])) {
+            $status = $response['result']['success'];
+        }
+
+        return $status;
     }
 
     /**

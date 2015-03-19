@@ -83,7 +83,7 @@ class File extends Item {
      * @return The versions list.
      */
     public function versions($startVersion = 0, $endVersion = null, $limit = 10){
-        $versions = $this->restAdapter()->fileVersions($this, $startVersion, $endVersion, $limit);
+        $versions = $this->restAdapter()->fileVersions($this->getPath(), $startVersion, $endVersion, $limit);
         return $versions;
     }
 
