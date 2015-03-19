@@ -283,12 +283,12 @@ class RESTAdapter {
      * Create a folder at a given path with the supplied name.
      *
      * @param string $parentPath The folder path under which the new folder should be created.
-     * @param string $folderName The name for the folder to be created.
+     * @param string $name The name for the folder to be created.
      * @param string $exists Specifies the action to take if the folder already exists.
      * @return An instance of the newly created item of type Folder.
      * @throws InvalidArgument
      */
-    public function createFolder($parentPath, $folderName, $exists = Exists::FAIL) {
+    public function createFolder($parentPath, $name, $exists = Exists::FAIL) {
         $item = null;
         $connection = new HTTPConnector($this->credential->getSession());
         if ($parentPath == null) {
@@ -296,10 +296,10 @@ class RESTAdapter {
         }
 
         Assert::assertPath($parentPath, 1);
-        Assert::assertString($folderName, 2);
+        Assert::assertString($name, 2);
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $parentPath,
             array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_CREATE));
-        $body = BitcasaUtils::generateParamsString(array("name" => $folderName, "exists" => $exists));
+        $body = BitcasaUtils::generateParamsString(array("name" => $name, "exists" => $exists));
 
         $connection->setData($body);
         if ($this->debug) {
