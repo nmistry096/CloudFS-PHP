@@ -325,11 +325,21 @@ class Item {
      * @return The success/fail response of the restore operation.
      */
     public function restore($destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null) {
+        $status = false;
         if (!is_string($destination)) {
             $destination = $destination->path();
         }
-        $path = $this->getId();
-        return $this->restAdapter()->restore($path, $destination, $restoreMethod, $restoreArgument);
+
+        $status = $this->restAdapter()->restore($this->getId(), $destination, $restoreMethod, $restoreArgument);
+
+        if($status){
+
+            $this->full_path = $destination . '/' . $this->getId();
+
+        }else{
+            $this->restAdapter = null;
+        }
+        return $status;
     }
 
     /**

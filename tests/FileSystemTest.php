@@ -2,6 +2,7 @@
 
 use CloudFS\Utils\Exists;
 use CloudFS\Utils\FileType;
+use CloudFS\Utils\RestoreMethod;
 
 /**
  * Test Bitcasa file system related functionality.
@@ -252,7 +253,7 @@ class FileSystemTest extends BaseTest {
         $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
         $articleFile = $folder->upload($localUploadDirectory . 'text2', null, Exists::OVERWRITE);
         $articleFile->delete();
-        $response = $articleFile->restore($articleFile->getPath());
+        $response = $articleFile->restore($folder->getPath(), RestoreMethod::RECREATE);
         $this->assertTrue($response);
 
         $localDestinationPath = dirname(__FILE__) . '/files/download/article';
