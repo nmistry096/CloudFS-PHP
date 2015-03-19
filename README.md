@@ -55,14 +55,13 @@ $folder = $root->createFolder($folderName);
 Uploading a file to a folder
 
 ```php
-$folder->upload($localFilePath, $uploadProgressCallback, Exists::OVERWRITE);
+$uploadedFile = $folder->upload($localFilePath, $uploadProgressCallback, Exists::OVERWRITE);
 ```
 
-Download a file from a folder
+Download a file to a local destination.
 
 ```php
-$file = $folder->getFile($filePath);
-$file->download($localDestinationPath, $downloadProgressCallback);
+$uploadedFile->download($localDestinationPath, $downloadProgressCallback);
 ```
 
 Deleting a file or folder
