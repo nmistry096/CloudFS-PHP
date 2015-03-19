@@ -62,8 +62,7 @@ class Session {
      * @return The authentication status.
      */
     public function authenticate($username, $password) {
-        $api = $this->getRestAdapter();
-        $resp = $api->getAccessToken($this, $username, $password);
+        $resp = $this->restAdapter->authenticate($this, $username, $password);
         if ($this->debug) {
             print "auth result: "; var_dump($resp);
         }

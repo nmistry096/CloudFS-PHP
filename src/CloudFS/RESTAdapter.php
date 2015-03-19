@@ -39,14 +39,14 @@ class RESTAdapter {
     }
 
     /**
-     * Retrieves the CloudFS access token through an api request.
+     * Authenticates with bitcasa and gets the access token.
      *
      * @param Session $session The bitcasa session.
      * @param string $username Bitcasa username.
      * @param string $password Bitcasa password.
      * @return The success status of retrieving the access token.
      */
-    public function getAccessToken($session, $username, $password) {
+    public function authenticate($session, $username, $password) {
 
         if ($this->credential != null
             && $this->credential->getAccessToken() != null
@@ -96,6 +96,7 @@ class RESTAdapter {
 
             return true;
         }
+
         return false;
     }
 
@@ -182,7 +183,7 @@ class RESTAdapter {
         }
 
         $response = $connection->getResponse(true);
-		return Item::make($response['result'], $this->getParentPath($path), $this);
+        return Item::make($response['result'], $this->getParentPath($path), $this);
     }
 
 
@@ -282,12 +283,12 @@ class RESTAdapter {
      * Create a folder at a given path with the supplied name.
      *
      * @param string $parentPath The folder path under which the new folder should be created.
-     * @param string $filename The name for the folder to be created.
+     * @param string $name The name for the folder to be created.
      * @param string $exists Specifies the action to take if the folder already exists.
      * @return An instance of the newly created item of type Folder.
      * @throws InvalidArgument
      */
-    public function createFolder($parentPath, $filename, $exists = Exists::FAIL) {
+    public function createFolder($parentPath, $name, $exists = Exists::FAIL) {
         $item = null;
         $connection = new HTTPConnector($this->credential->getSession());
         if ($parentPath == null) {
@@ -295,10 +296,10 @@ class RESTAdapter {
         }
 
         Assert::assertPath($parentPath, 1);
-        Assert::assertString($filename, 2);
+        Assert::assertString($name, 2);
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $parentPath,
             array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_CREATE));
-        $body = BitcasaUtils::generateParamsString(array("name" => $filename, "exists" => $exists));
+        $body = BitcasaUtils::generateParamsString(array("name" => $name, "exists" => $exists));
 
         $connection->setData($body);
         if ($this->debug) {
@@ -368,8 +369,8 @@ class RESTAdapter {
             return false;
         }
 
-		$response = $connection->getResponse(true);
-		return $response['result']['success'];
+        $response = $connection->getResponse(true);
+        return $response['result']['success'];
     }
 
     /**
@@ -432,7 +433,7 @@ class RESTAdapter {
     public function copyFolder($path, $destination, $name = null, $exists = Exists::FAIL) {
         Assert::assertString($path, 1);
         Assert::assertString($destination, 2);
-		$item = null;
+        $item = null;
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path,
             array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_COPY));
@@ -448,12 +449,12 @@ class RESTAdapter {
             return false;
         }
 
-		$response = $connection->getResponse(true);
-		if ($response != null && isset($response['result']) && isset($response['result']['meta']) ) {
-			$item = Item::make($response['result']['meta'], $destination, $this);
-		}
+        $response = $connection->getResponse(true);
+        if ($response != null && isset($response['result']) && isset($response['result']['meta']) ) {
+            $item = Item::make($response['result']['meta'], $destination, $this);
+        }
 
-		return $item;
+        return $item;
     }
 
     /**
@@ -468,7 +469,7 @@ class RESTAdapter {
     public function copyFile($path, $destination, $name = null, $exists = Exists::FAIL) {
         Assert::assertString($path, 1);
         Assert::assertString($destination, 2);
-		$item = null;
+        $item = null;
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
             array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_COPY));
@@ -484,12 +485,12 @@ class RESTAdapter {
             return false;
         }
 
-		$response = $connection->getResponse(true);
-		if ($response != null && isset($response['result']) && isset($response['result']['meta']) ) {
-			$item = Item::make($response['result']['meta'], $destination, $this);
-		}
+        $response = $connection->getResponse(true);
+        if ($response != null && isset($response['result']) && isset($response['result']['meta']) ) {
+            $item = Item::make($response['result']['meta'], $destination, $this);
+        }
 
-		return $item;
+        return $item;
     }
 
     /**
@@ -504,7 +505,7 @@ class RESTAdapter {
     public function moveFolder($path, $destination, $name = null, $exists = Exists::FAIL) {
         Assert::assertPath($path, 1);
         Assert::assertPath($destination, 2);
-		$item = null;
+        $item = null;
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path,
             array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_MOVE));
@@ -520,11 +521,11 @@ class RESTAdapter {
         }
 
         $response = $connection->getResponse(true);
-		if ($response != null && isset($response['result']) && isset($response['result']['meta']) ) {
-			$item = Item::make($response['result']['meta'], $destination, $this);
-		}
+        if ($response != null && isset($response['result']) && isset($response['result']['meta']) ) {
+            $item = Item::make($response['result']['meta'], $destination, $this);
+        }
 
-		return $item;
+        return $item;
     }
 
     /**
@@ -539,7 +540,7 @@ class RESTAdapter {
     public function moveFile($path, $destination, $name = null, $exists = Exists::FAIL) {
         Assert::assertPath($path, 1);
         Assert::assertPath($destination, 2);
-		$item = null;
+        $item = null;
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path,
             array(BitcasaConstants::PARAM_OPERATION => BitcasaConstants::OPERATION_MOVE));
@@ -554,12 +555,12 @@ class RESTAdapter {
             return false;
         }
 
-		$response = $connection->getResponse(true);
-		if ($response != null && isset($response['result']) && isset($response['result']['meta']) ) {
-			$item = Item::make($response['result']['meta'], $destination, $this);
-		}
+        $response = $connection->getResponse(true);
+        if ($response != null && isset($response['result']) && isset($response['result']['meta']) ) {
+            $item = Item::make($response['result']['meta'], $destination, $this);
+        }
 
-		return $item;
+        return $item;
     }
 
     /**
@@ -669,9 +670,9 @@ class RESTAdapter {
             $connection->setData($body);
             $status = $connection->post($url);
             $response = $connection->getResponse(true);
-			if (!empty($response) && !empty($response['result'])) {
-				$share = Share::getInstance($this, $response['result']);
-			}
+            if (!empty($response) && !empty($response['result'])) {
+                $share = Share::getInstance($this, $response['result']);
+            }
         }
         else {
             throw new InvalidArgumentException('createShare function accepts a valid path. Input was ' . $path);
@@ -692,11 +693,11 @@ class RESTAdapter {
         $statusCode = $connection->get($url);
         if ($statusCode == 200) {
             $response = $connection->getResponse(true);
-			if (!empty($response) && !empty($response['result'])) {
-				foreach($response['result'] as $result) {
-					$shares[] = Share::getInstance($this, $result);
-				}
-			}
+            if (!empty($response) && !empty($response['result'])) {
+                foreach($response['result'] as $result) {
+                    $shares[] = Share::getInstance($this, $result);
+                }
+            }
         }
 
         return $shares;

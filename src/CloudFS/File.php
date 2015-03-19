@@ -2,8 +2,6 @@
 
 namespace CloudFS;
 
-use CloudFS\Utils\VersionExists;
-
 
 class File extends Item {
 
