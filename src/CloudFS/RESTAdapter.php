@@ -707,17 +707,28 @@ class RESTAdapter {
      * Retrieves the items for a supplied share key.
      *
      * @param string $shareKey The supplied share key.
+     * @param string $path The path to any folder inside the share
      * @return An array of items for the share key.
+     * @throws Exception\InvalidArgumentException
      */
-    public function browseShare($shareKey) {
+    public function browseShare($shareKey, $path = null) {
         $response = null;
-        if (!empty($shareKey)) {
-            $connection = new HTTPConnector($this->credential->getSession());
-            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/meta');
-            $statusCode = $connection->get($url);
-            if ($statusCode == 200) {
-                $response = $connection->getResponse(true);
-            }
+        if(empty($shareKey)){
+            throw new InvalidArgumentException('browseShare function accepts a valid shareKey. Input was ' . $shareKey);
+        }
+
+        $pathParam = $shareKey;
+
+        if($path != null){
+            $pathParam .= '/' . $path;
+        }
+
+        $connection = new HTTPConnector($this->credential->getSession());
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $pathParam . '/meta');
+        $statusCode = $connection->get($url);
+
+        if ($statusCode == 200) {
+            $response = $connection->getResponse(true);
         }
 
         return $response;

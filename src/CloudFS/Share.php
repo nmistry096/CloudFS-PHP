@@ -166,7 +166,7 @@ class Share {
      * @return The list of items for the share key.
      */
     public function getList() {
-        return $this->restAdapter->browseShare($this->shareKey);
+        return $this->restAdapter->shares();
     }
 
     /**
