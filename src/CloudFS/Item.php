@@ -288,7 +288,14 @@ class Item {
      */
     public function delete($commit=False, $force=False) {
         $success = false;
-        $response = $this->restAdapter()->delete($this, $force);
+        $response = array();
+
+        if($this->getType() == FileType::FOLDER){
+            $response = $this->restAdapter()->deleteFolder($this->getPath(), $commit, $force);
+        }else{
+            $response = $this->restAdapter()->deleteFile($this->getPath(), $force);
+        }
+
         if (count($response) > 0) {
             if (!empty($response[0]['result'])) {
                 $success = $response[0]['result']['success'];
