@@ -63,24 +63,6 @@ class File extends Item {
     }
 
     /**
-     * Alters the specified attributes.
-     *
-     * @param array $values The values that need to be changed.
-     * @param int $ifConflict Defines what to do when a conflict occurs.
-     * @return The status of the operation.
-     */
-    public function changeAttributes(array $values, $ifConflict = VersionExists::FAIL) {
-        $success = false;
-        $values['version'] = $this->getVersion();
-        $result = $this->restAdapter()->alterFile($this->getPath(), $values, $ifConflict);
-        if (empty($result['error'])) {
-            $success = true;
-        }
-
-        return $success;
-    }
-
-    /**
      * Downloads the file from the cloud.
      *
      * @param string $localDestinationPath The local path of the file to download the content.
@@ -89,7 +71,7 @@ class File extends Item {
      * @return The download status.
      */
     public function download($localDestinationPath, $downloadProgressCallback) {
-        return $this->restAdapter()->download($this->getPath(), $localDestinationPath, $downloadProgressCallback);
+        return $this->restAdapter()->downloadFile($this->getPath(), $localDestinationPath, $downloadProgressCallback);
     }
 
     /**

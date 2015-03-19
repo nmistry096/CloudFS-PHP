@@ -36,12 +36,14 @@ class ShareOperationsTest extends BaseTest {
      * Test share operations.
      */
     public function testShares() {
-        $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
+        /** @var \CloudFS\Filesystem $fileSystem */
+        $fileSystem = $this->getSession()->filesystem();
+        $root = $fileSystem->root();
 
         // /top
 
         /** @var \CloudFS\Folder $topLevelFolder */
-        $topLevelFolder = $fileSystem->create(null, $this->topLevelFolder, Exists::OVERWRITE);
+        $topLevelFolder = $root->createFolder($this->topLevelFolder, Exists::OVERWRITE);
         $this->assertNotNull($topLevelFolder);
         $this->assertTrue($topLevelFolder->getName() == $this->topLevelFolder);
         $this->assertTrue($topLevelFolder->getType() == FileType::FOLDER);
@@ -68,18 +70,10 @@ class ShareOperationsTest extends BaseTest {
         $this->assertNotNull($share);
         $this->assertNotEmpty($share->getShareKey());
 
-        $items = $fileSystem->browseShare($share->getShareKey());
-        foreach($items as $item) {
-            if ($item->getType() == FileType::FILE) {
-                $this->assertTrue($item instanceof \CloudFS\ShareFile);
-            }
-        }
-
         $shares = $fileSystem->listShares();
         $this->assertTrue(count($shares) > 0);
 
         $sharedItem = $fileSystem->retrieveShare($share->getShareKey());
-        $this->assertNotNull($sharedItem);
         $this->assertEquals($share->getShareKey(), $sharedItem->getShareKey());
 
         $items = $share->getList();
@@ -110,19 +104,6 @@ class ShareOperationsTest extends BaseTest {
         }
 
         $this->assertEquals($this->sharedFolderName, $share->getName());
-
-        $failed = false;
-        try {
-            $unlocked = $fileSystem->unlockShare($share->getShareKey(), 'password');
-        }
-        catch(\Exception $error) {
-            $failed = true;
-        }
-
-        $this->assertTrue($failed);
-
-        $unlocked = $fileSystem->unlockShare($share->getShareKey(), 'newPassword');
-        $this->assertTrue($unlocked);
 
         $deleted = $share->delete();
         $this->assertTrue($deleted);

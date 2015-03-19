@@ -62,15 +62,7 @@ class Filesystem {
      * @return The share list.
      */
     public function listShares() {
-        $shares = array();
-        $response = $this->restAdapter->shares();
-        if (!empty($response) && !empty($response['result'])) {
-            foreach($response['result'] as $result) {
-                $shares[] = Share::getInstance($this, $result);
-            }
-        }
-
-        return $shares;
+        return $this->restAdapter->shares();
     }
 
     /**
@@ -82,13 +74,7 @@ class Filesystem {
      * @throws Exception\InvalidArgumentException
      */
     public function createShare($path, $password = null) {
-        $share = null;
-        $response = $this->restAdapter->createShare($path, $password);
-        if (!empty($response) && !empty($response['result'])) {
-            $share = Share::getInstance($this, $response['result']);
-        }
-
-        return $share;
+        return $this->restAdapter->createShare($path, $password);
     }
 
     /**

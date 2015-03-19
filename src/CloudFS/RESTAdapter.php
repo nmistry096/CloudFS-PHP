@@ -174,14 +174,15 @@ class RESTAdapter {
         }
         $endpoint .= "meta";
 
-        $connection = new HTTPConnect($this->credential->getSession());
+        $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl($endpoint, null, $params);
 
         if (!BitcasaUtils::isSuccess($connection->get($url))) {
             return null;
         }
 
-        return $connection->getResponse(true);
+        $response = $connection->getResponse(true);
+		return Item::make($response['result'], $this->getParentPath($path), $this);
     }
 
 
@@ -649,7 +650,7 @@ class RESTAdapter {
      * @throws Exception\InvalidArgumentException
      */
     public function createShare($path, $password = null) {
-        $response = null;
+        $share = null;
         if (!empty($path)) {
             $connection = new HTTPConnector($this->credential->getSession());
             $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES);
@@ -661,12 +662,15 @@ class RESTAdapter {
             $connection->setData($body);
             $status = $connection->post($url);
             $response = $connection->getResponse(true);
+			if (!empty($response) && !empty($response['result'])) {
+				$share = Share::getInstance($this, $response['result']);
+			}
         }
         else {
             throw new InvalidArgumentException('createShare function accepts a valid path. Input was ' . $path);
         }
 
-        return $response;
+        return $share;
     }
 
     /**
@@ -675,15 +679,20 @@ class RESTAdapter {
      * @return The share list.
      */
     public function shares() {
-        $response = null;
+        $shares = array();
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES);
         $statusCode = $connection->get($url);
         if ($statusCode == 200) {
             $response = $connection->getResponse(true);
+			if (!empty($response) && !empty($response['result'])) {
+				foreach($response['result'] as $result) {
+					$shares[] = Share::getInstance($this, $result);
+				}
+			}
         }
 
-        return $response;
+        return $shares;
     }
 
     /**

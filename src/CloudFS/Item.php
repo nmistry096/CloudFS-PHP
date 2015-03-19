@@ -249,7 +249,13 @@ class Item {
     public function changeAttributes(array $values, $ifConflict = VersionExists::FAIL) {
         $success = false;
         $values['version'] = $this->getVersion();
-        $result = $this->restAdapter()->alterFolder($this->getPath(), $values, $ifConflict);
+        if ($this->getType() == FileType::FILE) {
+            $result = $this->restAdapter()->alterFile($this->getPath(), $values, $ifConflict);
+        }
+        else {
+            $result = $this->restAdapter()->alterFolder($this->getPath(), $values, $ifConflict);
+        }
+
         if (empty($result['error'])) {
             $success = true;
         }
@@ -265,7 +271,14 @@ class Item {
      * @return The success/fail response of the move operation.
      */
     public function move($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
-        return $this->restAdapter()->move($this, $destination, $exists);
+        if ($this->getType() == FileType::FILE) {
+            $item = $this->restAdapter()->moveFile($this->getPath(), $destination, $this->getName(), $exists);
+        }
+        else {
+            $item = $this->restAdapter()->moveFolder($this->getPath(), $destination, $this->getName(), $exists);
+        }
+
+        return $item;
     }
 
     /**
@@ -276,7 +289,14 @@ class Item {
      * @return The success/fail response of the copy operation.
      */
     public function copy($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
-        return $this->restAdapter()->copy($this, $destination, $exists);
+        if ($this->getType() == FileType::FILE) {
+            $item = $this->restAdapter()->copyFile($this->getPath(), $destination, $this->getName(), $exists);
+        }
+        else {
+            $item = $this->restAdapter()->copyFolder($this->getPath(), $destination, $this->getName(), $exists);
+        }
+
+        return $item;
     }
 
     /**
@@ -286,20 +306,11 @@ class Item {
      * @param bool $force Flag to force the delete operation.
      * @return Boolean value indicating the status of the delete operation.
      */
-    public function delete($commit=False, $force=False) {
-        $success = false;
-        $response = array();
-
-        if($this->getType() == FileType::FOLDER){
-            $response = $this->restAdapter()->deleteFolder($this->getPath(), $commit, $force);
-        }else{
-            $response = $this->restAdapter()->deleteFile($this->getPath(), $force);
-        }
-
-        if (count($response) > 0) {
-            if (!empty($response[0]['result'])) {
-                $success = $response[0]['result']['success'];
-            }
+    public function delete($commit = False, $force = False) {
+        if ($this->getType() == FileType::FILE) {
+            $success = $this->restAdapter()->deleteFile($this->getPath(), $force);
+        } else {
+            $success = $this->restAdapter()->deleteFolder($this->getPath(), $commit, $force);
         }
 
         return $success;
