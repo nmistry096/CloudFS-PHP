@@ -1,6 +1,5 @@
 <?php
 
-use CloudFS\Filesystem;
 use CloudFS\Utils\Exists;
 use CloudFS\Utils\FileType;
 
@@ -14,34 +13,22 @@ class ShareOperationsTest extends BaseTest {
     /**
      * The session authenticate test. Needs to authenticate before doing any other operations.
      */
-    public function testAuthenticate(){
+    public function testAuthenticate() {
         $this->getSession()->authenticate(self::USERNAME, self::PASSWORD);
         $this->assertTrue(true, $this->getSession()->isLinked());
     }
 
     /**
-     * Clears user file system. Use with care. This deletes every thing in users folder system.
-     */
-//    public function DeleteRootFolders() {
-//        /** @var \CloudFS\Filesystem $fileSystem */
-//        $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
-//
-//        $items = $fileSystem->getList('/');
-//        if (count($items) > 0) {
-//            $fileSystem->delete($items, true);
-//        }
-//    }
-
-    /**
      * Test share operations.
      */
     public function testShares() {
-        $fileSystem = new Filesystem($this->getSession()->getRestAdapter());
+        /** @var \CloudFS\Filesystem $fileSystem */
+        $fileSystem = $this->getSession()->filesystem();
+        $root = $fileSystem->root();
 
         // /top
-
         /** @var \CloudFS\Folder $topLevelFolder */
-        $topLevelFolder = $fileSystem->create(null, $this->topLevelFolder, Exists::OVERWRITE);
+        $topLevelFolder = $root->createFolder($this->topLevelFolder, Exists::OVERWRITE);
         $this->assertNotNull($topLevelFolder);
         $this->assertTrue($topLevelFolder->getName() == $this->topLevelFolder);
         $this->assertTrue($topLevelFolder->getType() == FileType::FOLDER);
@@ -64,22 +51,16 @@ class ShareOperationsTest extends BaseTest {
         $this->assertEquals($this->receiveFolderName, $receivedFolder->getName());
 
         /** @var \CloudFS\Share $share */
-        $share = $fileSystem->createShare($sharedFolder->getPath());
+        $path = array($sharedFolder->getPath(), $receivedFolder->getPath());
+        //$path = $receivedFolder->getPath();
+        $share = $fileSystem->createShare($path);
         $this->assertNotNull($share);
         $this->assertNotEmpty($share->getShareKey());
-
-        $items = $fileSystem->browseShare($share->getShareKey());
-        foreach($items as $item) {
-            if ($item->getType() == FileType::FILE) {
-                $this->assertTrue($item instanceof \CloudFS\ShareFile);
-            }
-        }
 
         $shares = $fileSystem->listShares();
         $this->assertTrue(count($shares) > 0);
 
         $sharedItem = $fileSystem->retrieveShare($share->getShareKey());
-        $this->assertNotNull($sharedItem);
         $this->assertEquals($share->getShareKey(), $sharedItem->getShareKey());
 
         $items = $share->getList();
@@ -103,26 +84,13 @@ class ShareOperationsTest extends BaseTest {
         $this->assertTrue($altered);
 
         $shares = $fileSystem->listShares();
-        foreach($shares as $sharedItem) {
+        foreach ($shares as $sharedItem) {
             if ($sharedItem->getName() == $this->sharedFolderName) {
                 $share = $sharedItem;
             }
         }
 
         $this->assertEquals($this->sharedFolderName, $share->getName());
-
-        $failed = false;
-        try {
-            $unlocked = $fileSystem->unlockShare($share->getShareKey(), 'password');
-        }
-        catch(\Exception $error) {
-            $failed = true;
-        }
-
-        $this->assertTrue($failed);
-
-        $unlocked = $fileSystem->unlockShare($share->getShareKey(), 'newPassword');
-        $this->assertTrue($unlocked);
 
         $deleted = $share->delete();
         $this->assertTrue($deleted);

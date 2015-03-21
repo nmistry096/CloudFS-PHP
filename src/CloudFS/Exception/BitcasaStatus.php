@@ -22,7 +22,6 @@ class BitcasaStatus {
      */
     public function __construct($response) {
         $this->response = $response;
-//        $this->status = isset($response["result"]) && $response["result"] != null && $response["result"] != false;
         $this->status = !isset($response["error"]);
         $this->code = 0;
         $message = isset($response["error"]) && isset($response["error"]["message"])
@@ -55,8 +54,7 @@ class BitcasaStatus {
      *
      * @return The success status.
      */
-    public function success()
-    {
+    public function success() {
         return $this->status;
     }
 

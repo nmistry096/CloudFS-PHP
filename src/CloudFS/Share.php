@@ -30,11 +30,11 @@ class Share {
     private $dateMetaLastModified;
 
     /**
-     * @var \CloudFS\Filesystem The file system instance.
+     * @var \CloudFS\RESTAdapter The rest adapter instance.
      */
-    private $fileSystem;
+    private $restAdapter;
 
-	/**
+    /**
      * Retrieves the  share key.
      *
      * @return The share key.
@@ -43,7 +43,7 @@ class Share {
         return $this->shareKey;
     }
 
-	/**
+    /**
      * Retrieves the  share type.
      *
      * @return The share type.
@@ -52,7 +52,7 @@ class Share {
         return $this->shareType;
     }
 
-	/**
+    /**
      * Retrieves the  share name.
      *
      * @return The share name.
@@ -61,7 +61,7 @@ class Share {
         return $this->name;
     }
 
-	/**
+    /**
      * Retrieves the  url.
      *
      * @return The share url.
@@ -70,7 +70,7 @@ class Share {
         return $this->url;
     }
 
-	/**
+    /**
      * Retrieves the  short url.
      *
      * @return The short url.
@@ -79,7 +79,7 @@ class Share {
         return $this->shortUrl;
     }
 
-	/**
+    /**
      * Retrieves the created date.
      *
      * @return The created date.
@@ -88,7 +88,7 @@ class Share {
         return $this->dateCreated;
     }
 
-	/**
+    /**
      * Retrieves the  share size.
      *
      * @return The share size.
@@ -131,15 +131,16 @@ class Share {
 
     }
 
-	/**
+    /**
      * Retrieves a share instance from the supplied result.
      *
+     * @param \CloudFS\RESTAdapter $restAdapter The rest adapter instance.
      * @param mixed $result The json response retrieved from rest api.
      * @return A share instance.
      */
-    public static function getInstance($fileSystem, $result) {
+    public static function getInstance($restAdapter, $result) {
         $share = new Share();
-        $share->fileSystem = $fileSystem;
+        $share->restAdapter = $restAdapter;
         $share->shareKey = $result['share_key'];
         $share->shareType = $result['share_type'];
         $share->name = $result['share_name'];
@@ -165,27 +166,27 @@ class Share {
      * @return The list of items for the share key.
      */
     public function getList() {
-        return $this->fileSystem->browseShare($this->shareKey);
+        return $this->restAdapter->shares();
     }
 
     /**
      * Deletes the item for the share key.
-     * 
+     *
      * @return The success/fail response of the delete operation.
      */
     public function delete() {
-        return $this->fileSystem->deleteShare($this->shareKey);
+        return $this->restAdapter->deleteShare($this->shareKey);
     }
 
     /**
      * Adds all shared items for the given share key to the path supplied
      *
      * @param string $path The path to which the share files are added.
-     * @param string $exists  The action to take if the item already exists.
+     * @param string $exists The action to take if the item already exists.
      * @return bool The success/fail response of the receive operation.
      */
     public function receive($path = '/', $exists = Exists::RENAME) {
-        return $this->fileSystem->receiveShare($this->shareKey, $path, $exists);
+        return $this->restAdapter->receiveShare($this->shareKey, $path, $exists);
     }
 
     /**
@@ -197,7 +198,7 @@ class Share {
      */
     public function changeAttributes(array $values, $password = null) {
         $success = false;
-        $share = $this->fileSystem->alterShare($this->shareKey, $values, $password);
+        $share = $this->restAdapter->alterShare($this->shareKey, $values, $password);
         if (!empty($share)) {
             $success = true;
         }
@@ -214,7 +215,7 @@ class Share {
      */
     public function setName($newName, $password = null) {
         $success = false;
-        $share = $this->fileSystem->alterShare($this->shareKey, array('name' => $newName), $password);
+        $share = $this->restAdapter->alterShare($this->shareKey, array('name' => $newName), $password);
         if (!empty($share)) {
             $success = true;
         }
@@ -231,7 +232,7 @@ class Share {
      */
     public function setPassword($newPassword, $oldPassword = null) {
         $success = false;
-        $share = $this->fileSystem->alterShare($this->shareKey, array('password' => $newPassword), $oldPassword);
+        $share = $this->restAdapter->alterShare($this->shareKey, array('password' => $newPassword), $oldPassword);
         if (!empty($share)) {
             $success = true;
         }

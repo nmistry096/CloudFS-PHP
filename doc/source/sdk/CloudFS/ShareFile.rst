@@ -6,7 +6,7 @@ CloudFS\\ShareFile
 
 .. php:class:: ShareFile
 
-    .. php:method:: __construct($data, $parentPath, $filesystem)
+    .. php:method:: __construct($data, $parentPath, $restAdapter)
 
         Initializes a new instance of shared file.
 
@@ -14,8 +14,8 @@ CloudFS\\ShareFile
         :param $data: The item data.
         :type $parentPath: string
         :param $parentPath: The item parent path.
-        :type $filesystem: \CloudFS\Filesystem
-        :param $filesystem: The file system instance.
+        :type $restAdapter: \CloudFS\RESTAdapter
+        :param $restAdapter: The rest adapter instance.
 
     .. php:method:: getExtension()
 
@@ -41,16 +41,6 @@ CloudFS\\ShareFile
         Retrieves the size of this item.
 
         :returns: The size of this item.
-
-    .. php:method:: changeAttributes($values, $ifConflict = VersionExists::FAIL)
-
-        Alters the specified attributes.
-
-        :type $values: array
-        :param $values: The values that need to be changed.
-        :type $ifConflict: int
-        :param $ifConflict: Defines what to do when a conflict occurs.
-        :returns: The status of the operation.
 
     .. php:method:: download($localDestinationPath, $downloadProgressCallback)
 
@@ -84,6 +74,8 @@ CloudFS\\ShareFile
     .. php:method:: downloadUrl()
 
         Gets the download url for the file.
+
+        :returns: The download url.
 
     .. php:method:: getName()
 
@@ -159,13 +151,13 @@ CloudFS\\ShareFile
 
         :returns: The item version number.
 
-    .. php:method:: filesystem()
+    .. php:method:: restAdapter()
 
-        Retrieves this file system instance.
+        Retrieves this rest adapter instance.
 
-        :returns: The file system instance.
+        :returns: \CloudFS\RESTAdapter The rest adapter instance.
 
-    .. php:method:: make($data, $parentPath = null, $filesystem = null, $shared = false)
+    .. php:method:: make($data, $parentPath = null, $restAdapter = null, $shared = false)
 
         Retrieves an instance of an item for the supplied data.
 
@@ -173,11 +165,21 @@ CloudFS\\ShareFile
         :param $data: The data needed to create an item.
         :type $parentPath: string
         :param $parentPath: Parent path for the new item.
-        :type $filesystem: Filesystem
-        :param $filesystem: The file system instance.
+        :type $restAdapter: \CloudFS\RESTAdapter
+        :param $restAdapter: The rest adapter instance.
         :type $shared: bool
         :param $shared: Indicates whether the data belongs to a shared item.
         :returns: An instance of the new item.
+
+    .. php:method:: changeAttributes($values, $ifConflict = VersionExists::FAIL)
+
+        Alters the specified attributes.
+
+        :type $values: array
+        :param $values: The values that need to be changed.
+        :type $ifConflict: int
+        :param $ifConflict: Defines what to do when a conflict occurs.
+        :returns: The status of the operation.
 
     .. php:method:: move($destination, $exists = BitcasaConstants::EXISTS_RENAME)
 
@@ -209,24 +211,16 @@ CloudFS\\ShareFile
         :param $force: Flag to force the delete operation.
         :returns: Boolean value indicating the status of the delete operation.
 
-    .. php:method:: save($ifConflict = "fail", $debug = False)
-
-        Save this item on the cloud.
-
-        :type $ifConflict: string
-        :param $ifConflict: The action to take if a conflict occurs.
-        :type $debug: bool
-        :param $debug: Debug flag.
-        :returns: The success/fail response of the save operation.
-
     .. php:method:: restore($destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null)
 
         Restores this item to the given destination.
 
         :type $destination: string
         :param $destination: The destination of the item restore.
-        :param $restoreMethod:
-        :param $restoreArgument:
+        :type $restoreMethod: string
+        :param $restoreMethod: The restore method.
+        :type $restoreArgument: string
+        :param $restoreArgument: The restore argument.
         :returns: The success/fail response of the restore operation.
 
     .. php:method:: history()

@@ -62,10 +62,10 @@ class Session {
      * @return The authentication status.
      */
     public function authenticate($username, $password) {
-        $api = $this->getRestAdapter();
-        $resp = $api->getAccessToken($this, $username, $password);
+        $resp = $this->restAdapter->authenticate($this, $username, $password);
         if ($this->debug) {
-            print "auth result: "; var_dump($resp);
+            print "auth result: ";
+            var_dump($resp);
         }
         return ($resp != null && isset($resp['access_token']));
     }
@@ -251,7 +251,7 @@ class Session {
         if (empty($username)) {
             throw new InvalidArgumentException('createAccount function accepts a valid username. Input was ' . $username);
         }
-        if(empty($password)) {
+        if (empty($password)) {
             throw new InvalidArgumentException('createAccount function accepts a valid password. Input was ' . $password);
         }
 
@@ -271,7 +271,7 @@ class Session {
         }
 
         $url = $this::ADMIN_END_POINT . BitcasaConstants::API_VERSION_2 . BitcasaConstants::METHOD_ADMIN .
-            BitcasaConstants::METHOD_CLOUDFS. BitcasaConstants::METHOD_CUSTOMERS;
+            BitcasaConstants::METHOD_CLOUDFS . BitcasaConstants::METHOD_CUSTOMERS;
 
         $authorizationDate = strftime(BitcasaConstants::DATE_FORMAT, time());
         $authorizationParameters = BitcasaUtils::generateParamsString($formParameters);

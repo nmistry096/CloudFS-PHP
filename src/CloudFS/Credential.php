@@ -9,10 +9,9 @@
 namespace CloudFS;
 
 
-
-    /**
-     * Defines the credential properties.
-     */
+/**
+ * Defines the credential properties.
+ */
 class Credential {
 
     private $endpoint;

@@ -2,8 +2,6 @@
 
 namespace CloudFS;
 
-use CloudFS\Utils\VersionExists;
-
 
 class File extends Item {
 
@@ -16,10 +14,10 @@ class File extends Item {
      *
      * @param array $data The item data.
      * @param string $parentPath The item parent path.
-     * @param \CloudFS\Filesystem $filesystem The file system instance.
+     * @param \CloudFS\RESTAdapter $restAdapter The rest adapter instance.
      */
-    protected function __construct($data, $parentPath, $filesystem) {
-        parent::__construct($data, $parentPath, $filesystem);
+    protected function __construct($data, $parentPath, $restAdapter) {
+        parent::__construct($data, $parentPath, $restAdapter);
         $this->mime = $data['mime'];
         $this->extension = $data['extension'];
         $this->size = $data['size'];
@@ -63,24 +61,6 @@ class File extends Item {
     }
 
     /**
-     * Alters the specified attributes.
-     *
-     * @param array $values The values that need to be changed.
-     * @param int $ifConflict Defines what to do when a conflict occurs.
-     * @return The status of the operation.
-     */
-    public function changeAttributes(array $values, $ifConflict = VersionExists::FAIL) {
-        $success = false;
-        $values['version'] = $this->getVersion();
-        $result = $this->filesystem()->alterFile($this->getPath(), $values, $ifConflict);
-        if (empty($result['error'])) {
-            $success = true;
-        }
-
-        return $success;
-    }
-
-    /**
      * Downloads the file from the cloud.
      *
      * @param string $localDestinationPath The local path of the file to download the content.
@@ -89,7 +69,7 @@ class File extends Item {
      * @return The download status.
      */
     public function download($localDestinationPath, $downloadProgressCallback) {
-        return $this->filesystem()->download($this->getPath(), $localDestinationPath, $downloadProgressCallback);
+        return $this->restAdapter()->downloadFile($this->getPath(), $localDestinationPath, $downloadProgressCallback);
     }
 
     /**
@@ -100,8 +80,8 @@ class File extends Item {
      * @param int $limit The number of versions to be retrieved limit.
      * @return The versions list.
      */
-    public function versions($startVersion = 0, $endVersion = null, $limit = 10){
-        $versions = $this->filesystem()->fileVersions($this, $startVersion, $endVersion, $limit);
+    public function versions($startVersion = 0, $endVersion = null, $limit = 10) {
+        $versions = $this->restAdapter()->fileVersions($this->getPath(), $startVersion, $endVersion, $limit);
         return $versions;
     }
 
@@ -109,8 +89,8 @@ class File extends Item {
      * Read the file stream.
      * @return The file stream.
      */
-    public function read(){
-        return $this->filesystem()->fileRead($this);
+    public function read() {
+        return $this->restAdapter()->fileRead($this->getPath(), $this->getName(), $this->getSize());
     }
 
     /**
@@ -118,7 +98,7 @@ class File extends Item {
      * @return The download url.
      */
     public function downloadUrl() {
-        return $this->filesystem()->downloadUrl($this->getPath());
+        return $this->restAdapter()->downloadUrl($this->getPath());
     }
 
 }

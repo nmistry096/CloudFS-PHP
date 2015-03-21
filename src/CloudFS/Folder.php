@@ -11,10 +11,10 @@ class Folder extends Container {
      *
      * @param array $data The item data.
      * @param string $parentPath The item parent path.
-     * @param \CloudFS\Filesystem $filesystem The file system instance.
+     * @param \CloudFS\RESTAdapter $restAdapter The rest adapter instance.
      */
-    protected function __construct($data, $parentPath, $filesystem) {
-        parent::__construct($data, $parentPath, $filesystem);
+    protected function __construct($data, $parentPath, $restAdapter) {
+        parent::__construct($data, $parentPath, $restAdapter);
     }
 
     /**
@@ -25,7 +25,7 @@ class Folder extends Container {
      * @return Instance of the newly created folder.
      */
     public function createFolder($name, $exists = Exists::OVERWRITE) {
-        return $this->filesystem()->create($this, $name, $exists);
+        return $this->restAdapter()->createFolder($this->getPath(), $name, $exists);
     }
 
     /**
@@ -35,10 +35,12 @@ class Folder extends Container {
      * @param mixed $uploadProgressCallback The upload progress callback function. This function should take
      * 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
      * @param string $exists The action to take if the file already exists.
-     .
+     * .
      * @return A file instance representing the uploaded file..
      */
     public function upload($filesystemPath, $uploadProgressCallback, $exists = Exists::FAIL) {
-        return $this->filesystem()->upload($this, $filesystemPath, null, $exists, $uploadProgressCallback);
+        $filename = basename($filesystemPath);
+        return $this->restAdapter()->uploadFile($this->getPath(), $filename, $filesystemPath, $exists,
+            $uploadProgressCallback);
     }
 }

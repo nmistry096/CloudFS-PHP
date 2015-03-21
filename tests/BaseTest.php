@@ -48,88 +48,15 @@ class BaseTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Retrieves the path given an associative array.
-     *
-     * @param mixed $item The item path string or array.
-     * @param string $parent_path The parent item path.
-     * @return The processed path.
-     */
-    protected function getPathFromAssociativeArray($item = null, $parent_path = null) {
-        if ($parent_path == null) {
-            $path = '/';
-        }
-        else {
-            $path = $parent_path . '/';
-        }
-
-        if ($item != null) {
-            if (is_string($item)) {
-                $path .= $item;
-            }
-            else {
-                $path .= $item['id'];
-            }
-        }
-
-        return $path;
-    }
-
-    /**
-     * Retrieves the path of an item.
-     *
-     * @param mixed $item The item path string or an item instance.
-     * @param string $parent_path The parent path string.
-     * @return The processes path.
-     */
-    protected function getPath($item = null, $parent_path = null) {
-        if ($parent_path == null) {
-            $path = '/';
-        }
-        else {
-            $path = $parent_path . '/';
-        }
-
-        if ($item != null) {
-            if (is_string($item)) {
-                $path .= $item;
-            }
-            else {
-                $path .= $item->id();
-            }
-        }
-
-        return $path;
-    }
-
-    /**
-     * Retrieves an item from a given item associative array.
-     *
-     * @param array $items The associative array containing items.
-     * @param string $item_name The name of the item to be retrieved.
-     * @return The retrieved item.
-     */
-    protected function getItemFromAssociativeArray(array $items, $item_name) {
-        $result = null;
-        foreach($items['result']['items'] as $item) {
-            if ($item['name'] == $item_name) {
-                $result = $item;
-                break;
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * Retrieves an item from a given item array.
      *
      * @param array $items The array containing items.
-     * @param $item_name The name of the item to be retrieved.
-     * @return The retrieved item.
+     * @param string $item_name The name of the item to be retrieved.
+     * @return \CloudFS\Item An item instance.
      */
-    protected function getItemFromIndexArray(array $items, $item_name) {
+    protected function getItem(array $items, $item_name) {
         $result = null;
-        foreach($items as $item) {
+        foreach ($items as $item) {
             /** @var \CloudFS\Item $item */
             if ($item->getName() == $item_name) {
                 $result = $item;
@@ -140,7 +67,7 @@ class BaseTest extends PHPUnit_Framework_TestCase {
         return $result;
     }
 
-    protected function checkedAndCreateDirName($pathToDirector){
+    protected function checkedAndCreateDirName($pathToDirector) {
         if (!file_exists($pathToDirector)) {
             mkdir($pathToDirector, 0777, true);
         }

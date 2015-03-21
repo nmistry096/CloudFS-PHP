@@ -10,7 +10,7 @@ use CloudFS\Utils\RestoreMethod;
 class Item {
 
     private $full_path;
-    private $filesystem;
+    private $restAdapter;
     private $id;
     private $type;
     private $isMirrored;
@@ -26,10 +26,10 @@ class Item {
      *
      * @param array $data The item data.
      * @param string $parentPath The item parent path.
-     * @param \CloudFS\Filesystem $filesystem The file system instance.
+     * @param \CloudFS\RESTAdapter $restAdapter The rest adapter instance.
      */
-    protected function __construct($data, $parentPath, $filesystem) {
-        $this->filesystem = $filesystem;
+    protected function __construct($data, $parentPath, $restAdapter) {
+        $this->restAdapter = $restAdapter;
 
         $this->id = $data['id'];
         $this->type = $data['type'];
@@ -43,11 +43,9 @@ class Item {
 
         if ($parentPath == null) {
             $this->full_path = "/" . $this->id;
-        }
-        else if ($parentPath == '/') {
+        } else if ($parentPath == '/') {
             $this->full_path = $parentPath . $this->id;
-        }
-        else {
+        } else {
             $this->full_path = $parentPath . '/' . $this->id;
         }
     }
@@ -163,12 +161,12 @@ class Item {
     }
 
     /**
-     * Retrieves this file system instance.
+     * Retrieves this rest adapter instance.
      *
-     * @return The file system instance.
+     * @return \CloudFS\RESTAdapter The rest adapter instance.
      */
-    public function filesystem() {
-        return $this->filesystem;
+    public function restAdapter() {
+        return $this->restAdapter;
     }
 
     /**
@@ -176,11 +174,11 @@ class Item {
      *
      * @param array $data The data needed to create an item.
      * @param string $parentPath Parent path for the new item.
-     * @param Filesystem $filesystem The file system instance.
+     * @param \CloudFS\RESTAdapter $restAdapter The rest adapter instance.
      * @param bool $shared Indicates whether the data belongs to a shared item.
      * @return An instance of the new item.
      */
-    public static function make($data, $parentPath = null, $filesystem = null, $shared = false) {
+    public static function make($data, $parentPath = null, $restAdapter = null, $shared = false) {
         $item = null;
         if (count($data) == 0) {
             return null;
@@ -191,48 +189,46 @@ class Item {
 
         if ($shared) {
             if ($data["type"] == FileType::FILE) {
-                $item = new ShareFile($data, $parentPath, $filesystem);
+                $item = new ShareFile($data, $parentPath, $restAdapter);
+            } else {
+                $item = new ShareFolder($data, $parentPath, $restAdapter);
             }
-            else {
-                $item = new ShareFolder($data, $parentPath, $filesystem);
-            }
-        }
-        else {
+        } else {
             if ($data["type"] == FileType::FOLDER || $data['type'] == FileType::ROOT) {
-                $item = new Folder($data, $parentPath, $filesystem);
+                $item = new Folder($data, $parentPath, $restAdapter);
             } else if (isset($data['mime'])) {
                 $t = explode("/", $data['mime']);
                 switch ($t[0]) {
                     case 'image':
-                        $item = new Photo($data, $parentPath, $filesystem);
+                        $item = new Photo($data, $parentPath, $restAdapter);
                         break;
 
                     case 'audio':
-                        $item = new Audio($data, $parentPath, $filesystem);
+                        $item = new Audio($data, $parentPath, $restAdapter);
                         break;
 
                     case 'video':
-                        $item = new Video($data, $parentPath, $filesystem);
+                        $item = new Video($data, $parentPath, $restAdapter);
                         break;
 
                     case 'text':
-                        $item = new Document($data, $parentPath, $filesystem);
+                        $item = new Document($data, $parentPath, $restAdapter);
                         break;
 
                     case 'application':
                         if ($t[1] == 'pdf') {
-                            $item = new Document($data, $parentPath, $filesystem);
+                            $item = new Document($data, $parentPath, $restAdapter);
                             break;
                         }
 
                     default:
-                        $item = new File($data, $parentPath, $filesystem);
+                        $item = new File($data, $parentPath, $restAdapter);
                         break;
                 }
             } else if ($data["type"] == FileType::FILE) {
-                $item = new File($data, $parentPath, $filesystem);
+                $item = new File($data, $parentPath, $restAdapter);
             } else {
-                $item = new Container($data, $parentPath, $filesystem);
+                $item = new Container($data, $parentPath, $restAdapter);
             }
         }
 
@@ -249,7 +245,12 @@ class Item {
     public function changeAttributes(array $values, $ifConflict = VersionExists::FAIL) {
         $success = false;
         $values['version'] = $this->getVersion();
-        $result = $this->filesystem()->alterFolder($this->getPath(), $values, $ifConflict);
+        if ($this->getType() == FileType::FILE) {
+            $result = $this->restAdapter()->alterFileMeta($this->getPath(), $values, $ifConflict);
+        } else {
+            $result = $this->restAdapter()->alterFolderMeta($this->getPath(), $values, $ifConflict);
+        }
+
         if (empty($result['error'])) {
             $success = true;
         }
@@ -265,7 +266,13 @@ class Item {
      * @return The success/fail response of the move operation.
      */
     public function move($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
-        return $this->filesystem()->move($this, $destination, $exists);
+        if ($this->getType() == FileType::FILE) {
+            $item = $this->restAdapter()->moveFile($this->getPath(), $destination, $this->getName(), $exists);
+        } else {
+            $item = $this->restAdapter()->moveFolder($this->getPath(), $destination, $this->getName(), $exists);
+        }
+
+        return $item;
     }
 
     /**
@@ -276,7 +283,13 @@ class Item {
      * @return The success/fail response of the copy operation.
      */
     public function copy($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
-        return $this->filesystem()->copy($this, $destination, $exists);
+        if ($this->getType() == FileType::FILE) {
+            $item = $this->restAdapter()->copyFile($this->getPath(), $destination, $this->getName(), $exists);
+        } else {
+            $item = $this->restAdapter()->copyFolder($this->getPath(), $destination, $this->getName(), $exists);
+        }
+
+        return $item;
     }
 
     /**
@@ -286,41 +299,40 @@ class Item {
      * @param bool $force Flag to force the delete operation.
      * @return Boolean value indicating the status of the delete operation.
      */
-    public function delete($commit=False, $force=False) {
-        $success = false;
-        $response = $this->filesystem()->delete($this, $force);
-        if (count($response) > 0) {
-            if (!empty($response[0]['result'])) {
-                $success = $response[0]['result']['success'];
-            }
+    public function delete($commit = False, $force = False) {
+        if ($this->getType() == FileType::FILE) {
+            $success = $this->restAdapter()->deleteFile($this->getPath(), $force);
+        } else {
+            $success = $this->restAdapter()->deleteFolder($this->getPath(), $commit, $force);
         }
 
         return $success;
     }
 
     /**
-     * Save this item on the cloud.
-     *
-     * @param string $ifConflict The action to take if a conflict occurs.
-     * @param bool $debug Debug flag.
-     * @return The success/fail response of the save operation.
-     */
-    public function save($ifConflict="fail", $debug=False) {
-        return $this->filesystem()->save($this);
-    }
-
-    /**
      * Restores this item to the given destination.
      *
      * @param string $destination The destination of the item restore.
+     * @param string $restoreMethod The restore method.
+     * @param string $restoreArgument The restore argument.
      * @return The success/fail response of the restore operation.
      */
     public function restore($destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null) {
+        $status = false;
         if (!is_string($destination)) {
             $destination = $destination->path();
         }
-        $path = $this->getId();
-        return $this->filesystem()->restore($path, $destination, $restoreMethod, $restoreArgument);
+
+        $status = $this->restAdapter()->restore($this->getId(), $destination, $restoreMethod, $restoreArgument);
+
+        if ($status) {
+
+            $this->full_path = $destination . '/' . $this->getId();
+
+        } else {
+            $this->restAdapter = null;
+        }
+        return $status;
     }
 
     /**
@@ -329,6 +341,6 @@ class Item {
      * @return The file history response.
      */
     public function history() {
-        return $this->filesystem()->fileHistory($this);
+        return $this->restAdapter()->fileHistory($this);
     }
 }

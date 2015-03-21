@@ -11,8 +11,7 @@ class AdminTest extends BaseTest {
             $username = rand(1000000, 100000000);
             $password = rand(1000000, 100000000);
             $user = $this->getSession()->createAccount($username, $password);
-        }
-        catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             $failed = true;
         }
 

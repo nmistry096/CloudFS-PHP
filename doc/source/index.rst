@@ -67,38 +67,23 @@ Admin Operations
       ::
 
       $session->setAdminCredentials($this::ADMIN_ID, $this::ADMIN_SECRET);
-      $user = $session->createAccount($username, $password, $email, $firstName,$lastName, $logInToCreatedUser);
+      $user = $session->createAccount($username, $password, $email, $firstName, $lastName, $logInToCreatedUser);
 
 File System Operations
 ----------------------
 .. note:: You need to create a session in order to perform file system operations.
 
-- :php:meth:`Get Root Folder <Filesystem::getFolder>`
+- :php:meth:`Get Root Folder <Filesystem::root>`
       ::
 
-      $fileSystem = new Filesystem($session->getBitcasaClientApi());
+      $fileSystem = new Filesystem($session->getRestAdapter());
       $root = $fileSystem->root();
 
 
-- :php:meth:`Get Specific Folder <Filesystem::getFolder>`
+- :php:meth:`Get Specific Item <Filesystem::getItem>`
       ::
 
-      $folder = $fileSystem->getFolder($pathOfFolder);
-
-
-- :php:meth:`Get Specific File <Filesystem::getFile>`
-      ::
-
-      $file = $fileSystem->getFile($pathOfFile);
-
-
-- :php:meth:`List Items <Filesystem::getList>`
-
-  You can list down the contents of a Folder. Below example shows how to retrieve contents of the root folder.
-
-      ::
-
-      $items = $fileSystem->getList();
+      $file = $fileSystem->getItem($pathOfFile);
 
 
 - :php:meth:`List Trash Items <Filesystem::listTrash>`
@@ -134,34 +119,7 @@ File System Operations
  
       ::
 
-      $share = $fileSystem->browseShare($shareKey);
-
-
-- :php:meth:`Copy Items <Filesystem::copy>`
-
-  You can copy a list of items to a new location in the file system. If the contents in the destination folder conflicts with the copying items you can either RENAME, OVERWRITE or FAIL the operation.
-
-      ::
-
-      $items = $fileSystem->copy(array($item1, $item2), $destinationPath, Exists::OVERWRITE);
-
-
-- :php:meth:`Move Items <Filesystem::move>`
-
-  You can move a list of items to a new location in the file system. If the contents in the destination folder conflicts with the moving items you can either RENAME, OVERWRITE or FAIL the operation.
-
-      ::
-
-      $items = $fileSystem->move(array($item1, $item2), $destinationPath, Exists::OVERWRITE);
-
-
-- :php:meth:`Delete Items <Filesystem::delete>`
-
-  You can specify a list of items that needs to be deleted. This will return a list of Success/fail status of each item once the operation completes.
-
-      ::
-
-      $items = $fileSystem->delete(array($item1, $item2));
+      $share = $fileSystem->retrieveShare($shareKey);
 
 
 Folder Operations
@@ -227,7 +185,7 @@ Folder Operations
 
       ::
 
-      $subFolder = $folder->create($subFolderName);
+      $subFolder = $folder->createFolder($subFolderName);
 
 
 - :php:meth:`Upload File <Folder::upload>`
