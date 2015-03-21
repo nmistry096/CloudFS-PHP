@@ -15,8 +15,8 @@ class BaseTest extends PHPUnit_Framework_TestCase {
     const END_POINT = '<add cloudfs endpoint here>';
     const USERNAME = '<add cloudfs username here>';
     const PASSWORD = '<add cloudfs password here>';
-    const ADMIN_ID = '<add cloudfs admin id here>';
-    const ADMIN_SECRET = '<add cloudfs admin secret here>';
+    const ADMIN_ID = '<add cloudfs admin id here - only available for paid users>';
+    const ADMIN_SECRET = '<add cloudfs admin secret here - only available for paid users>';
 
     /**
      * The session variable of the unit test.
