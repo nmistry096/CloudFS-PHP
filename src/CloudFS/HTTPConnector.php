@@ -395,7 +395,7 @@ class HTTPConnector {
      * Validates and processes the http request.
      *
      * @param string $url The url variable for curl operations.
-     * @throws Exception
+     * @throws \Exception
      */
     private function process($url) {
         //if (substr($url, -1, 1) == "/") {
@@ -457,7 +457,7 @@ class HTTPConnector {
                 print "error-msg: ";
                 var_dump($this->error_msg);
             }
-            throw new Exception($this->error_msg);
+            throw new \Exception($this->error_msg);
         } else {
             $this->response = $resp;
         }

@@ -58,6 +58,27 @@ abstract class Assert {
     }
 
     /**
+     * Check if a supplied argument is of type string, not null and not empty.
+     *
+     * @param mixed $s The argument to validate.
+     * @param int $argNumber The argument number to pass to InvalidateArgument.
+     * @return bool The string or empty status of the argument supplied.
+     * @throws \InvalidArgument
+     */
+    public static function assertStringOrEmpty($s, $argNumber = 0) {
+        if (is_string($s)) {
+            if (empty($s)) {
+                throw new \InvalidArgument($argNumber);
+            }
+        }
+        else {
+            throw new \InvalidArgument($argNumber);
+        }
+
+        return true;
+    }
+
+    /**
      * Check if a supplied argument is a number or not.
      *
      * @param mixed $s The argument to validate.

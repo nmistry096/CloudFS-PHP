@@ -162,6 +162,30 @@ abstract class BitcasaUtils {
         return $authorizationValue;
     }
 
+    /**
+     * Gets the parent path from the specified item path.
+     *
+     * @param $path The path of the item.
+     * @return The parent path.
+     */
+    public static function getParentPath($path) {
+        $parentPath = $path;
+        if ($path == null) {
+            $parentPath = "/";
+        }
+        if ($path != "/") {
+            $pathItems = explode("/", $path);
+            if (count($pathItems) <= 2) {
+                $parentPath = "/";
+            } else {
+                array_pop($pathItems);
+                $parentPath = implode("/", $pathItems);
+            }
+        }
+
+        return $parentPath;
+    }
+
 }
 
 ?>
