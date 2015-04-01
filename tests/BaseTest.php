@@ -13,8 +13,8 @@ class BaseTest extends PHPUnit_Framework_TestCase {
     const CLIENT_ID = '6VaRUN0AJDftZaaFyQy98oHvVmuUjI8fJz6UHIkQct0';
     const CLIENT_SECRET = 'fSXNM3HhRJaNM-N8gJsADjYwxvQnCMyZEh95BQpjuNRpt2j5EGVInd8UtTbmjg8dtd1qK0sb1NDmN7ClxxdanA';
     const END_POINT = 'evyg9ym7w1.cloudfs.io';
-    const USERNAME = 'dhanushka@calcey.com';
-    const PASSWORD = 'dhanushka';
+    const USERNAME = 'gayan@calcey.com';
+    const PASSWORD = 'user@123';
     const ADMIN_ID = 'lO8YWMqr6SLlPztLI7JiPDM-yQuosvlvLiCA_2vzdf0';
     const ADMIN_SECRET = 'eIdbCSpAawBmyzCcdb5c1htZqyeCeim13cFJb1knGlQ2MjZ8AGWcBrTanTlJnNyDcPdDTPBgGK9znF0HnvjRpw';
 

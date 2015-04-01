@@ -830,7 +830,7 @@ class RESTAdapter {
     public function deleteTrashItem($path) {
         Assert::assertStringOrEmpty($path);
         $endpoint = BitcasaConstants::METHOD_TRASH;
-        $connection = new HTTPConnect($this->credential->getSession());
+        $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl($endpoint, "/" . $path);
         $connection->delete($url);
         return $connection->getResponse(true);
