@@ -197,13 +197,8 @@ class RESTAdapter {
 
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl($endpoint, null, $params);
-
-        if (!BitcasaUtils::isSuccess($connection->get($url))) {
-            throw new Exception("Invalid connection url");
-        }
-
-        $response = $connection->getResponse(true);
-        return Item::make($response["result"], BitcasaUtils::getParentPath($path), $this);
+        $connection->get($url);
+        return $connection->getResponse(true);
     }
 
     /**
