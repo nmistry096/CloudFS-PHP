@@ -740,7 +740,7 @@ class RESTAdapter {
      * @return An instance of the altered share.
      * @throws Exception\InvalidArgumentException
      */
-    public function alterShare($shareKey, array $values, $password = null) {
+    public function alterShare($shareKey, $values, $password = null) {
         $response = null;
         if (!empty($shareKey)) {
             $connection = new HTTPConnector($this->credential->getSession());
