@@ -42,6 +42,7 @@ class RESTAdapterTest extends BaseTest {
         $this->assertTrue($item['type'] == FileType::FOLDER);
         $this->assertNotEmpty($item['id']);
         $this->assertEmpty($item['parent_id']);
+        
     }
 
     /**
