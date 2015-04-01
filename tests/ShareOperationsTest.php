@@ -6,7 +6,8 @@ use CloudFS\Utils\FileType;
 class ShareOperationsTest extends BaseTest {
 
     private $topLevelFolder = 'top';
-    private $sharedFolderName = 'shared';
+    private $sharedFolder1Name = 'shared1';
+    private $sharedFolder2Name = 'shared2';
     private $sharedAlterFolderName = 'shared-altered';
     private $receiveFolderName = 'received';
 
@@ -16,6 +17,19 @@ class ShareOperationsTest extends BaseTest {
     public function testAuthenticate() {
         $this->getSession()->authenticate(self::USERNAME, self::PASSWORD);
         $this->assertTrue(true, $this->getSession()->isLinked());
+    }
+
+    /**
+     * Test to delete existing shares.
+     */
+    public function testDeleteShares() {
+        /** @var \CloudFS\Filesystem $fileSystem */
+        $fileSystem = $this->getSession()->filesystem();
+        $shares = $fileSystem->listShares();
+        foreach($shares as $share) {
+            /** @var \CloudFS\Share $share */
+            $share->delete();
+        }
     }
 
     /**
@@ -34,15 +48,18 @@ class ShareOperationsTest extends BaseTest {
         $this->assertTrue($topLevelFolder->getType() == FileType::FOLDER);
         $this->assertNotEmpty($topLevelFolder->getId());
 
-        // /top/shared
-        $sharedFolder = $topLevelFolder->createFolder($this->sharedFolderName);
-        $this->assertNotNull($sharedFolder);
-        $this->assertEquals($this->sharedFolderName, $sharedFolder->getName());
+        // /top/shared1
+        $sharedFolder1 = $topLevelFolder->createFolder($this->sharedFolder1Name);
+        $this->assertNotNull($sharedFolder1);
+        $this->assertEquals($this->sharedFolder1Name, $sharedFolder1->getName());
 
-        // /top/shared/shared-file
+        $sharedFolder2 = $topLevelFolder->createFolder($this->sharedFolder2Name);
+        $this->assertNotNull($sharedFolder2);
+        $this->assertEquals($this->sharedFolder2Name, $sharedFolder2->getName());
+
+        // /top/shared1/shared-file
         $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
-        $textFileName = 'shared-file';
-        $uploadedTextFile = $sharedFolder->upload($localUploadDirectory . 'text', null, Exists::OVERWRITE);
+        $uploadedTextFile = $sharedFolder1->upload($localUploadDirectory . 'text', null, Exists::OVERWRITE);
         $this->assertNotNull($uploadedTextFile);
 
         // /top/receive
@@ -51,9 +68,7 @@ class ShareOperationsTest extends BaseTest {
         $this->assertEquals($this->receiveFolderName, $receivedFolder->getName());
 
         /** @var \CloudFS\Share $share */
-        $path = array($sharedFolder->getPath(), $receivedFolder->getPath());
-        //$path = $receivedFolder->getPath();
-        $share = $fileSystem->createShare($path);
+        $share = $fileSystem->createShare(array($sharedFolder1->getPath(), $sharedFolder2->getPath()));
         $this->assertNotNull($share);
         $this->assertNotEmpty($share->getShareKey());
 
@@ -66,31 +81,38 @@ class ShareOperationsTest extends BaseTest {
         $items = $share->getList();
         $this->assertTrue(count($items) > 0);
 
+        foreach($items as $item) {
+            /** @var \CloudFS\Item $item */
+            if ($item->getType() == FileType::FOLDER) {
+                $subItems = $item->getList();
+                $this->assertTrue(count($subItems) >= 0);
+            }
+        }
+
         $received = $share->receive($receivedFolder->getPath());
         $this->assertTrue($received);
 
         $items = $receivedFolder->getList();
         $this->assertTrue(count($items) > 0);
 
+        $receivedItems = $items[0]->getList();
+        $this->assertTrue(count($receivedItems) == 2);
+
         $altered = $share->setName($this->sharedAlterFolderName);
         $this->assertTrue($altered);
 
-        $altered = $share->setPassword('password');
-        $this->assertTrue($altered);
-
         $altered = $share->changeAttributes(
-            array('name' => $this->sharedFolderName, 'password' => 'newPassword'),
-            'password');
+            array('name' => $this->sharedFolder1Name));
         $this->assertTrue($altered);
 
         $shares = $fileSystem->listShares();
         foreach ($shares as $sharedItem) {
-            if ($sharedItem->getName() == $this->sharedFolderName) {
+            if ($sharedItem->getName() == $this->sharedFolder1Name) {
                 $share = $sharedItem;
             }
         }
 
-        $this->assertEquals($this->sharedFolderName, $share->getName());
+        $this->assertEquals($this->sharedFolder1Name, $share->getName());
 
         $deleted = $share->delete();
         $this->assertTrue($deleted);

@@ -201,40 +201,40 @@ class Item {
 
 
         if ($data["type"] == FileType::FOLDER || $data['type'] == FileType::ROOT) {
-            $item = new Folder($data, $parentPath, $restAdapter);
+            $item = new Folder($data, $parentPath, $restAdapter, $parentState);
         } else if (isset($data['mime'])) {
             $t = explode("/", $data['mime']);
             switch ($t[0]) {
                 case 'image':
-                    $item = new Photo($data, $parentPath, $restAdapter);
+                    $item = new Photo($data, $parentPath, $restAdapter, $parentState);
                     break;
 
                 case 'audio':
-                    $item = new Audio($data, $parentPath, $restAdapter);
+                    $item = new Audio($data, $parentPath, $restAdapter, $parentState);
                     break;
 
                 case 'video':
-                    $item = new Video($data, $parentPath, $restAdapter);
+                    $item = new Video($data, $parentPath, $restAdapter, $parentState);
                     break;
 
                 case 'text':
-                    $item = new Document($data, $parentPath, $restAdapter);
+                    $item = new Document($data, $parentPath, $restAdapter, $parentState);
                     break;
 
                 case 'application':
                     if ($t[1] == 'pdf') {
-                        $item = new Document($data, $parentPath, $restAdapter);
+                        $item = new Document($data, $parentPath, $restAdapter, $parentState);
                         break;
                     }
 
                 default:
-                    $item = new File($data, $parentPath, $restAdapter);
+                    $item = new File($data, $parentPath, $restAdapter, $parentState);
                     break;
             }
         } else if ($data["type"] == FileType::FILE) {
-            $item = new File($data, $parentPath, $restAdapter);
+            $item = new File($data, $parentPath, $restAdapter, $parentState);
         } else {
-            $item = new Container($data, $parentPath, $restAdapter);
+            $item = new Container($data, $parentPath, $restAdapter, $parentState);
         }
 
         return $item;

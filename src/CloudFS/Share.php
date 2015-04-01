@@ -170,7 +170,7 @@ class Share {
         $response = $this->restAdapter->browseShare($this->getShareKey());
         $items = array();
         if (!empty($response) && !empty($response['result'])) {
-            $parentState = array(BitcasaConstants::KEY_SHARE_KEY, $this->getShareKey());
+            $parentState = array(BitcasaConstants::KEY_SHARE_KEY => $this->getShareKey());
             foreach ($response['result']['items'] as $item) {
                 $items[] = Item::make($item, null, $this->restAdapter, $parentState);
             }
