@@ -138,16 +138,7 @@ class RESTAdapter {
             throw new Exception("Invalid connection url");
         }
 
-        $response = $connection->getResponse(true);
-        $items = $response["result"]["items"];
-        $lst = array();
-        if ($items != null) {
-            foreach ($items as $item) {
-                $lst[] = Item::make($item, $parent, $this);
-            }
-        }
-
-        return $lst;
+        return $connection->getResponse(true);
     }
 
     /**
@@ -240,13 +231,8 @@ class RESTAdapter {
 
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl($endpoint, null, $params);
-
-        if (!BitcasaUtils::isSuccess($connection->get($url))) {
-            throw new Exception("Invalid connection url");
-        }
-
-        $response = $connection->getResponse(true);
-        return Item::make($response["result"]["meta"], BitcasaUtils::getParentPath($path), $this);
+        BitcasaUtils::isSuccess($connection->get($url));
+        return $connection->getResponse(true);
     }
 
     /**

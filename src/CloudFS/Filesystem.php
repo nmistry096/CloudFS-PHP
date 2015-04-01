@@ -38,7 +38,8 @@ class Filesystem {
      * @return The root directory.
      */
     public function root() {
-        return $this->restAdapter->getFolderMeta(null);
+        $response = $this->restAdapter->getFolderMeta(null);
+        return Item::make($response["result"]["meta"], BitcasaUtils::getParentPath(null), $this->restAdapter, null);
     }
 
     /**
@@ -48,7 +49,7 @@ class Filesystem {
         $response = $this->restAdapter->listTrash();
         $items = array();
         if ($response != null && isset($response['result']) && isset($response['result']['items'])) {
-            $parentState = array(BitcasaConstants::KEY_IN_TRASH, true);
+            $parentState = array(BitcasaConstants::KEY_IN_TRASH => true);
             foreach ($response['result']['items'] as $item) {
                 $items[] = Item::make($item, null, $this->restAdapter, $parentState);
             }

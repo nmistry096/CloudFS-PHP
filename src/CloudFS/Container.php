@@ -30,19 +30,25 @@ class Container extends Item {
      */
     public function getList() {
         $parentState = $this->getParentState();
-        if (empty($parentState)) {
-            return $this->restAdapter()->getList($this->getPath());
-        }
-        else{
+        if (!empty($parentState)) {
             if (array_key_exists(BitcasaConstants::KEY_SHARE_KEY, $parentState)) {
-                return $this->restAdapter()->browseShare($parentState[BitcasaConstants::KEY_SHARE_KEY], $this->getPath());
+                $response = $this->restAdapter()->browseShare($parentState[BitcasaConstants::KEY_SHARE_KEY],
+                    $this->getPath());
             }
             else if(array_key_exists(BitcasaConstants::KEY_IN_TRASH, $parentState)) {
-                return $this->restAdapter()->listTrash($this->getPath());
+                $response = $this->restAdapter()->listTrash($this->getPath());
             }
         }
+        else{
+            $response = $this->restAdapter()->getList($this->getPath());
+        }
 
-        return null;
+        $items = array();
+        foreach ($response['result']['items'] as $item) {
+            $items[] = Item::make($item, $this->getPath(), $this->restAdapter(), $parentState);
+        }
+
+        return $items;
     }
 
 }
