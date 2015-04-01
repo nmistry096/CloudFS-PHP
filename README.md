@@ -32,7 +32,7 @@ Use the credentials you obtained from Bitcasa admin console to create a client s
 
 ```php
 $session = new Session($endPoint, $clientId, $clientSecret);
-$session->authenticate("myaccount@domain", "mypassword");
+$session->authenticate($username, $password);
 ```
 
 Getting the root folder
@@ -74,7 +74,7 @@ Create user (for paid accounts only)
 
 ```php
 $session->setAdminCredentials($adminId, $adminSecret);
-$user = $session->createAccount($username, $password, email, $firstName, $lastName);
+$user = $session->createAccount($username, $password, $email, $firstName, $lastName);
 ```
 
 ## Running the Tests
