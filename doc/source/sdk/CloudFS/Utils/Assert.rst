@@ -36,6 +36,16 @@ CloudFS\\Utils\\Assert
         :param $argno: The argument number to pass to InvalidateArgument.
         :returns: bool The string or null status of the argument supplied.
 
+    .. php:method:: assertStringOrEmpty($s, $argNumber = 0)
+
+        Check if a supplied argument is of type string, not null and not empty.
+
+        :type $s: mixed
+        :param $s: The argument to validate.
+        :type $argNumber: int
+        :param $argNumber: The argument number to pass to InvalidateArgument.
+        :returns: bool The string or empty status of the argument supplied.
+
     .. php:method:: assertNumber($s, $argno = 0)
 
         Check if a supplied argument is a number or not.

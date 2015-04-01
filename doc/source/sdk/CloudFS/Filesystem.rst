@@ -23,7 +23,7 @@ CloudFS\\Filesystem
 
     .. php:method:: listTrash()
 
-        Browses the Trash meta folder on the authenticated user’s account.
+        Retrieves the item list in trash.
 
     .. php:method:: getItem($path)
 

@@ -59,3 +59,11 @@ CloudFS\\Utils\\BitcasaConstants
     .. php:const:: DATE_FORMAT
 
         Web request related strings.
+
+    .. php:const:: KEY_IN_TRASH
+
+        The key used to store whether the item is in trash or not.
+
+    .. php:const:: KEY_SHARE_KEY
+
+        The key used to store the item share key.

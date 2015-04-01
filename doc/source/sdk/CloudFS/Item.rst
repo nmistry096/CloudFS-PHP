@@ -6,7 +6,7 @@ CloudFS\\Item
 
 .. php:class:: Item
 
-    .. php:method:: __construct($data, $parentPath, $restAdapter)
+    .. php:method:: __construct($data, $parentPath, $restAdapter, $parentState)
 
         Initializes an item instance.
 
@@ -16,6 +16,8 @@ CloudFS\\Item
         :param $parentPath: The item parent path.
         :type $restAdapter: \CloudFS\RESTAdapter
         :param $restAdapter: The rest adapter instance.
+        :type $parentState: array
+        :param $parentState: The parent state of the item.
 
     .. php:method:: getName()
 
@@ -85,6 +87,12 @@ CloudFS\\Item
 
         :returns: Is mirrored flag of this item.
 
+    .. php:method:: getParentState()
+
+        Gets the parent state of the item.
+
+        :returns: The parent state.
+
     .. php:method:: getVersion()
 
         Gets the item version number.
@@ -97,7 +105,7 @@ CloudFS\\Item
 
         :returns: \CloudFS\RESTAdapter The rest adapter instance.
 
-    .. php:method:: make($data, $parentPath = null, $restAdapter = null, $shared = false)
+    .. php:method:: make($data, $parentPath = null, $restAdapter = null, $parentState = null)
 
         Retrieves an instance of an item for the supplied data.
 
@@ -107,8 +115,8 @@ CloudFS\\Item
         :param $parentPath: Parent path for the new item.
         :type $restAdapter: \CloudFS\RESTAdapter
         :param $restAdapter: The rest adapter instance.
-        :type $shared: bool
-        :param $shared: Indicates whether the data belongs to a shared item.
+        :type $parentState: array
+        :param $parentState: The parent state.
         :returns: An instance of the new item.
 
     .. php:method:: changeAttributes($values, $ifConflict = VersionExists::FAIL)
@@ -129,7 +137,7 @@ CloudFS\\Item
         :param $destination: The destination of the item move.
         :type $exists: string
         :param $exists: The action to take if the item exists.
-        :returns: The success/fail response of the move operation.
+        :returns: The moved item instance.
 
     .. php:method:: copy($destination, $exists = BitcasaConstants::EXISTS_RENAME)
 

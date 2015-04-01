@@ -91,3 +91,10 @@ CloudFS\\BitcasaUtils
         :type $date: string
         :param $date: Date of the request.
         :returns: The authorization value.
+
+    .. php:method:: getParentPath($path)
+
+        Gets the parent path from the specified item path.
+
+        :param $path:
+        :returns: The parent path.

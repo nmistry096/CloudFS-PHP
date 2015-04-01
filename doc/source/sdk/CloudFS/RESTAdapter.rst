@@ -46,7 +46,7 @@ CloudFS\\RESTAdapter
 
         :type $path: string
         :param $path: The path of the item.
-        :returns: The meta data of the item.
+        :returns: The json string containing the meta data of the item.
 
     .. php:method:: getFileMeta($path)
 
@@ -55,13 +55,6 @@ CloudFS\\RESTAdapter
         :type $path: string
         :param $path: The path of the item.
         :returns: The meta data of the item.
-
-    .. php:method:: getParentPath($path)
-
-        Gets the parent path from the specified item path.
-
-        :param $path:
-        :returns: The parent path.
 
     .. php:method:: getFolderMeta($path)
 
@@ -105,7 +98,7 @@ CloudFS\\RESTAdapter
         :param $force: The flag to force delete the file from cloud storage.
         :returns: The success/fail response of the delete operation.
 
-    .. php:method:: alterFolderMeta($path, $values, $conflict = "fail")
+    .. php:method:: alterFolderMeta($path, $values, $conflict = Conflict::FAIL)
 
         Alter the attributes of the folder at a given path.
 
@@ -117,7 +110,7 @@ CloudFS\\RESTAdapter
         :param $conflict: Specifies the action to take if a conflict occurs.
         :returns: The success/fail response of the alter operation.
 
-    .. php:method:: alterFileMeta($path, $values, $conflict = "fail")
+    .. php:method:: alterFileMeta($path, $values, $conflict = Conflict::FAIL)
 
         Alter the attributes of the file at a given path.
 
@@ -169,7 +162,7 @@ CloudFS\\RESTAdapter
         :param $name: Name of the newly moved folder.
         :type $exists: string
         :param $exists: Specifies the action to take if the folder already exists.
-        :returns: The moved folder instance.
+        :returns: The json response containing moved folder data.
 
     .. php:method:: moveFile($path, $destination, $name = null, $exists = Exists::FAIL)
 
@@ -183,7 +176,7 @@ CloudFS\\RESTAdapter
         :param $name: Name of the newly moved file.
         :type $exists: string
         :param $exists: Specifies the action to take if the file already exists.
-        :returns: The moved file instance.
+        :returns: The json response containing moved file data.
 
     .. php:method:: downloadFile($path, $localDestinationPath, $downloadProgressCallback)
 
@@ -241,7 +234,7 @@ CloudFS\\RESTAdapter
 
         Retrieves the list of shares on the filesystem.
 
-        :returns: The share list.
+        :returns: The share list in user file system.
 
     .. php:method:: browseShare($shareKey, $path = null)
 
@@ -250,8 +243,8 @@ CloudFS\\RESTAdapter
         :type $shareKey: string
         :param $shareKey: The supplied share key.
         :type $path: string
-        :param $path: The path to any folder inside the share
-        :returns: An array of items for the share key.
+        :param $path: The path to any folder inside the share.
+        :returns: The json response containing the items for the share.
 
     .. php:method:: receiveShare($shareKey, $path, $exists = Exists::OVERWRITE)
 
@@ -299,22 +292,22 @@ CloudFS\\RESTAdapter
 
     .. php:method:: fileVersions($path, $startVersion, $endVersion, $limit)
 
-        :param $path:
-        :param $startVersion:
-        :param $endVersion:
-        :param $limit:
-        :returns: The|null
+        :type $path: string
+        :param $path: The item path.
+        :type $startVersion: int
+        :param $startVersion: The start version number.
+        :type $endVersion: int
+        :param $endVersion: The end version number.
+        :type $limit: int
+        :param $limit: The number of versions to retrieve.
+        :returns: The json response containing the version history.
 
-    .. php:method:: fileRead($path, $fileName, $fileSize)
+    .. php:method:: fileRead($path)
 
         Streams the content of a given file at the supplied path
 
         :type $path: string
         :param $path: The file path.
-        :type $fileName: string
-        :param $fileName: The name of the file.
-        :type $fileSize: string
-        :param $fileSize: The size of the file.
         :returns: The file stream.
 
     .. php:method:: listTrash($path = null)
@@ -327,6 +320,7 @@ CloudFS\\RESTAdapter
     .. php:method:: deleteTrashItem($path)
 
         :param $path:
+        :returns: The json response containing the status of the delete operation.
 
     .. php:method:: downloadUrl($path)
 

@@ -12,6 +12,7 @@ CloudFS\\Utils
    Assert
    Exists
    BitcasaConstants
+   Conflict
    HistoryActions
    VersionExists
    RestoreMethod

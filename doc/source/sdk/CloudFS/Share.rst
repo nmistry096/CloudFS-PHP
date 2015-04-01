@@ -82,9 +82,9 @@ CloudFS\\Share
 
     .. php:method:: getList()
 
-        Lists the items for the share key.
+        Lists the items of the share.
 
-        :returns: The list of items for the share key.
+        :returns: The items list of the share.
 
     .. php:method:: delete()
 
