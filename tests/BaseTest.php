@@ -75,15 +75,42 @@ class BaseTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * Retrieves the path given an associative array.
+     *
+     * @param mixed $item The item path string or array.
+     * @param string $parent_path The parent item path.
+     * @return The processed path.
+     */
+    protected function getPathFromAssociativeArray($item = null, $parent_path = null)
+    {
+        if ($parent_path == null) {
+            $path = '/';
+        } else {
+            $path = $parent_path . '/';
+        }
+
+        if ($item != null) {
+            if (is_string($item)) {
+                $path .= $item;
+            } else {
+                $path .= $item['id'];
+            }
+        }
+
+        return $path;
+    }
+
+    /**
      * Retrieves an item from a given item associative array.
      *
      * @param array $items The associative array containing items.
      * @param string $item_name The name of the item to be retrieved.
      * @return The retrieved item.
      */
-    protected function getItemFromAssociativeArray(array $items, $item_name) {
+    protected function getItemFromAssociativeArray(array $items, $item_name)
+    {
         $result = null;
-        foreach($items['result']['items'] as $item) {
+        foreach ($items['result']['items'] as $item) {
             if ($item['name'] == $item_name) {
                 $result = $item;
                 break;
@@ -92,32 +119,4 @@ class BaseTest extends PHPUnit_Framework_TestCase {
 
         return $result;
     }
-
-    /**
-     * Retrieves the path given an associative array.
-     *
-     * @param mixed $item The item path string or array.
-     * @param string $parent_path The parent item path.
-     * @return The processed path.
-     */
-    protected function getPathFromAssociativeArray($item = null, $parent_path = null) {
-        if ($parent_path == null) {
-            $path = '/';
-        }
-        else {
-            $path = $parent_path . '/';
-        }
-
-        if ($item != null) {
-            if (is_string($item)) {
-                $path .= $item;
-            }
-            else {
-                $path .= $item['id'];
-            }
-        }
-
-        return $path;
-    }
-
 }
