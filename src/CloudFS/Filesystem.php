@@ -11,6 +11,8 @@
 
 namespace CloudFS;
 
+use CloudFS\Utils\BitcasaConstants;
+
 /**
  * Defines the Bitcasa file system.
  */
@@ -40,10 +42,19 @@ class Filesystem {
     }
 
     /**
-     * Browses the Trash meta folder on the authenticated user’s account.
+     * Retrieves the item list in trash.
      */
     public function listTrash() {
-        return $this->restAdapter->listTrash();
+        $response = $this->restAdapter->listTrash();
+        $items = array();
+        if ($response != null && isset($response['result']) && isset($response['result']['items'])) {
+            $parentState = array(BitcasaConstants::KEY_IN_TRASH, true);
+            foreach ($response['result']['items'] as $item) {
+                $items[] = Item::make($item, null, $this->restAdapter, $parentState);
+            }
+        }
+
+        return $items;
     }
 
     /**
@@ -53,7 +64,8 @@ class Filesystem {
      * @return An instance of the item.
      */
     public function getItem($path) {
-        return $this->restAdapter->getItemMeta($path);
+        $response = $this->restAdapter->getItemMeta($path);
+        return Item::make($response['result'], BitcasaUtils::getParentPath($path), $this->restAdapter, null);
     }
 
     /**

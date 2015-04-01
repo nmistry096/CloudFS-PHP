@@ -166,4 +166,14 @@ abstract class BitcasaConstants {
     const DATE_FORMAT = "%a, %e %b %Y %H:%M:%S %Z";
     const FORM_URLENCODED = "application/x-www-form-urlencoded; charset=\"utf-8\"";
     const OAUTH_TOKEN = "/oauth2/token";
+
+    /**
+     * The key used to store whether the item is in trash or not.
+     */
+    const KEY_IN_TRASH = 'in-trash';
+
+    /**
+     * The key used to store the item share key.
+     */
+    const KEY_SHARE_KEY = 'share-key';
 }

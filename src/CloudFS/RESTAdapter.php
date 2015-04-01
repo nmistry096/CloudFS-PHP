@@ -154,7 +154,7 @@ class RESTAdapter {
      * Retrieves the meta data of a item at a given path.
      *
      * @param string $path The path of the item.
-     * @return The meta data of the item.
+     * @return The json string containing the meta data of the item.
      * @throws Exception
      */
     public function getItemMeta($path) {
@@ -175,13 +175,9 @@ class RESTAdapter {
 
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl($endpoint, null, $params);
+        $connection->get($url);
 
-        if (!BitcasaUtils::isSuccess($connection->get($url))) {
-            throw new Exception("Invalid connection url");
-        }
-
-        $response = $connection->getResponse(true);
-        return Item::make($response['result'], BitcasaUtils::getParentPath($path), $this);
+        return $connection->getResponse(true);
     }
 
 
@@ -280,16 +276,9 @@ class RESTAdapter {
         if ($this->debug) {
             var_dump($url);
         }
-        if ($connection->post($url) <= 100) {
-            return false;
-        }
 
-        $response = $connection->getResponse(true);
-        if ($response != null && isset($response['result']) && isset($response['result']['items'])) {
-            $item = Item::make($response['result']['items'][0], $parentPath, $this);
-        }
-
-        return $item;
+        $connection->post($url);
+        return $connection->getResponse(true);
     }
 
     /**
@@ -314,15 +303,8 @@ class RESTAdapter {
         }
 
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path, $force_option);
-
-        $status = $connection->delete($url);
-
+        $connection->delete($url);
         $response = $connection->getResponse(true);
-
-        if($response['error'] != null){
-            return false;
-        }
-
         return $response['result']['success'];
     }
 
@@ -342,15 +324,8 @@ class RESTAdapter {
         }
 
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path, $force_option);
-
-        $status = $connection->delete($url);
-
+        $connection->delete($url);
         $response = $connection->getResponse(true);
-
-        if($response['error'] != null){
-            return false;
-        }
-
         return $response['result']['success'];
     }
 
@@ -371,10 +346,7 @@ class RESTAdapter {
         $body = BitcasaUtils::generateParamsString($values);
 
         $connection->setData($body);
-        if ($connection->post($url) <= 100) {
-            return false;
-        }
-
+        $connection->post($url);
         return $connection->getResponse(true);
     }
 
@@ -395,10 +367,7 @@ class RESTAdapter {
         $body = BitcasaUtils::generateParamsString($values);
 
         $connection->setData($body);
-        if ($connection->post($url) <= 100) {
-            return false;
-        }
-
+        $connection->post($url);
         return $connection->getResponse(true);
     }
 
@@ -426,16 +395,8 @@ class RESTAdapter {
         $body = BitcasaUtils::generateParamsString($params);
 
         $connection->setData($body);
-        if ($connection->post($url) <= 100) {
-            return false;
-        }
-
-        $response = $connection->getResponse(true);
-        if ($response != null && isset($response['result']) && isset($response['result']['meta'])) {
-            $item = Item::make($response['result']['meta'], $destination, $this);
-        }
-
-        return $item;
+        $connection->post($url);
+        return $connection->getResponse(true);
     }
 
     /**
@@ -462,16 +423,8 @@ class RESTAdapter {
         $body = BitcasaUtils::generateParamsString($params);
 
         $connection->setData($body);
-        if ($connection->post($url) <= 100) {
-            return false;
-        }
-
-        $response = $connection->getResponse(true);
-        if ($response != null && isset($response['result']) && isset($response['result']['meta'])) {
-            $item = Item::make($response['result']['meta'], $destination, $this);
-        }
-
-        return $item;
+        $connection->post($url);
+        return $connection->getResponse(true);
     }
 
     /**
@@ -481,7 +434,7 @@ class RESTAdapter {
      * @param string $destination Path to which the folder should be moved to.
      * @param string $name Name of the newly moved folder.
      * @param string $exists Specifies the action to take if the folder already exists.
-     * @return The moved folder instance.
+     * @return The json response containing moved folder data.
      */
     public function moveFolder($path, $destination, $name = null, $exists = Exists::FAIL) {
         Assert::assertStringOrEmpty($path, 1);
@@ -498,16 +451,8 @@ class RESTAdapter {
         $body = BitcasaUtils::generateParamsString($params);
 
         $connection->setData($body);
-        if ($connection->post($url) <= 100) {
-            return false;
-        }
-
-        $response = $connection->getResponse(true);
-        if ($response != null && isset($response['result']) && isset($response['result']['meta'])) {
-            $item = Item::make($response['result']['meta'], $destination, $this);
-        }
-
-        return $item;
+        $connection->post($url);
+        return $connection->getResponse(true);
     }
 
     /**
@@ -517,7 +462,7 @@ class RESTAdapter {
      * @param string $destination Path to which the file should be moved to.
      * @param string $name Name of the newly moved file.
      * @param string $exists Specifies the action to take if the file already exists.
-     * @return The moved file instance.
+     * @return The json response containing moved file data.
      */
     public function moveFile($path, $destination, $name = null, $exists = Exists::FAIL) {
         Assert::assertStringOrEmpty($path, 1);
@@ -534,16 +479,8 @@ class RESTAdapter {
         $body = BitcasaUtils::generateParamsString($params);
 
         $connection->setData($body);
-        if ($connection->post($url) <= 100) {
-            return false;
-        }
-
-        $response = $connection->getResponse(true);
-        if ($response != null && isset($response['result']) && isset($response['result']['meta'])) {
-            $item = Item::make($response['result']['meta'], $destination, $this);
-        }
-
-        return $item;
+        $connection->post($url);
+        return $connection->getResponse(true);
     }
 
     /**
@@ -585,12 +522,8 @@ class RESTAdapter {
         $connection = new HTTPConnector($this->credential->getSession());
         $connection->raw();
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $parentPath, $params);
-        if ($connection->postMultipart($url, $name, $filePath, $exists, $uploadProgressCallback) <= 100) {
-            return false;
-        }
-
-        $response = $connection->getResponse(true);
-        return Item::make($response['result'], $parentPath, $this);
+        $connection->postMultipart($url, $name, $filePath, $exists, $uploadProgressCallback);
+        return $connection->getResponse(true);
     }
 
     /**
@@ -628,10 +561,7 @@ class RESTAdapter {
         $body = BitcasaUtils::generateParamsString($body);
 
         $connection->setData($body);
-        if ($connection->post($url) <= 100) {
-            return false;
-        }
-
+        $connection->post($url);
         $response = $connection->getResponse(true);
 
         if (!empty($response) && !empty($response['result'])) {
@@ -671,7 +601,7 @@ class RESTAdapter {
             }
             $body = BitcasaUtils::generateParamsString($formParameters);
             $connection->setData($body);
-            $status = $connection->post($url);
+            $connection->post($url);
             $response = $connection->getResponse(true);
             if (!empty($response) && !empty($response['result'])) {
                 $share = Share::getInstance($this, $response['result']);
@@ -686,19 +616,17 @@ class RESTAdapter {
     /**
      * Retrieves the list of shares on the filesystem.
      *
-     * @return The share list.
+     * @return The share list in user file system.
      */
     public function shares() {
         $shares = array();
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES);
-        $statusCode = $connection->get($url);
-        if ($statusCode == 200) {
-            $response = $connection->getResponse(true);
-            if (!empty($response) && !empty($response['result'])) {
-                foreach ($response['result'] as $result) {
-                    $shares[] = Share::getInstance($this, $result);
-                }
+        $connection->get($url);
+        $response = $connection->getResponse(true);
+        if (!empty($response) && !empty($response['result'])) {
+            foreach ($response['result'] as $result) {
+                $shares[] = Share::getInstance($this, $result);
             }
         }
 
@@ -709,8 +637,8 @@ class RESTAdapter {
      * Retrieves the items for a supplied share key.
      *
      * @param string $shareKey The supplied share key.
-     * @param string $path The path to any folder inside the share
-     * @return An array of items for the share key.
+     * @param string $path The path to any folder inside the share.
+     * @return The json response containing the items for the share.
      * @throws Exception\InvalidArgumentException
      */
     public function browseShare($shareKey, $path = null) {
@@ -727,19 +655,8 @@ class RESTAdapter {
 
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $pathParam . '/meta');
-        $statusCode = $connection->get($url);
-
-        if ($statusCode == 200) {
-            $response = $connection->getResponse(true);
-        }
-
-        if (!empty($response) && !empty($response['result'])) {
-            foreach ($response['result']['items'] as $item) {
-                $items[] = Item::make($item, null, $this, true);
-            }
-	    }
-
-	    return $items;
+        $connection->get($url);
+        return $connection->getResponse(true);
     }
 
     /**
@@ -757,7 +674,7 @@ class RESTAdapter {
             $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/');
             $body = BitcasaUtils::generateParamsString(array('path' => $path, 'exists' => $exists));
             $connection->setData($body);
-            $status = $connection->post($url);
+            $connection->post($url);
             $response = $connection->getResponse(true);
             if (!empty($response) && !empty($response['result'])) {
                 $success = true;
@@ -778,10 +695,8 @@ class RESTAdapter {
         if (!empty($shareKey)) {
             $connection = new HTTPConnector($this->credential->getSession());
             $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/');
-            $status = $connection->delete($url);
-            if ($status == 200) {
-                $deleted = true;
-            }
+            $connection->delete($url);
+            $deleted = true;
         }
 
         return $deleted;
@@ -806,7 +721,7 @@ class RESTAdapter {
             $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/unlock');
             $body = BitcasaUtils::generateParamsString(array('password' => $password));
             $connection->setData($body);
-            $status = $connection->post($url);
+            $connection->post($url);
             $response = $connection->getResponse(true);
             if (!empty($response) && !empty($response['result'])) {
                 $success = true;
@@ -841,7 +756,7 @@ class RESTAdapter {
 
             $body = BitcasaUtils::generateParamsString($formParameters);
             $connection->setData($body);
-            $status = $connection->post($url);
+            $connection->post($url);
             $response = $connection->getResponse(true);
         } else {
             throw new InvalidArgumentException('alterShare function accepts a valid shareKey. Input was ' . $shareKey);
@@ -851,11 +766,11 @@ class RESTAdapter {
     }
 
     /**
-     * @param $path
-     * @param $startVersion
-     * @param $endVersion
-     * @param $limit
-     * @return The|null
+     * @param string $path The item path.
+     * @param int $startVersion The start version number.
+     * @param int $endVersion The end version number.
+     * @param int $limit The number of versions to retrieve.
+     * @return The json response containing the version history.
      * @throws InvalidArgumentException
      */
     public function fileVersions($path, $startVersion, $endVersion, $limit) {
@@ -874,7 +789,7 @@ class RESTAdapter {
             }
             $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES,
                 $path . BitcasaConstants::METHOD_VERSIONS, $params);
-            $status = $connection->get($url);
+            $connection->get($url);
             $response = $connection->getResponse(true);
 
         } else {
@@ -888,8 +803,6 @@ class RESTAdapter {
      * Streams the content of a given file at the supplied path
      *
      * @param string $path The file path.
-     * @param string $fileName The name of the file.
-     * @param string $fileSize The size of the file.
      * @return The file stream.
      * @throws Exception\InvalidArgumentException
      */
@@ -899,7 +812,7 @@ class RESTAdapter {
         if (!empty($path)) {
             $connection = new HTTPConnector($this->credential->getSession());
             $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path, array());
-            $status = $connection->get($url);
+            $connection->get($url);
             $response = $connection->getResponse();
 
         } else {
@@ -919,28 +832,22 @@ class RESTAdapter {
         $endpoint = BitcasaConstants::METHOD_TRASH;
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl($endpoint, "/" . $path);
-        $status = $connection->get($url);
-        if ($status <= 100) {
-            return false;
-        }
-
-        $resp = $connection->getResponse(true);
-        if ($resp != null && isset($resp['result']) && isset($resp['result']['items'])) {
-            return $resp['result']['items'];
-        }
+        $connection->get($url);
+        return $connection->getResponse(true);
     }
 
+    /**
+     * @param $path The item path
+     * @return The json response containing the status of the delete operation.
+     * @throws \InvalidArgument
+     */
     public function deleteTrashItem($path) {
         Assert::assertStringOrEmpty($path);
         $endpoint = BitcasaConstants::METHOD_TRASH;
         $connection = new HTTPConnect($this->credential->getSession());
         $url = $this->credential->getRequestUrl($endpoint, "/" . $path);
-        $status = $connection->delete($url);
-        if ($status <= 100) {
-            return false;
-        }
-        $resp = $connection->getResponse(true);
-        return $resp;
+        $connection->delete($url);
+        return $connection->getResponse(true);
     }
 
     /**

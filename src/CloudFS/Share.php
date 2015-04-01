@@ -2,6 +2,7 @@
 
 namespace CloudFS;
 
+use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Utils\Exists;
 
 class Share {
@@ -161,12 +162,21 @@ class Share {
     }
 
     /**
-     * Lists the items for the share key.
+     * Lists the items of the share.
      *
-     * @return The list of items for the share key.
+     * @return The items list of the share.
      */
     public function getList() {
-        return $this->restAdapter->shares();
+        $response = $this->restAdapter->browseShare($this->getShareKey());
+        $items = array();
+        if (!empty($response) && !empty($response['result'])) {
+            $parentState = array(BitcasaConstants::KEY_SHARE_KEY, $this->getShareKey());
+            foreach ($response['result']['items'] as $item) {
+                $items[] = Item::make($item, null, $this->restAdapter, $parentState);
+            }
+        }
+
+        return $items;
     }
 
     /**
