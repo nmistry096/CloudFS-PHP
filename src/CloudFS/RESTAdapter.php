@@ -197,6 +197,7 @@ class RESTAdapter {
 
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl($endpoint, null, $params);
+
         $connection->get($url);
         return $connection->getResponse(true);
     }
@@ -226,6 +227,7 @@ class RESTAdapter {
 
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl($endpoint, null, $params);
+
         BitcasaUtils::isSuccess($connection->get($url));
         return $connection->getResponse(true);
     }
@@ -284,6 +286,7 @@ class RESTAdapter {
         }
 
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FOLDERS, $path, $force_option);
+
         $connection->delete($url);
         $response = $connection->getResponse(true);
         return $response['result']['success'];
@@ -305,8 +308,10 @@ class RESTAdapter {
         }
 
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path, $force_option);
+
         $connection->delete($url);
         $response = $connection->getResponse(true);
+
         return $response['result']['success'];
     }
 
@@ -636,6 +641,7 @@ class RESTAdapter {
 
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $pathParam . '/meta');
+
         $connection->get($url);
         return $connection->getResponse(true);
     }
