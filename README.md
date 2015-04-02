@@ -1,84 +1,94 @@
+# Bitcasa SDK for PHP
+  
+The **Bitcasa SDK for PHP** enables PHP developers to easily work with [Bitcasa Cloud Storage Platform](https://www.bitcasa.com/) and build scalable solutions.
 
-CloudFS-PHP Beta Release 0.6
-============================
+* [REST API Documentation](https://www.bitcasa.com/cloudfs-api-docs/)
+* [Blog](http://blog.bitcasa.com/) 
 
-Initial release of the PHP SDK for CloudFS. This release allows
-developers get started building CloudFS-based
-applications. Unfortunately the functionality is far from complete.
+## Getting Started
 
+If you have already [signed up](https://www.bitcasa.com/cloudfs/pricing) and obtained your credentials you can get started in minutes.
 
-Current Functionality
----------------------
+There are two main methods of getting the CloudFS-PHP SDK.
 
-This release supports a subset of CloudFS functionality. Most
-operations with files and folders are supported, though objects cannot
-be restored from the trash. Reaching full REST functionality is
-expected to happen in the next few weeks.
+1. Cloning the git repository.
 
-Here are the major missing features:
+  ```bash
+  $ git clone https://github.com/bitcasa/CloudFS-PHP.git
+  ```
+  
+2. Adding the CloudFS-PHP SDK package name to composer by editing `composer.json`.
 
-- User Creation
-
-- Call to BitcasaFIlesystem::download() returns the content of the
-  file. This will change to have the caller supply a file name.
-
-- File Version History is untested
-
-- Retore from Trash is untested
-
-- PHP-SDK specific functionality is also planned once the REST interface is implemented.
-
-- Test files for this particular SDK.
-
-Example to list content of a folder
------------------------------------
-
-<?php
-
-require_once "BitcasaApi.php";
-require_once "BitcasaFilesystem.php";
-
-$session = new Session("bitcasa.cloudfs.io", CLIENT_ID, CLIENT_SECRET);
-$res = $session->authenticate("myaccount@domain", "mypassword");
-$fs = $session->filesystem();
-$api = $session->getClientApi();
-
-$parent = "/";
-
-try {
-    $items = $fs->getList($parent);
-    foreach ($items as $i) {
-        print $i->name() . "\t" . $i->id() . "\n";
+  ```
+  "require": {
+      "bitcasa/cloudfs-sdk": "dev-develop"
     }
-} catch (Exception $e) {
-    print $e->getMessage();
-}
+  ```
+For the composer package to run, you should have [composer](https://getcomposer.org/) installed.
 
-?>
+## Using the SDK
 
-Example to upload a file
-------------------------
+Use the credentials you obtained from Bitcasa admin console to create a client session. This session can be used for all future requests to Bitcasa.
 
-<?
-require_once "BitcasaApi.php";
-require_once "BitcasaFilesystem.php";
+```php
+$session = new Session($endPoint, $clientId, $clientSecret);
+$session->authenticate($username, $password);
+```
 
-$session = new Session("bitcasa.cloudfs.io", CLIENT_ID, CLIENT_SECRET);
-$res = $session->authenticate("myaccount@domain", "mypassword");
-$fs = $session->filesystem();
-$api = $session->getClientApi();
+Getting the root folder
 
-$parent = "/";
+```php
+$root = $session->filesystem()->root();
+```
 
-try {
-    $file = "/tmp/hello.txt";
-    $item = $fs->upload($parent, $file);
-    print $item->name() . ": " . $item->id();
-} catch (Exception $e) {
-    print $e->getMessage();
-}
+Getting the contents of root folder
 
-?>
+```php
+$items = $root->getList();
+```
 
+Creating a sub folder under root folder
+
+```php
+$folder = $root->createFolder($folderName);
+```
+Uploading a file to a folder
+
+```php
+$uploadedFile = $folder->upload($localFilePath, $uploadProgressCallback, Exists::OVERWRITE);
+```
+
+Download a file to a local destination.
+
+```php
+$uploadedFile->download($localDestinationPath, $downloadProgressCallback);
+```
+
+Deleting a file or folder
+
+```php
+$item->delete();
+```
+
+Create user (for paid accounts only)
+
+```php
+$session->setAdminCredentials($adminId, $adminSecret);
+$user = $session->createAccount($username, $password, $email, $firstName, $lastName);
+```
+
+## Running the Tests
+
+Before running the tests, you should add the API credentials found in your CloudFS account to the file \tests\BaseTest.php
+
+If you used the clone method to download the SDK you should have PHPUnit installed to run the tests. The instructions to download and install PHPUnit can be found at https://phpunit.de/ 
+
+>>WARNING!!! Never run the test suite against a production environment. It deletes all the contents of the file system.
+
+To execute the tests go the root source code directory and run:
+```
+phpunit
+```
 
 We would love to hear what features or functionality you're interested in, or general comments on the SDK (good and bad - especially bad).
+
