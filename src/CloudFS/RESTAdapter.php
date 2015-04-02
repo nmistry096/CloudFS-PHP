@@ -74,28 +74,22 @@ class RESTAdapter {
         $connection->AddHeader(BitcasaConstants::HEADER_AUTORIZATION, $authorizationValue);
 
         $connection->setData($parameters);
-        $status = $connection->post($url);
-        $resp = null;
+        $connection->post($url);
+        $resp = $connection->getResponse(true, false);
 
-        if (BitcasaUtils::isSuccess($status)) {
-            $resp = $connection->getResponse(true, false);
-
-            if (isset($resp["access_token"])) {
-                $this->credential->setAccessToken($resp["access_token"]);
-            }
-
-            if (isset($resp["token_type"])) {
-                $this->credential->setTokenType($resp["token_type"]);
-            }
-
-            if ($this->debug) {
-                var_dump($resp);
-            }
-
-            return true;
+        if (isset($resp["access_token"])) {
+            $this->credential->setAccessToken($resp["access_token"]);
         }
 
-        return false;
+        if (isset($resp["token_type"])) {
+            $this->credential->setTokenType($resp["token_type"]);
+        }
+
+        if ($this->debug) {
+            var_dump($resp);
+        }
+
+        return true;
     }
 
     /**
@@ -134,10 +128,7 @@ class RESTAdapter {
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl($endpoint, null, $params);
 
-        if (!BitcasaUtils::isSuccess($connection->get($url))) {
-            throw new Exception("Invalid connection url");
-        }
-
+        $connection->get($url);
         return $connection->getResponse(true);
     }
 
@@ -228,7 +219,7 @@ class RESTAdapter {
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl($endpoint, null, $params);
 
-        BitcasaUtils::isSuccess($connection->get($url));
+        $connection->get($url);
         return $connection->getResponse(true);
     }
 
@@ -522,8 +513,8 @@ class RESTAdapter {
      * @return The state of the restore operation.
      */
     public function restore($path, $destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null) {
-        Assert::assertStringOrEmpty($path);
-        Assert::assertStringOrEmpty($destination);
+        Assert::assertStringOrEmpty($path, 1);
+        Assert::assertStringOrEmpty($destination, 2);
         $connection = new HTTPConnector($this->credential->getSession());
         $params = array();
         $status = false;
@@ -567,33 +558,33 @@ class RESTAdapter {
      */
     public function createShare($path, $password = null) {
         $share = null;
-        if (!empty($path)) {
-            $connection = new HTTPConnector($this->credential->getSession());
-            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES);
-            $formParameters = array();
-            $pathValues = array();
-            if (is_array($path)) {
-                foreach ($path as $value) {
-                    $pathValues[] = $value;
-                }
-                $formParameters = array('path' => $pathValues);
-
-            } else {
-                $formParameters = array('path' => $path);
-            }
-
-            if (!empty($password)) {
-                $formParameters['password'] = $password;
-            }
-            $body = BitcasaUtils::generateParamsString($formParameters);
-            $connection->setData($body);
-            $connection->post($url);
-            $response = $connection->getResponse(true);
-            if (!empty($response) && !empty($response['result'])) {
-                $share = Share::getInstance($this, $response['result']);
-            }
-        } else {
+        if (empty($path)) {
             throw new InvalidArgumentException('createShare function accepts a valid path. Input was ' . $path);
+        }
+
+        $connection = new HTTPConnector($this->credential->getSession());
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES);
+        $formParameters = array();
+        $pathValues = array();
+        if (is_array($path)) {
+            foreach ($path as $value) {
+                $pathValues[] = $value;
+            }
+            $formParameters = array('path' => $pathValues);
+
+        } else {
+            $formParameters = array('path' => $path);
+        }
+
+        if (!empty($password)) {
+            $formParameters['password'] = $password;
+        }
+        $body = BitcasaUtils::generateParamsString($formParameters);
+        $connection->setData($body);
+        $connection->post($url);
+        $response = $connection->getResponse(true);
+        if (!empty($response) && !empty($response['result'])) {
+            $share = Share::getInstance($this, $response['result']);
         }
 
         return $share;
@@ -628,11 +619,8 @@ class RESTAdapter {
      * @throws Exception\InvalidArgumentException
      */
     public function browseShare($shareKey, $path = null) {
+        Assert::assertStringOrEmpty($shareKey, 1);
         $response = null;
-        if (empty($shareKey)) {
-            throw new InvalidArgumentException('browseShare function accepts a valid shareKey. Input was ' . $shareKey);
-        }
-
         $pathParam = $shareKey;
 
         if ($path != null) {
@@ -655,17 +643,17 @@ class RESTAdapter {
      * @return The success/failure status of the retrieve operation.
      */
     public function receiveShare($shareKey, $path, $exists = Exists::OVERWRITE) {
+        Assert::assertStringOrEmpty($shareKey, 1);
+        Assert::assertStringOrEmpty($path, 2);
         $success = false;
-        if (!empty($shareKey) && !empty($path)) {
-            $connection = new HTTPConnector($this->credential->getSession());
-            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/');
-            $body = BitcasaUtils::generateParamsString(array('path' => $path, 'exists' => $exists));
-            $connection->setData($body);
-            $connection->post($url);
-            $response = $connection->getResponse(true);
-            if (!empty($response) && !empty($response['result'])) {
-                $success = true;
-            }
+        $connection = new HTTPConnector($this->credential->getSession());
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/');
+        $body = BitcasaUtils::generateParamsString(array('path' => $path, 'exists' => $exists));
+        $connection->setData($body);
+        $connection->post($url);
+        $response = $connection->getResponse(true);
+        if (!empty($response) && !empty($response['result'])) {
+            $success = true;
         }
 
         return $success;
@@ -678,13 +666,11 @@ class RESTAdapter {
      * @return The success/failure status of the delete operation.
      */
     public function deleteShare($shareKey) {
-        $deleted = false;
-        if (!empty($shareKey)) {
-            $connection = new HTTPConnector($this->credential->getSession());
-            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/');
-            $connection->delete($url);
-            $deleted = true;
-        }
+        Assert::assertStringOrEmpty($shareKey, 1);
+        $connection = new HTTPConnector($this->credential->getSession());
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/');
+        $connection->delete($url);
+        $deleted = true;
 
         return $deleted;
     }
@@ -698,21 +684,17 @@ class RESTAdapter {
      * @throws Exception\InvalidArgumentException
      */
     public function unlockShare($shareKey, $password) {
+        Assert::assertStringOrEmpty($shareKey, 1);
+        Assert::assertStringOrEmpty($password, 2);
         $success = false;
-        if (empty($shareKey)) {
-            throw new InvalidArgumentException('unlockShare function accepts a valid shareKey. Input was ' . $shareKey);
-        } else if (empty($password)) {
-            throw new InvalidArgumentException('unlockShare function accepts a valid password. Input was ' . $password);
-        } else {
-            $connection = new HTTPConnector($this->credential->getSession());
-            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/unlock');
-            $body = BitcasaUtils::generateParamsString(array('password' => $password));
-            $connection->setData($body);
-            $connection->post($url);
-            $response = $connection->getResponse(true);
-            if (!empty($response) && !empty($response['result'])) {
-                $success = true;
-            }
+        $connection = new HTTPConnector($this->credential->getSession());
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/unlock');
+        $body = BitcasaUtils::generateParamsString(array('password' => $password));
+        $connection->setData($body);
+        $connection->post($url);
+        $response = $connection->getResponse(true);
+        if (!empty($response) && !empty($response['result'])) {
+            $success = true;
         }
 
         return $success;
@@ -728,28 +710,22 @@ class RESTAdapter {
      * @throws Exception\InvalidArgumentException
      */
     public function alterShare($shareKey, $values, $password = null) {
-        $response = null;
-        if (!empty($shareKey)) {
-            $connection = new HTTPConnector($this->credential->getSession());
-            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/info');
-            $formParameters = array();
-            if (!empty($password)) {
-                $formParameters['current_password'] = $password;
-            }
-
-            foreach ($values as $key => $value) {
-                $formParameters[$key] = $value;
-            }
-
-            $body = BitcasaUtils::generateParamsString($formParameters);
-            $connection->setData($body);
-            $connection->post($url);
-            $response = $connection->getResponse(true);
-        } else {
-            throw new InvalidArgumentException('alterShare function accepts a valid shareKey. Input was ' . $shareKey);
+        Assert::assertStringOrEmpty($shareKey, 1);
+        $connection = new HTTPConnector($this->credential->getSession());
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_SHARES, $shareKey . '/info');
+        $formParameters = array();
+        if (!empty($password)) {
+            $formParameters['current_password'] = $password;
         }
 
-        return $response;
+        foreach ($values as $key => $value) {
+            $formParameters[$key] = $value;
+        }
+
+        $body = BitcasaUtils::generateParamsString($formParameters);
+        $connection->setData($body);
+        $connection->post($url);
+        return $connection->getResponse(true);
     }
 
     /**
@@ -761,29 +737,22 @@ class RESTAdapter {
      * @throws InvalidArgumentException
      */
     public function fileVersions($path, $startVersion, $endVersion, $limit) {
-        $response = null;
-        if (!empty($path)) {
-            $connection = new HTTPConnector($this->credential->getSession());
-            $params = array();
-            if ($startVersion != null) {
-                $params['start-version'] = $startVersion;
-            }
-            if ($endVersion != null) {
-                $params['stop-version'] = $endVersion;
-            }
-            if ($limit != null) {
-                $params['limit'] = $limit;
-            }
-            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES,
-                $path . BitcasaConstants::METHOD_VERSIONS, $params);
-            $connection->get($url);
-            $response = $connection->getResponse(true);
-
-        } else {
-            throw new InvalidArgumentException('fileVersions function accepts a valid path. Input was ' . $path);
+        Assert::assertStringOrEmpty($path, 1);
+        $connection = new HTTPConnector($this->credential->getSession());
+        $params = array();
+        if ($startVersion != null) {
+            $params['start-version'] = $startVersion;
         }
-
-        return $response;
+        if ($endVersion != null) {
+            $params['stop-version'] = $endVersion;
+        }
+        if ($limit != null) {
+            $params['limit'] = $limit;
+        }
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES,
+            $path . BitcasaConstants::METHOD_VERSIONS, $params);
+        $connection->get($url);
+        return $connection->getResponse(true);
     }
 
     /**
@@ -794,19 +763,11 @@ class RESTAdapter {
      * @throws Exception\InvalidArgumentException
      */
     public function fileRead($path) {
-
-        $response = null;
-        if (!empty($path)) {
-            $connection = new HTTPConnector($this->credential->getSession());
-            $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path, array());
-            $connection->get($url);
-            $response = $connection->getResponse();
-
-        } else {
-            throw new InvalidArgumentException('fileRead function accepts a valid path. Input was ' . $path);
-        }
-
-        return $response;
+        Assert::assertStringOrEmpty($path, 1);
+        $connection = new HTTPConnector($this->credential->getSession());
+        $url = $this->credential->getRequestUrl(BitcasaConstants::METHOD_FILES, $path, array());
+        $connection->get($url);
+        return $connection->getResponse();
     }
 
     /**
@@ -829,7 +790,7 @@ class RESTAdapter {
      * @throws \InvalidArgument
      */
     public function deleteTrashItem($path) {
-        Assert::assertStringOrEmpty($path);
+        Assert::assertStringOrEmpty($path, 1);
         $endpoint = BitcasaConstants::METHOD_TRASH;
         $connection = new HTTPConnector($this->credential->getSession());
         $url = $this->credential->getRequestUrl($endpoint, "/" . $path);
