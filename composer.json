@@ -1,8 +1,8 @@
 {
-  "name": "bitcasa/cloudfs-sdk",
+  "name": "bitcasa/cloudfs_sdk",
   "type": "library",
-  "description": "The bitcasa cloudfs sdk",
-  "keywords": ["bitcasa", "cloudfs"],
+  "description": "PHP cloudfs sdk",
+  "keywords": ["bitcasa", "cloudfs", "cloud", "storage"],
   "homepage": "https://github.com/bitcasa/CloudFS-PHP",
   "license": "MIT",
   "require": {
@@ -11,6 +11,9 @@
   "require-dev": {
     "phpunit/phpunit": "4.4.*",
     "sphpdox/sphpdox": "dev-master"
+  },
+  "support": {
+    "email": "sdks@bitcasa.com"
   },
   "autoload": {
     "psr-0": {
