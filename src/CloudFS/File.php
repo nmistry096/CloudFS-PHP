@@ -3,6 +3,8 @@
 namespace CloudFS;
 
 
+use CloudFS\Utils\Assert;
+
 class File extends Item {
 
     private $extension;
@@ -43,11 +45,12 @@ class File extends Item {
     }
 
     /**
-     * Sets the Mime type of this item.
+     * Sets the Mime type of this item and updates to CloudFS.
      *
      * @param string $newMime The new Mime type of the item.
      */
     public function setMime($newMime) {
+        Assert::assertStringOrEmpty($newMime, 1);
         $this->mime = $newMime;
         $this->changeAttributes(array('mime' => $newMime, 'version' => $this->getVersion()));
     }
@@ -62,14 +65,15 @@ class File extends Item {
     }
 
     /**
-     * Downloads the file from the cloud.
+     * Downloads the file from the cloud to the specified local path.
      *
      * @param string $localDestinationPath The local path of the file to download the content.
      * @param mixed $downloadProgressCallback The download progress callback function. This function should take
      * 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
-     * @return The download status.
+     * @return The success/fail status of the download operation.
      */
     public function download($localDestinationPath, $downloadProgressCallback) {
+        Assert::assertStringOrEmpty($localDestinationPath, 1);
         return $this->restAdapter()->downloadFile($this->getPath(), $localDestinationPath, $downloadProgressCallback);
     }
 

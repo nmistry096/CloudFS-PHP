@@ -224,7 +224,7 @@ CloudFS\\RESTAdapter
 
         Create a share of an item at the supplied path.
 
-        :type $path: mixed
+        :type $path: string|array
         :param $path: The paths of the item to be shared.
         :type $password: string
         :param $password: The password of the shared to be created.

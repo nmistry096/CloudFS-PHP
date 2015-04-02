@@ -119,14 +119,14 @@ CloudFS\\Share
 
         :param $newName:
         :type $password: null
-        :param $password: The password for the set name operation.
-        :returns: The success/fail response of the set name operation.
+        :param $password: The password for the Share if it is password protected.
+        :returns: The success/fail status of the set name operation.
 
     .. php:method:: setPassword($newPassword, $oldPassword = null)
 
-        Sets a new password the given user share.
+        Sets a new password for the share.
 
         :param $newPassword:
         :type $oldPassword: null
-        :param $oldPassword: The old password for the set password operation.
-        :returns: bool The success/fail response of the set password operation.
+        :param $oldPassword: The old password for the Share if it is password protected.
+        :returns: bool The success/fail status of the set password operation.

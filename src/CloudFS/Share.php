@@ -2,6 +2,7 @@
 
 namespace CloudFS;
 
+use CloudFS\Utils\Assert;
 use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Utils\Exists;
 
@@ -220,10 +221,11 @@ class Share {
      * Sets the name for a given user share.
      *
      * @param $newName The new name to be set.
-     * @param null $password The password for the set name operation.
-     * @return The success/fail response of the set name operation.
+     * @param null $password The password for the Share if it is password protected.
+     * @return The success/fail status of the set name operation.
      */
     public function setName($newName, $password = null) {
+        Assert::assertStringOrEmpty($newName, 1);
         $success = false;
         $share = $this->restAdapter->alterShare($this->shareKey, array('name' => $newName), $password);
         if (!empty($share)) {
@@ -234,13 +236,14 @@ class Share {
     }
 
     /**
-     * Sets a new password the given user share.
+     * Sets a new password for the share.
      *
-     * @param $newPassword The new password to be set.
-     * @param null $oldPassword The old password for the set password operation.
-     * @return bool The success/fail response of the set password operation.
+     * @param $newPassword The new password
+     * @param null $oldPassword The old password for the Share if it is password protected.
+     * @return bool The success/fail status of the set password operation.
      */
     public function setPassword($newPassword, $oldPassword = null) {
+        Assert::assertStringOrEmpty($newPassword, 1);
         $success = false;
         $share = $this->restAdapter->alterShare($this->shareKey, array('password' => $newPassword), $oldPassword);
         if (!empty($share)) {

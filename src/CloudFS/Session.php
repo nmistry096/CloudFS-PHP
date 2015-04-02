@@ -14,6 +14,7 @@ namespace CloudFS;
 use CloudFS\Filesystem;
 use CloudFS\HTTPConnector;
 use CloudFS\BitcasaUtils;
+use CloudFS\Utils\Assert;
 use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Credential;
 use CloudFS\Exception\InvalidArgumentException;
@@ -62,6 +63,8 @@ class Session {
      * @return The authentication status.
      */
     public function authenticate($username, $password) {
+        Assert::assertStringOrEmpty($username, 1);
+        Assert::assertStringOrEmpty($password, 2);
         $resp = $this->restAdapter->authenticate($this, $username, $password);
         if ($this->debug) {
             print "auth result: ";
@@ -207,6 +210,8 @@ class Session {
      * @param string $adminSecret The admin secret for the bitcasa account.
      */
     public function setAdminCredentials($adminClientId, $adminSecret) {
+        Assert::assertStringOrEmpty($adminClientId, 1);
+        Assert::assertStringOrEmpty($adminSecret, 2);
         $this->adminClientId = $adminClientId;
         $this->adminClientSecret = $adminSecret;
     }

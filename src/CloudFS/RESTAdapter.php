@@ -551,7 +551,7 @@ class RESTAdapter {
     /**
      * Create a share of an item at the supplied path.
      *
-     * @param mixed $path The paths of the item to be shared.
+     * @param string|array $path The paths of the item to be shared.
      * @param string $password The password of the shared to be created.
      * @return An instance of the share.
      * @throws Exception\InvalidArgumentException
@@ -559,7 +559,7 @@ class RESTAdapter {
     public function createShare($path, $password = null) {
         $share = null;
         if (empty($path)) {
-            throw new InvalidArgumentException('createShare function accepts a valid path. Input was ' . $path);
+            throw new InvalidArgumentException('createShare function accepts a valid path or path array. Input was ' . $path);
         }
 
         $connection = new HTTPConnector($this->credential->getSession());

@@ -33,7 +33,7 @@ CloudFS\\File
 
     .. php:method:: setMime($newMime)
 
-        Sets the Mime type of this item.
+        Sets the Mime type of this item and updates to CloudFS.
 
         :type $newMime: string
         :param $newMime: The new Mime type of the item.
@@ -46,13 +46,13 @@ CloudFS\\File
 
     .. php:method:: download($localDestinationPath, $downloadProgressCallback)
 
-        Downloads the file from the cloud.
+        Downloads the file from the cloud to the specified local path.
 
         :type $localDestinationPath: string
         :param $localDestinationPath: The local path of the file to download the content.
         :type $downloadProgressCallback: mixed
         :param $downloadProgressCallback: The download progress callback function. This function should take 'downloadSize', 'downloadedSize', 'uploadSize', 'uploadedSize' as arguments.
-        :returns: The download status.
+        :returns: The success/fail status of the download operation.
 
     .. php:method:: versions($startVersion = 0, $endVersion = null, $limit = 10)
 
@@ -161,23 +161,23 @@ CloudFS\\File
 
     .. php:method:: restAdapter()
 
-        Retrieves this rest adapter instance.
+        Retrieves the rest adapter instance.
 
         :returns: \CloudFS\RESTAdapter The rest adapter instance.
 
     .. php:method:: make($data, $parentPath = null, $restAdapter = null, $parentState = null)
 
-        Retrieves an instance of an item for the supplied data.
+        Creates an instance of an item from the supplied data.
 
         :type $data: array
-        :param $data: The data needed to create an item.
+        :param $data: The array containing the item data.
         :type $parentPath: string
         :param $parentPath: Parent path for the new item.
         :type $restAdapter: \CloudFS\RESTAdapter
         :param $restAdapter: The rest adapter instance.
         :type $parentState: array
         :param $parentState: The parent state.
-        :returns: An instance of the new item.
+        :returns: An item instance.
 
     .. php:method:: changeAttributes($values, $ifConflict = VersionExists::FAIL)
 
@@ -187,52 +187,52 @@ CloudFS\\File
         :param $values: The values that need to be changed.
         :type $ifConflict: int
         :param $ifConflict: Defines what to do when a conflict occurs.
-        :returns: The status of the operation.
+        :returns: The success/fail status of the operation.
 
     .. php:method:: move($destination, $exists = BitcasaConstants::EXISTS_RENAME)
 
-        Moves this item to a given destination.
+        Moves the item to the specified destination.
 
-        :type $destination: string
-        :param $destination: The destination of the item move.
+        :type $destination: string|Container
+        :param $destination: The destination path to move or the destination folder.
         :type $exists: string
         :param $exists: The action to take if the item exists.
-        :returns: The moved item instance.
+        :returns: An item instance.
 
     .. php:method:: copy($destination, $exists = BitcasaConstants::EXISTS_RENAME)
 
-        Copy this item to a given destination.
+        Copy the item to the specified destination.
 
-        :type $destination: string
-        :param $destination: The destination of the item copy.
+        :type $destination: string|Container
+        :param $destination: The destination path to copy or the destination folder.
         :type $exists: string
         :param $exists: The action to take if the item exists.
-        :returns: The success/fail response of the copy operation.
+        :returns: An item instance.
 
     .. php:method:: delete($commit = False, $force = False)
 
         Delete this item from the cloud.
 
         :type $commit: bool
-        :param $commit: Flag to commit the delete operation.
+        :param $commit: If false moves the item to the 'Trash', else deletes the file immediately.
         :type $force: bool
-        :param $force: Flag to force the delete operation.
-        :returns: Boolean value indicating the status of the delete operation.
+        :param $force: If true deletes the directory even if it contains items.
+        :returns: The success/fail status of the delete operation.
 
     .. php:method:: restore($destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null)
 
-        Restores this item to the given destination.
+        Restores the item to the specified destination.
 
-        :type $destination: string
-        :param $destination: The destination of the item restore.
+        :type $destination: string|Container
+        :param $destination: The destination path for item restore or the destination folder.
         :type $restoreMethod: string
         :param $restoreMethod: The restore method.
         :type $restoreArgument: string
         :param $restoreArgument: The restore argument.
-        :returns: The success/fail response of the restore operation.
+        :returns: The success/fail status of the restore operation.
 
     .. php:method:: history()
 
-        Retrieves the files history of this file.
+        Retrieves the version history.
 
-        :returns: The file history response.
+        :returns: The version history.

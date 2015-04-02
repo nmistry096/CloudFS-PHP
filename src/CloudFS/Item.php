@@ -2,6 +2,8 @@
 
 namespace CloudFS;
 
+use CloudFS\Exception\InvalidArgumentException;
+use CloudFS\Utils\Assert;
 use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Utils\FileType;
 use CloudFS\Utils\VersionExists;
@@ -68,6 +70,7 @@ class Item {
      * @param string $newName The item name.
      */
     public function setName($newName) {
+        Assert::assertStringOrEmpty($newName, 1);
         $this->name = $newName;
         $this->changeAttributes(array('name' => $newName, 'version' => $this->getVersion()));
     }
@@ -173,7 +176,7 @@ class Item {
     }
 
     /**
-     * Retrieves this rest adapter instance.
+     * Retrieves the rest adapter instance.
      *
      * @return \CloudFS\RESTAdapter The rest adapter instance.
      */
@@ -182,13 +185,13 @@ class Item {
     }
 
     /**
-     * Retrieves an instance of an item for the supplied data.
+     * Creates an instance of an item from the supplied data.
      *
-     * @param array $data The data needed to create an item.
+     * @param array $data The array containing the item data.
      * @param string $parentPath Parent path for the new item.
      * @param \CloudFS\RESTAdapter $restAdapter The rest adapter instance.
      * @param array $parentState The parent state.
-     * @return An instance of the new item.
+     * @return An item instance.
      */
     public static function make($data, $parentPath = null, $restAdapter = null, $parentState = null) {
         $item = null;
@@ -245,7 +248,7 @@ class Item {
      *
      * @param array $values The values that need to be changed.
      * @param int $ifConflict Defines what to do when a conflict occurs.
-     * @return The status of the operation.
+     * @return The success/fail status of the operation.
      */
     public function changeAttributes(array $values, $ifConflict = VersionExists::FAIL) {
         $success = false;
@@ -264,13 +267,23 @@ class Item {
     }
 
     /**
-     * Moves this item to a given destination.
+     * Moves the item to the specified destination.
      *
-     * @param string $destination The destination of the item move.
+     * @param string|Container $destination The destination path to move or the destination folder.
      * @param string $exists The action to take if the item exists.
-     * @return The moved item instance.
+     * @return An item instance.
      */
-    public function move($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
+    public function move($destination, $exists = BitcasaConstants::EXISTS_RENAME)
+    {
+        if (is_string($destination) && empty($destination)) {
+            throw new \InvalidArgumentException();
+        } elseif ($destination instanceof Container) {
+            $destination = $destination->getPath();
+            if (empty($destination)) {
+                throw new \InvalidArgumentException();
+            }
+        }
+
         $item = null;
         if ($this->getType() == FileType::FILE) {
             $response = $this->restAdapter()->moveFile($this->getPath(), $destination, $this->getName(), $exists);
@@ -286,13 +299,22 @@ class Item {
     }
 
     /**
-     * Copy this item to a given destination.
+     * Copy the item to the specified destination.
      *
-     * @param string $destination The destination of the item copy.
+     * @param string|Container $destination The destination path to copy or the destination folder.
      * @param string $exists The action to take if the item exists.
-     * @return The success/fail response of the copy operation.
+     * @return An item instance.
      */
     public function copy($destination, $exists = BitcasaConstants::EXISTS_RENAME) {
+        if (is_string($destination) && empty($destination)) {
+            throw new \InvalidArgumentException();
+        } elseif ($destination instanceof Container) {
+            $destination = $destination->getPath();
+            if (empty($destination)) {
+                throw new \InvalidArgumentException();
+            }
+        }
+
         $item = null;
         if ($this->getType() == FileType::FILE) {
             $response = $this->restAdapter()->copyFile($this->getPath(), $destination, $this->getName(), $exists);
@@ -310,9 +332,9 @@ class Item {
     /**
      * Delete this item from the cloud.
      *
-     * @param bool $commit Flag to commit the delete operation.
-     * @param bool $force Flag to force the delete operation.
-     * @return Boolean value indicating the status of the delete operation.
+     * @param bool $commit If false moves the item to the 'Trash', else deletes the file immediately.
+     * @param bool $force If true deletes the directory even if it contains items.
+     * @return The success/fail status of the delete operation.
      */
     public function delete($commit = False, $force = False) {
         if ($this->getType() == FileType::FILE) {
@@ -325,23 +347,30 @@ class Item {
     }
 
     /**
-     * Restores this item to the given destination.
+     * Restores the item to the specified destination.
      *
-     * @param string $destination The destination of the item restore.
+     * @param string|Container $destination The destination path for item restore or the destination folder.
      * @param string $restoreMethod The restore method.
      * @param string $restoreArgument The restore argument.
-     * @return The success/fail response of the restore operation.
+     * @return The success/fail status of the restore operation.
      */
     public function restore($destination, $restoreMethod = RestoreMethod::FAIL, $restoreArgument = null) {
-        if (!is_string($destination)) {
-            $destination = $destination->path();
+        if (is_string($destination) && empty($destination)) {
+            throw new \InvalidArgumentException();
+        } elseif ($destination instanceof Container) {
+            $destination = $destination->getPath();
+            if (empty($destination)) {
+                throw new \InvalidArgumentException();
+            }
         }
 
         $status = $this->restAdapter()->restore($this->getId(), $destination, $restoreMethod, $restoreArgument);
         if ($status) {
+            /* Fixing the path after successful restoration to seamlessly continue item operations*/
             $this->fullPath = $destination . '/' . $this->getId();
 
         } else {
+            /* We do not want user's to do any operations on the restoration failed item */
             $this->restAdapter = null;
         }
 
@@ -349,9 +378,9 @@ class Item {
     }
 
     /**
-     * Retrieves the files history of this file.
+     * Retrieves the version history.
      *
-     * @return The file history response.
+     * @return The version history.
      */
     public function history() {
         return $this->restAdapter()->fileHistory($this);

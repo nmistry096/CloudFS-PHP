@@ -11,6 +11,7 @@
 
 namespace CloudFS;
 
+use CloudFS\Utils\Assert;
 use CloudFS\Utils\BitcasaConstants;
 
 /**
@@ -65,6 +66,7 @@ class Filesystem {
      * @return An instance of the item.
      */
     public function getItem($path) {
+        Assert::assertStringOrEmpty($path, 1);
         $response = $this->restAdapter->getItemMeta($path);
         return Item::make($response['result'], BitcasaUtils::getParentPath($path), $this->restAdapter, null);
     }
@@ -85,8 +87,12 @@ class Filesystem {
      * @param string $password The password of the shared to be created.
      * @return An instance of the share.
      * @throws Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function createShare($path, $password = null) {
+        if (empty($path)) {
+            throw new InvalidArgumentException('createShare function accepts a valid path or path array. Input was ' . $path);
+        }
         return $this->restAdapter->createShare($path, $password);
     }
 
@@ -98,6 +104,7 @@ class Filesystem {
      * @return An instance of share.
      */
     public function retrieveShare($shareKey, $password = null) {
+        Assert::assertStringOrEmpty($shareKey, 1);
         $shares = $this->listShares();
         $sharedItem = null;
         foreach ($shares as $share) {
