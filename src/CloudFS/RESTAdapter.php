@@ -89,7 +89,7 @@ class RESTAdapter {
             var_dump($resp);
         }
 
-        return true;
+        return $resp;
     }
 
     /**
