@@ -2,7 +2,7 @@
   
 The **Bitcasa SDK for PHP** enables PHP developers to easily work with [Bitcasa Cloud Storage Platform](https://www.bitcasa.com/) and build scalable solutions.
 
-* [REST API Documentation](https://www.bitcasa.com/cloudfs-api-docs/)
+* [REST API Documentation](https://developer.bitcasa.com/cloudfs-rest-documentation/)
 * [Blog](http://blog.bitcasa.com/) 
 
 ## Getting Started
