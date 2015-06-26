@@ -9,16 +9,20 @@ namespace CloudFS\Exception;
  */
 class BitcasaError extends \Exception {
 
-    private $status;
+    private $httpCode;
 
     /**
      * Initializes the Bitcasa Error instance.
      *
-     * @param BitcasaStatus $status The error status.
+     * @param array $jsonResponse The JSON of the error.
+     * @param int $httpCode Status code of the request that triggered the error.
      */
-    public function __construct($status) {
-        $this->status = $status;
-        parent::__construct($status->errorMessage());
+    public function __construct($jsonResponse, $httpCode) {
+        if (!isset($jsonResponse["error"])) {
+            throw Exception("Attempted to raise an exception from a non-error response: \r\n" . json_encode($json_response));
+        }
+        $this->httpCode = $httpCode;
+        parent::__construct($jsonResponse["error"]["message"], $jsonResponse["error"]["code"]);
     }
 
     /**
@@ -26,8 +30,8 @@ class BitcasaError extends \Exception {
      *
      * @return The error status.
      */
-    public function getStatus() {
-        return $this->status;
+    public function getHTTPStatus() {
+        return $this->httpCode;
     }
 
 }

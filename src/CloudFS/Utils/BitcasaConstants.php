@@ -53,7 +53,7 @@ abstract class BitcasaConstants {
     const METHOD_CLOUDFS = "/cloudfs";
     const METHOD_CUSTOMERS = "/customers/";
     const METHOD_TOKEN = "/token";
-    const METHOD_ITEMS = "/files";  // TODO should change this path to /v2/filesystem/root/<path>/meta after REST fix
+    const METHOD_ITEMS = "/filesystem/root"; 
     const METHOD_FOLDERS = "/folders";
     const METHOD_FILES = "/files";
     const METHOD_USER = "/user";

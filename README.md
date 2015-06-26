@@ -1,13 +1,15 @@
-# Bitcasa SDK for PHP
+# CloudFS SDK for PHP
   
-The **Bitcasa SDK for PHP** enables PHP developers to easily work with [Bitcasa Cloud Storage Platform](https://www.bitcasa.com/) and build scalable solutions.
+The **CloudFS SDK for PHP** enables PHP developers to easily work with [Bitcasa Cloud Storage Platform](https://www.bitcasa.com/) and build scalable solutions. CloudFS provides developers with a seamless and secure way to integrate cloud storage, access, and sharing functionality into applications.
 
-* [REST API Documentation](https://developer.bitcasa.com/cloudfs-rest-documentation/)
+* [CloudFS FAQs](https://developer.bitcasa.com/faqs/)
+* [REST API Documentation](https://www.bitcasa.com/cloudfs-api-docs/)
 * [Blog](http://blog.bitcasa.com/) 
+* [Free Prototype Account](https://access.bitcasa.com/Sign-Up/Info/Prototype/) 
 
 ## Getting Started
 
-If you have already [signed up](https://www.bitcasa.com/cloudfs/pricing) and obtained your credentials you can get started in minutes.
+If you have already [signed up](https://access.bitcasa.com/Sign-Up/Info/Prototype/) and obtained your credentials you can get started in minutes.
 
 There are two main methods of getting the CloudFS-PHP SDK.
 
@@ -89,6 +91,8 @@ To execute the tests go the root source code directory and run:
 ```
 phpunit
 ```
+
+# Feedback
 
 We would love to hear what features or functionality you're interested in, or general comments on the SDK (good and bad - especially bad).
 

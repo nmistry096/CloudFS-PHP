@@ -7,6 +7,7 @@ use CloudFS\Utils\Assert;
 use CloudFS\Utils\BitcasaConstants;
 use CloudFS\Utils\FileType;
 use CloudFS\Utils\VersionExists;
+use CloudFS\Utils\Conflict;
 use CloudFS\Utils\RestoreMethod;
 
 class Item {
@@ -250,7 +251,7 @@ class Item {
      * @param int $ifConflict Defines what to do when a conflict occurs.
      * @return The success/fail status of the operation.
      */
-    public function changeAttributes(array $values, $ifConflict = VersionExists::FAIL) {
+    public function changeAttributes(array $values, $ifConflict = Conflict::FAIL) {
         $success = false;
         $values['version'] = $this->getVersion();
         if ($this->getType() == FileType::FILE) {

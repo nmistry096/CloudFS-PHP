@@ -14,13 +14,16 @@ class BitcasaStatus {
     private $message;
     private $code;
     private $response;
+    private $json;
+    private $httpCode;
 
     /**
      * Initializes the Bitcasa status instance.
      *
      * @param object $response
+     * @param int $httpCode Status code of the request that triggered the error.
      */
-    public function __construct($response) {
+    public function __construct($response, $httpCode) {
         $this->response = $response;
         $this->status = !isset($response["error"]);
         $this->code = 0;
@@ -29,6 +32,8 @@ class BitcasaStatus {
         $this->code = isset($response["error"]) && isset($response["error"]["code"])
             ? $response["result"]["code"] : 0;
         $this->message = $message;
+        $this->json = $response;
+        $this->httpCode = $httpCode;
     }
 
     /**
@@ -70,7 +75,7 @@ class BitcasaStatus {
                 print "BitcasaError: " . $this->code . " => " . $this->message . "\n";
             }
 
-            throw new BitcasaError($this);
+            throw new BitcasaError($this->json, $this->httpCode);
         }
     }
 }

@@ -3,6 +3,8 @@
 use CloudFS\Utils\Exists;
 use CloudFS\Utils\FileType;
 
+use CloudFS\Exception\BitcasaError;
+
 /**
  * Test Bitcasa rest adapter related tests.
  */
@@ -46,8 +48,8 @@ class RESTAdapterTest extends BaseTest {
     }
 
     /**
-     * @expectedException Exception
-     * @expectedExceptionCode 409
+     * @expectedException CloudFS\Exception\BitcasaError
+     * @expectedExceptionCode 2042
      */
     public function testCreateRootFolderFailIfExists() {
         $this->getSession()->getRestAdapter()->createFolder(null, $this->level0Folder1Name, Exists::FAIL);

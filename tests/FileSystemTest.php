@@ -3,6 +3,7 @@
 use CloudFS\Utils\Exists;
 use CloudFS\Utils\FileType;
 use CloudFS\Utils\RestoreMethod;
+use CloudFS\Exception\BitcasaError;
 
 /**
  * Test Bitcasa file system related functionality.
@@ -196,6 +197,33 @@ class FileSystemTest extends BaseTest {
 
         $this->assertTrue(count($level1Folder3->getList()) > 0);
         $this->assertTrue(count($level1Folder4->getList()) > 0);
+    }
+
+    public function testExceptionHandleing() {
+        $fileSystem = $this->getSession()->filesystem();
+        try {
+            $fileSystem->getItem("/fake/path");
+            // fail if it doesn't throw
+            $this->assertTrue(false);
+        } catch (BitcasaError $e) {
+            $this->assertEquals($e->getMessage(), "Sorry! This folder no longer exists.");
+            $this->assertEquals($e->getCode(), 2002);
+            $this->assertEquals($e->getHTTPStatus(), 404);
+        }
+    }
+
+    public function testFilesOverwrite() {
+        $localUploadDirectory = dirname(__FILE__) . '/files/upload/';
+
+        $fileSystem = $this->getSession()->filesystem();
+        $root = $fileSystem->root();
+        $this->assertNotNull($root);
+
+        $level0Folder1 = $this->getItem($root->getList(), $this->level0Folder1Name);
+        $level1Folder3 = $level0Folder1->createFolder($this->level1Folder3Name);
+
+        $level1Folder3->upload($localUploadDirectory . 'text', null, Exists::OVERWRITE);
+        $uploadedTextFile = $level1Folder3->upload($localUploadDirectory . 'text', null, Exists::OVERWRITE);
     }
 
     /**
